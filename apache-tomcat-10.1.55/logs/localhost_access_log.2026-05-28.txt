@@ -19,3 +19,7 @@
 172.10.12.45 - - [28/May/2026:18:54:44 +0900] "GET /asf-logo-wide.svg HTTP/1.1" 200 7147
 172.10.12.45 - - [28/May/2026:18:54:44 +0900] "GET /bg-middle.png HTTP/1.1" 200 1918
 172.10.12.45 - - [28/May/2026:18:54:44 +0900] "GET /bg-button.png HTTP/1.1" 200 713
+172.10.12.45 - - [28/May/2026:18:54:56 +0900] "GET /nexacroN_v24/ HTTP/1.1" 404 825
+172.10.12.45 - - [28/May/2026:18:55:13 +0900] "GET /nexacroN_v24/newWorld.html HTTP/1.1" 200 5
+172.10.12.45 - - [28/May/2026:19:14:50 +0900] "GET /nexacroN_v24/nexacroN_v24_license.jsp HTTP/1.1" 404 817
+172.10.12.45 - - [28/May/2026:19:15:01 +0900] "GET /jsp/nexacroN_v24_license.jsp HTTP/1.1" 500 3271

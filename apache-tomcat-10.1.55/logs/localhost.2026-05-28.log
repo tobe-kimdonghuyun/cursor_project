@@ -32,3 +32,80 @@
 28-May-2026 18:53:02.875 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
 28-May-2026 18:53:02.875 정보 [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
 28-May-2026 18:53:02.877 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: attributeAdded('StockTicker', 'async.Stockticker@74bdc168')
+28-May-2026 19:12:44.572 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
+28-May-2026 19:12:44.572 정보 [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
+28-May-2026 19:12:44.574 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: attributeAdded('StockTicker', 'async.Stockticker@3c89bb12')
+28-May-2026 19:12:44.874 정보 [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextDestroyed()
+28-May-2026 19:12:44.874 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextDestroyed()
+28-May-2026 19:12:59.466 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
+28-May-2026 19:12:59.466 정보 [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
+28-May-2026 19:12:59.467 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: attributeAdded('StockTicker', 'async.Stockticker@27b71f50')
+28-May-2026 19:12:59.806 정보 [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextDestroyed()
+28-May-2026 19:12:59.806 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextDestroyed()
+28-May-2026 19:13:57.156 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
+28-May-2026 19:13:57.156 정보 [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
+28-May-2026 19:13:57.158 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: attributeAdded('StockTicker', 'async.Stockticker@5c92166b')
+28-May-2026 19:15:01.292 심각 [http-nio-8080-exec-9] org.apache.catalina.core.StandardWrapperValve.invoke 경로 []의 컨텍스트 내의 서블릿 [jsp]을(를) 위한 Servlet.service() 호출이, 근본 원인(root cause)과 함께, 예외 [org.apache.jasper.JasperException: JSP를 위한 클래스를 컴파일할 수 없습니다.: 
+
+JSP 파일 [/jsp/nexacroN_v24_license.jsp]의 [13] 행에서 오류가 발생했습니다.
+com.nexacro.java.xapi.util.JarInfo cannot be resolved to a type
+10: <body>
+11: <pre>
+12: <%
+13: new com.nexacro.java.xapi.util.JarInfo().info(out);
+14: %>
+15: </pre>
+16: </body>
+
+
+Stacktrace:]을(를) 발생시켰습니다.
+	org.apache.jasper.JasperException: JSP를 위한 클래스를 컴파일할 수 없습니다.: 
+
+JSP 파일 [/jsp/nexacroN_v24_license.jsp]의 [13] 행에서 오류가 발생했습니다.
+com.nexacro.java.xapi.util.JarInfo cannot be resolved to a type
+10: <body>
+11: <pre>
+12: <%
+13: new com.nexacro.java.xapi.util.JarInfo().info(out);
+14: %>
+15: </pre>
+16: </body>
+
+
+Stacktrace:
+		at org.apache.jasper.compiler.DefaultErrorHandler.javacError(DefaultErrorHandler.java:70)
+		at org.apache.jasper.compiler.ErrorDispatcher.javacError(ErrorDispatcher.java:189)
+		at org.apache.jasper.compiler.JDTCompiler.generateClass(JDTCompiler.java:575)
+		at org.apache.jasper.compiler.Compiler.compile(Compiler.java:368)
+		at org.apache.jasper.compiler.Compiler.compile(Compiler.java:340)
+		at org.apache.jasper.compiler.Compiler.compile(Compiler.java:326)
+		at org.apache.jasper.JspCompilationContext.compile(JspCompilationContext.java:586)
+		at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:368)
+		at org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:350)
+		at org.apache.jasper.servlet.JspServlet.service(JspServlet.java:301)
+		at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+		at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88)
+		at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+		at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+		at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+		at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:782)
+		at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+		at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+		at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+		at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+		at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1272)
+		at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1797)
+		at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+		at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973)
+		at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491)
+		at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+		at java.base/java.lang.Thread.run(Thread.java:1583)
+28-May-2026 19:21:13.878 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
+28-May-2026 19:21:13.879 정보 [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
+28-May-2026 19:21:13.883 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: attributeAdded('StockTicker', 'async.Stockticker@444548a0')
