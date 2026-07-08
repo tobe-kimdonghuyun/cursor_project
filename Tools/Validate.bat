@@ -9,7 +9,8 @@ cd /d "%~dp0..\NTemplate\config"
 REM validate.args를 사용하여 검증 수행 (출력을 실시간으로 표시하며 완료 메시지 감지 시 종료)
 echo 검증 작업 진행 중...
 powershell -Command "$pinfo = New-Object System.Diagnostics.ProcessStartInfo; $pinfo.FileName = '.\validator-cli.exe'; $pinfo.Arguments = '@.\command\validate.args'; $pinfo.RedirectStandardOutput = $true; $pinfo.UseShellExecute = $false; $pinfo.CreateNoWindow = $true; $p = New-Object System.Diagnostics.Process; $p.StartInfo = $pinfo; $p.Start() | Out-Null; while (!$p.StandardOutput.EndOfStream) { $line = $p.StandardOutput.ReadLine(); Write-Host $line; if ($line -match 'runValidate done.') { Start-Sleep -Seconds 2; if (!$p.HasExited) { $p.Kill() }; break } } if (!$p.HasExited) { $p.WaitForExit(5000) }"
-
+ 
+ 
 echo.
 echo 검증 작업(Validate)이 완료되었습니다.
 

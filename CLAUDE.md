@@ -151,7 +151,7 @@ Tools/git_push.bat   # 프로젝트 전용 git push 스크립트
 > 플랜 승인 후에는 자동으로 Sonnet으로 복귀한다.
 
 ---
-
+ 
 # Claude 행동 지침
 
 ## 코드 수정 시
