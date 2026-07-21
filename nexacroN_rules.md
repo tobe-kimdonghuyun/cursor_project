@@ -3342,3 +3342,94 @@ trace(sum.toString());
 // 비교
 var cmp = d1.compareTo(d2);  // -1: d1<d2, 0: 같음, 1: d1>d2
 ```
+
+---
+
+## 상세 컴포넌트 레퍼런스 (`nexacro_reference/`)
+
+> `nexacro_reference/` 폴더에는 `nexacro_manual.chm`에서 자동 추출된 **컴포넌트별 상세 속성·메서드·이벤트 레퍼런스**가 있다.
+
+### 활용 규칙
+
+1. 특정 컴포넌트의 속성·메서드·이벤트 상세 사양이 필요한 경우 → 해당 MD 파일을 **Read 도구로 직접 읽어서** 확인한다.
+2. 아래 표에서 컴포넌트명으로 파일을 찾은 뒤 `nexacro_reference/<파일명>`을 읽는다.
+3. 이 rules 파일의 내용과 레퍼런스가 충돌할 경우 → **레퍼런스 파일 우선** (CHM 원문 기준).
+
+### 파일 인덱스
+
+| 파일 | 항목 수 | 주요 컴포넌트/대상 |
+|------|---------|------------------|
+| [Animation.md](nexacro_reference/Animation.md) | 31개 | Animation 오브젝트 |
+| [AnimationTimeline.md](nexacro_reference/AnimationTimeline.md) | 24개 | AnimationTimeline 오브젝트 |
+| [Appendix.md](nexacro_reference/Appendix.md) | 27개 | 상수·부록 |
+| [Application.md](nexacro_reference/Application.md) | 80개 | Application 오브젝트 |
+| [Button.md](nexacro_reference/Button.md) | 136개 | Button |
+| [Calendar.md](nexacro_reference/Calendar.md) | 176개 | Calendar |
+| [CheckBox.md](nexacro_reference/CheckBox.md) | 135개 | CheckBox |
+| [CheckBoxSet.md](nexacro_reference/CheckBoxSet.md) | 140개 | CheckBoxSet |
+| [Combo.md](nexacro_reference/Combo.md) | 166개 | Combo |
+| [Communication_Objects.md](nexacro_reference/Communication_Objects.md) | 93개 | DataObject, XAgent 등 |
+| [Dataset.md](nexacro_reference/Dataset.md) | 171개 | Dataset, VariableList, ColumnInfo |
+| [DataObject.md](nexacro_reference/DataObject.md) | 40개 | DataObject (REST/JSON 통신 오브젝트) |
+| [DateField.md](nexacro_reference/DateField.md) | 178개 | DateField |
+| [DateRangePicker.md](nexacro_reference/DateRangePicker.md) | 147개 | DateRangePicker |
+| [DeviceAPI.md](nexacro_reference/DeviceAPI.md) | 272개 | 모바일 디바이스 API |
+| [Div.md](nexacro_reference/Div.md) | 141개 | Div |
+| [Edit.md](nexacro_reference/Edit.md) | 145개 | Edit |
+| [Environment.md](nexacro_reference/Environment.md) | 92개 | Environment 오브젝트 |
+| [EventInfo_Objects.md](nexacro_reference/EventInfo_Objects.md) | 1317개 | 이벤트 파라미터 오브젝트 전체 |
+| [Event_Objects.md](nexacro_reference/Event_Objects.md) | 5개 | 이벤트 오브젝트 |
+| [FileDialog.md](nexacro_reference/FileDialog.md) | 11개 | FileDialog |
+| [FileDownTransfer.md](nexacro_reference/FileDownTransfer.md) | 26개 | FileDownTransfer |
+| [FileDownload.md](nexacro_reference/FileDownload.md) | 129개 | FileDownload |
+| [FileUpTransfer.md](nexacro_reference/FileUpTransfer.md) | 35개 | FileUpTransfer |
+| [FileUpload.md](nexacro_reference/FileUpload.md) | 166개 | FileUpload |
+| [Form.md](nexacro_reference/Form.md) | 183개 | Form |
+| [Frames.md](nexacro_reference/Frames.md) | 535개 | MainFrame, ChildFrame, FrameSet 계열 |
+| [GoogleMap.md](nexacro_reference/GoogleMap.md) | 104개 | GoogleMap |
+| [Graphics.md](nexacro_reference/Graphics.md) | 396개 | Graphics, 도형 오브젝트 |
+| [Grid.md](nexacro_reference/Grid.md) | 690개 | Grid (가장 많은 API) |
+| [GroupBox.md](nexacro_reference/GroupBox.md) | 106개 | GroupBox |
+| [ImageViewer.md](nexacro_reference/ImageViewer.md) | 137개 | ImageViewer |
+| [ListBox.md](nexacro_reference/ListBox.md) | 177개 | ListBox |
+| [ListView.md](nexacro_reference/ListView.md) | 429개 | ListView |
+| [MaskEdit.md](nexacro_reference/MaskEdit.md) | 148개 | MaskEdit |
+| [Menu.md](nexacro_reference/Menu.md) | 157개 | Menu |
+| [Misc_Objects.md](nexacro_reference/Misc_Objects.md) | 168개 | 기타 오브젝트 (Timer, VirtualFile 등) |
+| [MultiCombo.md](nexacro_reference/MultiCombo.md) | 242개 | MultiCombo |
+| [MultiLineTextField.md](nexacro_reference/MultiLineTextField.md) | 165개 | MultiLineTextField |
+| [NexacroAPI.md](nexacro_reference/NexacroAPI.md) | 55개 | nexacro 정적 API |
+| [Panel.md](nexacro_reference/Panel.md) | 132개 | Panel |
+| [Plugin.md](nexacro_reference/Plugin.md) | 72개 | Plugin |
+| [PopupDateRangePicker.md](nexacro_reference/PopupDateRangePicker.md) | 147개 | PopupDateRangePicker |
+| [PopupDiv.md](nexacro_reference/PopupDiv.md) | 125개 | PopupDiv |
+| [PopupMenu.md](nexacro_reference/PopupMenu.md) | 132개 | PopupMenu |
+| [ProgressBar.md](nexacro_reference/ProgressBar.md) | 127개 | ProgressBar |
+| [Radio.md](nexacro_reference/Radio.md) | 158개 | Radio |
+| [Script.md](nexacro_reference/Script.md) | 131개 | Script 오브젝트 |
+| [SelectField.md](nexacro_reference/SelectField.md) | 165개 | SelectField |
+| [Sketch.md](nexacro_reference/Sketch.md) | 144개 | Sketch |
+| [Spin.md](nexacro_reference/Spin.md) | 147개 | Spin |
+| [SpinField.md](nexacro_reference/SpinField.md) | 151개 | SpinField |
+| [Static.md](nexacro_reference/Static.md) | 113개 | Static |
+| [System_Component.md](nexacro_reference/System_Component.md) | 550개 | System, Screen, Geolocation 등 |
+| [Tab.md](nexacro_reference/Tab.md) | 277개 | Tab |
+| [TextArea.md](nexacro_reference/TextArea.md) | 167개 | TextArea |
+| [TextField.md](nexacro_reference/TextField.md) | 154개 | TextField |
+| [VideoPlayer.md](nexacro_reference/VideoPlayer.md) | 86개 | VideoPlayer |
+| [View.md](nexacro_reference/View.md) | 141개 | View |
+| [VirtualFile.md](nexacro_reference/VirtualFile.md) | 35개 | VirtualFile |
+| [WebBrowser.md](nexacro_reference/WebBrowser.md) | 85개 | WebBrowser |
+| [WebView.md](nexacro_reference/WebView.md) | 86개 | WebView |
+
+### 주요 사용 시나리오
+
+```
+Grid 속성 확인       → nexacro_reference/Grid.md 읽기
+Dataset API          → nexacro_reference/Dataset.md 읽기
+DataObject API       → nexacro_reference/DataObject.md 읽기
+이벤트 파라미터      → nexacro_reference/EventInfo_Objects.md 읽기
+환경 설정            → nexacro_reference/Environment.md 읽기
+NexacroAPI           → nexacro_reference/NexacroAPI.md 읽기
+Frame 구조           → nexacro_reference/Frames.md 읽기
+```

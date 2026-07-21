@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="multicombo_test_tech" width="1280" height="720" titletext="MultiCombo 빈 code 테스트">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <MultiCombo id="MultiCombo00" taborder="0" text="" left="201" top="145" width="200" height="50" innerdataset="Dataset00" codecolumn="code" datacolumn="data" border="1px solid black" showselectallcheckbox="false" index="-1" type="caseifilterlike" onitemchanged="MultiCombo00_onitemchanged"/>
+        <Edit id="Edit00" taborder="1" left="210" top="220" width="300" height="40" readonly="true" border="1px solid black"/>
+        <Static id="Static00" taborder="2" text="MultiCombo value 바인딩 확인" left="201" top="270" width="400" height="30"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="Dataset00">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="data" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="code"/>
+            <Col id="data">전체</Col>
+          </Row>
+          <Row>
+            <Col id="code">1</Col>
+            <Col id="data">aa</Col>
+          </Row>
+          <Row>
+            <Col id="code">2</Col>
+            <Col id="data">bb</Col>
+          </Row>
+          <Row>
+            <Col id="code">3</Col>
+            <Col id="data">cc</Col>
+          </Row>
+          <Row>
+            <Col id="code">4</Col>
+            <Col id="data">dd</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="Dataset01">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="MultiCombo00" propid="value" datasetid="Dataset01" columnid="Column0"/>
+      <BindItem id="item1" compid="Edit00" propid="value" datasetid="Dataset01" columnid="Column0"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[
+this.MultiCombo00_onitemchanged = function(obj:nexacro.MultiCombo,e:nexacro.ItemChangeEventInfo)
+{
+	//nexacro._OnceCallbackTimer.callonce(this, function(){
+	var selectVal = e.newvalue; 
+    
+    var timestamp = new Date().getTime(); 
+    
+    var sUrl = "http://172.10.12.45:9090/service_jsp/RP_105654_nexacrodummy.do"
+             + "?comboVal=" + encodeURIComponent(selectVal)
+             + "&_rs_=" + timestamp;
+			 
+    this.transaction(
+        "MyService01", 
+        sUrl, 
+        "",                 
+        "Dataset03=output1", 
+        "a=b", 
+        "callbackFunction", 
+        true
+    );
+	//},1000); 
+
+};
+
+this.callbackFunction = function()
+{
+    trace("=========================");
+};
+
+]]></Script>
+  </Form>
+</FDL>

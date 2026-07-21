@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<root>
+                
+  
+  
+  
+  
+  
+  
+  <GenInfo version="1.1">
+                                
+    
+    
+    
+    
+    
+    
+    <Rule>
+                                                
+      
+      
+      
+      
+      
+      
+      <ENV rule_version="1.05"/>
+                                                
+      
+      
+      
+      
+      
+      
+      <ADL rule_version="1.14"/>
+                                                
+      
+      
+      
+      
+      
+      
+      <FDL rule_version="1.04"/>
+                                                
+      
+      
+      
+      
+      
+      
+      <XCSS rule_version="1.04"/>
+                                                
+      
+      
+      
+      
+      
+      
+      <Script rule_version="1.02"/>
+                                                
+      
+      
+      
+      
+      
+      
+      <GeneratorInfo rule_version="1.3"/>
+                                              
+    
+    
+    
+    
+    
+    
+    </Rule>
+                                
+  
+    
+    
+    
+    
+    
+    
+    <Info generated="D:\git_prj\cursor_project\output\nexacroN_v24\RP_105654\" project="D:\git_prj\cursor_project\nexacroNv24_UI\RP_105654\">
+      <File checksum="20260630123339" errormsg="" url="typedefinition.xml"/>
+      <File checksum="20260630123339" errormsg="" url="appvariables.xml"/>
+      <File checksum="20260630123338" errormsg="" url="environment.xml"/>
+      <File checksum="20260630123339" errormsg="" url="_resource_\_theme_\blue\theme.xcss"/>
+      <File checksum="20260630123339" errormsg="" url="Application_Desktop.xadl"/>
+      <File checksum="20260710111937" errormsg="" url="FrameBase\Form_Work.xfdl"/>
+      <File checksum="20260630123712" errormsg="" url="Base\RP_105654_multicombo_test_tech (1).xfdl"/>
+      <File checksum="20260710141501" errormsg="" url="D:\git_prj\cursor_project\nexacrolib\nexacrolib\resources\Resource.json"/>
+      <File checksum="20260710150102" errormsg="" url="D:\git_prj\cursor_project\nexacrolib\nexacrolib\framework\Framework.json"/>
+      <File checksum="20260710150102" errormsg="" url="D:\git_prj\cursor_project\nexacrolib\nexacrolib\component\MobileComp.json"/>
+      <File checksum="20260710141501" errormsg="" url="D:\git_prj\cursor_project\nexacrolib\nexacrolib\component\ListView.json"/>
+      <File checksum="20260710141500" errormsg="" url="D:\git_prj\cursor_project\nexacrolib\nexacrolib\component\Grid.json"/>
+      <File checksum="20260710150100" errormsg="" url="D:\git_prj\cursor_project\nexacrolib\nexacrolib\component\ComComp.json"/>
+      <File checksum="20260710141500" errormsg="" url="D:\git_prj\cursor_project\nexacrolib\nexacrolib\component\DeviceAPI.json"/>
+      <File checksum="20260710150101" errormsg="" url="D:\git_prj\cursor_project\nexacrolib\nexacrolib\component\CompBase.json"/>
+    </Info>
+                          
+  
+  
+  
+  
+  
+  </GenInfo>
+              
+
+
+
+
+
+
+</root>

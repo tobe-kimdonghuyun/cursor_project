@@ -104,6 +104,56 @@ echo Selected branch : %BRANCH%
 echo Selected version: %VERSION%
 echo.
 
+rem -- Determine expected version prefix (21 or 24) --
+if "%VERSION%"=="v21" (set "VER_PREFIX=21") else (set "VER_PREFIX=24")
+
+rem -- Prompt for version number with validation --
+set "VERSION_NUM="
+:ask_version
+set /p "VERSION_NUM=  Enter nexacro version (%VER_PREFIX%.x.x.x, Enter=%VER_PREFIX%.0.0.9999): "
+
+rem -- If empty, use default: VER_PREFIX.0.0.9999 --
+if "%VERSION_NUM%"=="" (
+    set "VERSION_NUM=%VER_PREFIX%.0.0.9999"
+    echo   [INFO] No input - using default: %VER_PREFIX%.0.0.9999
+    goto version_ok
+)
+
+rem -- Validate format: must be N.N.N.N --
+set "_VN_CHECK=%VERSION_NUM%"
+powershell -NoProfile -Command "if($env:_VN_CHECK -match '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$'){exit 0}else{exit 1}" >nul 2>&1
+if %ERRORLEVEL% neq 0 (
+    echo [ERROR] Invalid format. Must be N.N.N.N  ^(e.g. %VER_PREFIX%.0.0.1000^)
+    set "VERSION_NUM="
+    goto ask_version
+)
+
+rem -- Validate prefix matches selected version (v21 -> "21", v24 -> "24") --
+set "_VN_PREFIX=%VERSION_NUM:~0,2%"
+if not "%_VN_PREFIX%"=="%VER_PREFIX%" (
+    echo [ERROR] Version must start with "%VER_PREFIX%" for %VERSION%.  ^(got: %_VN_PREFIX%^)
+    set "VERSION_NUM="
+    goto ask_version
+)
+
+:version_ok
+echo   Version number confirmed: %VERSION_NUM%
+echo.
+
+rem -- Ask whether to create zip archive --
+set "DO_ZIP="
+:ask_zip
+set /p "DO_ZIP=  Create zip archive? (Y/N, Enter=Y): "
+if "%DO_ZIP%"=="" set "DO_ZIP=Y"
+if /i "%DO_ZIP%"=="Y" goto zip_decided
+if /i "%DO_ZIP%"=="N" goto zip_decided
+echo [ERROR] Please enter Y or N.
+set "DO_ZIP="
+goto ask_zip
+:zip_decided
+echo   [INFO] Zip: %DO_ZIP%
+echo.
+
 rem -- Apply version to paths --
 set "DEST_DIR=%PROJECT_ROOT%\nexacrolib\nexacrolib"
 set "GENERATERULE_SRC2=%SOURCE_DIR%\Tools\Lib\TiGenerateLib\Template\24"
@@ -215,11 +265,42 @@ if "%VERSION%"=="v24" (
 )
 echo [DONE] GenerateRule files copied.
 
+rem ============================================================
+rem [5/5] Zip archive (optional)
+rem ============================================================
+echo.
+
+rem -- Prepare zip filename using VERSION_NUM confirmed earlier --
+set "ZIP_BASE=%PROJECT_ROOT%\nexacrolib\nexacrolib_noMerge_noCompress_noShrink"
+if not "%VERSION_NUM%"=="" (
+    set "ZIP_FILE=%ZIP_BASE%(%VERSION_NUM%).zip"
+) else (
+    set "ZIP_FILE=%ZIP_BASE%.zip"
+)
+
+if /i "%DO_ZIP%"=="N" (
+    echo [5/5] Zip skipped.
+    goto done_zip
+)
+
+echo [5/5] Creating zip archive...
+echo   Output: %ZIP_FILE%
+if exist "%ZIP_FILE%" del "%ZIP_FILE%"
+powershell -NoProfile -ExecutionPolicy Bypass -Command ^
+    "$src = @('%DEST_DIR%', '%GENERATERULE_DEST%'); Compress-Archive -Path $src -DestinationPath '%ZIP_FILE%' -Force"
+if %ERRORLEVEL% neq 0 (
+    echo [ERROR] Zip failed.
+    pause & exit /b %ERRORLEVEL%
+)
+echo [DONE] Zip created: %ZIP_FILE%
+
+:done_zip
 echo.
 echo ==========================================
 echo  All steps completed successfully.
 echo  Branch : %BRANCH%
 echo  Commit : %COMMIT_HASH%
+echo  Version: %VERSION_NUM%
 echo ==========================================
 endlocal
 pause

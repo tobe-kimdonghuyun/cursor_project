@@ -1,5 +1,8 @@
-ProjectPath=D:\git_prj\REQM\nexacroK_UI\NexacroK_XCSS_Sizing\NexacroK_XCSS_Sizing.xprj
-OutputPath=D:\git_prj\REQM\nexacroK\NexacroK_XCSS_Sizing
-NexacroLibPath=E:\git\VSCODE_WORK900\WORK900\nexacrolib
-GenerateRule=E:\git\VSCODE_WORK900\WORK900\tools\resource\generate
+ProjectPath=D:\git_prj\cursor_project\nexacroNv24_UI\RP_105654\RP_105654.xprj
+OutputPath=D:\git_prj\cursor_project\output\nexacroN_v24\RP_105654
+DeployPath=D:\git_prj\cursor_project\output\nexacroN_v24\Deploy\RP_105654
+NexacroLibPath=D:\git_prj\cursor_project\nexacrolib\nexacrolib
+GenerateRule=D:\git_prj\cursor_project\nexacrolib\generate
 SourceDir=E:\git\extension2\WORK800\
+-MERGE
+-COMPRESS

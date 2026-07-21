@@ -17,8 +17,10 @@
 $RepoPath    = $env:PSBRANCH_REPO
 $ResultFile  = if ($env:PSBRANCH_RESULT) { $env:PSBRANCH_RESULT } `
                else { Join-Path $env:TEMP "_update_fw_branch.tmp" }
-$VersionFile = if ($env:PSVERSION_RESULT) { $env:PSVERSION_RESULT } `
-               else { Join-Path $env:TEMP "_update_fw_version.tmp" }
+$VersionFile    = if ($env:PSVERSION_RESULT) { $env:PSVERSION_RESULT } `
+                  else { Join-Path $env:TEMP "_update_fw_version.tmp" }
+$VersionNumFile = if ($env:PSVERNUM_RESULT)  { $env:PSVERNUM_RESULT  } `
+                  else { Join-Path $env:TEMP "_update_fw_vernum.tmp"  }
 
 if (-not $RepoPath) {
     Write-Host "[ERROR] PSBRANCH_REPO environment variable is not set." -ForegroundColor Red
@@ -277,19 +279,88 @@ try {
                         $sel = 0; $scroll = 0
                     }
                     "branch" {
-                        # Step 2: version selection
-                        $version = Select-Version
-                        if ($null -eq $version) {
-                            # ESC in version screen -> back to branch selection
-                            [Console]::CursorVisible = $false
-                            # $backToBranch flag: break inner switch, then outer switch
-                            $script:backToBranch = $true
-                            break
+                        $autoVersion    = $null
+                        $autoVersionNum = $null
+
+                        # --- Rule 1: well-known branch names → fixed version ---
+                        if ($chosen.Full -ieq "master_21" -or $chosen.Full -ieq "main_21") {
+                            $autoVersion = "v21"
+                        } elseif ($chosen.Full -ieq "master" -or $chosen.Full -ieq "main") {
+                            $autoVersion = "v24"
                         }
-                        [Console]::CursorVisible = $true
-                        [Console]::Clear()
+
+                        # --- Rule 2: RELEASE folder → extract version from branch name ---
+                        # Branch format: REL_<YY.MM.DD.00>_<nexacro-version>[_AS]
+                        # Date always ends with .00, so match structure precisely to avoid date/version confusion
+                        if ($null -eq $autoVersion -and ($chosen.Full -imatch '(^|/)RELE?ASE?/')) {
+                            $leaf = $chosen.Name
+
+                            $m = [regex]::Match($leaf,
+                                '^REL_\d+\.\d+\.\d+\.00_((?:21|24)\.\d+\.\d+\.\d+)(_AS)?$',
+                                [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)
+
+                            if ($m.Success) {
+                                $extractedVer = $m.Groups[1].Value
+                                $hasAS        = $m.Groups[2].Success
+
+                                if ($hasAS) {
+                                    # _AS suffix: increment last component by 1
+                                    $parts    = $extractedVer -split '\.'
+                                    $parts[3] = [string]([int]$parts[3] + 1)
+                                    $autoVersionNum = $parts -join '.'
+                                } else {
+                                    $autoVersionNum = $extractedVer
+                                }
+
+                                $autoVersion = if ($extractedVer.StartsWith("21.")) { "v21" } else { "v24" }
+                            }
+                        }
+
+                        # --- Rule 3: SITE folder → version is at the END of the branch name ---
+                        # Branch format: SITE_<name>_<version>[trailing _ or spaces]
+                        if ($null -eq $autoVersion -and ($chosen.Full -imatch '(^|/)SITE/')) {
+                            $leaf = $chosen.Name
+
+                            # Extract last N.N.N.N starting with 21 or 24, ignore trailing _ or whitespace
+                            $m = [regex]::Match($leaf,
+                                '((?:21|24)\.\d+\.\d+\.\d+)[_\s]*$',
+                                [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)
+
+                            if ($m.Success) {
+                                $extractedVer   = $m.Groups[1].Value
+                                $autoVersionNum = $extractedVer
+                                $autoVersion    = if ($extractedVer.StartsWith("21.")) { "v21" } else { "v24" }
+                            }
+                        }
+
+                        # --- Apply result ---
+                        if ($autoVersion) {
+                            [Console]::CursorVisible = $true
+                            [Console]::Clear()
+                            if ($autoVersionNum) {
+                                Write-Host " Auto-selected: $autoVersion  version: $autoVersionNum  (branch: $($chosen.Full))" -ForegroundColor Green
+                            } else {
+                                Write-Host " Auto-selected: $autoVersion  (branch: $($chosen.Full))" -ForegroundColor Green
+                            }
+                            $version = $autoVersion
+                        } else {
+                            # Step 2: version selection UI
+                            $version = Select-Version
+                            if ($null -eq $version) {
+                                # ESC in version screen -> back to branch selection
+                                [Console]::CursorVisible = $false
+                                $script:backToBranch = $true
+                                break
+                            }
+                            [Console]::CursorVisible = $true
+                            [Console]::Clear()
+                        }
+
                         [System.IO.File]::WriteAllText($ResultFile,  $chosen.Full, [System.Text.Encoding]::UTF8)
                         [System.IO.File]::WriteAllText($VersionFile, $version,     [System.Text.Encoding]::UTF8)
+                        if ($autoVersionNum) {
+                            [System.IO.File]::WriteAllText($VersionNumFile, $autoVersionNum, [System.Text.Encoding]::UTF8)
+                        }
                         exit 0
                     }
                 }

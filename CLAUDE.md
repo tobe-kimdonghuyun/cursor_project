@@ -57,6 +57,14 @@ nexacroN_UI/               — nexacroN UI 화면 프로젝트 소스
 nexacroN_generate/         — nexacroN Studio Generate/Deploy 결과물
   ├── output/              — Generate 결과물
   └── deploy/              — 최종 배포 결과물
+
+nexacro_reference/         — nexacro_manual.chm 자동 추출 상세 레퍼런스 (64개 MD)
+  ├── Grid.md              — Grid 속성·메서드·이벤트 (690개 항목)
+  ├── Dataset.md      — Dataset·VariableList API (204개)
+  ├── EventInfo_Objects.md — 이벤트 파라미터 상세 (1317개)
+  ├── Form.md / Frames.md  — Form·Frame 계열 API
+  ├── NexacroAPI.md        — nexacro 정적 유틸리티 함수
+  └── README.md            — 전체 파일 인덱스
 ```
 
 ---
@@ -75,6 +83,17 @@ nexacroN_generate/         — nexacroN Studio Generate/Deploy 결과물
 > nexacroN 또는 nexacroK 관련 작업 시 아래 규칙 파일을 반드시 참조한다.
 
 @nexacroN_rules.md
+
+> **상세 컴포넌트 레퍼런스**: `nexacro_reference/` 폴더 (CHM 자동 추출, 64개 MD 파일)
+>
+> 컴포넌트 속성·메서드·이벤트 상세 사양이 필요할 때는 **반드시** 해당 파일을 Read 도구로 읽어서 확인한다.
+> 파일 목록은 `nexacroN_rules.md` 하단 "상세 컴포넌트 레퍼런스" 섹션 또는 `nexacro_reference/README.md` 참조.
+>
+> 예시:
+> - Grid 작업 → `nexacro_reference/Grid.md`
+> - Dataset API → `nexacro_reference/Dataset.md`
+> - 이벤트 파라미터 → `nexacro_reference/EventInfo_Objects.md`
+> - nexacro 내장 함수 → `nexacro_reference/NexacroAPI.md`
 
 ---
 
