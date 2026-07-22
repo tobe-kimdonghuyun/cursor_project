@@ -28,7 +28,7 @@
 - nexacro 화면은 `.xfdl` 확장자 파일 — XML(컴포넌트/레이아웃) + nexacro 스크립트(로직) 혼합
 - 스크립트는 `<Script><![CDATA[ ... ]]></Script>` 태그 내부에 function으로 작성 javascript문법을 사용하고 있다
 - `nexacrodeploy.exe` 를 통해 nexacroK, nexacroN 모두 빌드 → 최종 `.js` 파일 생성
-- 넥사크로 엔진은 js로 되어 있고 D:\git_prj\cursor_project\nexacrolib\nexacrolib 폴더이다 
+- 넥사크로 엔진은 js로 되어 있고 D:\git_prj\cursor_project\nexacrolib\nexacrolib 폴더이다  
 ---
 
 ## 프로젝트 파일 구조
