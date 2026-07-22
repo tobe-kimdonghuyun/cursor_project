@@ -28,7 +28,7 @@
 - nexacro 화면은 `.xfdl` 확장자 파일 — XML(컴포넌트/레이아웃) + nexacro 스크립트(로직) 혼합
 - 스크립트는 `<Script><![CDATA[ ... ]]></Script>` 태그 내부에 function으로 작성 javascript문법을 사용하고 있다
 - `nexacrodeploy.exe` 를 통해 nexacroK, nexacroN 모두 빌드 → 최종 `.js` 파일 생성
-
+- 넥사크로 엔진은 js로 되어 있고 D:\git_prj\cursor_project\nexacrolib\nexacrolib 폴더이다 
 ---
 
 ## 프로젝트 파일 구조
@@ -3433,3 +3433,341 @@ DataObject API       → nexacro_reference/DataObject.md 읽기
 NexacroAPI           → nexacro_reference/NexacroAPI.md 읽기
 Frame 구조           → nexacro_reference/Frames.md 읽기
 ```
+
+---
+
+## nexacrolib 엔진 구조 (`nexacrolib/nexacrolib/`)
+
+> **위치**: `D:\git_prj\cursor_project\nexacrolib\nexacrolib\`
+>
+> nexacro N v24 엔진 자체를 구성하는 JS 라이브러리 소스. 컴포넌트 내부 동작 원리 파악, 커스텀 모듈 개발, 디버깅 시 참조한다.
+
+### 최상위 구조
+
+```
+nexacrolib/nexacrolib/
+├── nexacrolib.json         — 라이브러리 메타정보 (버전, 폴더 목록)
+├── framework/              — 시스템 코어 (초기화, 플랫폼 추상화, 암호화)
+├── component/              — UI 컴포넌트 라이브러리 (Button, Grid, Dataset 등)
+└── resources/              — 공통 리소스 (이미지 등)
+```
+
+**nexacrolib.json 핵심 정보**:
+```json
+{
+  "Nexacro N": {
+    "version": "24.0.0.9999",
+    "type": "framework",
+    "cssruleversion": "1.3",
+    "resources": [
+      { "folder": "component" },
+      { "folder": "framework" },
+      { "folder": "resources" }
+    ]
+  }
+}
+```
+
+---
+
+### framework/ — 시스템 코어
+
+| 파일명 | 크기 | 역할 |
+|--------|------|------|
+| `SystemBase.js` | 143KB | 시스템 초기화, 프로토타입 생성 엔진(`_createPrototype`) |
+| `SystemBase_HTML5.js` | 671KB | WRE(웹 브라우저) + iOS_NRE 런타임 구현 |
+| `SystemBase_Runtime.js` | 349KB | NRE(Native Runtime) 구현 |
+| `Platform.js` | 728KB | **최대 파일** — 전역 객체 등록, 컴포넌트 glue code |
+| `Platform_HTML5.js` | 188KB | HTML5 플랫폼 특화 |
+| `Platform_Runtime.js` | 84KB | Runtime 플랫폼 특화 |
+| `BasicObjs.js` | 143KB | 기본 객체 정의 (Point, Rect, Size, Decimal, Date, Image) |
+| `CssObjs.js` | 56KB | CSS 객체 및 스타일 관리 |
+| `ErrorDefine.js` | 56KB | 에러 코드 및 메시지 정의 |
+| `Crypto.js` | 157KB | 암호화 기능 (MD5, SHA, AES 등) |
+| `LocaleSupport.js` | 94KB | 다국어/지역 지원 |
+| `Device.js` | 34KB | Device API 기본 인터페이스 |
+| `Device_Android.js` | 5.7KB | Android 특화 기능 |
+| `Device_iOS.js` | 12KB | iOS 특화 기능 |
+| `Device_Windows.js` | 2.1KB | Windows 특화 기능 |
+| `makeLocaleInfo.js` | 604KB | 다국어 정보 생성/컴파일 |
+
+**파일명 패턴**:
+- `*_HTML5.js` → WRE (웹 브라우저), iOS_NRE 대상
+- `*_Runtime.js` → NRE (Windows/Android 네이티브) 대상
+- `Device_<OS>.js` → OS별 특화 구현
+
+**로딩 순서 (Framework.json 기준)**:
+```
+SystemBase.js → LocaleSupport.js → SystemBase_HTML5/Runtime.js
+→ BasicObjs.js → ErrorDefine.js → Platform_HTML5/Runtime.js
+→ Platform.js → CssObjs.js → Device*.js → Crypto.js
+```
+
+---
+
+### component/ — UI 컴포넌트 라이브러리
+
+#### CompBase/ — 컴포넌트 기본 클래스
+
+| 파일명 | 역할 |
+|--------|------|
+| `CompBase.js` | 모든 컴포넌트의 최상위 기본 클래스 |
+| `CompEventBase.js` | 이벤트 처리 기반 |
+| `FormBase.js` | Form 기본 클래스 |
+| `FrameBase.js` | Frame 기본 클래스 |
+| `EditBase.js` | 편집 컴포넌트 기본 클래스 |
+| `Element_HTML5.js` | HTML5 환경 DOM 요소 추상화 |
+| `Element_Runtime.js` | NRE 환경 DOM 요소 추상화 |
+| `Animation.js` | 애니메이션 기본 |
+| `ScrollBar.js` | 스크롤바 |
+| `TitleBar.js`, `StatusBar.js` | 타이틀바/상태바 |
+| `Data.js` | 데이터 기반 추상화 |
+| `ViewTransition.js` | 화면 전환 효과 |
+
+#### ComComp/ — 일반 UI 컴포넌트 (44개 JS)
+
+```
+Button.js, Edit.js, MaskEdit.js, TextArea.js
+CheckBox.js, Radio.js, CheckBoxSet.js
+Combo.js, MultiCombo.js, ListBox.js
+Calendar.js, DatePicker.js, Spin.js
+Static.js, ImageViewer.js, ProgressBar.js
+Div.js, Panel.js, PopupDiv.js, Tab.js, GroupBox.js
+Grid 관련: Dataset.js, DataObject.js, DomObject.js, Cell.js
+Menu.js, PopupMenu.js
+FileDialog.js, FileUpload.js, FileDownload.js
+FileUpTransfer.js, FileDownTransfer.js, VirtualFile.js
+WebBrowser.js, WebView.js, VideoPlayer.js
+GoogleMap.js, Sketch.js, View.js
+ExportObject.js, ImportObject.js
+Action.js, Plugin.js, Tray.js
+```
+
+#### Grid/ — 데이터 그리드 (2개 JS)
+
+```
+Grid.js      — 메인 그리드 구현 (복잡한 이벤트/셀/밴드 처리)
+GridInfo.js  — 그리드 컬럼/포맷 메타정보
+```
+
+#### MobileComp/ — 모바일 최적화 컴포넌트 (13개 JS)
+
+```
+MobileCompBase.js
+MobileElement_HTML5.js, MobileElement_Runtime.js
+TextField.js, MultiLineTextField.js
+DateField.js, SpinField.js, SelectField.js
+DateRangePicker.js, PopupDateRangePicker.js
+DateRangeCalendar.js, TimePickerControl.js, SpinnerControl.js
+```
+
+#### DevPackLib/ — 개발 팩 유틸리티 (12개 JS)
+
+```
+Frame.js        — 프레임 관리 유틸
+Util.js         — 공통 유틸리티
+Comp.js         — 컴포넌트 유틸리티
+Transaction.js  — 서버 통신
+Validation.js   — 유효성 검증
+Grid.js         — 그리드 관련 유틸
+Excel.js        — 엑셀 Import/Export
+Message.js      — 메시지 박스
+Popup.js        — 팝업 창
+File.js         — 파일 처리
+ExtLib.js       — 확장 라이브러리
+CompOverride.js — 컴포넌트 오버라이드
+```
+
+#### DeviceAPI/ — 디바이스 API (7개 JS)
+
+```
+DeviceObjs.js, DeviceObjs_Runtime.js
+SQLite.js, SQLite_Runtime.js
+Mobile.js                    — Camera, Geolocation, Contact, SMS 등
+BluetoothLE.js               — Bluetooth Low Energy
+TCPClientSocket.js           — TCP 소켓 통신
+```
+
+#### 기타 component 모듈
+
+| 폴더 | 파일 수 | 용도 |
+|------|--------|------|
+| `Chart/` | 119개 | 차트 엔진 (BasicChart, PieChart, BubbleChart, GaugeChart, RadarChart 등) |
+| `Accessibility/` | 4개 | 접근성(WAI-ARIA) |
+| `Graphics/` | 2개 | 캔버스 벡터 그래픽 |
+| `ListView/` | 2개 | 리스트뷰 |
+| `Push/` | 6개 | X-PUSH (sockjs.js 포함) |
+| `Splitter/` | 2개 | 분할 컨테이너 |
+| `XAgent/` | 1개 | XAgent 서버 통신 |
+| `VoiceRecognition/` | 1개 | 음성 인식 |
+| `Cordova/` | 1개 | Cordova 플러그인 |
+| `CompBaseEx/` | 2개 | SimpleComp, ComplexComp 확장 |
+
+---
+
+### 엔진 JS 코딩 패턴 (내부 구현 규칙)
+
+> 엔진 소스 분석 또는 커스텀 모듈 개발 시 아래 패턴을 이해하고 활용한다.
+
+#### 1. 전역 namespace 및 조건부 정의
+
+```javascript
+// nexacro 전역 namespace 초기화
+if (!this.nexacro) { this.nexacro = {}; }
+
+// 중복 로드 방지 — 컴포넌트 정의 전 반드시 체크
+if (!nexacro.Button) {
+    // 컴포넌트 정의...
+}
+```
+
+#### 2. 프로토타입 기반 상속
+
+```javascript
+// 컴포넌트 생성자 함수 — 인자: id, left, top, width, height, right, bottom, ...parent
+nexacro.Button = function (id, left, top, width, height, right, bottom,
+                           minwidth, maxwidth, minheight, maxheight, parent) {
+    nexacro._IconText.call(this, id, left, top, width, height,
+                           right, bottom, minwidth, maxwidth, minheight, maxheight, parent);
+};
+
+// 상속 체인 설정
+var _pButton = nexacro._createPrototype(nexacro._IconText, nexacro.Button);
+nexacro.Button.prototype = _pButton;
+_pButton._type_name = "Button";   // 타입명 등록 (필수)
+```
+
+#### 3. 내부 속성 네이밍 규칙
+
+| 접두어 | 의미 | 예시 |
+|--------|------|------|
+| `_p_` | property (외부 노출 속성) | `_p_tabstop`, `_p_text` |
+| `_is_` | boolean flag | `_is_focus_accept`, `_is_alive` |
+| `_cur_` | current state | `_cur_ldown_elem` |
+| `_use_` | feature flag | `_use_pushed_status` |
+| `_v_` | 내부 변수 | `_v_value` |
+
+```javascript
+_pButton._p_tabstop     = true;
+_pButton._p_defaultbutton = false;
+_pButton._is_focus_accept = true;
+_pButton._cur_ldown_elem  = null;
+_pButton._use_pushed_status = true;
+```
+
+#### 4. setter/getter 패턴
+
+```javascript
+// setter: set_<속성명>
+_pButton.set_text = function (v) {
+    if (this._p_text != v) {
+        this._p_text = v;
+        this._updateText();
+    }
+};
+
+// getter: get_<속성명>
+_pButton.get_text = function () {
+    return this._p_text;
+};
+```
+
+#### 5. EventInfo 클래스 패턴
+
+```javascript
+// 이벤트 파라미터 객체 — 이벤트별로 전용 클래스 정의
+nexacro.GridCellClickEventInfo = function (obj, id, cell, col, row, subrow, ...) {
+    nexacro.ClickEventInfo.call(this, obj, id, ...);
+    this.cell   = cell;
+    this.col    = col;
+    this.row    = row;
+    this.subrow = subrow;
+};
+var _p = nexacro._createPrototype(nexacro.ClickEventInfo, nexacro.GridCellClickEventInfo);
+nexacro.GridCellClickEventInfo.prototype = _p;
+_p._type_name = "GridCellClickEventInfo";
+delete _p;   // 임시 변수 정리
+```
+
+#### 6. 플랫폼 분기 패턴
+
+```javascript
+// scriptfilter로 환경별 파일 선택적 로드 (Framework.json/Component.json)
+// target: "WRE,iOS_NRE"  → 웹 + iOS 네이티브에서만 로드
+// target: "NRE"           → 모든 네이티브 환경
+// target: "NRE,iOS_NRE"  → 네이티브 환경 전체
+
+// 런타임 환경 분기 (파일 내부)
+if (nexacro._isWRE) {
+    // 웹 브라우저 환경 처리
+} else {
+    // NRE 환경 처리
+}
+```
+
+#### 7. 컴포넌트 라이프사이클 오버라이드
+
+```javascript
+// 생성/초기화
+_pButton.on_created = function () { /* ... */ };
+
+// 표시
+_pButton.on_show = function () { /* ... */ };
+
+// 크기/위치 변경
+_pButton.on_resize = function () { /* ... */ };
+
+// 포커스
+_pButton.on_focus_in = function (focused_comp) { /* ... */ };
+_pButton.on_focus_out = function (focus_comp)  { /* ... */ };
+
+// 제거
+_pButton.destroyComponent = function () {
+    // 정리 로직
+    return nexacro.Component.prototype.destroyComponent.call(this);
+};
+```
+
+---
+
+### 컴포넌트 상속 계층 (클래스 트리)
+
+```
+nexacro.Object
+└── nexacro.Component                         (CompBase.js)
+    ├── nexacro._Text / nexacro._IconText      (공통 텍스트/아이콘)
+    │   ├── nexacro.Button
+    │   ├── nexacro.Static
+    │   └── nexacro.CheckBox, Radio ...
+    ├── nexacro._EditBase                      (EditBase.js)
+    │   ├── nexacro.Edit
+    │   ├── nexacro.MaskEdit
+    │   └── nexacro.TextArea
+    ├── nexacro.Div                            (컨테이너)
+    │   ├── nexacro.Panel, GroupBox
+    │   └── nexacro.PopupDiv
+    ├── nexacro.Grid                           (Grid.js)
+    └── nexacro.Dataset                        (ComComp/Dataset.js)
+
+nexacro._Form (FormBase.js)
+└── nexacro.Form
+    └── nexacro.ChildFrame, MainFrame 등
+```
+
+---
+
+### 규모 요약
+
+| 모듈 | JS 파일 수 | 비고 |
+|------|-----------|------|
+| framework | 16 | 시스템 코어 (~3.5MB) |
+| CompBase | 14 | 컴포넌트 기반 클래스 |
+| ComComp | 44 | 기본 UI 컴포넌트 |
+| Grid | 2 | 그리드 (가장 복잡한 단일 컴포넌트) |
+| Chart | ~6 | 차트 엔진 |
+| MobileComp | 13 | 모바일 최적화 컴포넌트 |
+| DeviceAPI | 7 | 디바이스 API |
+| DevPackLib | 12 | 개발 유틸리티 라이브러리 |
+| metainfo | 1,000+ | 다국어 API 메타정보 (CHN/ENG/JPN/KOR) |
+
+> **Design/ 폴더**: 각 컴포넌트 하위에 Design 스크립트가 존재하며, Nexacro Studio 디자이너 실행 시에만 로드됨. 프로덕션 빌드에는 포함되지 않음.
