@@ -62,7 +62,7 @@ flowchart TD
     G --> H
 
     %% --- Step 6 ---
-    H["📂 Step 6\nstart.bat 존재 확인\nD:\\...\\Jar\\bin\\start.bat"]
+    H["📂 Step 6\nstart.bat 존재 확인\n...\\deploy_jar\\nexacroN\\bin\\start.bat"]
     H --> H1{파일 존재?}
     H1 -- 없음 --> ERR4["❌ ERROR\nstart.bat not found\n→ exit /b 1"]
     H1 -- 있음 --> I
@@ -129,7 +129,7 @@ flowchart TD
 | **Step 3** | 필수 필드 누락 검사 | 파싱된 변수 | 누락 시 오류 종료 |
 | **Step 4** | 출력/배포 디렉토리 초기화 | `OutputPath`, `DeployPath` | 삭제 후 빈 폴더 재생성 |
 | **Step 5** | JAVA_HOME 자동 탐색 | 환경변수 / 레지스트리 / PATH | JAVA_HOME 확정 (4단계 우선순위) |
-| **Step 6** | `start.bat` 존재 확인 | `D:\git_prj\nexacroN\Jar\bin\start.bat` | 없으면 오류 종료 |
+| **Step 6** | `start.bat` 존재 확인 | `<repo>\deploy_jar\nexacroN\...\bin\start.bat` | 없으면 오류 종료 |
 | **Step 7** | 배포 명령어 문자열 조립 | 설정 변수 + 옵션 플래그 | `DEPLOY_CMD` 변수 |
 | **Step 8** | 배포 명령 실행 | `DEPLOY_CMD` | Nexacro 빌드 결과물 생성 |
 | **Step 9** | `deploy_engine` 폴더 구성 | `DeployPath`, `GenerateRule` | nexacrolib + GenerateRule 복사 |

@@ -1,0 +1,558 @@
+25-Jul-2026 18:01:22.766 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 서버 버전 이름:    Apache Tomcat/10.1.55
+25-Jul-2026 18:01:22.768 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 빌드 시각:  May 5 2026 13:33:02 UTC
+25-Jul-2026 18:01:22.768 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 버전 번호:  10.1.55.0
+25-Jul-2026 18:01:22.768 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 이름:     Windows 11
+25-Jul-2026 18:01:22.768 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 버전:     10.0
+25-Jul-2026 18:01:22.769 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 아키텍처:          amd64
+25-Jul-2026 18:01:22.769 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 자바 홈:           C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot
+25-Jul-2026 18:01:22.769 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 버전:          25.0.3+9-LTS
+25-Jul-2026 18:01:22.769 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 벤더:          Eclipse Adoptium
+25-Jul-2026 18:01:22.769 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:     E:\git_prj\cursor_project\apache-tomcat-10.1.55
+25-Jul-2026 18:01:22.769 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:     E:\git_prj\cursor_project\apache-tomcat-10.1.55
+25-Jul-2026 18:01:22.774 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.config.file=E:\git_prj\cursor_project\apache-tomcat-10.1.55\conf\logging.properties
+25-Jul-2026 18:01:22.774 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+25-Jul-2026 18:01:22.774 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djdk.tls.ephemeralDHKeySize=2048
+25-Jul-2026 18:01:22.775 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+25-Jul-2026 18:01:22.775 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dsun.io.useCanonCaches=false
+25-Jul-2026 18:01:22.775 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang=ALL-UNNAMED
+25-Jul-2026 18:01:22.775 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+25-Jul-2026 18:01:22.775 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.io=ALL-UNNAMED
+25-Jul-2026 18:01:22.775 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util=ALL-UNNAMED
+25-Jul-2026 18:01:22.776 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+25-Jul-2026 18:01:22.776 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+25-Jul-2026 18:01:22.776 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.base=E:\git_prj\cursor_project\apache-tomcat-10.1.55
+25-Jul-2026 18:01:22.776 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.home=E:\git_prj\cursor_project\apache-tomcat-10.1.55
+25-Jul-2026 18:01:22.776 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.io.tmpdir=E:\git_prj\cursor_project\apache-tomcat-10.1.55\temp
+25-Jul-2026 18:01:22.782 정보 [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent 프로덕션 환경들에서 최적의 성능을 제공하는, APR 기반 Apache Tomcat Native 라이브러리가, 다음 java.library.path에서 발견되지 않습니다: [C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Python314\Scripts\;C:\Python314\;C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\NVIDIA Corporation\NVIDIA App\NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\dotnet\;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Git\cmd;C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin\;C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin\;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\apache-maven-3.9.16\bin\;C:\apache-maven-3.9.16\bin;C:\Users\sjrnfl13\AppData\Roaming\npm;;C:\Program Files (x86)\AOMEI\AOMEI Backupper\8.4.0;C:\Program Files\GitExtensions\;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity IDE\bin;C:\Users\sjrnfl13\AppData\Roaming\npm;C:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\sjrnfl13\.local\bin;C:\Users\sjrnfl13\AppData\Local\PowerToys\DSCModules\;C:\Users\sjrnfl13\AppData\Roaming\Python\Python314\Scripts;.]
+25-Jul-2026 18:01:22.890 정보 [main] org.apache.coyote.AbstractProtocol.init 프로토콜 핸들러 ["http-nio-7070"]을(를) 초기화합니다.
+25-Jul-2026 18:01:22.903 정보 [main] org.apache.catalina.startup.Catalina.load [229] 밀리초 내에 서버가 초기화되었습니다.
+25-Jul-2026 18:01:22.921 정보 [main] org.apache.catalina.core.StandardService.startInternal 서비스 [Catalina]을(를) 시작합니다.
+25-Jul-2026 18:01:22.922 정보 [main] org.apache.catalina.core.StandardEngine.startInternal 서버 엔진을 시작합니다: [Apache Tomcat/10.1.55]
+25-Jul-2026 18:01:22.937 심각 [main] org.apache.catalina.core.ContainerBase.startInternal 자식 컨테이너를 시작 중 실패했습니다.
+	java.util.concurrent.ExecutionException: org.apache.catalina.LifecycleException: 구성요소 [org.apache.catalina.webresources.StandardRoot@5db6b9cd]을(를) 시작하지 못했습니다.
+		at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:124)
+		at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:193)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:754)
+		at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:783)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:149)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747)
+		at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:201)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardService.startInternal(StandardService.java:410)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:868)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.startup.Catalina.start(Catalina.java:758)
+		at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+		at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:342)
+		at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:473)
+	Caused by: org.apache.catalina.LifecycleException: 구성요소 [org.apache.catalina.webresources.StandardRoot@5db6b9cd]을(를) 시작하지 못했습니다.
+		at org.apache.catalina.util.LifecycleBase.handleSubClassException(LifecycleBase.java:404)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:179)
+		at org.apache.catalina.core.StandardContext.resourcesStart(StandardContext.java:4151)
+		at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4273)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:149)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747)
+		... 19 more
+	Caused by: java.lang.IllegalArgumentException: The main resource set specified [D:\git_prj\cursor_project\nexacroN_v24] is not a directory or war file, or is not readable (it does not exist or permissions to access it are missing)
+		at org.apache.catalina.webresources.StandardRoot.createMainResourceSet(StandardRoot.java:758)
+		at org.apache.catalina.webresources.StandardRoot.startInternal(StandardRoot.java:715)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		... 28 more
+25-Jul-2026 18:01:22.939 심각 [main] org.apache.catalina.core.ContainerBase.startInternal 자식 컨테이너를 시작 중 실패했습니다.
+	java.util.concurrent.ExecutionException: org.apache.catalina.LifecycleException: 자식 컨테이너를 시작 중 실패했습니다.
+		at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:124)
+		at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:193)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:754)
+		at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:201)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardService.startInternal(StandardService.java:410)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:868)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.startup.Catalina.start(Catalina.java:758)
+		at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+		at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:342)
+		at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:473)
+	Caused by: org.apache.catalina.LifecycleException: 자식 컨테이너를 시작 중 실패했습니다.
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:766)
+		at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:783)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:149)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747)
+		... 11 more
+	Caused by: java.util.concurrent.ExecutionException: org.apache.catalina.LifecycleException: 구성요소 [org.apache.catalina.webresources.StandardRoot@5db6b9cd]을(를) 시작하지 못했습니다.
+		at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:124)
+		at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:193)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:754)
+		... 19 more
+	Caused by: org.apache.catalina.LifecycleException: 구성요소 [org.apache.catalina.webresources.StandardRoot@5db6b9cd]을(를) 시작하지 못했습니다.
+		at org.apache.catalina.util.LifecycleBase.handleSubClassException(LifecycleBase.java:404)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:179)
+		at org.apache.catalina.core.StandardContext.resourcesStart(StandardContext.java:4151)
+		at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4273)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:149)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747)
+		... 19 more
+	Caused by: java.lang.IllegalArgumentException: The main resource set specified [D:\git_prj\cursor_project\nexacroN_v24] is not a directory or war file, or is not readable (it does not exist or permissions to access it are missing)
+		at org.apache.catalina.webresources.StandardRoot.createMainResourceSet(StandardRoot.java:758)
+		at org.apache.catalina.webresources.StandardRoot.startInternal(StandardRoot.java:715)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		... 28 more
+25-Jul-2026 18:01:22.940 심각 [main] org.apache.catalina.startup.Catalina.start 필수 항목인 서버 구성요소가 제대로 시작되지 못하여, Tomcat이 시작될 수 없습니다.
+	org.apache.catalina.LifecycleException: 자식 컨테이너를 시작 중 실패했습니다.
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:766)
+		at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:201)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardService.startInternal(StandardService.java:410)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:868)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.startup.Catalina.start(Catalina.java:758)
+		at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+		at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:342)
+		at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:473)
+	Caused by: java.util.concurrent.ExecutionException: org.apache.catalina.LifecycleException: 자식 컨테이너를 시작 중 실패했습니다.
+		at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:124)
+		at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:193)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:754)
+		... 11 more
+	Caused by: org.apache.catalina.LifecycleException: 자식 컨테이너를 시작 중 실패했습니다.
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:766)
+		at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:783)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:149)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747)
+		... 11 more
+	Caused by: java.util.concurrent.ExecutionException: org.apache.catalina.LifecycleException: 구성요소 [org.apache.catalina.webresources.StandardRoot@5db6b9cd]을(를) 시작하지 못했습니다.
+		at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:124)
+		at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:193)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:754)
+		... 19 more
+	Caused by: org.apache.catalina.LifecycleException: 구성요소 [org.apache.catalina.webresources.StandardRoot@5db6b9cd]을(를) 시작하지 못했습니다.
+		at org.apache.catalina.util.LifecycleBase.handleSubClassException(LifecycleBase.java:404)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:179)
+		at org.apache.catalina.core.StandardContext.resourcesStart(StandardContext.java:4151)
+		at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4273)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:149)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747)
+		... 19 more
+	Caused by: java.lang.IllegalArgumentException: The main resource set specified [D:\git_prj\cursor_project\nexacroN_v24] is not a directory or war file, or is not readable (it does not exist or permissions to access it are missing)
+		at org.apache.catalina.webresources.StandardRoot.createMainResourceSet(StandardRoot.java:758)
+		at org.apache.catalina.webresources.StandardRoot.startInternal(StandardRoot.java:715)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		... 28 more
+25-Jul-2026 18:01:22.941 정보 [main] org.apache.coyote.AbstractProtocol.pause 프로토콜 핸들러 ["http-nio-7070"]을(를) 일시 정지 중
+25-Jul-2026 18:01:22.941 정보 [main] org.apache.catalina.core.StandardService.stopInternal 서비스 [Catalina]을(를) 중지시킵니다.
+25-Jul-2026 18:01:22.942 정보 [main] org.apache.coyote.AbstractProtocol.destroy 프로토콜 핸들러 ["http-nio-7070"]을(를) 소멸시킵니다.
+25-Jul-2026 18:04:57.945 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 서버 버전 이름:    Apache Tomcat/10.1.55
+25-Jul-2026 18:04:57.947 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 빌드 시각:  May 5 2026 13:33:02 UTC
+25-Jul-2026 18:04:57.947 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 버전 번호:  10.1.55.0
+25-Jul-2026 18:04:57.947 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 이름:     Windows 11
+25-Jul-2026 18:04:57.947 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 버전:     10.0
+25-Jul-2026 18:04:57.948 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 아키텍처:          amd64
+25-Jul-2026 18:04:57.948 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 자바 홈:           C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot
+25-Jul-2026 18:04:57.948 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 버전:          25.0.3+9-LTS
+25-Jul-2026 18:04:57.948 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 벤더:          Eclipse Adoptium
+25-Jul-2026 18:04:57.948 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:     E:\git_prj\cursor_project\apache-tomcat-10.1.55
+25-Jul-2026 18:04:57.948 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:     E:\git_prj\cursor_project\apache-tomcat-10.1.55
+25-Jul-2026 18:04:57.953 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.config.file=E:\git_prj\cursor_project\apache-tomcat-10.1.55\conf\logging.properties
+25-Jul-2026 18:04:57.954 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+25-Jul-2026 18:04:57.954 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djdk.tls.ephemeralDHKeySize=2048
+25-Jul-2026 18:04:57.954 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+25-Jul-2026 18:04:57.954 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dsun.io.useCanonCaches=false
+25-Jul-2026 18:04:57.954 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang=ALL-UNNAMED
+25-Jul-2026 18:04:57.954 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+25-Jul-2026 18:04:57.955 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.io=ALL-UNNAMED
+25-Jul-2026 18:04:57.955 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util=ALL-UNNAMED
+25-Jul-2026 18:04:57.955 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+25-Jul-2026 18:04:57.955 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+25-Jul-2026 18:04:57.955 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.base=E:\git_prj\cursor_project\apache-tomcat-10.1.55
+25-Jul-2026 18:04:57.955 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.home=E:\git_prj\cursor_project\apache-tomcat-10.1.55
+25-Jul-2026 18:04:57.955 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.io.tmpdir=E:\git_prj\cursor_project\apache-tomcat-10.1.55\temp
+25-Jul-2026 18:04:57.961 정보 [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent 프로덕션 환경들에서 최적의 성능을 제공하는, APR 기반 Apache Tomcat Native 라이브러리가, 다음 java.library.path에서 발견되지 않습니다: [C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Python314\Scripts\;C:\Python314\;C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\NVIDIA Corporation\NVIDIA App\NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\dotnet\;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Git\cmd;C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin\;C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin\;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\apache-maven-3.9.16\bin\;C:\apache-maven-3.9.16\bin;C:\Users\sjrnfl13\AppData\Roaming\npm;;C:\Program Files (x86)\AOMEI\AOMEI Backupper\8.4.0;C:\Program Files\GitExtensions\;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity IDE\bin;C:\Users\sjrnfl13\AppData\Roaming\npm;C:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\sjrnfl13\.local\bin;C:\Users\sjrnfl13\AppData\Local\PowerToys\DSCModules\;C:\Users\sjrnfl13\AppData\Roaming\Python\Python314\Scripts;.]
+25-Jul-2026 18:04:58.067 정보 [main] org.apache.coyote.AbstractProtocol.init 프로토콜 핸들러 ["http-nio-7070"]을(를) 초기화합니다.
+25-Jul-2026 18:04:58.077 정보 [main] org.apache.catalina.startup.Catalina.load [222] 밀리초 내에 서버가 초기화되었습니다.
+25-Jul-2026 18:04:58.093 정보 [main] org.apache.catalina.core.StandardService.startInternal 서비스 [Catalina]을(를) 시작합니다.
+25-Jul-2026 18:04:58.093 정보 [main] org.apache.catalina.core.StandardEngine.startInternal 서버 엔진을 시작합니다: [Apache Tomcat/10.1.55]
+25-Jul-2026 18:04:58.108 심각 [main] org.apache.catalina.core.ContainerBase.startInternal 자식 컨테이너를 시작 중 실패했습니다.
+	java.util.concurrent.ExecutionException: org.apache.catalina.LifecycleException: 구성요소 [org.apache.catalina.webresources.StandardRoot@6933b6c6]을(를) 시작하지 못했습니다.
+		at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:124)
+		at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:193)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:754)
+		at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:783)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:149)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747)
+		at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:201)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardService.startInternal(StandardService.java:410)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:868)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.startup.Catalina.start(Catalina.java:758)
+		at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+		at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:342)
+		at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:473)
+	Caused by: org.apache.catalina.LifecycleException: 구성요소 [org.apache.catalina.webresources.StandardRoot@6933b6c6]을(를) 시작하지 못했습니다.
+		at org.apache.catalina.util.LifecycleBase.handleSubClassException(LifecycleBase.java:404)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:179)
+		at org.apache.catalina.core.StandardContext.resourcesStart(StandardContext.java:4151)
+		at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4273)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:149)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747)
+		... 19 more
+	Caused by: java.lang.IllegalArgumentException: The main resource set specified [D:\git_prj\cursor_project\nexacroN_v24] is not a directory or war file, or is not readable (it does not exist or permissions to access it are missing)
+		at org.apache.catalina.webresources.StandardRoot.createMainResourceSet(StandardRoot.java:758)
+		at org.apache.catalina.webresources.StandardRoot.startInternal(StandardRoot.java:715)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		... 28 more
+25-Jul-2026 18:04:58.110 심각 [main] org.apache.catalina.core.ContainerBase.startInternal 자식 컨테이너를 시작 중 실패했습니다.
+	java.util.concurrent.ExecutionException: org.apache.catalina.LifecycleException: 자식 컨테이너를 시작 중 실패했습니다.
+		at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:124)
+		at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:193)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:754)
+		at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:201)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardService.startInternal(StandardService.java:410)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:868)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.startup.Catalina.start(Catalina.java:758)
+		at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+		at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:342)
+		at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:473)
+	Caused by: org.apache.catalina.LifecycleException: 자식 컨테이너를 시작 중 실패했습니다.
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:766)
+		at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:783)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:149)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747)
+		... 11 more
+	Caused by: java.util.concurrent.ExecutionException: org.apache.catalina.LifecycleException: 구성요소 [org.apache.catalina.webresources.StandardRoot@6933b6c6]을(를) 시작하지 못했습니다.
+		at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:124)
+		at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:193)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:754)
+		... 19 more
+	Caused by: org.apache.catalina.LifecycleException: 구성요소 [org.apache.catalina.webresources.StandardRoot@6933b6c6]을(를) 시작하지 못했습니다.
+		at org.apache.catalina.util.LifecycleBase.handleSubClassException(LifecycleBase.java:404)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:179)
+		at org.apache.catalina.core.StandardContext.resourcesStart(StandardContext.java:4151)
+		at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4273)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:149)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747)
+		... 19 more
+	Caused by: java.lang.IllegalArgumentException: The main resource set specified [D:\git_prj\cursor_project\nexacroN_v24] is not a directory or war file, or is not readable (it does not exist or permissions to access it are missing)
+		at org.apache.catalina.webresources.StandardRoot.createMainResourceSet(StandardRoot.java:758)
+		at org.apache.catalina.webresources.StandardRoot.startInternal(StandardRoot.java:715)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		... 28 more
+25-Jul-2026 18:04:58.111 심각 [main] org.apache.catalina.startup.Catalina.start 필수 항목인 서버 구성요소가 제대로 시작되지 못하여, Tomcat이 시작될 수 없습니다.
+	org.apache.catalina.LifecycleException: 자식 컨테이너를 시작 중 실패했습니다.
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:766)
+		at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:201)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardService.startInternal(StandardService.java:410)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:868)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.startup.Catalina.start(Catalina.java:758)
+		at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+		at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:342)
+		at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:473)
+	Caused by: java.util.concurrent.ExecutionException: org.apache.catalina.LifecycleException: 자식 컨테이너를 시작 중 실패했습니다.
+		at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:124)
+		at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:193)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:754)
+		... 11 more
+	Caused by: org.apache.catalina.LifecycleException: 자식 컨테이너를 시작 중 실패했습니다.
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:766)
+		at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:783)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:149)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747)
+		... 11 more
+	Caused by: java.util.concurrent.ExecutionException: org.apache.catalina.LifecycleException: 구성요소 [org.apache.catalina.webresources.StandardRoot@6933b6c6]을(를) 시작하지 못했습니다.
+		at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:124)
+		at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:193)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:754)
+		... 19 more
+	Caused by: org.apache.catalina.LifecycleException: 구성요소 [org.apache.catalina.webresources.StandardRoot@6933b6c6]을(를) 시작하지 못했습니다.
+		at org.apache.catalina.util.LifecycleBase.handleSubClassException(LifecycleBase.java:404)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:179)
+		at org.apache.catalina.core.StandardContext.resourcesStart(StandardContext.java:4151)
+		at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4273)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:149)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747)
+		... 19 more
+	Caused by: java.lang.IllegalArgumentException: The main resource set specified [D:\git_prj\cursor_project\nexacroN_v24] is not a directory or war file, or is not readable (it does not exist or permissions to access it are missing)
+		at org.apache.catalina.webresources.StandardRoot.createMainResourceSet(StandardRoot.java:758)
+		at org.apache.catalina.webresources.StandardRoot.startInternal(StandardRoot.java:715)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		... 28 more
+25-Jul-2026 18:04:58.112 정보 [main] org.apache.coyote.AbstractProtocol.pause 프로토콜 핸들러 ["http-nio-7070"]을(를) 일시 정지 중
+25-Jul-2026 18:04:58.112 정보 [main] org.apache.catalina.core.StandardService.stopInternal 서비스 [Catalina]을(를) 중지시킵니다.
+25-Jul-2026 18:04:58.113 정보 [main] org.apache.coyote.AbstractProtocol.destroy 프로토콜 핸들러 ["http-nio-7070"]을(를) 소멸시킵니다.
+25-Jul-2026 18:07:19.766 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 서버 버전 이름:    Apache Tomcat/10.1.55
+25-Jul-2026 18:07:19.767 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 빌드 시각:  May 5 2026 13:33:02 UTC
+25-Jul-2026 18:07:19.767 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 버전 번호:  10.1.55.0
+25-Jul-2026 18:07:19.768 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 이름:     Windows 11
+25-Jul-2026 18:07:19.768 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 버전:     10.0
+25-Jul-2026 18:07:19.768 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 아키텍처:          amd64
+25-Jul-2026 18:07:19.768 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 자바 홈:           C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot
+25-Jul-2026 18:07:19.768 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 버전:          25.0.3+9-LTS
+25-Jul-2026 18:07:19.768 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 벤더:          Eclipse Adoptium
+25-Jul-2026 18:07:19.768 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:     E:\git_prj\cursor_project\apache-tomcat-10.1.55
+25-Jul-2026 18:07:19.769 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:     E:\git_prj\cursor_project\apache-tomcat-10.1.55
+25-Jul-2026 18:07:19.774 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.config.file=E:\git_prj\cursor_project\apache-tomcat-10.1.55\conf\logging.properties
+25-Jul-2026 18:07:19.774 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+25-Jul-2026 18:07:19.774 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djdk.tls.ephemeralDHKeySize=2048
+25-Jul-2026 18:07:19.774 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+25-Jul-2026 18:07:19.775 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dsun.io.useCanonCaches=false
+25-Jul-2026 18:07:19.775 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang=ALL-UNNAMED
+25-Jul-2026 18:07:19.775 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+25-Jul-2026 18:07:19.775 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.io=ALL-UNNAMED
+25-Jul-2026 18:07:19.775 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util=ALL-UNNAMED
+25-Jul-2026 18:07:19.776 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+25-Jul-2026 18:07:19.776 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+25-Jul-2026 18:07:19.776 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.base=E:\git_prj\cursor_project\apache-tomcat-10.1.55
+25-Jul-2026 18:07:19.776 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.home=E:\git_prj\cursor_project\apache-tomcat-10.1.55
+25-Jul-2026 18:07:19.776 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.io.tmpdir=E:\git_prj\cursor_project\apache-tomcat-10.1.55\temp
+25-Jul-2026 18:07:19.782 정보 [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent 프로덕션 환경들에서 최적의 성능을 제공하는, APR 기반 Apache Tomcat Native 라이브러리가, 다음 java.library.path에서 발견되지 않습니다: [C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Python314\Scripts\;C:\Python314\;C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\NVIDIA Corporation\NVIDIA App\NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\dotnet\;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Git\cmd;C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin\;C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin\;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\apache-maven-3.9.16\bin\;C:\apache-maven-3.9.16\bin;C:\Users\sjrnfl13\AppData\Roaming\npm;;C:\Program Files (x86)\AOMEI\AOMEI Backupper\8.4.0;C:\Program Files\GitExtensions\;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity IDE\bin;C:\Users\sjrnfl13\AppData\Roaming\npm;C:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\sjrnfl13\.local\bin;C:\Users\sjrnfl13\AppData\Local\PowerToys\DSCModules\;C:\Users\sjrnfl13\AppData\Roaming\Python\Python314\Scripts;.]
+25-Jul-2026 18:07:19.886 정보 [main] org.apache.coyote.AbstractProtocol.init 프로토콜 핸들러 ["http-nio-7070"]을(를) 초기화합니다.
+25-Jul-2026 18:07:19.896 정보 [main] org.apache.catalina.startup.Catalina.load [221] 밀리초 내에 서버가 초기화되었습니다.
+25-Jul-2026 18:07:19.913 정보 [main] org.apache.catalina.core.StandardService.startInternal 서비스 [Catalina]을(를) 시작합니다.
+25-Jul-2026 18:07:19.913 정보 [main] org.apache.catalina.core.StandardEngine.startInternal 서버 엔진을 시작합니다: [Apache Tomcat/10.1.55]
+25-Jul-2026 18:07:20.109 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+25-Jul-2026 18:07:20.138 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]을(를) 배치합니다.
+25-Jul-2026 18:07:20.216 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+25-Jul-2026 18:07:20.219 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]에 대한 배치가 [80] 밀리초에 완료되었습니다.
+25-Jul-2026 18:07:20.219 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]을(를) 배치합니다.
+25-Jul-2026 18:07:20.401 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+25-Jul-2026 18:07:20.429 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]에 대한 배치가 [210] 밀리초에 완료되었습니다.
+25-Jul-2026 18:07:20.430 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]을(를) 배치합니다.
+25-Jul-2026 18:07:20.493 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+25-Jul-2026 18:07:20.497 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]에 대한 배치가 [68] 밀리초에 완료되었습니다.
+25-Jul-2026 18:07:20.497 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]을(를) 배치합니다.
+25-Jul-2026 18:07:20.553 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+25-Jul-2026 18:07:20.555 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]에 대한 배치가 [58] 밀리초에 완료되었습니다.
+25-Jul-2026 18:07:20.555 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]을(를) 배치합니다.
+25-Jul-2026 18:07:20.607 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+25-Jul-2026 18:07:20.609 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]에 대한 배치가 [54] 밀리초에 완료되었습니다.
+25-Jul-2026 18:07:20.611 정보 [main] org.apache.coyote.AbstractProtocol.start 프로토콜 핸들러 ["http-nio-7070"]을(를) 시작합니다.
+25-Jul-2026 18:07:20.624 정보 [main] org.apache.catalina.startup.Catalina.start 서버가 [728] 밀리초 내에 시작되었습니다.
+25-Jul-2026 18:17:53.106 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 서버 버전 이름:    Apache Tomcat/10.1.55
+25-Jul-2026 18:17:53.107 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 빌드 시각:  May 5 2026 13:33:02 UTC
+25-Jul-2026 18:17:53.108 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 버전 번호:  10.1.55.0
+25-Jul-2026 18:17:53.108 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 이름:     Windows 11
+25-Jul-2026 18:17:53.108 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 버전:     10.0
+25-Jul-2026 18:17:53.108 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 아키텍처:          amd64
+25-Jul-2026 18:17:53.108 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 자바 홈:           C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot
+25-Jul-2026 18:17:53.108 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 버전:          25.0.3+9-LTS
+25-Jul-2026 18:17:53.108 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 벤더:          Eclipse Adoptium
+25-Jul-2026 18:17:53.108 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:     E:\git_prj\cursor_project\apache-tomcat-10.1.55
+25-Jul-2026 18:17:53.108 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:     E:\git_prj\cursor_project\apache-tomcat-10.1.55
+25-Jul-2026 18:17:53.114 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.config.file=E:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\conf\logging.properties
+25-Jul-2026 18:17:53.114 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+25-Jul-2026 18:17:53.114 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djdk.tls.ephemeralDHKeySize=2048
+25-Jul-2026 18:17:53.114 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+25-Jul-2026 18:17:53.114 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dsun.io.useCanonCaches=false
+25-Jul-2026 18:17:53.114 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang=ALL-UNNAMED
+25-Jul-2026 18:17:53.114 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+25-Jul-2026 18:17:53.115 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.io=ALL-UNNAMED
+25-Jul-2026 18:17:53.115 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util=ALL-UNNAMED
+25-Jul-2026 18:17:53.115 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+25-Jul-2026 18:17:53.115 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+25-Jul-2026 18:17:53.115 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.base=E:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+25-Jul-2026 18:17:53.115 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.home=E:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+25-Jul-2026 18:17:53.115 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.io.tmpdir=E:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\temp
+25-Jul-2026 18:17:53.122 정보 [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent 프로덕션 환경들에서 최적의 성능을 제공하는, APR 기반 Apache Tomcat Native 라이브러리가, 다음 java.library.path에서 발견되지 않습니다: [C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin;C:\Python314\Scripts\;C:\Python314\;C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\NVIDIA Corporation\NVIDIA App\NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\dotnet\;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Git\cmd;C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin\;C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin\;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\apache-maven-3.9.16\bin\;C:\apache-maven-3.9.16\bin;C:\Users\sjrnfl13\AppData\Roaming\npm;;C:\Program Files (x86)\AOMEI\AOMEI Backupper\8.4.0;C:\Program Files\GitExtensions\;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity IDE\bin;C:\Users\sjrnfl13\AppData\Roaming\npm;C:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\sjrnfl13\.local\bin;C:\Users\sjrnfl13\AppData\Local\PowerToys\DSCModules\;C:\Users\sjrnfl13\AppData\Roaming\Python\Python314\Scripts;.]
+25-Jul-2026 18:17:53.231 정보 [main] org.apache.coyote.AbstractProtocol.init 프로토콜 핸들러 ["http-nio-7070"]을(를) 초기화합니다.
+25-Jul-2026 18:17:53.242 정보 [main] org.apache.catalina.startup.Catalina.load [239] 밀리초 내에 서버가 초기화되었습니다.
+25-Jul-2026 18:17:53.259 정보 [main] org.apache.catalina.core.StandardService.startInternal 서비스 [Catalina]을(를) 시작합니다.
+25-Jul-2026 18:17:53.260 정보 [main] org.apache.catalina.core.StandardEngine.startInternal 서버 엔진을 시작합니다: [Apache Tomcat/10.1.55]
+25-Jul-2026 18:17:53.467 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+25-Jul-2026 18:17:53.497 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]을(를) 배치합니다.
+25-Jul-2026 18:17:53.578 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+25-Jul-2026 18:17:53.582 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]에 대한 배치가 [83] 밀리초에 완료되었습니다.
+25-Jul-2026 18:17:53.582 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]을(를) 배치합니다.
+25-Jul-2026 18:17:53.800 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+25-Jul-2026 18:17:53.831 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]에 대한 배치가 [249] 밀리초에 완료되었습니다.
+25-Jul-2026 18:17:53.831 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]을(를) 배치합니다.
+25-Jul-2026 18:17:53.893 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+25-Jul-2026 18:17:53.898 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]에 대한 배치가 [67] 밀리초에 완료되었습니다.
+25-Jul-2026 18:17:53.898 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]을(를) 배치합니다.
+25-Jul-2026 18:17:53.961 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+25-Jul-2026 18:17:53.963 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]에 대한 배치가 [65] 밀리초에 완료되었습니다.
+25-Jul-2026 18:17:53.963 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]을(를) 배치합니다.
+25-Jul-2026 18:17:54.021 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+25-Jul-2026 18:17:54.023 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]에 대한 배치가 [60] 밀리초에 완료되었습니다.
+25-Jul-2026 18:17:54.026 정보 [main] org.apache.coyote.AbstractProtocol.start 프로토콜 핸들러 ["http-nio-7070"]을(를) 시작합니다.
+25-Jul-2026 18:17:54.042 정보 [main] org.apache.catalina.startup.Catalina.start 서버가 [799] 밀리초 내에 시작되었습니다.
+25-Jul-2026 18:23:52.756 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 서버 버전 이름:    Apache Tomcat/10.1.55
+25-Jul-2026 18:23:52.758 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 빌드 시각:  May 5 2026 13:33:02 UTC
+25-Jul-2026 18:23:52.758 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 버전 번호:  10.1.55.0
+25-Jul-2026 18:23:52.758 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 이름:     Windows 11
+25-Jul-2026 18:23:52.758 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 버전:     10.0
+25-Jul-2026 18:23:52.758 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 아키텍처:          amd64
+25-Jul-2026 18:23:52.758 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 자바 홈:           C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot
+25-Jul-2026 18:23:52.758 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 버전:          25.0.3+9-LTS
+25-Jul-2026 18:23:52.758 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 벤더:          Eclipse Adoptium
+25-Jul-2026 18:23:52.758 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:     E:\git_prj\cursor_project\apache-tomcat-10.1.55
+25-Jul-2026 18:23:52.758 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:     E:\git_prj\cursor_project\apache-tomcat-10.1.55
+25-Jul-2026 18:23:52.764 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.config.file=E:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\conf\logging.properties
+25-Jul-2026 18:23:52.764 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+25-Jul-2026 18:23:52.764 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djdk.tls.ephemeralDHKeySize=2048
+25-Jul-2026 18:23:52.764 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+25-Jul-2026 18:23:52.765 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dsun.io.useCanonCaches=false
+25-Jul-2026 18:23:52.765 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang=ALL-UNNAMED
+25-Jul-2026 18:23:52.765 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+25-Jul-2026 18:23:52.765 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.io=ALL-UNNAMED
+25-Jul-2026 18:23:52.765 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util=ALL-UNNAMED
+25-Jul-2026 18:23:52.765 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+25-Jul-2026 18:23:52.765 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+25-Jul-2026 18:23:52.765 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.base=E:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+25-Jul-2026 18:23:52.765 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.home=E:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+25-Jul-2026 18:23:52.765 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.io.tmpdir=E:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\temp
+25-Jul-2026 18:23:52.772 정보 [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent 프로덕션 환경들에서 최적의 성능을 제공하는, APR 기반 Apache Tomcat Native 라이브러리가, 다음 java.library.path에서 발견되지 않습니다: [C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin;C:\Python314\Scripts\;C:\Python314\;C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\NVIDIA Corporation\NVIDIA App\NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\dotnet\;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Git\cmd;C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin\;C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin\;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\apache-maven-3.9.16\bin\;C:\apache-maven-3.9.16\bin;C:\Users\sjrnfl13\AppData\Roaming\npm;;C:\Program Files (x86)\AOMEI\AOMEI Backupper\8.4.0;C:\Program Files\GitExtensions\;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity IDE\bin;C:\Users\sjrnfl13\AppData\Roaming\npm;C:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\sjrnfl13\.local\bin;C:\Users\sjrnfl13\AppData\Local\PowerToys\DSCModules\;C:\Users\sjrnfl13\AppData\Roaming\Python\Python314\Scripts;.]
+25-Jul-2026 18:23:52.873 정보 [main] org.apache.coyote.AbstractProtocol.init 프로토콜 핸들러 ["http-nio-7070"]을(를) 초기화합니다.
+25-Jul-2026 18:23:52.882 정보 [main] org.apache.catalina.startup.Catalina.load [221] 밀리초 내에 서버가 초기화되었습니다.
+25-Jul-2026 18:23:52.901 정보 [main] org.apache.catalina.core.StandardService.startInternal 서비스 [Catalina]을(를) 시작합니다.
+25-Jul-2026 18:23:52.901 정보 [main] org.apache.catalina.core.StandardEngine.startInternal 서버 엔진을 시작합니다: [Apache Tomcat/10.1.55]
+25-Jul-2026 18:23:53.102 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+25-Jul-2026 18:23:53.133 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]을(를) 배치합니다.
+25-Jul-2026 18:23:53.212 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+25-Jul-2026 18:23:53.215 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]에 대한 배치가 [80] 밀리초에 완료되었습니다.
+25-Jul-2026 18:23:53.215 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]을(를) 배치합니다.
+25-Jul-2026 18:23:53.418 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+25-Jul-2026 18:23:53.448 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]에 대한 배치가 [233] 밀리초에 완료되었습니다.
+25-Jul-2026 18:23:53.448 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]을(를) 배치합니다.
+25-Jul-2026 18:23:53.509 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+25-Jul-2026 18:23:53.513 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]에 대한 배치가 [65] 밀리초에 완료되었습니다.
+25-Jul-2026 18:23:53.513 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]을(를) 배치합니다.
+25-Jul-2026 18:23:53.572 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+25-Jul-2026 18:23:53.574 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]에 대한 배치가 [61] 밀리초에 완료되었습니다.
+25-Jul-2026 18:23:53.574 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]을(를) 배치합니다.
+25-Jul-2026 18:23:53.630 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+25-Jul-2026 18:23:53.632 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]에 대한 배치가 [57] 밀리초에 완료되었습니다.
+25-Jul-2026 18:23:53.634 정보 [main] org.apache.coyote.AbstractProtocol.start 프로토콜 핸들러 ["http-nio-7070"]을(를) 시작합니다.
+25-Jul-2026 18:23:53.647 정보 [main] org.apache.catalina.startup.Catalina.start 서버가 [763] 밀리초 내에 시작되었습니다.
+25-Jul-2026 18:25:21.047 정보 [main] org.apache.catalina.core.StandardServer.await 셧다운 포트를 통해 유효한 셧다운 명령을 받았습니다. 서버 인스턴스를 중지시킵니다.
+25-Jul-2026 18:25:21.047 정보 [main] org.apache.coyote.AbstractProtocol.pause 프로토콜 핸들러 ["http-nio-7070"]을(를) 일시 정지 중
+25-Jul-2026 18:25:21.052 정보 [main] org.apache.catalina.core.StandardService.stopInternal 서비스 [Catalina]을(를) 중지시킵니다.
+25-Jul-2026 18:25:21.059 정보 [main] org.apache.coyote.AbstractProtocol.stop 프로토콜 핸들러 ["http-nio-7070"]을(를) 중지시킵니다.
+25-Jul-2026 18:25:21.062 정보 [main] org.apache.coyote.AbstractProtocol.destroy 프로토콜 핸들러 ["http-nio-7070"]을(를) 소멸시킵니다.
+25-Jul-2026 18:25:51.205 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 서버 버전 이름:    Apache Tomcat/10.1.55
+25-Jul-2026 18:25:51.206 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 빌드 시각:  May 5 2026 13:33:02 UTC
+25-Jul-2026 18:25:51.206 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 버전 번호:  10.1.55.0
+25-Jul-2026 18:25:51.207 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 이름:     Windows 11
+25-Jul-2026 18:25:51.207 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 버전:     10.0
+25-Jul-2026 18:25:51.207 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 아키텍처:          amd64
+25-Jul-2026 18:25:51.207 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 자바 홈:           C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot
+25-Jul-2026 18:25:51.207 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 버전:          25.0.3+9-LTS
+25-Jul-2026 18:25:51.207 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 벤더:          Eclipse Adoptium
+25-Jul-2026 18:25:51.207 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:     E:\git_prj\cursor_project\apache-tomcat-10.1.55
+25-Jul-2026 18:25:51.207 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:     E:\git_prj\cursor_project\apache-tomcat-10.1.55
+25-Jul-2026 18:25:51.212 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.config.file=E:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\conf\logging.properties
+25-Jul-2026 18:25:51.212 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+25-Jul-2026 18:25:51.212 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djdk.tls.ephemeralDHKeySize=2048
+25-Jul-2026 18:25:51.212 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+25-Jul-2026 18:25:51.213 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dsun.io.useCanonCaches=false
+25-Jul-2026 18:25:51.213 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang=ALL-UNNAMED
+25-Jul-2026 18:25:51.213 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+25-Jul-2026 18:25:51.214 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.io=ALL-UNNAMED
+25-Jul-2026 18:25:51.214 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util=ALL-UNNAMED
+25-Jul-2026 18:25:51.214 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+25-Jul-2026 18:25:51.214 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+25-Jul-2026 18:25:51.214 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.base=E:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+25-Jul-2026 18:25:51.214 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.home=E:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+25-Jul-2026 18:25:51.214 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.io.tmpdir=E:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\temp
+25-Jul-2026 18:25:51.222 정보 [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent 프로덕션 환경들에서 최적의 성능을 제공하는, APR 기반 Apache Tomcat Native 라이브러리가, 다음 java.library.path에서 발견되지 않습니다: [C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin;C:\Python314\Scripts\;C:\Python314\;C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\NVIDIA Corporation\NVIDIA App\NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\dotnet\;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Git\cmd;C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin\;C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot\bin\;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\apache-maven-3.9.16\bin\;C:\apache-maven-3.9.16\bin;C:\Users\sjrnfl13\AppData\Roaming\npm;;C:\Program Files (x86)\AOMEI\AOMEI Backupper\8.4.0;C:\Program Files\GitExtensions\;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity IDE\bin;C:\Users\sjrnfl13\AppData\Roaming\npm;C:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\sjrnfl13\.local\bin;C:\Users\sjrnfl13\AppData\Local\PowerToys\DSCModules\;C:\Users\sjrnfl13\AppData\Roaming\Python\Python314\Scripts;.]
+25-Jul-2026 18:25:51.335 정보 [main] org.apache.coyote.AbstractProtocol.init 프로토콜 핸들러 ["http-nio-7070"]을(를) 초기화합니다.
+25-Jul-2026 18:25:51.343 정보 [main] org.apache.catalina.startup.Catalina.load [231] 밀리초 내에 서버가 초기화되었습니다.
+25-Jul-2026 18:25:51.362 정보 [main] org.apache.catalina.core.StandardService.startInternal 서비스 [Catalina]을(를) 시작합니다.
+25-Jul-2026 18:25:51.362 정보 [main] org.apache.catalina.core.StandardEngine.startInternal 서버 엔진을 시작합니다: [Apache Tomcat/10.1.55]
+25-Jul-2026 18:25:51.563 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+25-Jul-2026 18:25:51.590 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]을(를) 배치합니다.
+25-Jul-2026 18:25:51.671 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+25-Jul-2026 18:25:51.674 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]에 대한 배치가 [83] 밀리초에 완료되었습니다.
+25-Jul-2026 18:25:51.675 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]을(를) 배치합니다.
+25-Jul-2026 18:25:51.886 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+25-Jul-2026 18:25:51.919 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]에 대한 배치가 [244] 밀리초에 완료되었습니다.
+25-Jul-2026 18:25:51.919 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]을(를) 배치합니다.
+25-Jul-2026 18:25:51.979 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+25-Jul-2026 18:25:51.983 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]에 대한 배치가 [64] 밀리초에 완료되었습니다.
+25-Jul-2026 18:25:51.983 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]을(를) 배치합니다.
+25-Jul-2026 18:25:52.047 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+25-Jul-2026 18:25:52.049 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]에 대한 배치가 [66] 밀리초에 완료되었습니다.
+25-Jul-2026 18:25:52.049 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]을(를) 배치합니다.
+25-Jul-2026 18:25:52.107 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+25-Jul-2026 18:25:52.109 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [E:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]에 대한 배치가 [60] 밀리초에 완료되었습니다.
+25-Jul-2026 18:25:52.111 정보 [main] org.apache.coyote.AbstractProtocol.start 프로토콜 핸들러 ["http-nio-7070"]을(를) 시작합니다.
+25-Jul-2026 18:25:52.125 정보 [main] org.apache.catalina.startup.Catalina.start 서버가 [780] 밀리초 내에 시작되었습니다.
+25-Jul-2026 18:34:12.285 정보 [Catalina-utility-1] org.apache.catalina.webresources.Cache.backgroundProcess 백그라운드 캐시 퇴거 (cache eviction) 프로세스가, 컨텍스트 []을(를) 위한 캐시의 [10] 퍼센트를 해제시킬 수 없었습니다. 캐시의 최대 크기를 증가시킬 것을 고려해 보십시오. 캐시 퇴거 작업 이후, 대략 [9,438] KiB의 데이터가 캐시에 남아 있습니다.
+25-Jul-2026 18:50:31.206 정보 [Thread-1] org.apache.coyote.AbstractProtocol.pause 프로토콜 핸들러 ["http-nio-7070"]을(를) 일시 정지 중
+25-Jul-2026 18:50:31.214 정보 [Thread-1] org.apache.catalina.core.StandardService.stopInternal 서비스 [Catalina]을(를) 중지시킵니다.
+25-Jul-2026 18:50:31.222 정보 [Thread-1] org.apache.coyote.AbstractProtocol.stop 프로토콜 핸들러 ["http-nio-7070"]을(를) 중지시킵니다.
+25-Jul-2026 18:50:31.225 정보 [Thread-1] org.apache.coyote.AbstractProtocol.destroy 프로토콜 핸들러 ["http-nio-7070"]을(를) 소멸시킵니다.

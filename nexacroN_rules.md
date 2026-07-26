@@ -3771,3 +3771,100 @@ nexacro._Form (FormBase.js)
 | metainfo | 1,000+ | 다국어 API 메타정보 (CHN/ENG/JPN/KOR) |
 
 > **Design/ 폴더**: 각 컴포넌트 하위에 Design 스크립트가 존재하며, Nexacro Studio 디자이너 실행 시에만 로드됨. 프로덕션 빌드에는 포함되지 않음.
+
+---
+
+# 작업 사례 (성공/실패) — 실전 트러블슈팅 기록
+
+> 실제 작업 중 확인된 성공 패턴과 실패 원인을 기록한다. 새로운 nexacro 작업(특히 배포·서버 연동) 전에 먼저 확인할 것.
+
+## 성공 사례
+
+### DataObject + REST API + Dataset + Grid 연동 샘플 (2026-07-25)
+
+`nexacroNv24_UI/DataObjectSample/FrameBase/Form_Work.xfdl` 참고. Button 클릭 → REST API(GET) 호출 → Dataset 동적 바인딩 → Grid 출력까지 전체 플로우가 정상 동작 확인됨.
+
+핵심 패턴 (`developer_guide_nexacro_n_v24_ko.md` 55장 DataObject 예제 기반):
+
+```javascript
+// 1) 버튼 클릭 시 REST API 호출
+this.btn_search_onclick = function(obj, e)
+{
+    this.dobj_post.request("SEARCH", "GET", "https://jsonplaceholder.typicode.com/posts");
+};
+
+// 2) onload에서 응답 데이터 첫 행 기준으로 컬럼을 동적 생성 후 Dataset ↔ DataObject 바인딩
+this.dobj_post_onload = function(obj, e)
+{
+    if (e.reason != DataObject.REASON_REQUEST) return;   // REASON_REQUEST = 2 (request() 호출로 인한 로딩)
+
+    var objSample = obj.data[0];
+    for (var key in objSample)
+    {
+        var objColInfo = new ColumnInfo();
+        objColInfo.type = "String";
+        objColInfo.datapath = "@." + key;                 // 원본 JSON key 경로는 유지
+        this.ds_post.addColumnInfo(key.toUpperCase(), objColInfo);  // 컬럼 id만 대문자 컨벤션 적용 가능
+    }
+
+    this.ds_post.binddataobject = obj.id;
+    this.ds_post.dataobjectpath = "$[*]";
+
+    this.grd_post.binddataset = this.ds_post.name;
+    this.grd_post.createFormat();   // Grid Contents Editor 없이도 동적 바인딩된 컬럼 그대로 포맷 생성됨
+};
+```
+
+- DataObject 이벤트(`onsuccess`/`onload`/`onerror`)는 invisible object이므로 XML 속성이 아니라 `Form_onload`에서 `addEventHandler`로 명시적으로 등록하는 것이 안전함.
+- `addColumnInfo(strID, objColInfo)`의 `strID`(컬럼 id)와 `objColInfo.datapath`(실제 JSON 경로)는 서로 달라도 됨 — 이를 이용해 JSON key(camelCase)를 유지한 채 Dataset 컬럼명 대문자 컨벤션을 지킬 수 있음.
+
+### NexacroN_Deploy_JAVA CLI 배포 성공 조건
+
+```powershell
+# 반드시 CLI가 설치된 bin 폴더 안에서 실행해야 함 (아래 "실패 사례" 참조)
+Push-Location "...\NexacroN_Deploy_JAVA_xxx\bin"
+& ".\start.bat" -P "<xprj경로>" -B "<nexacrolib경로>" -O "<Tomcat webapps 배포경로>" -GENERATERULE "<generate룰경로>"
+Pop-Location
+```
+
+- `-REGENERATE` 옵션을 붙이면 캐시/증분생성을 무시하고 전체(테마 포함)를 강제로 다시 생성한다. nexacrolib 라이브러리 파일을 복구/변경한 직후에는 `-REGENERATE`로 재배포해야 반영됨.
+- 배포 로그 마지막 줄의 `Success N, Fail N` 카운트를 반드시 확인할 것. `Fail` 이 0이 아니면 (theme 등) 일부 리소스가 깨진 채로 배포된 것이므로, 겉보기엔 index.html이 200으로 열려도 화면이 정상 렌더링되지 않을 수 있다.
+
+## 실패 사례 (원인 및 해결)
+
+### 1. `nexacrolib.json` 누락 → 화면이 안 나옴 (2026-07-25)
+
+- **증상**: 배포는 `Success N, Fail 1`로 "성공"처럼 보이고 `index.html`, 엔진 JS, Form JS 모두 HTTP 200이 정상 응답되는데, 브라우저 화면은 비어 보임(컴포넌트가 안 보임).
+- **원인**: `nexacrolib/nexacrolib/nexacrolib.json` (cssruleversion 등 엔진 메타정보) 파일이 git에는 커밋되어 있지만 작업 디렉토리에서 삭제되어 있었음. 이 파일이 없으면 배포 도구가 테마의 CSS 룰 버전을 판단하지 못해 `-CSSRULE version does not match the base library version.(1.3)` 경고와 함께 **테마 생성 자체가 실패**하고, `theme.map.js` / `theme_*.css`가 배포 결과물에 아예 생성되지 않아 런타임에 404가 남 (Tomcat access log에서 확인 가능). 테마 맵이 없으면 컴포넌트의 위치/스타일 CSS 클래스가 전혀 적용되지 않아 사실상 빈 화면이 된다.
+- **해결**: `git status --porcelain -- nexacrolib/` 로 삭제된 추적 파일 확인 → `git restore -- nexacrolib/` 로 전체 복원 → `-REGENERATE` 옵션으로 재배포 (`Fail 0` 확인).
+- **교훈**: nexacro 배포 후 화면이 안 보이면, 프로젝트 자신의 xfdl/스크립트보다 먼저 **엔진 라이브러리(`nexacrolib/`) 자체의 누락 파일**부터 `git status`로 점검한다. `theme.map.js` / `theme_*.css` 관련 404가 Tomcat access log에 있으면 이 케이스일 확률이 높다.
+- **원칙**: nexacrolib 하위 파일은 현재 프로젝트가 사용하지 않는 모듈(`DevPackLib`, `Splitter` 등)이라도 임의로 삭제하거나 복원을 누락하지 않는다 — 추후 다른 프로젝트에서 쓰일 수 있으므로 항상 전체를 온전히 유지한다.
+
+### 2. `apache-tomcat-10.1.55/conf/server.xml`의 하드코딩된 `Context docBase` → Tomcat 전체 기동 실패 (2026-07-25)
+
+- **증상**: `catalina.bat start`/`run` 실행 시 `LifecycleException`으로 Tomcat 자체가 부팅되지 않음 (특정 웹앱이 아니라 **서버 전체**가 뜨지 않음).
+- **원인**: `server.xml`에 `<Context docBase="d:\git_prj\cursor_project\nexacroN_v24" path="/nexacroN_v24" .../>` 항목이 다른 개발자의 PC(D 드라이브) 기준 절대경로로 하드코딩되어 있었음. 이 저장소가 실제로 위치한 드라이브(E:)와 경로가 달라 `StandardRoot`가 리소스셋을 시작하지 못하고 Host 하위 컨테이너 시작이 통째로 실패함.
+- **해결**: `docBase`를 현재 저장소 경로(`E:\git_prj\cursor_project\nexacroN_v24`)로 수정하고, 참조 폴더가 없으면 빈 폴더로 생성.
+- **교훈**: Tomcat이 개별 웹앱이 아니라 전체가 안 뜰 때는 `server.xml`의 `<Context>` 항목 중 다른 PC 기준 절대경로(특히 드라이브 문자)가 없는지부터 확인한다. 이런 설정은 팀원마다 로컬 경로가 달라 깨지기 쉽다.
+
+### 3. `Tools/start_tomcat.bat` / `stop_tomcat.bat`의 JDK 경로 하드코딩 (2026-07-25)
+
+- **증상**: `start_tomcat.bat` 실행 시 `The JRE_HOME environment variable is not defined correctly` 오류.
+- **원인**: 스크립트 내 `JAVA_HOME`/`JRE_HOME`이 `C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10` 로 하드코딩되어 있었는데, 실제 PC에는 해당 경로가 없고 `C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot` 만 설치되어 있었음.
+- **해결**: 이 PC 전용 사본(`start_tomcat_home.bat`)을 만들어 실제 설치된 JDK 경로로 교체하고, 팀 공용 `start_tomcat.bat`는 원래 경로 그대로 유지(다른 PC에서는 정상 동작할 수 있으므로 임의로 되돌리지 않음).
+- **교훈**: `Tools/*.bat`의 `JAVA_HOME` 하드코딩 경로는 PC마다 다를 수 있으므로, 팀 공용 스크립트를 직접 고치기보다 **PC 전용 사본을 만들어 사용**하는 편이 안전하다.
+- **stop_tomcat.bat 주의**: 이 스크립트는 `CATALINA_HOME`이 `apache-tomcat-9.0.89`로 되어 있는데, 이 저장소에는 `apache-tomcat-10.1.55`만 존재한다(다른 프로젝트 템플릿에서 복사되며 남은 것으로 추정). 아직 수정되지 않았으니 사용 전 확인 필요.
+
+### 4. `NexacroN_Deploy_JAVA` CLI를 엉뚱한 위치에서 실행 → `ClassNotFoundException` (2026-07-25)
+
+- **증상**: `& "...\bin\start.bat" -P ... ` 형태로 (다른 디렉토리에 있는 상태에서) 절대경로로 바로 실행하면 `기본 클래스 com.nexacro.build.cli.Main을(를) 찾거나 로드할 수 없습니다` 오류 발생.
+- **원인**: `start.bat` 내부의 classpath가 `..\libs\*` 처럼 **상대경로**로 되어 있어서, 현재 작업 디렉토리(cwd)가 `bin` 폴더가 아니면 상대경로가 엉뚱한 곳을 가리킴.
+- **해결**: `Push-Location "...\bin"` 으로 반드시 `bin` 폴더로 이동한 뒤 `& ".\start.bat" ...` 형태로 실행.
+- **교훈**: 이 배포 CLI는 항상 자기 자신의 `bin` 폴더 안에서 실행해야 한다.
+
+### 5. Write 도구로 새 `.bat` 파일을 만들면 cmd.exe가 명령어를 조각내서 인식 (2026-07-25)
+
+- **증상**: 기존 파일을 복사해 만든 것처럼 보이는 새 `.bat` 파일을 실행했더니, 배치문 전체가 아니라 `'Tomcat'`, `'f'`, 경로 조각, 한글 주석 조각(`'젙'` 등) 하나하나가 "내부 또는 외부 명령이 아닙니다" 오류로 실행 시도됨.
+- **원인**: 새로 작성한 파일이 유닉스 스타일 줄바꿈(LF)으로 저장되었음. `cmd.exe`의 배치 파서는 CRLF를 전제로 하며, LF만 있으면 줄 경계를 잘못 인식해 파싱이 깨진다 (원본 파일은 CRLF였음).
+- **해결**: 처음부터 새로 쓰지 말고, **정상 동작하는 기존 `.bat` 파일을 OS 레벨로 복사(`cp`)한 뒤** 필요한 부분만 수정하는 방식으로 인코딩/줄바꿈을 그대로 보존.
+- **교훈**: `.bat`/`.cmd` 파일을 새로 생성해야 할 때는 파일을 새로 쓰지 말고 기존 정상 파일을 복사 후 편집한다. 부득이 새로 작성했다면 저장 후 반드시 CRLF 여부를 확인한다 (`file <경로>` 명령으로 `CRLF line terminators` 표시 여부 확인 가능).

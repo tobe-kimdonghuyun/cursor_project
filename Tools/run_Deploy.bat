@@ -40,9 +40,9 @@ if not "!OPT_CONFIG!"=="" (
         )
     )
 )
-rem --- Find start.bat under Tools\Jar (동적 탐색 — 서브폴더 구조 대응) ---
+rem --- Find start.bat under deploy_jar\nexacroN (동적 탐색 — 서브폴더 구조 대응) ---
 set "START_BAT="
-for /f "delims=" %%F in ('dir /b /s "%~dp0Jar\start.bat" 2^>nul') do (
+for /f "delims=" %%F in ('dir /b /s "%~dp0..\deploy_jar\nexacroN\start.bat" 2^>nul') do (
     if "!START_BAT!"=="" set "START_BAT=%%F"
 )
 
@@ -131,7 +131,7 @@ echo [INFO] JAVA_HOME: %JAVA_HOME%
 
 rem --- 6. Check start.bat exists ---
 if "!START_BAT!"=="" (
-    echo [ERROR] start.bat not found under %~dp0Jar
+    echo [ERROR] start.bat not found under %~dp0..\deploy_jar\nexacroN
     echo         run update_jar.bat first to install the deploy engine.
     exit /b 1
 )

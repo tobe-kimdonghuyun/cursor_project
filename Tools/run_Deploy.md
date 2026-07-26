@@ -83,10 +83,10 @@ GenerateRule=D:\git_prj\nexacroN\nexacrolib\generate
 
 ### [2] start.bat 동적 탐색
 
-`Tools\Jar\` 하위를 재귀 탐색하여 `start.bat`을 찾는다.
+`deploy_jar\nexacroN\` 하위를 재귀 탐색하여 `start.bat`을 찾는다 (2026-07-25부터 `Tools\Jar`에서 이동).
 
 ```bat
-dir /b /s "Tools\Jar\start.bat"
+dir /b /s "deploy_jar\nexacroN\start.bat"
 ```
 
 - 서브폴더 구조에 무관하게 자동으로 경로를 찾음
@@ -219,7 +219,7 @@ deploy_engine\*
 ```
 config 파일 결정 (-config 지정 or deploy_config*.txt 자동 탐색)
     ↓
-start.bat 동적 탐색 (Tools\Jar\ 하위 재귀)
+start.bat 동적 탐색 (deploy_jar\nexacroN\ 하위 재귀)
     ↓
 config 파일 파싱 + 필수 항목 검증
     ↓
@@ -251,6 +251,6 @@ deploy_engine → nexacrolib_Merge_Compress_Shrink(버전).zip 압축  ← -igno
 | 파일 | 역할 |
 |---|---|
 | `deploy_config.txt` | 배포 경로 및 옵션 설정 |
-| `Tools\Jar\` | Nexacro 빌드/배포 엔진 (`update_jar.bat`으로 설치) |
+| `deploy_jar\nexacroN\` | Nexacro 빌드/배포 엔진 (`update_jar.bat`으로 설치, 저장소 루트 기준) |
 | `get_version.ps1` | nexacrolib.json에서 version 값 추출 (zip 파일명 생성에 사용) |
 | `compress_deploy.ps1` | deploy_engine zip 압축 (파일 잠금 우회 지원) |

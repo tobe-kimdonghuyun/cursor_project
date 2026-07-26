@@ -159,7 +159,7 @@
                prefix="localhost_access_log" suffix=".txt"
                pattern="%h %l %u %t &quot;%r&quot; %s %b" />
                
-     <Context docBase="d:\git_prj\cursor_project\nexacroN_v24" path="/nexacroN_v24" reloadable="true" />
+     <Context docBase="E:\git_prj\cursor_project\nexacroN_v24" path="/nexacroN_v24" reloadable="true" />
       </Host>
       
     </Engine>
