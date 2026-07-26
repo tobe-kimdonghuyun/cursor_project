@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Form_Work" width="1280" height="720" titletext="DataObject REST API 연동 샘플" onload="Form_Work_onload">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Static id="stc_title" taborder="0" text="DataObject 오브젝트 REST API 연동 샘플 (GET https://jsonplaceholder.typicode.com/posts)" left="30" top="20" width="900" height="30"/>
+        <Button id="btn_search" taborder="1" text="게시글 조회" left="30" top="60" width="140" height="40" onclick="btn_search_onclick"/>
+        <Static id="stc_status" taborder="2" text="" left="190" top="60" width="700" height="40"/>
+        <Grid id="grd_post" taborder="3" left="30" top="120" width="1220" height="560" autofittype="col"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_post">
+        <ColumnInfo/>
+      </Dataset>
+      <DataObject id="dobj_post"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[
+this.Form_Work_onload = function(obj:nexacro.Form, e:nexacro.LoadEventInfo)
+{
+    this.dobj_post.addEventHandler("onsuccess", this.dobj_post_onsuccess, this);
+    this.dobj_post.addEventHandler("onload", this.dobj_post_onload, this);
+    this.dobj_post.addEventHandler("onerror", this.dobj_post_onerror, this);
+};
+
+this.btn_search_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo)
+{
+    this.stc_status.set_text("조회 중...");
+    this.dobj_post.request("SEARCH", "GET", "https://jsonplaceholder.typicode.com/posts");
+};
+
+// request 호출 후 통신이 성공하면 onsuccess가 먼저 발생하고, 이어서 onload에서 data 속성값을 확인할 수 있다
+this.dobj_post_onsuccess = function(obj:nexacro.DataObject, e:nexacro.DataObjectEventInfo)
+{
+    trace(e.serviceid + ":" + e.statuscode);
+
+    if (e.statuscode > 200)
+    {
+        e.preventDefault();
+        this.stc_status.set_text("통신 오류: " + e.statuscode);
+    }
+};
+
+// request 메소드 호출로 인한 로딩 완료 시에만 처리 (DataObject.REASON_REQUEST = 2)
+this.dobj_post_onload = function(obj:nexacro.DataObject, e:nexacro.DataObjectLoadEventInfo)
+{
+    if (e.reason != DataObject.REASON_REQUEST) return;
+
+    if (!(obj.data instanceof Array) || obj.data.length == 0)
+    {
+        this.stc_status.set_text("조회된 데이터가 없습니다.");
+        return;
+    }
+
+    this.ds_post.clear();
+
+    // 응답 데이터의 첫 행을 기준으로 Dataset 컬럼을 동적으로 구성한다 (JSON key -> 대문자 컬럼 id)
+    var objSample = obj.data[0];
+    for (var key in objSample)
+    {
+        var objColInfo = new ColumnInfo();
+        objColInfo.type = "String";
+        objColInfo.datapath = "@." + key;
+        this.ds_post.addColumnInfo(key.toUpperCase(), objColInfo);
+    }
+
+    this.ds_post.binddataobject = obj.id;
+    this.ds_post.dataobjectpath = "$[*]";
+
+    this.grd_post.binddataset = this.ds_post.name;
+    this.grd_post.createFormat();
+
+    this.stc_status.set_text("조회 완료: " + this.ds_post.rowcount + "건");
+};
+
+this.dobj_post_onerror = function(obj:nexacro.DataObject, e:nexacro.DataObjectErrorEventInfo)
+{
+    trace(e.statuscode + ":" + e.errormsg);
+    this.stc_status.set_text("통신 오류: " + e.statuscode + " " + e.errormsg);
+};
+
+]]></Script>
+  </Form>
+</FDL>
