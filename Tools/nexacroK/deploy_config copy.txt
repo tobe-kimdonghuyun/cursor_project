@@ -1,0 +1,8 @@
+ProjectPath=D:\git_prj\cursor_project\nexacroNv24_UI\RP_105654\RP_105654.xprj
+OutputPath=D:\git_prj\cursor_project\output\nexacroN_v24\RP_105654
+DeployPath=D:\git_prj\cursor_project\output\nexacroN_v24\Deploy\RP_105654
+NexacroLibPath=D:\git_prj\cursor_project\nexacrolib\nexacrolib
+GenerateRule=D:\git_prj\cursor_project\nexacrolib\generate
+SourceDir=E:\git\extension2\WORK800\
+-MERGE
+-COMPRESS
