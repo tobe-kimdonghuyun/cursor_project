@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="EnvVsAppVariableSample" width="1280" height="670" onload="EnvVsAppVariableSample_onload">
+    <Layouts>
+      <Layout height="670" width="1280">
+        <Static id="stc_title" taborder="0" text="05. Environment 변수 vs Application 변수" left="10" top="10" width="700" height="28" font="bold 14 'Malgun Gothic'" forecolor="#1a56db"/>
+        <Static id="stc_desc" taborder="1" text="nexacro.setEnvironmentVariable() / getEnvironmentVariable() 은 Environment > Variables 영역을, application.setGlobal() / getGlobal() 은 Application > AppVariables 영역을 사용합니다. 두 저장소는 완전히 분리되어 있습니다 (Environment.md 'getEnvironmentVariable' Remark 근거)." left="10" top="44" width="1240" height="36" forecolor="#555555"/>
+
+        <Static id="stc_key_lbl" taborder="2" text="Key" left="10" top="90" width="40" height="28"/>
+        <Edit id="edt_key" taborder="3" text="TEST_KEY" left="55" top="90" width="200" height="30"/>
+        <Static id="stc_val_lbl" taborder="4" text="Value" left="270" top="90" width="50" height="28"/>
+        <Edit id="edt_val" taborder="5" text="hello-value" left="325" top="90" width="260" height="30"/>
+
+        <Static id="stc_env_col" taborder="6" text="▼ Environment 변수 (nexacro.xxxEnvironmentVariable)" left="10" top="132" width="500" height="20" forecolor="#065f46" font="bold 12 'Malgun Gothic'"/>
+        <Button id="btn_envSet" taborder="7" text="저장 (setEnvironmentVariable)" left="10" top="156" width="220" height="32" onclick="btn_envSet_onclick"/>
+        <Button id="btn_envGet" taborder="8" text="조회 (getEnvironmentVariable)" left="240" top="156" width="220" height="32" onclick="btn_envGet_onclick"/>
+        <Button id="btn_envRemove" taborder="9" text="삭제 (removeEnvironmentVariable)" left="470" top="156" width="240" height="32" onclick="btn_envRemove_onclick"/>
+
+        <Static id="stc_app_col" taborder="10" text="▼ Application 변수 (application.setGlobal / getGlobal)" left="10" top="204" width="500" height="20" forecolor="#065f46" font="bold 12 'Malgun Gothic'"/>
+        <Button id="btn_appSet" taborder="11" text="저장 (application.setGlobal)" left="10" top="228" width="220" height="32" onclick="btn_appSet_onclick"/>
+        <Button id="btn_appGet" taborder="12" text="조회 (application.getGlobal)" left="240" top="228" width="220" height="32" onclick="btn_appGet_onclick"/>
+
+        <Static id="stc_cross_col" taborder="13" text="▼ 교차 확인: 한 쪽에만 저장한 값을 반대쪽 API로 조회 → 저장소가 분리되어 있음을 증명" left="10" top="272" width="700" height="20" forecolor="#991b1b" font="bold 12 'Malgun Gothic'"/>
+        <Button id="btn_crossCheck" taborder="14" text="교차 확인 실행" left="10" top="296" width="200" height="32" onclick="btn_crossCheck_onclick"/>
+
+        <Static id="stc_log_lbl" taborder="15" text="▼ 실행 로그" left="10" top="340" width="200" height="20" forecolor="#888888"/>
+        <TextArea id="txa_log" taborder="16" left="10" top="362" width="1240" height="280" readonly="true"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.EnvVsAppVariableSample_onload = function(obj, e)
+{
+    this.txa_log.set_value("Key/Value를 입력하고 버튼을 눌러 두 저장소의 동작을 비교하세요.\n");
+};
+
+this.fn_log = function(sMsg)
+{
+    this.txa_log.set_value(this.txa_log.value + sMsg + "\n");
+};
+
+this.btn_envSet_onclick = function(obj, e)
+{
+    var sKey = this.edt_key.value, sVal = this.edt_val.value;
+    nexacro.setEnvironmentVariable(sKey, sVal);
+    this.fn_log("[Environment] setEnvironmentVariable(\"" + sKey + "\", \"" + sVal + "\") 저장 완료");
+};
+
+this.btn_envGet_onclick = function(obj, e)
+{
+    var sKey = this.edt_key.value;
+    var v = nexacro.getEnvironmentVariable(sKey);
+    this.fn_log("[Environment] getEnvironmentVariable(\"" + sKey + "\") = " + v);
+};
+
+this.btn_envRemove_onclick = function(obj, e)
+{
+    var sKey = this.edt_key.value;
+    nexacro.removeEnvironmentVariable(sKey);
+    this.fn_log("[Environment] removeEnvironmentVariable(\"" + sKey + "\") 실행 완료");
+};
+
+this.btn_appSet_onclick = function(obj, e)
+{
+    var sKey = this.edt_key.value, sVal = this.edt_val.value;
+    application.setGlobal(sKey, sVal);
+    this.fn_log("[Application] application.setGlobal(\"" + sKey + "\", \"" + sVal + "\") 저장 완료");
+};
+
+this.btn_appGet_onclick = function(obj, e)
+{
+    var sKey = this.edt_key.value;
+    var v = application.getGlobal(sKey);
+    this.fn_log("[Application] application.getGlobal(\"" + sKey + "\") = " + v);
+};
+
+this.btn_crossCheck_onclick = function(obj, e)
+{
+    var sKey = "CROSS_" + this.edt_key.value;
+    var sVal = this.edt_val.value;
+
+    // 1) Environment 에만 저장
+    nexacro.setEnvironmentVariable(sKey, sVal);
+    var vFromApp = application.getGlobal(sKey);
+    this.fn_log("[교차1] Environment에 저장(" + sKey + "=" + sVal + ") 후 application.getGlobal(\"" + sKey + "\") = " + vFromApp + "  (undefined/null 이면 분리 증명)");
+
+    // 2) Application 에만 저장 (다른 key로)
+    var sKey2 = "CROSS2_" + this.edt_key.value;
+    application.setGlobal(sKey2, sVal);
+    var vFromEnv = nexacro.getEnvironmentVariable(sKey2);
+    this.fn_log("[교차2] Application에 저장(" + sKey2 + "=" + sVal + ") 후 nexacro.getEnvironmentVariable(\"" + sKey2 + "\") = " + vFromEnv + "  (undefined/null 이면 분리 증명)");
+};
+    ]]></Script>
+  </Form>
+</FDL>

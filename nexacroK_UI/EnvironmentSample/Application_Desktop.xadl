@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ADL version="2.0">
+  <Application id="Application_Desktop" screenid="Desktop_screen">
+    <Layout>
+      <MainFrame id="mainframe" showtitlebar="true" showstatusbar="false" left="0" top="0" width="1280" height="760" titletext="Environment / nexacro 객체 상속 샘플">
+        <ChildFrame id="WorkFrame" showtitlebar="false" showstatusbar="false" formurl="FrameBase::main.xfdl"/>
+      </MainFrame>
+    </Layout>
+  </Application>
+</ADL>

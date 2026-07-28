@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="CalendarInheritSample" width="1280" height="670" onload="CalendarInheritSample_onload">
+    <Layouts>
+      <Layout height="670" width="1280">
+        <Static id="stc_title" taborder="0" text="02. Calendar × Environment 상속" left="10" top="10" width="700" height="28" font="bold 14 'Malgun Gothic'" forecolor="#1a56db"/>
+        <Static id="stc_desc" taborder="1" text="Calendar(type=monthonly) 컴포넌트는 Environment의 calendarrestoreonblur / usedateautocalibration 값을 상속받아 동작합니다. 이 둘은 Studio 전용 속성이라 스크립트로는 값을 바꿀 수 없습니다." left="10" top="44" width="1240" height="22" forecolor="#555555"/>
+
+        <Static id="stc_env_lbl" taborder="2" text="현재 Environment 값" left="10" top="78" width="200" height="20" forecolor="#888888"/>
+        <Static id="stc_env" taborder="3" text="" left="10" top="100" width="1240" height="24" forecolor="#1a56db" font="bold 12 'Malgun Gothic'"/>
+
+        <Button id="btn_tryChange" taborder="4" text="calendarrestoreonblur 변경 시도" left="10" top="132" width="230" height="32" onclick="btn_tryChange_onclick"/>
+        <Static id="stc_result" taborder="5" text="" left="250" top="138" width="1000" height="22" forecolor="#cc0000"/>
+
+        <Static id="stc_test_lbl" taborder="6" text="▼ 직접 확인해보기: monthonly Calendar에서 년/월만 바꾸고(일자 미확정) 아래 Edit을 클릭해 포커스를 옮겨보세요" left="10" top="172" width="900" height="20" forecolor="#065f46" font="bold 12 'Malgun Gothic'"/>
+
+        <Div id="div_cal" left="10" top="198" width="320" height="360" scrollbartype="autohide"/>
+        <Static id="stc_val_lbl" taborder="7" text="Calendar.value" left="350" top="198" width="120" height="26"/>
+        <Static id="stc_val" taborder="8" text="" left="350" top="226" width="300" height="26" forecolor="#1a56db"/>
+        <Edit id="edt_blurTarget" taborder="9" text="여기를 클릭하면 Calendar가 blur 됩니다" left="350" top="266" width="300" height="32"/>
+
+        <Static id="stc_explain" taborder="10" text="" left="350" top="310" width="900" height="200" forecolor="#333333"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.CalendarInheritSample_onload = function(obj, e)
+{
+    this.fn_refreshEnv();
+
+    // ────── Calendar(type=monthonly) 동적 생성 ──────────────────────
+    var objCal = new nexacro.Calendar("cal_monthonly", 5, 5, 300, 340, null, null);
+    objCal.set_type("monthonly");
+    objCal.set_dateformat("YYYY-MM-DD");
+    objCal.set_editformat("YYYY-MM-DD");
+    objCal.set_value(nexacro.getDate("YYYYMMDD"));
+    this.div_cal.addChild("cal_monthonly", objCal);
+    objCal.show();
+    objCal.addEventHandler("onchanged", this.cal_monthonly_onchanged, this);
+
+    this.stc_val.set_text(objCal.value);
+
+    this.stc_explain.set_text(
+        "테스트 방법:\n" +
+        "1) 좌측 달력에서 [<] / [>] 버튼으로 월만 이동합니다 (일자는 클릭하지 않음).\n" +
+        "2) 우측 Edit을 클릭해 포커스를 이동합니다 (blur 발생).\n" +
+        "3) calendarrestoreonblur 기본값(true)이면 → 다시 달력을 보면 원래 value 기준 월로 되돌아가 있어야 합니다.\n" +
+        "4) 이 값은 Studio에서만 바꿀 수 있어, 이 화면에서는 항상 기본 동작(true)만 확인할 수 있습니다."
+    );
+};
+
+this.fn_refreshEnv = function()
+{
+    var env = nexacro.getEnvironment();
+    this.stc_env.set_text(
+        "calendarrestoreonblur = " + env.calendarrestoreonblur +
+        "   /   usedateautocalibration = " + env.usedateautocalibration
+    );
+};
+
+this.cal_monthonly_onchanged = function(obj, e)
+{
+    this.stc_val.set_text(obj.value);
+};
+
+this.btn_tryChange_onclick = function(obj, e)
+{
+    var env = nexacro.getEnvironment();
+    var bBefore = env.calendarrestoreonblur;
+    env.calendarrestoreonblur = !bBefore;
+    var bAfter = env.calendarrestoreonblur;
+    this.fn_refreshEnv();
+
+    if (bBefore == bAfter) {
+        this.stc_result.set_text("[확인] 대입을 시도했지만 값이 그대로입니다 (" + bAfter + ") → calendarrestoreonblur는 Environment.md 문서대로 Studio 전용, 런타임 변경 불가.");
+    } else {
+        this.stc_result.set_text("[참고] 값이 " + bBefore + " → " + bAfter + " 로 실제 변경되었습니다. (SDK 버전에 따라 다를 수 있음)");
+    }
+};
+    ]]></Script>
+  </Form>
+</FDL>

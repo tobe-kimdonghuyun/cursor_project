@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="VirtualFileSecureSample" width="1280" height="670" onload="VirtualFileSecureSample_onload">
+    <Layouts>
+      <Layout height="670" width="1280">
+        <Static id="stc_title" taborder="0" text="03. VirtualFile × filesecurelevel" left="10" top="10" width="700" height="28" font="bold 14 'Malgun Gothic'" forecolor="#1a56db"/>
+        <Static id="stc_desc" taborder="1" text="VirtualFile 오브젝트로 로컬 파일에 접근할 때 Environment의 filesecurelevel 값이 접근 허용 범위를 결정합니다. (VirtualFile 오브젝트 사용 시 적용된다고 Environment.md에 명시)" left="10" top="44" width="1240" height="22" forecolor="#555555"/>
+
+        <Static id="stc_env_lbl" taborder="2" text="filesecurelevel" left="10" top="78" width="120" height="26" font="bold 12 'Malgun Gothic'"/>
+        <Static id="stc_env" taborder="3" text="" left="140" top="78" width="200" height="26" forecolor="#1a56db"/>
+        <Static id="stc_env_note" taborder="4" text="(Studio 전용 속성 — 실행 중 스크립트로 변경 불가. 기본값 'private' = Personal Path(내 문서) 하위만 무제한 허용)" left="350" top="80" width="700" height="22" forecolor="#888888"/>
+
+        <Static id="stc_env2_lbl" taborder="5" text="실행 환경" left="10" top="112" width="120" height="26" font="bold 12 'Malgun Gothic'"/>
+        <Static id="stc_env2" taborder="6" text="" left="140" top="112" width="400" height="26" forecolor="#1a56db"/>
+
+        <Static id="stc_path_lbl" taborder="7" text="테스트할 파일 경로" left="10" top="150" width="140" height="28"/>
+        <Edit id="edt_path" taborder="8" text="C:\Users\사용자명\Documents\envsample_inside.txt" left="150" top="150" width="560" height="30"/>
+        <Button id="btn_setInside" taborder="9" text="Personal Path 예시" left="720" top="150" width="140" height="30" onclick="btn_setInside_onclick"/>
+        <Button id="btn_setOutside" taborder="10" text="Personal Path 밖 예시" left="870" top="150" width="150" height="30" onclick="btn_setOutside_onclick"/>
+
+        <Button id="btn_createVF" taborder="11" text="VirtualFile 생성" left="10" top="192" width="130" height="32" onclick="btn_createVF_onclick"/>
+        <Button id="btn_write"    taborder="12" text="쓰기 시도" left="150" top="192" width="110" height="32" onclick="btn_write_onclick"/>
+        <Button id="btn_read"     taborder="13" text="읽기 시도" left="270" top="192" width="110" height="32" onclick="btn_read_onclick"/>
+        <Button id="btn_clear"    taborder="14" text="VirtualFile 삭제" left="390" top="192" width="120" height="32" onclick="btn_clear_onclick"/>
+
+        <Static id="stc_result" taborder="15" text="" left="10" top="234" width="1240" height="24" forecolor="#cc0000"/>
+        <Static id="stc_guide" taborder="16" text="※ '사용자명'은 실제 Windows 계정명으로 바꿔서 테스트하세요. filesecurelevel='private' 상태에서 Personal Path 밖 경로에 쓰기를 시도하면 NRE 환경에서 UserConfirm 접근 허용 창이 뜹니다 (WRE에서는 VirtualFile 독립 생성 자체가 제한적입니다)." left="10" top="266" width="1240" height="40" forecolor="#888888"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+// this.bVFCreated (Form 속성) 으로 관리 — var 클로저 변수 사용 금지
+
+this.VirtualFileSecureSample_onload = function(obj, e)
+{
+    this.bVFCreated = false;
+
+    var env = nexacro.getEnvironment();
+    this.stc_env.set_text(String(env.filesecurelevel));
+
+    var sEnv = (typeof system != "undefined" && system.osversion != "") ? "NRE (네이티브 런타임)" : "WRE (웹 브라우저)";
+    this.stc_env2.set_text(sEnv);
+    if (sEnv.indexOf("NRE") < 0) {
+        this.stc_result.set_text("WRE 환경입니다. VirtualFile 독립 생성 + 파일 R/W는 NRE 전용 기능이라 이 화면의 쓰기/읽기 테스트는 NRE(Windows)에서 실행해야 합니다.");
+    }
+};
+
+this.btn_setInside_onclick = function(obj, e)
+{
+    this.edt_path.set_value("C:\\Users\\사용자명\\Documents\\envsample_inside.txt");
+};
+
+this.btn_setOutside_onclick = function(obj, e)
+{
+    this.edt_path.set_value("C:\\envsample_outside.txt");
+};
+
+this.btn_createVF_onclick = function(obj, e)
+{
+    if (this.bVFCreated) { this.stc_result.set_text("이미 VirtualFile이 생성되어 있습니다."); return; }
+
+    var vf = new nexacro.VirtualFile("vf_secure", this);
+    this.addChild("vf_secure", vf);
+    vf.addEventHandler("onsuccess", this.vf_secure_onsuccess, this);
+    vf.addEventHandler("onerror",   this.vf_secure_onerror,   this);
+
+    this.bVFCreated = true;
+    this.stc_result.set_text("✔ new nexacro.VirtualFile() 생성 완료. 이제 경로를 입력하고 [쓰기 시도]를 눌러보세요.");
+};
+
+this.btn_write_onclick = function(obj, e)
+{
+    var vf = this["vf_secure"];
+    if (!vf) { this.stc_result.set_text("먼저 VirtualFile을 생성하세요."); return; }
+
+    var sPath = this.edt_path.value;
+    try {
+        var sContent = "nexacro filesecurelevel 테스트\n생성일시: " + nexacro.getDate("YYYY-MM-DD") + " " + nexacro.getTime("HH:MM:SS") + "\n경로: " + sPath;
+        vf.open(sPath, "w");
+        vf.write(sContent);
+        vf.close();
+        this.stc_result.set_text("✔ 쓰기 성공: " + sPath + " (UserConfirm 창이 떴다면 [허용]을 눌렀기 때문입니다)");
+    } catch (ex) {
+        this.stc_result.set_text("쓰기 실패: " + ex + " — filesecurelevel 정책 또는 WRE 환경 제약일 수 있습니다.");
+    }
+};
+
+this.btn_read_onclick = function(obj, e)
+{
+    var vf = this["vf_secure"];
+    if (!vf) { this.stc_result.set_text("먼저 VirtualFile을 생성하세요."); return; }
+
+    var sPath = this.edt_path.value;
+    try {
+        vf.open(sPath, "r");
+        var sContent = vf.read();
+        vf.close();
+        this.stc_result.set_text("✔ 읽기 성공: " + sPath);
+        this.alert("읽은 내용:\n" + sContent);
+    } catch (ex) {
+        this.stc_result.set_text("읽기 실패: " + ex);
+    }
+};
+
+this.vf_secure_onsuccess = function(obj, e) { trace("[VF onsuccess] reason=" + e.reason); };
+this.vf_secure_onerror   = function(obj, e) { this.stc_result.set_text("VirtualFile 오류: " + e.errormsg); };
+
+this.btn_clear_onclick = function(obj, e)
+{
+    var vf = this["vf_secure"];
+    if (vf) { this.removeChild("vf_secure"); vf.destroy(); }
+    this.bVFCreated = false;
+    this.stc_result.set_text("VirtualFile 삭제 완료.");
+};
+    ]]></Script>
+  </Form>
+</FDL>

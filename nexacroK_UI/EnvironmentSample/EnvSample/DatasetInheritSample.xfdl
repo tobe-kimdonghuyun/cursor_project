@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="DatasetInheritSample" width="1280" height="670" onload="DatasetInheritSample_onload">
+    <Layouts>
+      <Layout height="670" width="1280">
+        <Static id="stc_title" taborder="0" text="04. Dataset × Environment 상속(fallback)" left="10" top="10" width="700" height="28" font="bold 14 'Malgun Gothic'" forecolor="#1a56db"/>
+        <Static id="stc_desc" taborder="1" text="Dataset의 saveinfinity/savenan 속성을 설정하지 않으면 undefined가 되어 Environment의 datasetsaveinfinity/datasetsavenan 값으로 동작합니다 (Dataset.md Remark 근거). 아래에서 두 Dataset을 비교합니다." left="10" top="44" width="1240" height="22" forecolor="#555555"/>
+
+        <Static id="stc_env_lbl" taborder="2" text="Environment 현재 값" left="10" top="78" width="200" height="20" forecolor="#888888"/>
+        <Static id="stc_env" taborder="3" text="" left="10" top="100" width="700" height="24" forecolor="#1a56db" font="bold 12 'Malgun Gothic'"/>
+        <Button id="btn_toggleInfinity" taborder="4" text="datasetsaveinfinity 토글" left="720" top="98" width="200" height="30" onclick="btn_toggleInfinity_onclick"/>
+        <Button id="btn_toggleNan"      taborder="5" text="datasetsavenan 토글"      left="930" top="98" width="180" height="30" onclick="btn_toggleNan_onclick"/>
+
+        <Button id="btn_create" taborder="6" text="① 두 Dataset 생성 (Infinity/NaN 데이터 포함)" left="10" top="140" width="300" height="32" onclick="btn_create_onclick"/>
+        <Button id="btn_saveOwn" taborder="7" text="② ds_own.saveXML() 결과" left="320" top="140" width="220" height="32" onclick="btn_saveOwn_onclick"/>
+        <Button id="btn_saveFallback" taborder="8" text="③ ds_fallback.saveXML() 결과" left="550" top="140" width="240" height="32" onclick="btn_saveFallback_onclick"/>
+
+        <Static id="stc_result" taborder="9" text="" left="10" top="182" width="1240" height="22" forecolor="#cc0000"/>
+
+        <Static id="stc_own_lbl" taborder="10" text="ds_own (saveinfinity=exclude, savenan=exclude 개별 지정 — Environment 값 무시하고 항상 고정)" left="10" top="212" width="1240" height="20" forecolor="#065f46" font="bold 12 'Malgun Gothic'"/>
+        <TextArea id="txa_own" taborder="11" left="10" top="234" width="1240" height="180" readonly="true"/>
+
+        <Static id="stc_fallback_lbl" taborder="12" text="ds_fallback (saveinfinity/savenan 미지정 — Environment.datasetsaveinfinity/datasetsavenan 값을 그대로 상속)" left="10" top="422" width="1240" height="20" forecolor="#065f46" font="bold 12 'Malgun Gothic'"/>
+        <TextArea id="txa_fallback" taborder="13" left="10" top="444" width="1240" height="180" readonly="true"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+// this.bCreated (Form 속성) 으로 관리 — var 클로저 변수 사용 금지
+
+this.DatasetInheritSample_onload = function(obj, e)
+{
+    this.bCreated = false;
+    this.fn_refreshEnv();
+    this.stc_result.set_text("① 버튼을 눌러 Dataset 2개를 생성한 뒤, ②/③ 버튼과 상단 토글 버튼을 조합해 결과 차이를 확인하세요.");
+};
+
+this.fn_refreshEnv = function()
+{
+    var env = nexacro.getEnvironment();
+    this.stc_env.set_text("datasetsaveinfinity = " + env.datasetsaveinfinity + "   /   datasetsavenan = " + env.datasetsavenan);
+};
+
+this.btn_toggleInfinity_onclick = function(obj, e)
+{
+    var env = nexacro.getEnvironment();
+    env.datasetsaveinfinity = (env.datasetsaveinfinity == "include") ? "exclude" : "include";
+    this.fn_refreshEnv();
+    this.stc_result.set_text("Environment.datasetsaveinfinity → " + env.datasetsaveinfinity + " 로 변경. ds_fallback 결과만 바뀌는지 ③번으로 다시 확인해보세요.");
+};
+
+this.btn_toggleNan_onclick = function(obj, e)
+{
+    var env = nexacro.getEnvironment();
+    env.datasetsavenan = (env.datasetsavenan == "include") ? "exclude" : "include";
+    this.fn_refreshEnv();
+    this.stc_result.set_text("Environment.datasetsavenan → " + env.datasetsavenan + " 로 변경. ds_fallback 결과만 바뀌는지 ③번으로 다시 확인해보세요.");
+};
+
+this.btn_create_onclick = function(obj, e)
+{
+    if (this.bCreated) { this.stc_result.set_text("이미 생성되어 있습니다."); return; }
+
+    // ────── ds_own: saveinfinity/savenan 개별 지정 (Environment 값 무시) ──────
+    var dsOwn = new nexacro.Dataset("ds_own", this);
+    this.addChild("ds_own", dsOwn);
+    dsOwn.addColumn("NO",   "String", 5);
+    dsOwn.addColumn("AMT",  "Float");
+    dsOwn.addColumn("AMT2", "Float");
+    dsOwn.saveinfinity = "exclude";
+    dsOwn.savenan      = "exclude";
+    var r1 = dsOwn.addRow();
+    dsOwn.setColumn(r1, "NO",   1);
+    dsOwn.setColumn(r1, "AMT",  1 / 0);   // Infinity
+    dsOwn.setColumn(r1, "AMT2", 0 / 0);   // NaN
+
+    // ────── ds_fallback: saveinfinity/savenan 미지정 (Environment로 fallback) ──
+    var dsFallback = new nexacro.Dataset("ds_fallback", this);
+    this.addChild("ds_fallback", dsFallback);
+    dsFallback.addColumn("NO",   "String", 5);
+    dsFallback.addColumn("AMT",  "Float");
+    dsFallback.addColumn("AMT2", "Float");
+    var r2 = dsFallback.addRow();
+    dsFallback.setColumn(r2, "NO",   1);
+    dsFallback.setColumn(r2, "AMT",  1 / 0);   // Infinity
+    dsFallback.setColumn(r2, "AMT2", 0 / 0);   // NaN
+
+    this.bCreated = true;
+    this.stc_result.set_text("✔ ds_own / ds_fallback 생성 완료. ②/③ 버튼으로 saveXML() 결과를 비교하세요.");
+};
+
+this.btn_saveOwn_onclick = function(obj, e)
+{
+    var ds = this["ds_own"];
+    if (!ds) { this.stc_result.set_text("먼저 ① Dataset을 생성하세요."); return; }
+    this.txa_own.set_value("[ds_own.saveinfinity=" + ds.saveinfinity + ", savenan=" + ds.savenan + "]\n\n" + ds.saveXML());
+};
+
+this.btn_saveFallback_onclick = function(obj, e)
+{
+    var ds = this["ds_fallback"];
+    if (!ds) { this.stc_result.set_text("먼저 ① Dataset을 생성하세요."); return; }
+    var env = nexacro.getEnvironment();
+    this.txa_fallback.set_value(
+        "[ds_fallback.saveinfinity=" + ds.saveinfinity + "(undefined→Environment." + env.datasetsaveinfinity + " 적용), " +
+        "savenan=" + ds.savenan + "(undefined→Environment." + env.datasetsavenan + " 적용)]\n\n" + ds.saveXML()
+    );
+};
+    ]]></Script>
+  </Form>
+</FDL>

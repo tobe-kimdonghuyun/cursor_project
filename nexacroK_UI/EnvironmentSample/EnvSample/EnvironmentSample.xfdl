@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="EnvironmentSample" width="1280" height="670" onload="EnvironmentSample_onload">
+    <Layouts>
+      <Layout height="670" width="1280">
+        <Static id="stc_title" taborder="0" text="01. Environment 기본 조회 / 변경" left="10" top="10" width="700" height="28" font="bold 14 'Malgun Gothic'" forecolor="#1a56db"/>
+        <Static id="stc_desc" taborder="1" text="nexacro.getEnvironment() 로 Environment 오브젝트를 얻어 런타임에 실제로 값을 읽고 바꿀 수 있는 속성과, Studio에서만 설정 가능한 속성을 구분해서 보여줍니다." left="10" top="44" width="1240" height="22" forecolor="#555555"/>
+
+        <Static id="stc_area1" taborder="2" text="▼ 런타임에 값을 바꿀 수 있는 속성 (nexacro.getEnvironment() 로 대입 가능)" left="10" top="78" width="700" height="20" forecolor="#065f46" font="bold 12 'Malgun Gothic'"/>
+
+        <Static id="stc_locale_lbl" taborder="3" text="locale" left="10" top="104" width="160" height="26" font="bold 12 'Malgun Gothic'"/>
+        <Static id="stc_locale" taborder="4" text="" left="180" top="104" width="260" height="26" forecolor="#1a56db"/>
+        <Button id="btn_toggleLocale" taborder="5" text="ko_KR ↔ en_US 토글" left="450" top="102" width="160" height="30" onclick="btn_toggleLocale_onclick"/>
+
+        <Static id="stc_wait_lbl" taborder="6" text="usewaitcursor" left="10" top="140" width="160" height="26" font="bold 12 'Malgun Gothic'"/>
+        <Static id="stc_wait" taborder="7" text="" left="180" top="140" width="260" height="26" forecolor="#1a56db"/>
+        <Button id="btn_toggleWait" taborder="8" text="true ↔ false 토글" left="450" top="138" width="160" height="30" onclick="btn_toggleWait_onclick"/>
+
+        <Static id="stc_clip_lbl" taborder="9" text="enableclipboard" left="10" top="176" width="160" height="26" font="bold 12 'Malgun Gothic'"/>
+        <Static id="stc_clip" taborder="10" text="" left="180" top="176" width="260" height="26" forecolor="#1a56db"/>
+        <Button id="btn_toggleClip" taborder="11" text="true ↔ false 토글" left="450" top="174" width="160" height="30" onclick="btn_toggleClip_onclick"/>
+        <Edit id="edt_clipTest" taborder="12" text="이 텍스트를 Ctrl+C/Ctrl+V로 복사해보세요" left="630" top="176" width="360" height="28"/>
+
+        <Static id="stc_log_lbl" taborder="13" text="loglevel" left="10" top="212" width="160" height="26" font="bold 12 'Malgun Gothic'"/>
+        <Static id="stc_log" taborder="14" text="" left="180" top="212" width="260" height="26" forecolor="#1a56db"/>
+        <Button id="btn_cycleLog" taborder="15" text="fatal→error→warn→info→debug 순환" left="450" top="210" width="220" height="30" onclick="btn_cycleLog_onclick"/>
+
+        <Static id="stc_area2" taborder="16" text="▼ Studio 전용 속성 (실행 중 스크립트로 값 변경 불가 — Environment.md Remark 근거)" left="10" top="256" width="800" height="20" forecolor="#991b1b" font="bold 12 'Malgun Gothic'"/>
+        <Static id="stc_studio" taborder="17" text="" left="10" top="280" width="1240" height="22" forecolor="#555555"/>
+        <Button id="btn_tryChangeStudioOnly" taborder="18" text="Studio 전용 속성 변경 시도 (tabkeycirculation)" left="10" top="310" width="300" height="30" onclick="btn_tryChangeStudioOnly_onclick"/>
+
+        <Static id="stc_result" taborder="19" text="" left="10" top="352" width="1240" height="24" forecolor="#cc0000"/>
+        <Static id="stc_note" taborder="20" text="※ WRE 실행 중 이 화면에서 Environment 값을 바꿔도, openPopup()/nexacro.open() 등으로 새로 띄운 팝업창에는 반영되지 않습니다 (Environment.md 개요 Remark)." left="10" top="384" width="1240" height="44" forecolor="#888888"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+// this.aLogLevels / this.nLogIdx (Form 속성) 으로 관리 — var 클로저 변수 사용 금지
+
+this.EnvironmentSample_onload = function(obj, e)
+{
+    this.aLogLevels = ["fatal", "error", "warn", "info", "debug"];
+    this.nLogIdx    = 4; // 기본값 "debug"
+    this.fn_refresh();
+};
+
+this.fn_refresh = function()
+{
+    var env = nexacro.getEnvironment();
+    this.stc_locale.set_text(String(env.locale));
+    this.stc_wait.set_text(String(env.usewaitcursor));
+    this.stc_clip.set_text(String(env.enableclipboard));
+    this.stc_log.set_text(String(env.loglevel));
+    this.stc_studio.set_text("themeid=" + env.themeid + "  /  rtl=" + env.rtl + "  /  tabkeycirculation=" + env.tabkeycirculation);
+};
+
+this.btn_toggleLocale_onclick = function(obj, e)
+{
+    var env = nexacro.getEnvironment();
+    env.locale = (env.locale == "ko_KR") ? "en_US" : "ko_KR";
+    this.fn_refresh();
+    this.stc_result.set_text("locale → " + env.locale + " (런타임 변경 성공)");
+};
+
+this.btn_toggleWait_onclick = function(obj, e)
+{
+    var env = nexacro.getEnvironment();
+    env.usewaitcursor = !env.usewaitcursor;
+    this.fn_refresh();
+    this.stc_result.set_text("usewaitcursor → " + env.usewaitcursor + " (런타임 변경 성공, DataObject/transaction 통신 시 반영됨)");
+};
+
+this.btn_toggleClip_onclick = function(obj, e)
+{
+    var env = nexacro.getEnvironment();
+    env.enableclipboard = !env.enableclipboard;
+    this.fn_refresh();
+    this.stc_result.set_text("enableclipboard → " + env.enableclipboard + " (false로 바꾼 뒤 edt_clipTest에서 Ctrl+C 시도해보세요 — 복사가 막힙니다)");
+};
+
+this.btn_cycleLog_onclick = function(obj, e)
+{
+    var env = nexacro.getEnvironment();
+    this.nLogIdx = (this.nLogIdx + 1) % this.aLogLevels.length;
+    env.loglevel = this.aLogLevels[this.nLogIdx];
+    this.fn_refresh();
+    this.stc_result.set_text("loglevel → " + env.loglevel + " (런타임 변경 성공)");
+};
+
+this.btn_tryChangeStudioOnly_onclick = function(obj, e)
+{
+    var env = nexacro.getEnvironment();
+    var sBefore = env.tabkeycirculation;
+    env.tabkeycirculation = (sBefore == "form,cycle") ? "form,nocycle" : "form,cycle";
+    var sAfter = env.tabkeycirculation;
+    this.fn_refresh();
+
+    if (sBefore == sAfter) {
+        this.stc_result.set_text("[확인] tabkeycirculation 대입을 시도했지만 값이 그대로입니다 (" + sAfter + ") → Studio 전용 속성은 런타임 변경이 무시됩니다.");
+    } else {
+        this.stc_result.set_text("[참고] tabkeycirculation 값이 " + sBefore + " → " + sAfter + " 로 실제 변경되었습니다. (SDK 버전에 따라 동작이 다를 수 있으니 nexacro_reference/Environment.md로 재확인하세요)");
+    }
+};
+    ]]></Script>
+  </Form>
+</FDL>
