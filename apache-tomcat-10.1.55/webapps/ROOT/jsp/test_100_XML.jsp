@@ -1,9 +1,9 @@
-﻿<%@ page contentType="text/html; charset=utf-8" %>
+﻿<%@ page contentType="text/xml; charset=UTF-8" %>
 <%@ page language="java"%>
 <%@ page import="com.nexacro.java.xapi.tx.*" %>
 <%@ page import="com.nexacro.java.xapi.data.*" %>
 <%@ page import="com.nexacro.java.xapi.data.datatype.*" %>
-<%@ page import="com.nexacro.jakarta.servlet.http.HttpPlatformResponse" %>
+
 
 <%
        String strCharset = "utf-8";
@@ -13,6 +13,7 @@
      * input variable list, input dataset list에 저장한다.
      * (MiPlatform 에서 보내온 데이터를 parsing한다.)
      *********************************************************/
+    // nexacro transaction은 Origin 헤더를 보내지 않으므로 
     HttpPlatformRequest platformRequest = new HttpPlatformRequest(request.getInputStream(), PlatformType.CONTENT_TYPE_XML);
     platformRequest.receiveData();
     PlatformData inPD = platformRequest.getData();
@@ -46,17 +47,17 @@
     PlatformData outPD = platformRequest.getData();
     VariableList    outVariableList  = new VariableList();
     DataSetList     outDataSetList   = new DataSetList();
-    
+    /*
 	if (comp.equals("true"))
 	{
 		platformResponse.addProtocolType(PlatformType.PROTOCOL_TYPE_ZLIB); 
 		System.out.println("platformResponse 압축");
 	}
-
+*/
     //System.out.println("100초 대기 시작");
    //Thread.sleep(100);
     //System.out.println("100초 대기 끝");
-	
+	/*
 	Cookie[] cookies = request.getCookies();
  
  
@@ -70,34 +71,36 @@
 	}
 	
 	System.out.println("==========================================="+cc);
-
+*/
     try {
-       
+       /*
 	   for(int i = 0; i < 100; i++)
 	   {
 			DataSet outDataSet0  = new DataSet("output"+i);        
 			// Output Dataset 컬럼 정의
-			outDataSet0.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "A"+i);
-			outDataSet0.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "B"+i);
-			outDataSet0.addColumn("Column0",   DataTypes.STRING, 255); 
-			outDataSet0.addColumn("Column1",   DataTypes.STRING, 255); 
-			outDataSet0.addColumn("Column2",   DataTypes.STRING, 255); 
-			outDataSet0.addColumn("useclientlayout_XML",   DataTypes.STRING, 255); 
+		//	outDataSet0.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "A"+i);
+		//	outDataSet0.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "B"+i);
+			outDataSet0.addColumn("SAMPLE_NM",   DataTypes.STRING, 255); 
+			outDataSet0.addColumn("SAMPLE_ID",   DataTypes.STRING, 255); 
+			outDataSet0.addColumn("SAMPLE_DESC",   DataTypes.STRING, 255); 
+			outDataSet0.addColumn("SAMPLE_DEPT_NM",   DataTypes.STRING, 255); 
 			outDataSet0.newRow();
 			outDataSetList.add(outDataSet0);
 		   
 	   }
-	   
+	   */
+	  
        DataSet outDataSet00  = new DataSet("output");        
        // Output Dataset 컬럼 정의
-		outDataSet00.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "XML");
-		outDataSet00.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "BCD");
-		outDataSet00.addColumn("Column0",   DataTypes.STRING, 255); 
-		outDataSet00.addColumn("Column1",   DataTypes.STRING, 255); 
-		outDataSet00.addColumn("Column2",   DataTypes.STRING, 255); 
-		outDataSet00.addColumn("useclientlayout_XML",   DataTypes.STRING, 255); 
+	//	outDataSet00.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "XML");
+	//	outDataSet00.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "BCD");
+		outDataSet00.addColumn("SAMPLE_NM",   DataTypes.STRING, 255); 
+		outDataSet00.addColumn("SAMPLE_ID",   DataTypes.STRING, 255); 
+		outDataSet00.addColumn("SAMPLE_DESC",   DataTypes.STRING, 255); 
+		outDataSet00.addColumn("SAMPLE_DEPT_NM",   DataTypes.STRING, 255); 
 		
 		int newRow = 0;
+		/*
 	   for(int i = 0; i < Integer.parseInt(ag1); i++)
 	   {
 			newRow = outDataSet00.newRow();	
@@ -118,12 +121,21 @@
 		   
 	   }
 	 		
+		*/
+		for(int i = 0; i < 10; i++)
+		{
+			newRow = outDataSet00.newRow();	
+			outDataSet00.set(newRow, "SAMPLE_NM", "XML");
+			outDataSet00.set(newRow, "SAMPLE_ID", "test");
+			outDataSet00.set(newRow, "SAMPLE_DESC", "^"+i+"^");
+			outDataSet00.set(newRow, "SAMPLE_DEPT_NM", "X"+i+"X");
+		}
 		// Output Dataset 을 Output Dataset List 에 담는다.      									
         outDataSetList.add(outDataSet00);
         
         // Output Vairable 을 세팅한다.		
         
-        outVariableList.add("ErrorMsg",  "조회 성공");
+        outVariableList.add("ErrorMsg",  "조회 성공 promise통신");
 		outVariableList.add("ErrorCode", 1);
 		//outVariableList.add("ErrorMsg", strUserName);
 

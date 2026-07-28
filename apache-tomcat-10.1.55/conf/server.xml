@@ -160,6 +160,7 @@
                pattern="%h %l %u %t &quot;%r&quot; %s %b" />
                
      <Context docBase="d:\git_prj\cursor_project\nexacroN_v24" path="/nexacroN_v24" reloadable="true" />
+     <Context docBase="d:\git_prj\cursor_project\nexacroK" path="/nexacroK" reloadable="true" />
       </Host>
       
     </Engine>

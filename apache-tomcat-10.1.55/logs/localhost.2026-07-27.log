@@ -1,0 +1,1027 @@
+27-Jul-2026 18:37:24.605 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
+27-Jul-2026 18:37:24.605 정보 [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
+27-Jul-2026 18:37:24.608 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: attributeAdded('StockTicker', 'async.Stockticker@444548a0')
+27-Jul-2026 18:39:55.195 정보 [Catalina-utility-2] org.apache.catalina.core.ApplicationContext.log SessionListener: contextDestroyed()
+27-Jul-2026 18:39:55.195 정보 [Catalina-utility-2] org.apache.catalina.core.ApplicationContext.log ContextListener: contextDestroyed()
+27-Jul-2026 18:39:55.431 정보 [Catalina-utility-2] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
+27-Jul-2026 18:39:55.431 정보 [Catalina-utility-2] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
+27-Jul-2026 18:39:55.432 정보 [Catalina-utility-2] org.apache.catalina.core.ApplicationContext.log ContextListener: attributeAdded('StockTicker', 'async.Stockticker@7f26394b')
+27-Jul-2026 18:40:36.917 정보 [Thread-1] org.apache.catalina.core.ApplicationContext.log SessionListener: contextDestroyed()
+27-Jul-2026 18:40:36.918 정보 [Thread-1] org.apache.catalina.core.ApplicationContext.log ContextListener: contextDestroyed()
+27-Jul-2026 18:40:40.824 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
+27-Jul-2026 18:40:40.825 정보 [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
+27-Jul-2026 18:40:40.826 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: attributeAdded('StockTicker', 'async.Stockticker@345cf395')
+27-Jul-2026 18:43:31.509 정보 [Thread-1] org.apache.catalina.core.ApplicationContext.log SessionListener: contextDestroyed()
+27-Jul-2026 18:43:31.509 정보 [Thread-1] org.apache.catalina.core.ApplicationContext.log ContextListener: contextDestroyed()
+27-Jul-2026 18:43:37.911 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
+27-Jul-2026 18:43:37.911 정보 [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
+27-Jul-2026 18:43:37.913 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: attributeAdded('StockTicker', 'async.Stockticker@203c20cf')
+27-Jul-2026 18:45:27.711 심각 [http-nio-7070-exec-1] org.apache.catalina.core.StandardWrapperValve.invoke 경로 []의 컨텍스트 내의 서블릿 [jsp]을(를) 위한 Servlet.service() 호출이, 근본 원인(root cause)과 함께, 예외 [org.apache.jasper.JasperException: JSP를 위한 클래스를 컴파일할 수 없습니다.: 
+
+코드 생성된 자바 파일 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\work\Catalina\localhost\ROOT\org\apache\jsp\jsp\test_005f100_005fXML_jsp.java]의 [17] 행에서 오류가 발생했습니다.
+Only a type can be imported. com.nexacro.jakarta.servlet.http.HttpPlatformResponse resolves to a package
+
+Stacktrace:]을(를) 발생시켰습니다.
+	org.apache.jasper.JasperException: JSP를 위한 클래스를 컴파일할 수 없습니다.: 
+
+코드 생성된 자바 파일 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\work\Catalina\localhost\ROOT\org\apache\jsp\jsp\test_005f100_005fXML_jsp.java]의 [17] 행에서 오류가 발생했습니다.
+Only a type can be imported. com.nexacro.jakarta.servlet.http.HttpPlatformResponse resolves to a package
+
+Stacktrace:
+		at org.apache.jasper.compiler.DefaultErrorHandler.javacError(DefaultErrorHandler.java:70)
+		at org.apache.jasper.compiler.ErrorDispatcher.javacError(ErrorDispatcher.java:189)
+		at org.apache.jasper.compiler.JDTCompiler.generateClass(JDTCompiler.java:575)
+		at org.apache.jasper.compiler.Compiler.compile(Compiler.java:368)
+		at org.apache.jasper.compiler.Compiler.compile(Compiler.java:340)
+		at org.apache.jasper.compiler.Compiler.compile(Compiler.java:326)
+		at org.apache.jasper.JspCompilationContext.compile(JspCompilationContext.java:586)
+		at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:368)
+		at org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:350)
+		at org.apache.jasper.servlet.JspServlet.service(JspServlet.java:301)
+		at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.catalina.filters.CorsFilter.handleNonCORS(CorsFilter.java:332)
+		at org.apache.catalina.filters.CorsFilter.doFilter(CorsFilter.java:159)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+		at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88)
+		at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+		at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+		at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+		at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:782)
+		at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+		at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+		at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+		at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+		at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1272)
+		at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1797)
+		at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+		at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973)
+		at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491)
+		at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+		at java.base/java.lang.Thread.run(Thread.java:1583)
+27-Jul-2026 18:47:13.738 심각 [http-nio-7070-exec-4] org.apache.catalina.core.StandardWrapperValve.invoke 경로 []의 컨텍스트 내의 서블릿 [jsp]을(를) 위한 Servlet.service() 호출이, 근본 원인(root cause)과 함께, 예외 [org.apache.jasper.JasperException: JSP를 위한 클래스를 컴파일할 수 없습니다.: 
+
+코드 생성된 자바 파일 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\work\Catalina\localhost\ROOT\org\apache\jsp\jsp\test_005f100_005fXML_jsp.java]의 [17] 행에서 오류가 발생했습니다.
+Only a type can be imported. com.nexacro.jakarta.servlet.http.HttpPlatformResponse resolves to a package
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [16] 행에서 오류가 발생했습니다.
+HttpPlatformRequest cannot be resolved to a type
+13:      * input variable list, input dataset list에 저장한다.
+14:      * (MiPlatform 에서 보내온 데이터를 parsing한다.)
+15:      *********************************************************/
+16:     HttpPlatformRequest platformRequest = new HttpPlatformRequest(request.getInputStream(), PlatformType.CONTENT_TYPE_XML);
+17:     platformRequest.receiveData();
+18:     PlatformData inPD = platformRequest.getData();
+19: 
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [16] 행에서 오류가 발생했습니다.
+HttpPlatformRequest cannot be resolved to a type
+13:      * input variable list, input dataset list에 저장한다.
+14:      * (MiPlatform 에서 보내온 데이터를 parsing한다.)
+15:      *********************************************************/
+16:     HttpPlatformRequest platformRequest = new HttpPlatformRequest(request.getInputStream(), PlatformType.CONTENT_TYPE_XML);
+17:     platformRequest.receiveData();
+18:     PlatformData inPD = platformRequest.getData();
+19: 
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [16] 행에서 오류가 발생했습니다.
+PlatformType.CONTENT_TYPE_XML cannot be resolved to a type
+13:      * input variable list, input dataset list에 저장한다.
+14:      * (MiPlatform 에서 보내온 데이터를 parsing한다.)
+15:      *********************************************************/
+16:     HttpPlatformRequest platformRequest = new HttpPlatformRequest(request.getInputStream(), PlatformType.CONTENT_TYPE_XML);
+17:     platformRequest.receiveData();
+18:     PlatformData inPD = platformRequest.getData();
+19: 
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [18] 행에서 오류가 발생했습니다.
+PlatformData cannot be resolved to a type
+15:      *********************************************************/
+16:     HttpPlatformRequest platformRequest = new HttpPlatformRequest(request.getInputStream(), PlatformType.CONTENT_TYPE_XML);
+17:     platformRequest.receiveData();
+18:     PlatformData inPD = platformRequest.getData();
+19: 
+20:     VariableList    inVariableList  = inPD.getVariableList();
+21:     DataSetList     inDataSetList   = inPD.getDataSetList();
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [20] 행에서 오류가 발생했습니다.
+VariableList cannot be resolved to a type
+17:     platformRequest.receiveData();
+18:     PlatformData inPD = platformRequest.getData();
+19: 
+20:     VariableList    inVariableList  = inPD.getVariableList();
+21:     DataSetList     inDataSetList   = inPD.getDataSetList();
+22: 
+23:     String strUserID   = inVariableList.getString("test");
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [21] 행에서 오류가 발생했습니다.
+DataSetList cannot be resolved to a type
+18:     PlatformData inPD = platformRequest.getData();
+19: 
+20:     VariableList    inVariableList  = inPD.getVariableList();
+21:     DataSetList     inDataSetList   = inPD.getDataSetList();
+22: 
+23:     String strUserID   = inVariableList.getString("test");
+24:     //String strUserName = inVariableList.getString("username");
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [45] 행에서 오류가 발생했습니다.
+HttpPlatformResponse cannot be resolved to a type
+42:      out.clear();
+43:      out=pageContext.pushBody();    
+44:      
+45:     HttpPlatformResponse platformResponse = new HttpPlatformResponse(response, PlatformType.CONTENT_TYPE_XML);   
+46:     PlatformData outPD = platformRequest.getData();
+47:     VariableList    outVariableList  = new VariableList();
+48:     DataSetList     outDataSetList   = new DataSetList();
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [45] 행에서 오류가 발생했습니다.
+HttpPlatformResponse cannot be resolved to a type
+42:      out.clear();
+43:      out=pageContext.pushBody();    
+44:      
+45:     HttpPlatformResponse platformResponse = new HttpPlatformResponse(response, PlatformType.CONTENT_TYPE_XML);   
+46:     PlatformData outPD = platformRequest.getData();
+47:     VariableList    outVariableList  = new VariableList();
+48:     DataSetList     outDataSetList   = new DataSetList();
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [45] 행에서 오류가 발생했습니다.
+PlatformType.CONTENT_TYPE_XML cannot be resolved to a type
+42:      out.clear();
+43:      out=pageContext.pushBody();    
+44:      
+45:     HttpPlatformResponse platformResponse = new HttpPlatformResponse(response, PlatformType.CONTENT_TYPE_XML);   
+46:     PlatformData outPD = platformRequest.getData();
+47:     VariableList    outVariableList  = new VariableList();
+48:     DataSetList     outDataSetList   = new DataSetList();
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [46] 행에서 오류가 발생했습니다.
+PlatformData cannot be resolved to a type
+43:      out=pageContext.pushBody();    
+44:      
+45:     HttpPlatformResponse platformResponse = new HttpPlatformResponse(response, PlatformType.CONTENT_TYPE_XML);   
+46:     PlatformData outPD = platformRequest.getData();
+47:     VariableList    outVariableList  = new VariableList();
+48:     DataSetList     outDataSetList   = new DataSetList();
+49:     
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [47] 행에서 오류가 발생했습니다.
+VariableList cannot be resolved to a type
+44:      
+45:     HttpPlatformResponse platformResponse = new HttpPlatformResponse(response, PlatformType.CONTENT_TYPE_XML);   
+46:     PlatformData outPD = platformRequest.getData();
+47:     VariableList    outVariableList  = new VariableList();
+48:     DataSetList     outDataSetList   = new DataSetList();
+49:     
+50: 	if (comp.equals("true"))
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [47] 행에서 오류가 발생했습니다.
+VariableList cannot be resolved to a type
+44:      
+45:     HttpPlatformResponse platformResponse = new HttpPlatformResponse(response, PlatformType.CONTENT_TYPE_XML);   
+46:     PlatformData outPD = platformRequest.getData();
+47:     VariableList    outVariableList  = new VariableList();
+48:     DataSetList     outDataSetList   = new DataSetList();
+49:     
+50: 	if (comp.equals("true"))
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [48] 행에서 오류가 발생했습니다.
+DataSetList cannot be resolved to a type
+45:     HttpPlatformResponse platformResponse = new HttpPlatformResponse(response, PlatformType.CONTENT_TYPE_XML);   
+46:     PlatformData outPD = platformRequest.getData();
+47:     VariableList    outVariableList  = new VariableList();
+48:     DataSetList     outDataSetList   = new DataSetList();
+49:     
+50: 	if (comp.equals("true"))
+51: 	{
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [48] 행에서 오류가 발생했습니다.
+DataSetList cannot be resolved to a type
+45:     HttpPlatformResponse platformResponse = new HttpPlatformResponse(response, PlatformType.CONTENT_TYPE_XML);   
+46:     PlatformData outPD = platformRequest.getData();
+47:     VariableList    outVariableList  = new VariableList();
+48:     DataSetList     outDataSetList   = new DataSetList();
+49:     
+50: 	if (comp.equals("true"))
+51: 	{
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [52] 행에서 오류가 발생했습니다.
+PlatformType.PROTOCOL_TYPE_ZLIB cannot be resolved to a type
+49:     
+50: 	if (comp.equals("true"))
+51: 	{
+52: 		platformResponse.addProtocolType(PlatformType.PROTOCOL_TYPE_ZLIB); 
+53: 		System.out.println("platformResponse 압축");
+54: 	}
+55: 
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [78] 행에서 오류가 발생했습니다.
+DataSet cannot be resolved to a type
+75:        
+76: 	   for(int i = 0; i < 100; i++)
+77: 	   {
+78: 			DataSet outDataSet0  = new DataSet("output"+i);        
+79: 			// Output Dataset 컬럼 정의
+80: 			outDataSet0.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "A"+i);
+81: 			outDataSet0.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "B"+i);
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [78] 행에서 오류가 발생했습니다.
+DataSet cannot be resolved to a type
+75:        
+76: 	   for(int i = 0; i < 100; i++)
+77: 	   {
+78: 			DataSet outDataSet0  = new DataSet("output"+i);        
+79: 			// Output Dataset 컬럼 정의
+80: 			outDataSet0.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "A"+i);
+81: 			outDataSet0.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "B"+i);
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [80] 행에서 오류가 발생했습니다.
+DataTypes.STRING cannot be resolved to a type
+77: 	   {
+78: 			DataSet outDataSet0  = new DataSet("output"+i);        
+79: 			// Output Dataset 컬럼 정의
+80: 			outDataSet0.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "A"+i);
+81: 			outDataSet0.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "B"+i);
+82: 			outDataSet0.addColumn("Column0",   DataTypes.STRING, 255); 
+83: 			outDataSet0.addColumn("Column1",   DataTypes.STRING, 255); 
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [81] 행에서 오류가 발생했습니다.
+DataTypes.STRING cannot be resolved to a type
+78: 			DataSet outDataSet0  = new DataSet("output"+i);        
+79: 			// Output Dataset 컬럼 정의
+80: 			outDataSet0.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "A"+i);
+81: 			outDataSet0.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "B"+i);
+82: 			outDataSet0.addColumn("Column0",   DataTypes.STRING, 255); 
+83: 			outDataSet0.addColumn("Column1",   DataTypes.STRING, 255); 
+84: 			outDataSet0.addColumn("Column2",   DataTypes.STRING, 255); 
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [82] 행에서 오류가 발생했습니다.
+DataTypes.STRING cannot be resolved to a type
+79: 			// Output Dataset 컬럼 정의
+80: 			outDataSet0.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "A"+i);
+81: 			outDataSet0.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "B"+i);
+82: 			outDataSet0.addColumn("Column0",   DataTypes.STRING, 255); 
+83: 			outDataSet0.addColumn("Column1",   DataTypes.STRING, 255); 
+84: 			outDataSet0.addColumn("Column2",   DataTypes.STRING, 255); 
+85: 			outDataSet0.addColumn("useclientlayout_XML",   DataTypes.STRING, 255); 
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [83] 행에서 오류가 발생했습니다.
+DataTypes.STRING cannot be resolved to a type
+80: 			outDataSet0.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "A"+i);
+81: 			outDataSet0.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "B"+i);
+82: 			outDataSet0.addColumn("Column0",   DataTypes.STRING, 255); 
+83: 			outDataSet0.addColumn("Column1",   DataTypes.STRING, 255); 
+84: 			outDataSet0.addColumn("Column2",   DataTypes.STRING, 255); 
+85: 			outDataSet0.addColumn("useclientlayout_XML",   DataTypes.STRING, 255); 
+86: 			outDataSet0.newRow();
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [84] 행에서 오류가 발생했습니다.
+DataTypes.STRING cannot be resolved to a type
+81: 			outDataSet0.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "B"+i);
+82: 			outDataSet0.addColumn("Column0",   DataTypes.STRING, 255); 
+83: 			outDataSet0.addColumn("Column1",   DataTypes.STRING, 255); 
+84: 			outDataSet0.addColumn("Column2",   DataTypes.STRING, 255); 
+85: 			outDataSet0.addColumn("useclientlayout_XML",   DataTypes.STRING, 255); 
+86: 			outDataSet0.newRow();
+87: 			outDataSetList.add(outDataSet0);
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [85] 행에서 오류가 발생했습니다.
+DataTypes.STRING cannot be resolved to a type
+82: 			outDataSet0.addColumn("Column0",   DataTypes.STRING, 255); 
+83: 			outDataSet0.addColumn("Column1",   DataTypes.STRING, 255); 
+84: 			outDataSet0.addColumn("Column2",   DataTypes.STRING, 255); 
+85: 			outDataSet0.addColumn("useclientlayout_XML",   DataTypes.STRING, 255); 
+86: 			outDataSet0.newRow();
+87: 			outDataSetList.add(outDataSet0);
+88: 		   
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [91] 행에서 오류가 발생했습니다.
+DataSet cannot be resolved to a type
+88: 		   
+89: 	   }
+90: 	   
+91:        DataSet outDataSet00  = new DataSet("output");        
+92:        // Output Dataset 컬럼 정의
+93: 		outDataSet00.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "XML");
+94: 		outDataSet00.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "BCD");
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [91] 행에서 오류가 발생했습니다.
+DataSet cannot be resolved to a type
+88: 		   
+89: 	   }
+90: 	   
+91:        DataSet outDataSet00  = new DataSet("output");        
+92:        // Output Dataset 컬럼 정의
+93: 		outDataSet00.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "XML");
+94: 		outDataSet00.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "BCD");
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [93] 행에서 오류가 발생했습니다.
+DataTypes.STRING cannot be resolved to a type
+90: 	   
+91:        DataSet outDataSet00  = new DataSet("output");        
+92:        // Output Dataset 컬럼 정의
+93: 		outDataSet00.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "XML");
+94: 		outDataSet00.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "BCD");
+95: 		outDataSet00.addColumn("Column0",   DataTypes.STRING, 255); 
+96: 		outDataSet00.addColumn("Column1",   DataTypes.STRING, 255); 
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [94] 행에서 오류가 발생했습니다.
+DataTypes.STRING cannot be resolved to a type
+91:        DataSet outDataSet00  = new DataSet("output");        
+92:        // Output Dataset 컬럼 정의
+93: 		outDataSet00.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "XML");
+94: 		outDataSet00.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "BCD");
+95: 		outDataSet00.addColumn("Column0",   DataTypes.STRING, 255); 
+96: 		outDataSet00.addColumn("Column1",   DataTypes.STRING, 255); 
+97: 		outDataSet00.addColumn("Column2",   DataTypes.STRING, 255); 
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [95] 행에서 오류가 발생했습니다.
+DataTypes.STRING cannot be resolved to a type
+92:        // Output Dataset 컬럼 정의
+93: 		outDataSet00.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "XML");
+94: 		outDataSet00.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "BCD");
+95: 		outDataSet00.addColumn("Column0",   DataTypes.STRING, 255); 
+96: 		outDataSet00.addColumn("Column1",   DataTypes.STRING, 255); 
+97: 		outDataSet00.addColumn("Column2",   DataTypes.STRING, 255); 
+98: 		outDataSet00.addColumn("useclientlayout_XML",   DataTypes.STRING, 255); 
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [96] 행에서 오류가 발생했습니다.
+DataTypes.STRING cannot be resolved to a type
+93: 		outDataSet00.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "XML");
+94: 		outDataSet00.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "BCD");
+95: 		outDataSet00.addColumn("Column0",   DataTypes.STRING, 255); 
+96: 		outDataSet00.addColumn("Column1",   DataTypes.STRING, 255); 
+97: 		outDataSet00.addColumn("Column2",   DataTypes.STRING, 255); 
+98: 		outDataSet00.addColumn("useclientlayout_XML",   DataTypes.STRING, 255); 
+99: 		
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [97] 행에서 오류가 발생했습니다.
+DataTypes.STRING cannot be resolved to a type
+94: 		outDataSet00.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "BCD");
+95: 		outDataSet00.addColumn("Column0",   DataTypes.STRING, 255); 
+96: 		outDataSet00.addColumn("Column1",   DataTypes.STRING, 255); 
+97: 		outDataSet00.addColumn("Column2",   DataTypes.STRING, 255); 
+98: 		outDataSet00.addColumn("useclientlayout_XML",   DataTypes.STRING, 255); 
+99: 		
+100: 		int newRow = 0;
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [98] 행에서 오류가 발생했습니다.
+DataTypes.STRING cannot be resolved to a type
+95: 		outDataSet00.addColumn("Column0",   DataTypes.STRING, 255); 
+96: 		outDataSet00.addColumn("Column1",   DataTypes.STRING, 255); 
+97: 		outDataSet00.addColumn("Column2",   DataTypes.STRING, 255); 
+98: 		outDataSet00.addColumn("useclientlayout_XML",   DataTypes.STRING, 255); 
+99: 		
+100: 		int newRow = 0;
+101: 	   for(int i = 0; i < Integer.parseInt(ag1); i++)
+
+
+Stacktrace:]을(를) 발생시켰습니다.
+	org.apache.jasper.JasperException: JSP를 위한 클래스를 컴파일할 수 없습니다.: 
+
+코드 생성된 자바 파일 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\work\Catalina\localhost\ROOT\org\apache\jsp\jsp\test_005f100_005fXML_jsp.java]의 [17] 행에서 오류가 발생했습니다.
+Only a type can be imported. com.nexacro.jakarta.servlet.http.HttpPlatformResponse resolves to a package
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [16] 행에서 오류가 발생했습니다.
+HttpPlatformRequest cannot be resolved to a type
+13:      * input variable list, input dataset list에 저장한다.
+14:      * (MiPlatform 에서 보내온 데이터를 parsing한다.)
+15:      *********************************************************/
+16:     HttpPlatformRequest platformRequest = new HttpPlatformRequest(request.getInputStream(), PlatformType.CONTENT_TYPE_XML);
+17:     platformRequest.receiveData();
+18:     PlatformData inPD = platformRequest.getData();
+19: 
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [16] 행에서 오류가 발생했습니다.
+HttpPlatformRequest cannot be resolved to a type
+13:      * input variable list, input dataset list에 저장한다.
+14:      * (MiPlatform 에서 보내온 데이터를 parsing한다.)
+15:      *********************************************************/
+16:     HttpPlatformRequest platformRequest = new HttpPlatformRequest(request.getInputStream(), PlatformType.CONTENT_TYPE_XML);
+17:     platformRequest.receiveData();
+18:     PlatformData inPD = platformRequest.getData();
+19: 
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [16] 행에서 오류가 발생했습니다.
+PlatformType.CONTENT_TYPE_XML cannot be resolved to a type
+13:      * input variable list, input dataset list에 저장한다.
+14:      * (MiPlatform 에서 보내온 데이터를 parsing한다.)
+15:      *********************************************************/
+16:     HttpPlatformRequest platformRequest = new HttpPlatformRequest(request.getInputStream(), PlatformType.CONTENT_TYPE_XML);
+17:     platformRequest.receiveData();
+18:     PlatformData inPD = platformRequest.getData();
+19: 
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [18] 행에서 오류가 발생했습니다.
+PlatformData cannot be resolved to a type
+15:      *********************************************************/
+16:     HttpPlatformRequest platformRequest = new HttpPlatformRequest(request.getInputStream(), PlatformType.CONTENT_TYPE_XML);
+17:     platformRequest.receiveData();
+18:     PlatformData inPD = platformRequest.getData();
+19: 
+20:     VariableList    inVariableList  = inPD.getVariableList();
+21:     DataSetList     inDataSetList   = inPD.getDataSetList();
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [20] 행에서 오류가 발생했습니다.
+VariableList cannot be resolved to a type
+17:     platformRequest.receiveData();
+18:     PlatformData inPD = platformRequest.getData();
+19: 
+20:     VariableList    inVariableList  = inPD.getVariableList();
+21:     DataSetList     inDataSetList   = inPD.getDataSetList();
+22: 
+23:     String strUserID   = inVariableList.getString("test");
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [21] 행에서 오류가 발생했습니다.
+DataSetList cannot be resolved to a type
+18:     PlatformData inPD = platformRequest.getData();
+19: 
+20:     VariableList    inVariableList  = inPD.getVariableList();
+21:     DataSetList     inDataSetList   = inPD.getDataSetList();
+22: 
+23:     String strUserID   = inVariableList.getString("test");
+24:     //String strUserName = inVariableList.getString("username");
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [45] 행에서 오류가 발생했습니다.
+HttpPlatformResponse cannot be resolved to a type
+42:      out.clear();
+43:      out=pageContext.pushBody();    
+44:      
+45:     HttpPlatformResponse platformResponse = new HttpPlatformResponse(response, PlatformType.CONTENT_TYPE_XML);   
+46:     PlatformData outPD = platformRequest.getData();
+47:     VariableList    outVariableList  = new VariableList();
+48:     DataSetList     outDataSetList   = new DataSetList();
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [45] 행에서 오류가 발생했습니다.
+HttpPlatformResponse cannot be resolved to a type
+42:      out.clear();
+43:      out=pageContext.pushBody();    
+44:      
+45:     HttpPlatformResponse platformResponse = new HttpPlatformResponse(response, PlatformType.CONTENT_TYPE_XML);   
+46:     PlatformData outPD = platformRequest.getData();
+47:     VariableList    outVariableList  = new VariableList();
+48:     DataSetList     outDataSetList   = new DataSetList();
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [45] 행에서 오류가 발생했습니다.
+PlatformType.CONTENT_TYPE_XML cannot be resolved to a type
+42:      out.clear();
+43:      out=pageContext.pushBody();    
+44:      
+45:     HttpPlatformResponse platformResponse = new HttpPlatformResponse(response, PlatformType.CONTENT_TYPE_XML);   
+46:     PlatformData outPD = platformRequest.getData();
+47:     VariableList    outVariableList  = new VariableList();
+48:     DataSetList     outDataSetList   = new DataSetList();
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [46] 행에서 오류가 발생했습니다.
+PlatformData cannot be resolved to a type
+43:      out=pageContext.pushBody();    
+44:      
+45:     HttpPlatformResponse platformResponse = new HttpPlatformResponse(response, PlatformType.CONTENT_TYPE_XML);   
+46:     PlatformData outPD = platformRequest.getData();
+47:     VariableList    outVariableList  = new VariableList();
+48:     DataSetList     outDataSetList   = new DataSetList();
+49:     
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [47] 행에서 오류가 발생했습니다.
+VariableList cannot be resolved to a type
+44:      
+45:     HttpPlatformResponse platformResponse = new HttpPlatformResponse(response, PlatformType.CONTENT_TYPE_XML);   
+46:     PlatformData outPD = platformRequest.getData();
+47:     VariableList    outVariableList  = new VariableList();
+48:     DataSetList     outDataSetList   = new DataSetList();
+49:     
+50: 	if (comp.equals("true"))
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [47] 행에서 오류가 발생했습니다.
+VariableList cannot be resolved to a type
+44:      
+45:     HttpPlatformResponse platformResponse = new HttpPlatformResponse(response, PlatformType.CONTENT_TYPE_XML);   
+46:     PlatformData outPD = platformRequest.getData();
+47:     VariableList    outVariableList  = new VariableList();
+48:     DataSetList     outDataSetList   = new DataSetList();
+49:     
+50: 	if (comp.equals("true"))
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [48] 행에서 오류가 발생했습니다.
+DataSetList cannot be resolved to a type
+45:     HttpPlatformResponse platformResponse = new HttpPlatformResponse(response, PlatformType.CONTENT_TYPE_XML);   
+46:     PlatformData outPD = platformRequest.getData();
+47:     VariableList    outVariableList  = new VariableList();
+48:     DataSetList     outDataSetList   = new DataSetList();
+49:     
+50: 	if (comp.equals("true"))
+51: 	{
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [48] 행에서 오류가 발생했습니다.
+DataSetList cannot be resolved to a type
+45:     HttpPlatformResponse platformResponse = new HttpPlatformResponse(response, PlatformType.CONTENT_TYPE_XML);   
+46:     PlatformData outPD = platformRequest.getData();
+47:     VariableList    outVariableList  = new VariableList();
+48:     DataSetList     outDataSetList   = new DataSetList();
+49:     
+50: 	if (comp.equals("true"))
+51: 	{
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [52] 행에서 오류가 발생했습니다.
+PlatformType.PROTOCOL_TYPE_ZLIB cannot be resolved to a type
+49:     
+50: 	if (comp.equals("true"))
+51: 	{
+52: 		platformResponse.addProtocolType(PlatformType.PROTOCOL_TYPE_ZLIB); 
+53: 		System.out.println("platformResponse 압축");
+54: 	}
+55: 
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [78] 행에서 오류가 발생했습니다.
+DataSet cannot be resolved to a type
+75:        
+76: 	   for(int i = 0; i < 100; i++)
+77: 	   {
+78: 			DataSet outDataSet0  = new DataSet("output"+i);        
+79: 			// Output Dataset 컬럼 정의
+80: 			outDataSet0.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "A"+i);
+81: 			outDataSet0.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "B"+i);
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [78] 행에서 오류가 발생했습니다.
+DataSet cannot be resolved to a type
+75:        
+76: 	   for(int i = 0; i < 100; i++)
+77: 	   {
+78: 			DataSet outDataSet0  = new DataSet("output"+i);        
+79: 			// Output Dataset 컬럼 정의
+80: 			outDataSet0.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "A"+i);
+81: 			outDataSet0.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "B"+i);
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [80] 행에서 오류가 발생했습니다.
+DataTypes.STRING cannot be resolved to a type
+77: 	   {
+78: 			DataSet outDataSet0  = new DataSet("output"+i);        
+79: 			// Output Dataset 컬럼 정의
+80: 			outDataSet0.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "A"+i);
+81: 			outDataSet0.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "B"+i);
+82: 			outDataSet0.addColumn("Column0",   DataTypes.STRING, 255); 
+83: 			outDataSet0.addColumn("Column1",   DataTypes.STRING, 255); 
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [81] 행에서 오류가 발생했습니다.
+DataTypes.STRING cannot be resolved to a type
+78: 			DataSet outDataSet0  = new DataSet("output"+i);        
+79: 			// Output Dataset 컬럼 정의
+80: 			outDataSet0.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "A"+i);
+81: 			outDataSet0.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "B"+i);
+82: 			outDataSet0.addColumn("Column0",   DataTypes.STRING, 255); 
+83: 			outDataSet0.addColumn("Column1",   DataTypes.STRING, 255); 
+84: 			outDataSet0.addColumn("Column2",   DataTypes.STRING, 255); 
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [82] 행에서 오류가 발생했습니다.
+DataTypes.STRING cannot be resolved to a type
+79: 			// Output Dataset 컬럼 정의
+80: 			outDataSet0.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "A"+i);
+81: 			outDataSet0.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "B"+i);
+82: 			outDataSet0.addColumn("Column0",   DataTypes.STRING, 255); 
+83: 			outDataSet0.addColumn("Column1",   DataTypes.STRING, 255); 
+84: 			outDataSet0.addColumn("Column2",   DataTypes.STRING, 255); 
+85: 			outDataSet0.addColumn("useclientlayout_XML",   DataTypes.STRING, 255); 
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [83] 행에서 오류가 발생했습니다.
+DataTypes.STRING cannot be resolved to a type
+80: 			outDataSet0.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "A"+i);
+81: 			outDataSet0.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "B"+i);
+82: 			outDataSet0.addColumn("Column0",   DataTypes.STRING, 255); 
+83: 			outDataSet0.addColumn("Column1",   DataTypes.STRING, 255); 
+84: 			outDataSet0.addColumn("Column2",   DataTypes.STRING, 255); 
+85: 			outDataSet0.addColumn("useclientlayout_XML",   DataTypes.STRING, 255); 
+86: 			outDataSet0.newRow();
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [84] 행에서 오류가 발생했습니다.
+DataTypes.STRING cannot be resolved to a type
+81: 			outDataSet0.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "B"+i);
+82: 			outDataSet0.addColumn("Column0",   DataTypes.STRING, 255); 
+83: 			outDataSet0.addColumn("Column1",   DataTypes.STRING, 255); 
+84: 			outDataSet0.addColumn("Column2",   DataTypes.STRING, 255); 
+85: 			outDataSet0.addColumn("useclientlayout_XML",   DataTypes.STRING, 255); 
+86: 			outDataSet0.newRow();
+87: 			outDataSetList.add(outDataSet0);
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [85] 행에서 오류가 발생했습니다.
+DataTypes.STRING cannot be resolved to a type
+82: 			outDataSet0.addColumn("Column0",   DataTypes.STRING, 255); 
+83: 			outDataSet0.addColumn("Column1",   DataTypes.STRING, 255); 
+84: 			outDataSet0.addColumn("Column2",   DataTypes.STRING, 255); 
+85: 			outDataSet0.addColumn("useclientlayout_XML",   DataTypes.STRING, 255); 
+86: 			outDataSet0.newRow();
+87: 			outDataSetList.add(outDataSet0);
+88: 		   
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [91] 행에서 오류가 발생했습니다.
+DataSet cannot be resolved to a type
+88: 		   
+89: 	   }
+90: 	   
+91:        DataSet outDataSet00  = new DataSet("output");        
+92:        // Output Dataset 컬럼 정의
+93: 		outDataSet00.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "XML");
+94: 		outDataSet00.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "BCD");
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [91] 행에서 오류가 발생했습니다.
+DataSet cannot be resolved to a type
+88: 		   
+89: 	   }
+90: 	   
+91:        DataSet outDataSet00  = new DataSet("output");        
+92:        // Output Dataset 컬럼 정의
+93: 		outDataSet00.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "XML");
+94: 		outDataSet00.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "BCD");
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [93] 행에서 오류가 발생했습니다.
+DataTypes.STRING cannot be resolved to a type
+90: 	   
+91:        DataSet outDataSet00  = new DataSet("output");        
+92:        // Output Dataset 컬럼 정의
+93: 		outDataSet00.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "XML");
+94: 		outDataSet00.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "BCD");
+95: 		outDataSet00.addColumn("Column0",   DataTypes.STRING, 255); 
+96: 		outDataSet00.addColumn("Column1",   DataTypes.STRING, 255); 
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [94] 행에서 오류가 발생했습니다.
+DataTypes.STRING cannot be resolved to a type
+91:        DataSet outDataSet00  = new DataSet("output");        
+92:        // Output Dataset 컬럼 정의
+93: 		outDataSet00.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "XML");
+94: 		outDataSet00.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "BCD");
+95: 		outDataSet00.addColumn("Column0",   DataTypes.STRING, 255); 
+96: 		outDataSet00.addColumn("Column1",   DataTypes.STRING, 255); 
+97: 		outDataSet00.addColumn("Column2",   DataTypes.STRING, 255); 
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [95] 행에서 오류가 발생했습니다.
+DataTypes.STRING cannot be resolved to a type
+92:        // Output Dataset 컬럼 정의
+93: 		outDataSet00.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "XML");
+94: 		outDataSet00.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "BCD");
+95: 		outDataSet00.addColumn("Column0",   DataTypes.STRING, 255); 
+96: 		outDataSet00.addColumn("Column1",   DataTypes.STRING, 255); 
+97: 		outDataSet00.addColumn("Column2",   DataTypes.STRING, 255); 
+98: 		outDataSet00.addColumn("useclientlayout_XML",   DataTypes.STRING, 255); 
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [96] 행에서 오류가 발생했습니다.
+DataTypes.STRING cannot be resolved to a type
+93: 		outDataSet00.addConstantColumn("ConstColumn0", DataTypes.STRING, 30, "XML");
+94: 		outDataSet00.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "BCD");
+95: 		outDataSet00.addColumn("Column0",   DataTypes.STRING, 255); 
+96: 		outDataSet00.addColumn("Column1",   DataTypes.STRING, 255); 
+97: 		outDataSet00.addColumn("Column2",   DataTypes.STRING, 255); 
+98: 		outDataSet00.addColumn("useclientlayout_XML",   DataTypes.STRING, 255); 
+99: 		
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [97] 행에서 오류가 발생했습니다.
+DataTypes.STRING cannot be resolved to a type
+94: 		outDataSet00.addConstantColumn("ConstColumn1", DataTypes.STRING, 255, "BCD");
+95: 		outDataSet00.addColumn("Column0",   DataTypes.STRING, 255); 
+96: 		outDataSet00.addColumn("Column1",   DataTypes.STRING, 255); 
+97: 		outDataSet00.addColumn("Column2",   DataTypes.STRING, 255); 
+98: 		outDataSet00.addColumn("useclientlayout_XML",   DataTypes.STRING, 255); 
+99: 		
+100: 		int newRow = 0;
+
+
+JSP 파일 [/jsp/test_100_XML.jsp]의 [98] 행에서 오류가 발생했습니다.
+DataTypes.STRING cannot be resolved to a type
+95: 		outDataSet00.addColumn("Column0",   DataTypes.STRING, 255); 
+96: 		outDataSet00.addColumn("Column1",   DataTypes.STRING, 255); 
+97: 		outDataSet00.addColumn("Column2",   DataTypes.STRING, 255); 
+98: 		outDataSet00.addColumn("useclientlayout_XML",   DataTypes.STRING, 255); 
+99: 		
+100: 		int newRow = 0;
+101: 	   for(int i = 0; i < Integer.parseInt(ag1); i++)
+
+
+Stacktrace:
+		at org.apache.jasper.compiler.DefaultErrorHandler.javacError(DefaultErrorHandler.java:70)
+		at org.apache.jasper.compiler.ErrorDispatcher.javacError(ErrorDispatcher.java:189)
+		at org.apache.jasper.compiler.JDTCompiler.generateClass(JDTCompiler.java:575)
+		at org.apache.jasper.compiler.Compiler.compile(Compiler.java:368)
+		at org.apache.jasper.compiler.Compiler.compile(Compiler.java:340)
+		at org.apache.jasper.compiler.Compiler.compile(Compiler.java:326)
+		at org.apache.jasper.JspCompilationContext.compile(JspCompilationContext.java:586)
+		at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:368)
+		at org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:350)
+		at org.apache.jasper.servlet.JspServlet.service(JspServlet.java:301)
+		at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.catalina.filters.CorsFilter.handleNonCORS(CorsFilter.java:332)
+		at org.apache.catalina.filters.CorsFilter.doFilter(CorsFilter.java:159)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+		at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88)
+		at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+		at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+		at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+		at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:782)
+		at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+		at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+		at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+		at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+		at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1272)
+		at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1797)
+		at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+		at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973)
+		at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491)
+		at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+		at java.base/java.lang.Thread.run(Thread.java:1583)
+27-Jul-2026 18:52:27.069 심각 [http-nio-7070-exec-9] org.apache.catalina.core.StandardWrapperValve.invoke 경로 []의 컨텍스트 내의 서블릿 [jsp]을(를) 위한 Servlet.service() 호출이, 근본 원인(root cause)과 함께, 예외 [행 [16]에서 [/jsp/test_100_XML.jsp]을(를) 처리하는 중 예외 발생
+
+13:      * (MiPlatform 에서 보내온 데이터를 parsing한다.)
+14:      *********************************************************/
+15:     HttpPlatformRequest platformRequest = new HttpPlatformRequest(request.getInputStream(), PlatformType.CONTENT_TYPE_XML);
+16:     platformRequest.receiveData();
+17:     PlatformData inPD = platformRequest.getData();
+18: 
+19:     VariableList    inVariableList  = inPD.getVariableList();
+
+
+Stacktrace:]을(를) 발생시켰습니다.
+	com.nexacro.java.xapi.license.InvalidLicenseException: License has expired: expireDate=2026-07-01, currentDate=2026-07-27
+		at com.nexacro.java.xapi.license.A.H.G(Unknown Source)
+		at com.nexacro.java.xapi.license.A.H.B(Unknown Source)
+		at com.nexacro.java.xapi.license.A.D.A(Unknown Source)
+		at com.nexacro.java.xapi.license.A.D.A(Unknown Source)
+		at com.nexacro.java.xapi.license.A.D.A(Unknown Source)
+		at com.nexacro.java.xapi.license.A.D.B(Unknown Source)
+		at com.nexacro.java.xapi.license.License.getInstance(License.java:212)
+		at com.nexacro.java.xapi.tx.PlatformTransaction.checkLicense(PlatformTransaction.java:450)
+		at com.nexacro.java.xapi.tx.PlatformRequest.receiveData(PlatformRequest.java:213)
+		at com.nexacro.java.xapi.tx.HttpPlatformRequest.receiveData(HttpPlatformRequest.java:236)
+		at org.apache.jsp.jsp.test_005f100_005fXML_jsp._jspService(test_005f100_005fXML_jsp.java:142)
+		at org.apache.jasper.runtime.HttpJspBase.service(HttpJspBase.java:62)
+		at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+		at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:428)
+		at org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:350)
+		at org.apache.jasper.servlet.JspServlet.service(JspServlet.java:301)
+		at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.catalina.filters.CorsFilter.handleNonCORS(CorsFilter.java:332)
+		at org.apache.catalina.filters.CorsFilter.doFilter(CorsFilter.java:159)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+		at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88)
+		at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+		at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+		at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+		at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:782)
+		at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+		at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+		at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+		at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+		at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1272)
+		at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1797)
+		at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+		at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973)
+		at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491)
+		at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+		at java.base/java.lang.Thread.run(Thread.java:1583)
+27-Jul-2026 18:53:24.292 심각 [http-nio-7070-exec-1] org.apache.catalina.core.StandardWrapperValve.invoke 경로 []의 컨텍스트 내의 서블릿 [jsp]을(를) 위한 Servlet.service() 호출이, 근본 원인(root cause)과 함께, 예외 [행 [49]에서 [/jsp/test_100_XML.jsp]을(를) 처리하는 중 예외 발생
+
+46:     VariableList    outVariableList  = new VariableList();
+47:     DataSetList     outDataSetList   = new DataSetList();
+48:     
+49: 	if (comp.equals("true"))
+50: 	{
+51: 		platformResponse.addProtocolType(PlatformType.PROTOCOL_TYPE_ZLIB); 
+52: 		System.out.println("platformResponse 압축");
+
+
+Stacktrace:]을(를) 발생시켰습니다.
+	java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because "comp" is null
+		at org.apache.jsp.jsp.test_005f100_005fXML_jsp._jspService(test_005f100_005fXML_jsp.java:175)
+		at org.apache.jasper.runtime.HttpJspBase.service(HttpJspBase.java:62)
+		at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+		at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:428)
+		at org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:350)
+		at org.apache.jasper.servlet.JspServlet.service(JspServlet.java:301)
+		at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.catalina.filters.CorsFilter.handleNonCORS(CorsFilter.java:332)
+		at org.apache.catalina.filters.CorsFilter.doFilter(CorsFilter.java:159)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+		at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88)
+		at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+		at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+		at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+		at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:782)
+		at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+		at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+		at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+		at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+		at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1272)
+		at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1797)
+		at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+		at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973)
+		at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491)
+		at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+		at java.base/java.lang.Thread.run(Thread.java:1583)
+27-Jul-2026 18:53:25.402 심각 [http-nio-7070-exec-2] org.apache.catalina.core.StandardWrapperValve.invoke 경로 []의 컨텍스트 내의 서블릿 [jsp]을(를) 위한 Servlet.service() 호출이, 근본 원인(root cause)과 함께, 예외 [행 [49]에서 [/jsp/test_100_XML.jsp]을(를) 처리하는 중 예외 발생
+
+46:     VariableList    outVariableList  = new VariableList();
+47:     DataSetList     outDataSetList   = new DataSetList();
+48:     
+49: 	if (comp.equals("true"))
+50: 	{
+51: 		platformResponse.addProtocolType(PlatformType.PROTOCOL_TYPE_ZLIB); 
+52: 		System.out.println("platformResponse 압축");
+
+
+Stacktrace:]을(를) 발생시켰습니다.
+	java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because "comp" is null
+		at org.apache.jsp.jsp.test_005f100_005fXML_jsp._jspService(test_005f100_005fXML_jsp.java:175)
+		at org.apache.jasper.runtime.HttpJspBase.service(HttpJspBase.java:62)
+		at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+		at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:428)
+		at org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:350)
+		at org.apache.jasper.servlet.JspServlet.service(JspServlet.java:301)
+		at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.catalina.filters.CorsFilter.handleNonCORS(CorsFilter.java:332)
+		at org.apache.catalina.filters.CorsFilter.doFilter(CorsFilter.java:159)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+		at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88)
+		at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+		at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+		at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+		at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:782)
+		at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+		at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+		at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+		at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+		at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1272)
+		at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1797)
+		at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+		at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973)
+		at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491)
+		at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+		at java.base/java.lang.Thread.run(Thread.java:1583)
+27-Jul-2026 18:53:33.281 심각 [http-nio-7070-exec-3] org.apache.catalina.core.StandardWrapperValve.invoke 경로 []의 컨텍스트 내의 서블릿 [jsp]을(를) 위한 Servlet.service() 호출이, 근본 원인(root cause)과 함께, 예외 [행 [49]에서 [/jsp/test_100_XML.jsp]을(를) 처리하는 중 예외 발생
+
+46:     VariableList    outVariableList  = new VariableList();
+47:     DataSetList     outDataSetList   = new DataSetList();
+48:     
+49: 	if (comp.equals("true"))
+50: 	{
+51: 		platformResponse.addProtocolType(PlatformType.PROTOCOL_TYPE_ZLIB); 
+52: 		System.out.println("platformResponse 압축");
+
+
+Stacktrace:]을(를) 발생시켰습니다.
+	java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because "comp" is null
+		at org.apache.jsp.jsp.test_005f100_005fXML_jsp._jspService(test_005f100_005fXML_jsp.java:175)
+		at org.apache.jasper.runtime.HttpJspBase.service(HttpJspBase.java:62)
+		at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+		at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:428)
+		at org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:350)
+		at org.apache.jasper.servlet.JspServlet.service(JspServlet.java:301)
+		at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.catalina.filters.CorsFilter.handleNonCORS(CorsFilter.java:332)
+		at org.apache.catalina.filters.CorsFilter.doFilter(CorsFilter.java:159)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+		at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88)
+		at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+		at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+		at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+		at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:782)
+		at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+		at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+		at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+		at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+		at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1272)
+		at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1797)
+		at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+		at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973)
+		at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491)
+		at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+		at java.base/java.lang.Thread.run(Thread.java:1583)
+27-Jul-2026 19:20:07.329 정보 [Thread-1] org.apache.catalina.core.ApplicationContext.log SessionListener: contextDestroyed()
+27-Jul-2026 19:20:07.329 정보 [Thread-1] org.apache.catalina.core.ApplicationContext.log ContextListener: contextDestroyed()
+27-Jul-2026 19:20:10.658 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
+27-Jul-2026 19:20:10.658 정보 [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
+27-Jul-2026 19:20:10.659 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: attributeAdded('StockTicker', 'async.Stockticker@345cf395')
+27-Jul-2026 19:24:21.373 정보 [Catalina-utility-2] org.apache.catalina.core.ApplicationContext.log SessionListener: contextDestroyed()
+27-Jul-2026 19:24:21.373 정보 [Catalina-utility-2] org.apache.catalina.core.ApplicationContext.log ContextListener: contextDestroyed()
+27-Jul-2026 19:24:21.555 정보 [Catalina-utility-2] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
+27-Jul-2026 19:24:21.555 정보 [Catalina-utility-2] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
+27-Jul-2026 19:24:21.555 정보 [Catalina-utility-2] org.apache.catalina.core.ApplicationContext.log ContextListener: attributeAdded('StockTicker', 'async.Stockticker@e5bb718')
+27-Jul-2026 19:26:04.101 정보 [Thread-1] org.apache.catalina.core.ApplicationContext.log SessionListener: contextDestroyed()
+27-Jul-2026 19:26:04.101 정보 [Thread-1] org.apache.catalina.core.ApplicationContext.log ContextListener: contextDestroyed()
+27-Jul-2026 19:26:09.007 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
+27-Jul-2026 19:26:09.007 정보 [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
+27-Jul-2026 19:26:09.008 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: attributeAdded('StockTicker', 'async.Stockticker@592238c5')
+27-Jul-2026 19:26:53.987 정보 [Thread-1] org.apache.catalina.core.ApplicationContext.log SessionListener: contextDestroyed()
+27-Jul-2026 19:26:53.987 정보 [Thread-1] org.apache.catalina.core.ApplicationContext.log ContextListener: contextDestroyed()
+27-Jul-2026 19:26:57.433 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
+27-Jul-2026 19:26:57.433 정보 [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
+27-Jul-2026 19:26:57.435 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: attributeAdded('StockTicker', 'async.Stockticker@a20b94b')
+27-Jul-2026 19:27:41.152 정보 [Thread-1] org.apache.catalina.core.ApplicationContext.log SessionListener: contextDestroyed()
+27-Jul-2026 19:27:41.153 정보 [Thread-1] org.apache.catalina.core.ApplicationContext.log ContextListener: contextDestroyed()
+27-Jul-2026 19:27:47.297 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
+27-Jul-2026 19:27:47.297 정보 [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
+27-Jul-2026 19:27:47.299 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: attributeAdded('StockTicker', 'async.Stockticker@14f3c6fc')
+27-Jul-2026 19:29:49.938 정보 [Thread-1] org.apache.catalina.core.ApplicationContext.log SessionListener: contextDestroyed()
+27-Jul-2026 19:29:49.938 정보 [Thread-1] org.apache.catalina.core.ApplicationContext.log ContextListener: contextDestroyed()
+27-Jul-2026 19:30:00.324 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
+27-Jul-2026 19:30:00.324 정보 [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
+27-Jul-2026 19:30:00.327 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: attributeAdded('StockTicker', 'async.Stockticker@a20b94b')
+27-Jul-2026 20:16:42.665 정보 [Thread-1] org.apache.catalina.core.ApplicationContext.log SessionListener: contextDestroyed()
+27-Jul-2026 20:16:42.665 정보 [Thread-1] org.apache.catalina.core.ApplicationContext.log ContextListener: contextDestroyed()
+27-Jul-2026 20:22:11.064 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
+27-Jul-2026 20:22:11.064 정보 [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
+27-Jul-2026 20:22:11.066 정보 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: attributeAdded('StockTicker', 'async.Stockticker@6ee8dcd3')

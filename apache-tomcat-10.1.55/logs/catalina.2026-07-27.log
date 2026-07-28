@@ -1,0 +1,1092 @@
+27-Jul-2026 18:35:15.987 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 서버 버전 이름:    Apache Tomcat/10.1.55
+27-Jul-2026 18:35:15.991 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 빌드 시각:  May 5 2026 13:33:02 UTC
+27-Jul-2026 18:35:15.991 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 버전 번호:  10.1.55.0
+27-Jul-2026 18:35:15.991 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 이름:     Windows 11
+27-Jul-2026 18:35:15.992 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 버전:     10.0
+27-Jul-2026 18:35:15.992 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 아키텍처:          amd64
+27-Jul-2026 18:35:15.992 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 자바 홈:           C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10
+27-Jul-2026 18:35:15.992 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 버전:          21.0.9+10-LTS
+27-Jul-2026 18:35:15.992 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 벤더:          Microsoft
+27-Jul-2026 18:35:15.992 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:     D:\git_prj\cursor_project\apache-tomcat-10.1.55
+27-Jul-2026 18:35:15.993 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:     D:\git_prj\cursor_project\apache-tomcat-10.1.55
+27-Jul-2026 18:35:16.001 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dstdout.encoding=UTF-8
+27-Jul-2026 18:35:16.001 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dstderr.encoding=UTF-8
+27-Jul-2026 18:35:16.001 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.config.file=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\conf\logging.properties
+27-Jul-2026 18:35:16.002 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+27-Jul-2026 18:35:16.002 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djdk.tls.ephemeralDHKeySize=2048
+27-Jul-2026 18:35:16.002 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+27-Jul-2026 18:35:16.002 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dsun.io.useCanonCaches=false
+27-Jul-2026 18:35:16.002 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang=ALL-UNNAMED
+27-Jul-2026 18:35:16.002 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+27-Jul-2026 18:35:16.003 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.io=ALL-UNNAMED
+27-Jul-2026 18:35:16.003 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util=ALL-UNNAMED
+27-Jul-2026 18:35:16.003 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+27-Jul-2026 18:35:16.003 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+27-Jul-2026 18:35:16.003 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.base=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+27-Jul-2026 18:35:16.004 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.home=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+27-Jul-2026 18:35:16.004 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.io.tmpdir=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\temp
+27-Jul-2026 18:35:16.028 정보 [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent 프로덕션 환경들에서 최적의 성능을 제공하는, APR 기반 Apache Tomcat Native 라이브러리가, 다음 java.library.path에서 발견되지 않습니다: [C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Python314\Scripts\;C:\Python314\;c:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Program Files (x86)\Microsoft\Edge\Application;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\dotnet\;C:\Program Files\PuTTY\;C:\Program Files\TortoiseSVN\bin;C:\ProgramData\chocolatey\bin;C:\openssl-0.9.8k_X64\bin\;C:\Users\sjrnfl13\AppData\Local\Android\Sdk\platform-tools\;C:\Program Files\XVision\Sense Reader;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl1;D:\Python\Scripts\;D:\Python\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;C:\dev\apache-maven-3.9.11\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Program Files\GitExtensions\;C:\Program Files\XVision\Sense Reader;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\\bin;C:\Users\sjrnfl13\.bun\bin;C:\Program Files\Go\bin;C:\apache-maven-3.9.9\bin;C:\Program Files\XVision\Sense Reader;D:\Python\Scripts\;D:\Python;C:\Users\sjrnfl13\AppData\Local\Programs\Python\Python37\Scripts\;C:\Users\sjrnfl13\AppData\Local\Programs\Python\Python37\;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Local\afreeca;C:\Users\sjrnfl13\AppData\Local\Programs\Ollama;C:\Users\sjrnfl13\AppData\Local\Microsoft\WinGet\Packages\Schniz.fnm_Microsoft.Winget.Source_8wekyb3d8bbwe;C:\Users\sjrnfl13\AppData\Local\GitHubDesktop\bin;C:\Program Files\JetBrains\PyCharm Community Edition 2024.2.3\bin;C:\Users\sjrnfl13\AppData\Local\SOOP;C:\Users\sjrnfl13\AppData\Local\Programs\Fiddler;C:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Windsurf\bin;C:\Program Files\JetBrains\PyCharm 2025.1.2\bin;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Roaming\npm;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\sjrnfl13\AppData\Local\Microsoft\WinGet\Links;C:\Users\sjrnfl13\.local\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\;C:\Users\sjrnfl13\.bun\bin;C:\Users\sjrnfl13\.bun\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity IDE\bin;C:\Users\sjrnfl13\go\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Users\sjrnfl13\.dotnet\tools;C:\Users\sjrnfl13\AppData\Roaming\Python\Python314\Scripts;.]
+27-Jul-2026 18:35:16.231 정보 [main] org.apache.coyote.AbstractProtocol.init 프로토콜 핸들러 ["http-nio-7070"]을(를) 초기화합니다.
+27-Jul-2026 18:35:16.253 정보 [main] org.apache.catalina.startup.Catalina.load [486] 밀리초 내에 서버가 초기화되었습니다.
+27-Jul-2026 18:35:16.316 정보 [main] org.apache.catalina.core.StandardService.startInternal 서비스 [Catalina]을(를) 시작합니다.
+27-Jul-2026 18:35:16.316 정보 [main] org.apache.catalina.core.StandardEngine.startInternal 서버 엔진을 시작합니다: [Apache Tomcat/10.1.55]
+27-Jul-2026 18:35:16.363 심각 [main] org.apache.catalina.core.ContainerBase.startInternal 자식 컨테이너를 시작 중 실패했습니다.
+	java.util.concurrent.ExecutionException: org.apache.catalina.LifecycleException: 구성요소 [org.apache.catalina.webresources.StandardRoot@7f284218]을(를) 시작하지 못했습니다.
+		at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:122)
+		at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:191)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:754)
+		at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:783)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747)
+		at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:201)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardService.startInternal(StandardService.java:410)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:868)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.startup.Catalina.start(Catalina.java:758)
+		at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+		at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:342)
+		at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:473)
+	Caused by: org.apache.catalina.LifecycleException: 구성요소 [org.apache.catalina.webresources.StandardRoot@7f284218]을(를) 시작하지 못했습니다.
+		at org.apache.catalina.util.LifecycleBase.handleSubClassException(LifecycleBase.java:404)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:179)
+		at org.apache.catalina.core.StandardContext.resourcesStart(StandardContext.java:4151)
+		at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4273)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747)
+		... 19 more
+	Caused by: java.lang.IllegalArgumentException: The main resource set specified [D:\git_prj\cursor_project\nexacroN_v24] is not a directory or war file, or is not readable (it does not exist or permissions to access it are missing)
+		at org.apache.catalina.webresources.StandardRoot.createMainResourceSet(StandardRoot.java:758)
+		at org.apache.catalina.webresources.StandardRoot.startInternal(StandardRoot.java:715)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		... 28 more
+27-Jul-2026 18:35:16.366 심각 [main] org.apache.catalina.core.ContainerBase.startInternal 자식 컨테이너를 시작 중 실패했습니다.
+	java.util.concurrent.ExecutionException: org.apache.catalina.LifecycleException: 자식 컨테이너를 시작 중 실패했습니다.
+		at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:122)
+		at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:191)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:754)
+		at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:201)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardService.startInternal(StandardService.java:410)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:868)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.startup.Catalina.start(Catalina.java:758)
+		at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+		at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:342)
+		at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:473)
+	Caused by: org.apache.catalina.LifecycleException: 자식 컨테이너를 시작 중 실패했습니다.
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:766)
+		at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:783)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747)
+		... 11 more
+	Caused by: java.util.concurrent.ExecutionException: org.apache.catalina.LifecycleException: 구성요소 [org.apache.catalina.webresources.StandardRoot@7f284218]을(를) 시작하지 못했습니다.
+		at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:122)
+		at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:191)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:754)
+		... 19 more
+	Caused by: org.apache.catalina.LifecycleException: 구성요소 [org.apache.catalina.webresources.StandardRoot@7f284218]을(를) 시작하지 못했습니다.
+		at org.apache.catalina.util.LifecycleBase.handleSubClassException(LifecycleBase.java:404)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:179)
+		at org.apache.catalina.core.StandardContext.resourcesStart(StandardContext.java:4151)
+		at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4273)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747)
+		... 19 more
+	Caused by: java.lang.IllegalArgumentException: The main resource set specified [D:\git_prj\cursor_project\nexacroN_v24] is not a directory or war file, or is not readable (it does not exist or permissions to access it are missing)
+		at org.apache.catalina.webresources.StandardRoot.createMainResourceSet(StandardRoot.java:758)
+		at org.apache.catalina.webresources.StandardRoot.startInternal(StandardRoot.java:715)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		... 28 more
+27-Jul-2026 18:35:16.368 심각 [main] org.apache.catalina.startup.Catalina.start 필수 항목인 서버 구성요소가 제대로 시작되지 못하여, Tomcat이 시작될 수 없습니다.
+	org.apache.catalina.LifecycleException: 자식 컨테이너를 시작 중 실패했습니다.
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:766)
+		at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:201)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardService.startInternal(StandardService.java:410)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:868)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.startup.Catalina.start(Catalina.java:758)
+		at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+		at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:342)
+		at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:473)
+	Caused by: java.util.concurrent.ExecutionException: org.apache.catalina.LifecycleException: 자식 컨테이너를 시작 중 실패했습니다.
+		at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:122)
+		at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:191)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:754)
+		... 11 more
+	Caused by: org.apache.catalina.LifecycleException: 자식 컨테이너를 시작 중 실패했습니다.
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:766)
+		at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:783)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747)
+		... 11 more
+	Caused by: java.util.concurrent.ExecutionException: org.apache.catalina.LifecycleException: 구성요소 [org.apache.catalina.webresources.StandardRoot@7f284218]을(를) 시작하지 못했습니다.
+		at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:122)
+		at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:191)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:754)
+		... 19 more
+	Caused by: org.apache.catalina.LifecycleException: 구성요소 [org.apache.catalina.webresources.StandardRoot@7f284218]을(를) 시작하지 못했습니다.
+		at org.apache.catalina.util.LifecycleBase.handleSubClassException(LifecycleBase.java:404)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:179)
+		at org.apache.catalina.core.StandardContext.resourcesStart(StandardContext.java:4151)
+		at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4273)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747)
+		... 19 more
+	Caused by: java.lang.IllegalArgumentException: The main resource set specified [D:\git_prj\cursor_project\nexacroN_v24] is not a directory or war file, or is not readable (it does not exist or permissions to access it are missing)
+		at org.apache.catalina.webresources.StandardRoot.createMainResourceSet(StandardRoot.java:758)
+		at org.apache.catalina.webresources.StandardRoot.startInternal(StandardRoot.java:715)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		... 28 more
+27-Jul-2026 18:35:16.369 정보 [main] org.apache.coyote.AbstractProtocol.pause 프로토콜 핸들러 ["http-nio-7070"]을(를) 일시 정지 중
+27-Jul-2026 18:35:16.369 정보 [main] org.apache.catalina.core.StandardService.stopInternal 서비스 [Catalina]을(를) 중지시킵니다.
+27-Jul-2026 18:35:16.371 정보 [main] org.apache.coyote.AbstractProtocol.destroy 프로토콜 핸들러 ["http-nio-7070"]을(를) 소멸시킵니다.
+27-Jul-2026 18:36:34.891 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 서버 버전 이름:    Apache Tomcat/10.1.55
+27-Jul-2026 18:36:34.895 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 빌드 시각:  May 5 2026 13:33:02 UTC
+27-Jul-2026 18:36:34.895 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 버전 번호:  10.1.55.0
+27-Jul-2026 18:36:34.895 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 이름:     Windows 11
+27-Jul-2026 18:36:34.896 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 버전:     10.0
+27-Jul-2026 18:36:34.896 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 아키텍처:          amd64
+27-Jul-2026 18:36:34.896 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 자바 홈:           C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10
+27-Jul-2026 18:36:34.897 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 버전:          21.0.9+10-LTS
+27-Jul-2026 18:36:34.897 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 벤더:          Microsoft
+27-Jul-2026 18:36:34.897 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:     D:\git_prj\cursor_project\apache-tomcat-10.1.55
+27-Jul-2026 18:36:34.897 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:     D:\git_prj\cursor_project\apache-tomcat-10.1.55
+27-Jul-2026 18:36:34.906 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dstdout.encoding=UTF-8
+27-Jul-2026 18:36:34.907 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dstderr.encoding=UTF-8
+27-Jul-2026 18:36:34.907 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.config.file=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\conf\logging.properties
+27-Jul-2026 18:36:34.907 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+27-Jul-2026 18:36:34.907 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djdk.tls.ephemeralDHKeySize=2048
+27-Jul-2026 18:36:34.908 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+27-Jul-2026 18:36:34.908 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dsun.io.useCanonCaches=false
+27-Jul-2026 18:36:34.908 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang=ALL-UNNAMED
+27-Jul-2026 18:36:34.909 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+27-Jul-2026 18:36:34.909 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.io=ALL-UNNAMED
+27-Jul-2026 18:36:34.909 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util=ALL-UNNAMED
+27-Jul-2026 18:36:34.909 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+27-Jul-2026 18:36:34.910 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+27-Jul-2026 18:36:34.910 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.base=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+27-Jul-2026 18:36:34.910 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.home=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+27-Jul-2026 18:36:34.910 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.io.tmpdir=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\temp
+27-Jul-2026 18:36:34.935 정보 [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent 프로덕션 환경들에서 최적의 성능을 제공하는, APR 기반 Apache Tomcat Native 라이브러리가, 다음 java.library.path에서 발견되지 않습니다: [C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Python314\Scripts\;C:\Python314\;c:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Program Files (x86)\Microsoft\Edge\Application;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\dotnet\;C:\Program Files\PuTTY\;C:\Program Files\TortoiseSVN\bin;C:\ProgramData\chocolatey\bin;C:\openssl-0.9.8k_X64\bin\;C:\Users\sjrnfl13\AppData\Local\Android\Sdk\platform-tools\;C:\Program Files\XVision\Sense Reader;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl1;D:\Python\Scripts\;D:\Python\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;C:\dev\apache-maven-3.9.11\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Program Files\GitExtensions\;C:\Program Files\XVision\Sense Reader;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\\bin;C:\Users\sjrnfl13\.bun\bin;C:\Program Files\Go\bin;C:\apache-maven-3.9.9\bin;C:\Program Files\XVision\Sense Reader;D:\Python\Scripts\;D:\Python;C:\Users\sjrnfl13\AppData\Local\Programs\Python\Python37\Scripts\;C:\Users\sjrnfl13\AppData\Local\Programs\Python\Python37\;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Local\afreeca;C:\Users\sjrnfl13\AppData\Local\Programs\Ollama;C:\Users\sjrnfl13\AppData\Local\Microsoft\WinGet\Packages\Schniz.fnm_Microsoft.Winget.Source_8wekyb3d8bbwe;C:\Users\sjrnfl13\AppData\Local\GitHubDesktop\bin;C:\Program Files\JetBrains\PyCharm Community Edition 2024.2.3\bin;C:\Users\sjrnfl13\AppData\Local\SOOP;C:\Users\sjrnfl13\AppData\Local\Programs\Fiddler;C:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Windsurf\bin;C:\Program Files\JetBrains\PyCharm 2025.1.2\bin;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Roaming\npm;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\sjrnfl13\AppData\Local\Microsoft\WinGet\Links;C:\Users\sjrnfl13\.local\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\;C:\Users\sjrnfl13\.bun\bin;C:\Users\sjrnfl13\.bun\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity IDE\bin;C:\Users\sjrnfl13\go\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Users\sjrnfl13\.dotnet\tools;C:\Users\sjrnfl13\AppData\Roaming\Python\Python314\Scripts;.]
+27-Jul-2026 18:36:35.186 정보 [main] org.apache.coyote.AbstractProtocol.init 프로토콜 핸들러 ["http-nio-7070"]을(를) 초기화합니다.
+27-Jul-2026 18:36:35.212 정보 [main] org.apache.catalina.startup.Catalina.load [482] 밀리초 내에 서버가 초기화되었습니다.
+27-Jul-2026 18:36:35.278 정보 [main] org.apache.catalina.core.StandardService.startInternal 서비스 [Catalina]을(를) 시작합니다.
+27-Jul-2026 18:36:35.278 정보 [main] org.apache.catalina.core.StandardEngine.startInternal 서버 엔진을 시작합니다: [Apache Tomcat/10.1.55]
+27-Jul-2026 18:36:35.330 심각 [main] org.apache.catalina.core.ContainerBase.startInternal 자식 컨테이너를 시작 중 실패했습니다.
+	java.util.concurrent.ExecutionException: org.apache.catalina.LifecycleException: 구성요소 [org.apache.catalina.webresources.StandardRoot@4d6025c5]을(를) 시작하지 못했습니다.
+		at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:122)
+		at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:191)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:754)
+		at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:783)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747)
+		at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:201)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardService.startInternal(StandardService.java:410)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:868)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.startup.Catalina.start(Catalina.java:758)
+		at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+		at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:342)
+		at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:473)
+	Caused by: org.apache.catalina.LifecycleException: 구성요소 [org.apache.catalina.webresources.StandardRoot@4d6025c5]을(를) 시작하지 못했습니다.
+		at org.apache.catalina.util.LifecycleBase.handleSubClassException(LifecycleBase.java:404)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:179)
+		at org.apache.catalina.core.StandardContext.resourcesStart(StandardContext.java:4151)
+		at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4273)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747)
+		... 19 more
+	Caused by: java.lang.IllegalArgumentException: The main resource set specified [D:\git_prj\cursor_project\nexacroN_v24] is not a directory or war file, or is not readable (it does not exist or permissions to access it are missing)
+		at org.apache.catalina.webresources.StandardRoot.createMainResourceSet(StandardRoot.java:758)
+		at org.apache.catalina.webresources.StandardRoot.startInternal(StandardRoot.java:715)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		... 28 more
+27-Jul-2026 18:36:35.334 심각 [main] org.apache.catalina.core.ContainerBase.startInternal 자식 컨테이너를 시작 중 실패했습니다.
+	java.util.concurrent.ExecutionException: org.apache.catalina.LifecycleException: 자식 컨테이너를 시작 중 실패했습니다.
+		at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:122)
+		at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:191)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:754)
+		at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:201)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardService.startInternal(StandardService.java:410)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:868)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.startup.Catalina.start(Catalina.java:758)
+		at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+		at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:342)
+		at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:473)
+	Caused by: org.apache.catalina.LifecycleException: 자식 컨테이너를 시작 중 실패했습니다.
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:766)
+		at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:783)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747)
+		... 11 more
+	Caused by: java.util.concurrent.ExecutionException: org.apache.catalina.LifecycleException: 구성요소 [org.apache.catalina.webresources.StandardRoot@4d6025c5]을(를) 시작하지 못했습니다.
+		at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:122)
+		at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:191)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:754)
+		... 19 more
+	Caused by: org.apache.catalina.LifecycleException: 구성요소 [org.apache.catalina.webresources.StandardRoot@4d6025c5]을(를) 시작하지 못했습니다.
+		at org.apache.catalina.util.LifecycleBase.handleSubClassException(LifecycleBase.java:404)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:179)
+		at org.apache.catalina.core.StandardContext.resourcesStart(StandardContext.java:4151)
+		at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4273)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747)
+		... 19 more
+	Caused by: java.lang.IllegalArgumentException: The main resource set specified [D:\git_prj\cursor_project\nexacroN_v24] is not a directory or war file, or is not readable (it does not exist or permissions to access it are missing)
+		at org.apache.catalina.webresources.StandardRoot.createMainResourceSet(StandardRoot.java:758)
+		at org.apache.catalina.webresources.StandardRoot.startInternal(StandardRoot.java:715)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		... 28 more
+27-Jul-2026 18:36:35.337 심각 [main] org.apache.catalina.startup.Catalina.start 필수 항목인 서버 구성요소가 제대로 시작되지 못하여, Tomcat이 시작될 수 없습니다.
+	org.apache.catalina.LifecycleException: 자식 컨테이너를 시작 중 실패했습니다.
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:766)
+		at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:201)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardService.startInternal(StandardService.java:410)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:868)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.startup.Catalina.start(Catalina.java:758)
+		at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+		at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:342)
+		at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:473)
+	Caused by: java.util.concurrent.ExecutionException: org.apache.catalina.LifecycleException: 자식 컨테이너를 시작 중 실패했습니다.
+		at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:122)
+		at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:191)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:754)
+		... 11 more
+	Caused by: org.apache.catalina.LifecycleException: 자식 컨테이너를 시작 중 실패했습니다.
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:766)
+		at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:783)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747)
+		... 11 more
+	Caused by: java.util.concurrent.ExecutionException: org.apache.catalina.LifecycleException: 구성요소 [org.apache.catalina.webresources.StandardRoot@4d6025c5]을(를) 시작하지 못했습니다.
+		at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:122)
+		at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:191)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:754)
+		... 19 more
+	Caused by: org.apache.catalina.LifecycleException: 구성요소 [org.apache.catalina.webresources.StandardRoot@4d6025c5]을(를) 시작하지 못했습니다.
+		at org.apache.catalina.util.LifecycleBase.handleSubClassException(LifecycleBase.java:404)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:179)
+		at org.apache.catalina.core.StandardContext.resourcesStart(StandardContext.java:4151)
+		at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4273)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747)
+		... 19 more
+	Caused by: java.lang.IllegalArgumentException: The main resource set specified [D:\git_prj\cursor_project\nexacroN_v24] is not a directory or war file, or is not readable (it does not exist or permissions to access it are missing)
+		at org.apache.catalina.webresources.StandardRoot.createMainResourceSet(StandardRoot.java:758)
+		at org.apache.catalina.webresources.StandardRoot.startInternal(StandardRoot.java:715)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		... 28 more
+27-Jul-2026 18:36:35.339 정보 [main] org.apache.coyote.AbstractProtocol.pause 프로토콜 핸들러 ["http-nio-7070"]을(를) 일시 정지 중
+27-Jul-2026 18:36:35.340 정보 [main] org.apache.catalina.core.StandardService.stopInternal 서비스 [Catalina]을(를) 중지시킵니다.
+27-Jul-2026 18:36:35.343 정보 [main] org.apache.coyote.AbstractProtocol.destroy 프로토콜 핸들러 ["http-nio-7070"]을(를) 소멸시킵니다.
+27-Jul-2026 18:37:23.152 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 서버 버전 이름:    Apache Tomcat/10.1.55
+27-Jul-2026 18:37:23.155 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 빌드 시각:  May 5 2026 13:33:02 UTC
+27-Jul-2026 18:37:23.156 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 버전 번호:  10.1.55.0
+27-Jul-2026 18:37:23.157 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 이름:     Windows 11
+27-Jul-2026 18:37:23.157 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 버전:     10.0
+27-Jul-2026 18:37:23.157 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 아키텍처:          amd64
+27-Jul-2026 18:37:23.157 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 자바 홈:           C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10
+27-Jul-2026 18:37:23.158 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 버전:          21.0.9+10-LTS
+27-Jul-2026 18:37:23.158 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 벤더:          Microsoft
+27-Jul-2026 18:37:23.158 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:     D:\git_prj\cursor_project\apache-tomcat-10.1.55
+27-Jul-2026 18:37:23.158 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:     D:\git_prj\cursor_project\apache-tomcat-10.1.55
+27-Jul-2026 18:37:23.170 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dstdout.encoding=UTF-8
+27-Jul-2026 18:37:23.170 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dstderr.encoding=UTF-8
+27-Jul-2026 18:37:23.170 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.config.file=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\conf\logging.properties
+27-Jul-2026 18:37:23.171 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+27-Jul-2026 18:37:23.171 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djdk.tls.ephemeralDHKeySize=2048
+27-Jul-2026 18:37:23.171 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+27-Jul-2026 18:37:23.171 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dsun.io.useCanonCaches=false
+27-Jul-2026 18:37:23.172 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang=ALL-UNNAMED
+27-Jul-2026 18:37:23.172 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+27-Jul-2026 18:37:23.172 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.io=ALL-UNNAMED
+27-Jul-2026 18:37:23.172 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util=ALL-UNNAMED
+27-Jul-2026 18:37:23.172 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+27-Jul-2026 18:37:23.173 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+27-Jul-2026 18:37:23.173 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.base=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+27-Jul-2026 18:37:23.173 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.home=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+27-Jul-2026 18:37:23.173 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.io.tmpdir=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\temp
+27-Jul-2026 18:37:23.208 정보 [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent 프로덕션 환경들에서 최적의 성능을 제공하는, APR 기반 Apache Tomcat Native 라이브러리가, 다음 java.library.path에서 발견되지 않습니다: [C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Python314\Scripts\;C:\Python314\;c:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Program Files (x86)\Microsoft\Edge\Application;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\dotnet\;C:\Program Files\PuTTY\;C:\Program Files\TortoiseSVN\bin;C:\ProgramData\chocolatey\bin;C:\openssl-0.9.8k_X64\bin\;C:\Users\sjrnfl13\AppData\Local\Android\Sdk\platform-tools\;C:\Program Files\XVision\Sense Reader;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl1;D:\Python\Scripts\;D:\Python\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;C:\dev\apache-maven-3.9.11\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Program Files\GitExtensions\;C:\Program Files\XVision\Sense Reader;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\\bin;C:\Users\sjrnfl13\.bun\bin;C:\Program Files\Go\bin;C:\apache-maven-3.9.9\bin;C:\Program Files\XVision\Sense Reader;D:\Python\Scripts\;D:\Python;C:\Users\sjrnfl13\AppData\Local\Programs\Python\Python37\Scripts\;C:\Users\sjrnfl13\AppData\Local\Programs\Python\Python37\;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Local\afreeca;C:\Users\sjrnfl13\AppData\Local\Programs\Ollama;C:\Users\sjrnfl13\AppData\Local\Microsoft\WinGet\Packages\Schniz.fnm_Microsoft.Winget.Source_8wekyb3d8bbwe;C:\Users\sjrnfl13\AppData\Local\GitHubDesktop\bin;C:\Program Files\JetBrains\PyCharm Community Edition 2024.2.3\bin;C:\Users\sjrnfl13\AppData\Local\SOOP;C:\Users\sjrnfl13\AppData\Local\Programs\Fiddler;C:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Windsurf\bin;C:\Program Files\JetBrains\PyCharm 2025.1.2\bin;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Roaming\npm;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\sjrnfl13\AppData\Local\Microsoft\WinGet\Links;C:\Users\sjrnfl13\.local\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\;C:\Users\sjrnfl13\.bun\bin;C:\Users\sjrnfl13\.bun\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity IDE\bin;C:\Users\sjrnfl13\go\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Users\sjrnfl13\.dotnet\tools;C:\Users\sjrnfl13\AppData\Roaming\Python\Python314\Scripts;.]
+27-Jul-2026 18:37:23.487 정보 [main] org.apache.coyote.AbstractProtocol.init 프로토콜 핸들러 ["http-nio-7070"]을(를) 초기화합니다.
+27-Jul-2026 18:37:23.515 정보 [main] org.apache.catalina.startup.Catalina.load [542] 밀리초 내에 서버가 초기화되었습니다.
+27-Jul-2026 18:37:23.607 정보 [main] org.apache.catalina.core.StandardService.startInternal 서비스 [Catalina]을(를) 시작합니다.
+27-Jul-2026 18:37:23.607 정보 [main] org.apache.catalina.core.StandardEngine.startInternal 서버 엔진을 시작합니다: [Apache Tomcat/10.1.55]
+27-Jul-2026 18:37:24.096 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 18:37:24.148 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]을(를) 배치합니다.
+27-Jul-2026 18:37:24.265 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 18:37:24.270 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]에 대한 배치가 [121] 밀리초에 완료되었습니다.
+27-Jul-2026 18:37:24.271 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]을(를) 배치합니다.
+27-Jul-2026 18:37:24.552 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 18:37:24.623 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]에 대한 배치가 [351] 밀리초에 완료되었습니다.
+27-Jul-2026 18:37:24.623 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]을(를) 배치합니다.
+27-Jul-2026 18:37:24.725 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 18:37:24.731 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]에 대한 배치가 [108] 밀리초에 완료되었습니다.
+27-Jul-2026 18:37:24.731 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]을(를) 배치합니다.
+27-Jul-2026 18:37:24.819 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 18:37:24.821 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]에 대한 배치가 [90] 밀리초에 완료되었습니다.
+27-Jul-2026 18:37:24.822 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]을(를) 배치합니다.
+27-Jul-2026 18:37:24.901 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 18:37:24.904 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]에 대한 배치가 [82] 밀리초에 완료되었습니다.
+27-Jul-2026 18:37:24.908 정보 [main] org.apache.coyote.AbstractProtocol.start 프로토콜 핸들러 ["http-nio-7070"]을(를) 시작합니다.
+27-Jul-2026 18:37:24.927 정보 [main] org.apache.catalina.startup.Catalina.start 서버가 [1409] 밀리초 내에 시작되었습니다.
+27-Jul-2026 18:39:55.095 정보 [Catalina-utility-2] org.apache.catalina.startup.HostConfig.reload 컨텍스트 []을(를) 다시 로드합니다.
+27-Jul-2026 18:39:55.095 정보 [Catalina-utility-2] org.apache.catalina.core.StandardContext.reload 이름이 []인 컨텍스트를 다시 로드하는 작업이 시작되었습니다.
+27-Jul-2026 18:39:55.191 정보 [Catalina-utility-2] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 18:39:55.195 정보 [Catalina-utility-2] org.apache.catalina.core.StandardContext.reload 이름이 []인 컨텍스트를 다시 로드하는 것을 완료했습니다.
+27-Jul-2026 18:39:55.195 정보 [Catalina-utility-2] org.apache.catalina.startup.HostConfig.reload 컨텍스트 [/examples]을(를) 다시 로드합니다.
+27-Jul-2026 18:39:55.195 정보 [Catalina-utility-2] org.apache.catalina.core.StandardContext.reload 이름이 [/examples]인 컨텍스트를 다시 로드하는 작업이 시작되었습니다.
+27-Jul-2026 18:39:55.415 정보 [Catalina-utility-2] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 18:39:55.435 정보 [Catalina-utility-2] org.apache.catalina.core.StandardContext.reload 이름이 [/examples]인 컨텍스트를 다시 로드하는 것을 완료했습니다.
+27-Jul-2026 18:39:55.435 정보 [Catalina-utility-2] org.apache.catalina.startup.HostConfig.reload 컨텍스트 [/host-manager]을(를) 다시 로드합니다.
+27-Jul-2026 18:39:55.436 정보 [Catalina-utility-2] org.apache.catalina.core.StandardContext.reload 이름이 [/host-manager]인 컨텍스트를 다시 로드하는 작업이 시작되었습니다.
+27-Jul-2026 18:39:55.519 정보 [Catalina-utility-2] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 18:39:55.521 정보 [Catalina-utility-2] org.apache.catalina.core.StandardContext.reload 이름이 [/host-manager]인 컨텍스트를 다시 로드하는 것을 완료했습니다.
+27-Jul-2026 18:39:55.522 정보 [Catalina-utility-2] org.apache.catalina.startup.HostConfig.reload 컨텍스트 [/manager]을(를) 다시 로드합니다.
+27-Jul-2026 18:39:55.522 정보 [Catalina-utility-2] org.apache.catalina.core.StandardContext.reload 이름이 [/manager]인 컨텍스트를 다시 로드하는 작업이 시작되었습니다.
+27-Jul-2026 18:39:55.629 정보 [Catalina-utility-2] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 18:39:55.631 정보 [Catalina-utility-2] org.apache.catalina.core.StandardContext.reload 이름이 [/manager]인 컨텍스트를 다시 로드하는 것을 완료했습니다.
+27-Jul-2026 18:39:55.632 정보 [Catalina-utility-2] org.apache.catalina.startup.HostConfig.reload 컨텍스트 [/docs]을(를) 다시 로드합니다.
+27-Jul-2026 18:39:55.632 정보 [Catalina-utility-2] org.apache.catalina.core.StandardContext.reload 이름이 [/docs]인 컨텍스트를 다시 로드하는 작업이 시작되었습니다.
+27-Jul-2026 18:39:55.702 정보 [Catalina-utility-2] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 18:39:55.704 정보 [Catalina-utility-2] org.apache.catalina.core.StandardContext.reload 이름이 [/docs]인 컨텍스트를 다시 로드하는 것을 완료했습니다.
+27-Jul-2026 18:40:36.900 정보 [Thread-1] org.apache.coyote.AbstractProtocol.pause 프로토콜 핸들러 ["http-nio-7070"]을(를) 일시 정지 중
+27-Jul-2026 18:40:36.909 정보 [Thread-1] org.apache.catalina.core.StandardService.stopInternal 서비스 [Catalina]을(를) 중지시킵니다.
+27-Jul-2026 18:40:36.928 정보 [Thread-1] org.apache.coyote.AbstractProtocol.stop 프로토콜 핸들러 ["http-nio-7070"]을(를) 중지시킵니다.
+27-Jul-2026 18:40:36.937 정보 [Thread-1] org.apache.coyote.AbstractProtocol.destroy 프로토콜 핸들러 ["http-nio-7070"]을(를) 소멸시킵니다.
+27-Jul-2026 18:40:39.607 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 서버 버전 이름:    Apache Tomcat/10.1.55
+27-Jul-2026 18:40:39.610 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 빌드 시각:  May 5 2026 13:33:02 UTC
+27-Jul-2026 18:40:39.610 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 버전 번호:  10.1.55.0
+27-Jul-2026 18:40:39.610 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 이름:     Windows 11
+27-Jul-2026 18:40:39.610 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 버전:     10.0
+27-Jul-2026 18:40:39.610 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 아키텍처:          amd64
+27-Jul-2026 18:40:39.610 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 자바 홈:           C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10
+27-Jul-2026 18:40:39.610 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 버전:          21.0.9+10-LTS
+27-Jul-2026 18:40:39.610 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 벤더:          Microsoft
+27-Jul-2026 18:40:39.610 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:     D:\git_prj\cursor_project\apache-tomcat-10.1.55
+27-Jul-2026 18:40:39.610 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:     D:\git_prj\cursor_project\apache-tomcat-10.1.55
+27-Jul-2026 18:40:39.620 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dstdout.encoding=UTF-8
+27-Jul-2026 18:40:39.620 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dstderr.encoding=UTF-8
+27-Jul-2026 18:40:39.620 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.config.file=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\conf\logging.properties
+27-Jul-2026 18:40:39.621 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+27-Jul-2026 18:40:39.621 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djdk.tls.ephemeralDHKeySize=2048
+27-Jul-2026 18:40:39.621 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+27-Jul-2026 18:40:39.621 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dsun.io.useCanonCaches=false
+27-Jul-2026 18:40:39.621 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang=ALL-UNNAMED
+27-Jul-2026 18:40:39.621 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+27-Jul-2026 18:40:39.622 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.io=ALL-UNNAMED
+27-Jul-2026 18:40:39.622 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util=ALL-UNNAMED
+27-Jul-2026 18:40:39.622 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+27-Jul-2026 18:40:39.622 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+27-Jul-2026 18:40:39.622 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.base=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+27-Jul-2026 18:40:39.622 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.home=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+27-Jul-2026 18:40:39.623 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.io.tmpdir=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\temp
+27-Jul-2026 18:40:39.639 정보 [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent 프로덕션 환경들에서 최적의 성능을 제공하는, APR 기반 Apache Tomcat Native 라이브러리가, 다음 java.library.path에서 발견되지 않습니다: [C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Python314\Scripts\;C:\Python314\;c:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Program Files (x86)\Microsoft\Edge\Application;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\dotnet\;C:\Program Files\PuTTY\;C:\Program Files\TortoiseSVN\bin;C:\ProgramData\chocolatey\bin;C:\openssl-0.9.8k_X64\bin\;C:\Users\sjrnfl13\AppData\Local\Android\Sdk\platform-tools\;C:\Program Files\XVision\Sense Reader;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl1;D:\Python\Scripts\;D:\Python\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;C:\dev\apache-maven-3.9.11\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Program Files\GitExtensions\;C:\Program Files\XVision\Sense Reader;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\\bin;C:\Users\sjrnfl13\.bun\bin;C:\Program Files\Go\bin;C:\apache-maven-3.9.9\bin;C:\Program Files\XVision\Sense Reader;D:\Python\Scripts\;D:\Python;C:\Users\sjrnfl13\AppData\Local\Programs\Python\Python37\Scripts\;C:\Users\sjrnfl13\AppData\Local\Programs\Python\Python37\;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Local\afreeca;C:\Users\sjrnfl13\AppData\Local\Programs\Ollama;C:\Users\sjrnfl13\AppData\Local\Microsoft\WinGet\Packages\Schniz.fnm_Microsoft.Winget.Source_8wekyb3d8bbwe;C:\Users\sjrnfl13\AppData\Local\GitHubDesktop\bin;C:\Program Files\JetBrains\PyCharm Community Edition 2024.2.3\bin;C:\Users\sjrnfl13\AppData\Local\SOOP;C:\Users\sjrnfl13\AppData\Local\Programs\Fiddler;C:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Windsurf\bin;C:\Program Files\JetBrains\PyCharm 2025.1.2\bin;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Roaming\npm;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\sjrnfl13\AppData\Local\Microsoft\WinGet\Links;C:\Users\sjrnfl13\.local\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\;C:\Users\sjrnfl13\.bun\bin;C:\Users\sjrnfl13\.bun\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity IDE\bin;C:\Users\sjrnfl13\go\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Users\sjrnfl13\.dotnet\tools;C:\Users\sjrnfl13\AppData\Roaming\Python\Python314\Scripts;.]
+27-Jul-2026 18:40:39.819 정보 [main] org.apache.coyote.AbstractProtocol.init 프로토콜 핸들러 ["http-nio-7070"]을(를) 초기화합니다.
+27-Jul-2026 18:40:39.839 정보 [main] org.apache.catalina.startup.Catalina.load [392] 밀리초 내에 서버가 초기화되었습니다.
+27-Jul-2026 18:40:39.889 정보 [main] org.apache.catalina.core.StandardService.startInternal 서비스 [Catalina]을(를) 시작합니다.
+27-Jul-2026 18:40:39.890 정보 [main] org.apache.catalina.core.StandardEngine.startInternal 서버 엔진을 시작합니다: [Apache Tomcat/10.1.55]
+27-Jul-2026 18:40:40.269 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 18:40:40.424 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 18:40:40.428 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]을(를) 배치합니다.
+27-Jul-2026 18:40:40.525 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 18:40:40.529 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]에 대한 배치가 [101] 밀리초에 완료되었습니다.
+27-Jul-2026 18:40:40.533 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]을(를) 배치합니다.
+27-Jul-2026 18:40:40.783 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 18:40:40.835 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]에 대한 배치가 [302] 밀리초에 완료되었습니다.
+27-Jul-2026 18:40:40.835 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]을(를) 배치합니다.
+27-Jul-2026 18:40:40.926 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 18:40:40.935 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]에 대한 배치가 [99] 밀리초에 완료되었습니다.
+27-Jul-2026 18:40:40.935 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]을(를) 배치합니다.
+27-Jul-2026 18:40:41.032 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 18:40:41.034 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]에 대한 배치가 [99] 밀리초에 완료되었습니다.
+27-Jul-2026 18:40:41.034 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]을(를) 배치합니다.
+27-Jul-2026 18:40:41.109 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 18:40:41.111 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]에 대한 배치가 [77] 밀리초에 완료되었습니다.
+27-Jul-2026 18:40:41.115 정보 [main] org.apache.coyote.AbstractProtocol.start 프로토콜 핸들러 ["http-nio-7070"]을(를) 시작합니다.
+27-Jul-2026 18:40:41.135 정보 [main] org.apache.catalina.startup.Catalina.start 서버가 [1294] 밀리초 내에 시작되었습니다.
+27-Jul-2026 18:43:31.494 정보 [Thread-1] org.apache.coyote.AbstractProtocol.pause 프로토콜 핸들러 ["http-nio-7070"]을(를) 일시 정지 중
+27-Jul-2026 18:43:31.499 정보 [Thread-1] org.apache.catalina.core.StandardService.stopInternal 서비스 [Catalina]을(를) 중지시킵니다.
+27-Jul-2026 18:43:31.519 정보 [Thread-1] org.apache.coyote.AbstractProtocol.stop 프로토콜 핸들러 ["http-nio-7070"]을(를) 중지시킵니다.
+27-Jul-2026 18:43:31.536 정보 [Thread-1] org.apache.coyote.AbstractProtocol.destroy 프로토콜 핸들러 ["http-nio-7070"]을(를) 소멸시킵니다.
+27-Jul-2026 18:43:36.579 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 서버 버전 이름:    Apache Tomcat/10.1.55
+27-Jul-2026 18:43:36.582 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 빌드 시각:  May 5 2026 13:33:02 UTC
+27-Jul-2026 18:43:36.582 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 버전 번호:  10.1.55.0
+27-Jul-2026 18:43:36.582 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 이름:     Windows 11
+27-Jul-2026 18:43:36.583 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 버전:     10.0
+27-Jul-2026 18:43:36.583 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 아키텍처:          amd64
+27-Jul-2026 18:43:36.583 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 자바 홈:           C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10
+27-Jul-2026 18:43:36.583 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 버전:          21.0.9+10-LTS
+27-Jul-2026 18:43:36.583 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 벤더:          Microsoft
+27-Jul-2026 18:43:36.583 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:     D:\git_prj\cursor_project\apache-tomcat-10.1.55
+27-Jul-2026 18:43:36.584 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:     D:\git_prj\cursor_project\apache-tomcat-10.1.55
+27-Jul-2026 18:43:36.591 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dstdout.encoding=UTF-8
+27-Jul-2026 18:43:36.591 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dstderr.encoding=UTF-8
+27-Jul-2026 18:43:36.591 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.config.file=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\conf\logging.properties
+27-Jul-2026 18:43:36.591 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+27-Jul-2026 18:43:36.591 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djdk.tls.ephemeralDHKeySize=2048
+27-Jul-2026 18:43:36.592 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+27-Jul-2026 18:43:36.592 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dsun.io.useCanonCaches=false
+27-Jul-2026 18:43:36.592 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang=ALL-UNNAMED
+27-Jul-2026 18:43:36.592 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+27-Jul-2026 18:43:36.592 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.io=ALL-UNNAMED
+27-Jul-2026 18:43:36.593 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util=ALL-UNNAMED
+27-Jul-2026 18:43:36.593 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+27-Jul-2026 18:43:36.593 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+27-Jul-2026 18:43:36.594 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.base=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+27-Jul-2026 18:43:36.594 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.home=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+27-Jul-2026 18:43:36.594 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.io.tmpdir=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\temp
+27-Jul-2026 18:43:36.611 정보 [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent 프로덕션 환경들에서 최적의 성능을 제공하는, APR 기반 Apache Tomcat Native 라이브러리가, 다음 java.library.path에서 발견되지 않습니다: [C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Python314\Scripts\;C:\Python314\;c:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Program Files (x86)\Microsoft\Edge\Application;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\dotnet\;C:\Program Files\PuTTY\;C:\Program Files\TortoiseSVN\bin;C:\ProgramData\chocolatey\bin;C:\openssl-0.9.8k_X64\bin\;C:\Users\sjrnfl13\AppData\Local\Android\Sdk\platform-tools\;C:\Program Files\XVision\Sense Reader;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl1;D:\Python\Scripts\;D:\Python\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;C:\dev\apache-maven-3.9.11\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Program Files\GitExtensions\;C:\Program Files\XVision\Sense Reader;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\\bin;C:\Users\sjrnfl13\.bun\bin;C:\Program Files\Go\bin;C:\apache-maven-3.9.9\bin;C:\Program Files\XVision\Sense Reader;D:\Python\Scripts\;D:\Python;C:\Users\sjrnfl13\AppData\Local\Programs\Python\Python37\Scripts\;C:\Users\sjrnfl13\AppData\Local\Programs\Python\Python37\;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Local\afreeca;C:\Users\sjrnfl13\AppData\Local\Programs\Ollama;C:\Users\sjrnfl13\AppData\Local\Microsoft\WinGet\Packages\Schniz.fnm_Microsoft.Winget.Source_8wekyb3d8bbwe;C:\Users\sjrnfl13\AppData\Local\GitHubDesktop\bin;C:\Program Files\JetBrains\PyCharm Community Edition 2024.2.3\bin;C:\Users\sjrnfl13\AppData\Local\SOOP;C:\Users\sjrnfl13\AppData\Local\Programs\Fiddler;C:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Windsurf\bin;C:\Program Files\JetBrains\PyCharm 2025.1.2\bin;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Roaming\npm;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\sjrnfl13\AppData\Local\Microsoft\WinGet\Links;C:\Users\sjrnfl13\.local\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\;C:\Users\sjrnfl13\.bun\bin;C:\Users\sjrnfl13\.bun\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity IDE\bin;C:\Users\sjrnfl13\go\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Users\sjrnfl13\.dotnet\tools;C:\Users\sjrnfl13\AppData\Roaming\Python\Python314\Scripts;.]
+27-Jul-2026 18:43:36.795 정보 [main] org.apache.coyote.AbstractProtocol.init 프로토콜 핸들러 ["http-nio-7070"]을(를) 초기화합니다.
+27-Jul-2026 18:43:36.815 정보 [main] org.apache.catalina.startup.Catalina.load [406] 밀리초 내에 서버가 초기화되었습니다.
+27-Jul-2026 18:43:36.880 정보 [main] org.apache.catalina.core.StandardService.startInternal 서비스 [Catalina]을(를) 시작합니다.
+27-Jul-2026 18:43:36.881 정보 [main] org.apache.catalina.core.StandardEngine.startInternal 서버 엔진을 시작합니다: [Apache Tomcat/10.1.55]
+27-Jul-2026 18:43:37.292 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 18:43:37.456 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 18:43:37.462 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]을(를) 배치합니다.
+27-Jul-2026 18:43:37.571 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 18:43:37.577 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]에 대한 배치가 [113] 밀리초에 완료되었습니다.
+27-Jul-2026 18:43:37.577 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]을(를) 배치합니다.
+27-Jul-2026 18:43:37.851 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 18:43:37.920 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]에 대한 배치가 [343] 밀리초에 완료되었습니다.
+27-Jul-2026 18:43:37.920 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]을(를) 배치합니다.
+27-Jul-2026 18:43:38.016 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 18:43:38.023 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]에 대한 배치가 [103] 밀리초에 완료되었습니다.
+27-Jul-2026 18:43:38.024 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]을(를) 배치합니다.
+27-Jul-2026 18:43:38.110 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 18:43:38.114 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]에 대한 배치가 [91] 밀리초에 완료되었습니다.
+27-Jul-2026 18:43:38.114 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]을(를) 배치합니다.
+27-Jul-2026 18:43:38.201 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 18:43:38.203 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]에 대한 배치가 [89] 밀리초에 완료되었습니다.
+27-Jul-2026 18:43:38.207 정보 [main] org.apache.coyote.AbstractProtocol.start 프로토콜 핸들러 ["http-nio-7070"]을(를) 시작합니다.
+27-Jul-2026 18:43:38.228 정보 [main] org.apache.catalina.startup.Catalina.start 서버가 [1411] 밀리초 내에 시작되었습니다.
+27-Jul-2026 18:52:27.053 정보 [http-nio-7070-exec-9] com.nexacro.java.xapi.license.A.D.A Loaded license file in JAR dir: path=D:\git_prj\cursor_project\apache-tomcat-10.1.55\lib\NexacroN_server_license.xml
+27-Jul-2026 18:52:27.062 경고 [http-nio-7070-exec-9] com.nexacro.java.xapi.license.A.D.A Invalid license: jarResource=file:/D:/git_prj/cursor_project/apache-tomcat-10.1.55/lib/NexacroN_server_license.xml
+	com.nexacro.java.xapi.license.InvalidLicenseException: License has expired: expireDate=2026-07-01, currentDate=2026-07-27
+		at com.nexacro.java.xapi.license.A.H.G(Unknown Source)
+		at com.nexacro.java.xapi.license.A.H.B(Unknown Source)
+		at com.nexacro.java.xapi.license.A.D.A(Unknown Source)
+		at com.nexacro.java.xapi.license.A.D.A(Unknown Source)
+		at com.nexacro.java.xapi.license.A.D.A(Unknown Source)
+		at com.nexacro.java.xapi.license.A.D.B(Unknown Source)
+		at com.nexacro.java.xapi.license.License.getInstance(License.java:212)
+		at com.nexacro.java.xapi.tx.PlatformTransaction.checkLicense(PlatformTransaction.java:450)
+		at com.nexacro.java.xapi.tx.PlatformRequest.receiveData(PlatformRequest.java:213)
+		at com.nexacro.java.xapi.tx.HttpPlatformRequest.receiveData(HttpPlatformRequest.java:236)
+		at org.apache.jsp.jsp.test_005f100_005fXML_jsp._jspService(test_005f100_005fXML_jsp.java:142)
+		at org.apache.jasper.runtime.HttpJspBase.service(HttpJspBase.java:62)
+		at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+		at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:428)
+		at org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:350)
+		at org.apache.jasper.servlet.JspServlet.service(JspServlet.java:301)
+		at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.catalina.filters.CorsFilter.handleNonCORS(CorsFilter.java:332)
+		at org.apache.catalina.filters.CorsFilter.doFilter(CorsFilter.java:159)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+		at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88)
+		at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+		at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+		at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+		at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:782)
+		at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+		at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+		at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+		at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+		at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1272)
+		at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1797)
+		at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+		at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973)
+		at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491)
+		at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+		at java.base/java.lang.Thread.run(Thread.java:1583)
+27-Jul-2026 18:52:27.063 정보 [http-nio-7070-exec-9] com.nexacro.java.xapi.license.A.D.B Loaded license file in CLASSPATH: class path=
+27-Jul-2026 18:52:27.064 정보 [http-nio-7070-exec-9] com.nexacro.java.xapi.license.A.D.B Loaded license file in CLASSPATH: url=file:/D:/git_prj/cursor_project/apache-tomcat-10.1.55/lib/NexacroN_server_license.xml
+27-Jul-2026 18:52:27.066 심각 [http-nio-7070-exec-9] com.nexacro.java.xapi.tx.PlatformTransaction.checkLicense Invalid license
+	com.nexacro.java.xapi.license.InvalidLicenseException: License has expired: expireDate=2026-07-01, currentDate=2026-07-27
+		at com.nexacro.java.xapi.license.A.H.G(Unknown Source)
+		at com.nexacro.java.xapi.license.A.H.B(Unknown Source)
+		at com.nexacro.java.xapi.license.A.D.A(Unknown Source)
+		at com.nexacro.java.xapi.license.A.D.A(Unknown Source)
+		at com.nexacro.java.xapi.license.A.D.A(Unknown Source)
+		at com.nexacro.java.xapi.license.A.D.B(Unknown Source)
+		at com.nexacro.java.xapi.license.License.getInstance(License.java:212)
+		at com.nexacro.java.xapi.tx.PlatformTransaction.checkLicense(PlatformTransaction.java:450)
+		at com.nexacro.java.xapi.tx.PlatformRequest.receiveData(PlatformRequest.java:213)
+		at com.nexacro.java.xapi.tx.HttpPlatformRequest.receiveData(HttpPlatformRequest.java:236)
+		at org.apache.jsp.jsp.test_005f100_005fXML_jsp._jspService(test_005f100_005fXML_jsp.java:142)
+		at org.apache.jasper.runtime.HttpJspBase.service(HttpJspBase.java:62)
+		at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+		at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:428)
+		at org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:350)
+		at org.apache.jasper.servlet.JspServlet.service(JspServlet.java:301)
+		at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.catalina.filters.CorsFilter.handleNonCORS(CorsFilter.java:332)
+		at org.apache.catalina.filters.CorsFilter.doFilter(CorsFilter.java:159)
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+		at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+		at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88)
+		at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+		at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+		at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+		at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:782)
+		at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+		at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+		at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+		at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+		at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1272)
+		at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1797)
+		at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+		at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973)
+		at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491)
+		at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+		at java.base/java.lang.Thread.run(Thread.java:1583)
+27-Jul-2026 18:53:24.278 정보 [http-nio-7070-exec-1] com.nexacro.java.xapi.license.A.D.A Loaded license file in JAR dir: path=D:\git_prj\cursor_project\apache-tomcat-10.1.55\lib\NexacroN_server_license.xml
+27-Jul-2026 18:53:24.284 경고 [http-nio-7070-exec-1] com.nexacro.java.xapi.license.License.isValidTime null The license is 4 days left.
+27-Jul-2026 18:53:24.288 정보 [http-nio-7070-exec-1] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@41bc7bcb, elapsedTime=4, endTime=1785146004288
+27-Jul-2026 18:53:25.402 정보 [http-nio-7070-exec-2] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@71bc9336, elapsedTime=0, endTime=1785146005402
+27-Jul-2026 18:53:33.280 정보 [http-nio-7070-exec-3] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@7d9a2933, elapsedTime=0, endTime=1785146013279
+27-Jul-2026 18:53:49.859 정보 [http-nio-7070-exec-4] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@470599a2, elapsedTime=0, endTime=1785146029859
+27-Jul-2026 18:53:49.898 정보 [http-nio-7070-exec-4] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%403651c513, contentType=PlatformXml, charset=null, startTime=1785146029898
+27-Jul-2026 18:53:49.928 정보 [http-nio-7070-exec-4] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@3651c513, elapsedTime=30, endTime=1785146029928
+27-Jul-2026 19:07:24.337 정보 [http-nio-7070-exec-10] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@2cda5e7, elapsedTime=5, endTime=1785146844337
+27-Jul-2026 19:07:24.338 정보 [http-nio-7070-exec-10] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%4064a6b6c, contentType=PlatformXml, charset=null, startTime=1785146844338
+27-Jul-2026 19:07:24.339 정보 [http-nio-7070-exec-10] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@64a6b6c, elapsedTime=1, endTime=1785146844339
+27-Jul-2026 19:07:30.958 정보 [http-nio-7070-exec-2] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@16823421, elapsedTime=3, endTime=1785146850958
+27-Jul-2026 19:07:30.959 정보 [http-nio-7070-exec-2] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%40e3fc821, contentType=PlatformXml, charset=null, startTime=1785146850959
+27-Jul-2026 19:07:30.960 정보 [http-nio-7070-exec-2] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@e3fc821, elapsedTime=1, endTime=1785146850960
+27-Jul-2026 19:08:08.588 정보 [http-nio-7070-exec-9] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@72eaed4b, elapsedTime=4, endTime=1785146888587
+27-Jul-2026 19:08:08.588 정보 [http-nio-7070-exec-9] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%406acb0dba, contentType=PlatformXml, charset=null, startTime=1785146888588
+27-Jul-2026 19:08:08.589 정보 [http-nio-7070-exec-9] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@6acb0dba, elapsedTime=1, endTime=1785146888589
+27-Jul-2026 19:08:09.196 정보 [http-nio-7070-exec-10] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@69931d63, elapsedTime=3, endTime=1785146889196
+27-Jul-2026 19:08:09.198 정보 [http-nio-7070-exec-10] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%4024138886, contentType=PlatformXml, charset=null, startTime=1785146889198
+27-Jul-2026 19:08:09.199 정보 [http-nio-7070-exec-10] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@24138886, elapsedTime=1, endTime=1785146889199
+27-Jul-2026 19:08:09.369 정보 [http-nio-7070-exec-8] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@683080b3, elapsedTime=4, endTime=1785146889369
+27-Jul-2026 19:08:09.370 정보 [http-nio-7070-exec-8] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%402b893d65, contentType=PlatformXml, charset=null, startTime=1785146889370
+27-Jul-2026 19:08:09.371 정보 [http-nio-7070-exec-8] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@2b893d65, elapsedTime=0, endTime=1785146889370
+27-Jul-2026 19:08:09.527 정보 [http-nio-7070-exec-3] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@71e0240f, elapsedTime=1, endTime=1785146889527
+27-Jul-2026 19:08:09.528 정보 [http-nio-7070-exec-3] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%407d09225a, contentType=PlatformXml, charset=null, startTime=1785146889528
+27-Jul-2026 19:08:09.529 정보 [http-nio-7070-exec-3] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@7d09225a, elapsedTime=1, endTime=1785146889529
+27-Jul-2026 19:08:09.708 정보 [http-nio-7070-exec-1] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@7846bfbe, elapsedTime=2, endTime=1785146889708
+27-Jul-2026 19:08:09.709 정보 [http-nio-7070-exec-1] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%408ae9f19, contentType=PlatformXml, charset=null, startTime=1785146889709
+27-Jul-2026 19:08:09.710 정보 [http-nio-7070-exec-1] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@8ae9f19, elapsedTime=1, endTime=1785146889710
+27-Jul-2026 19:08:09.883 정보 [http-nio-7070-exec-6] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@18984be9, elapsedTime=1, endTime=1785146889883
+27-Jul-2026 19:08:09.884 정보 [http-nio-7070-exec-6] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%40165fb68a, contentType=PlatformXml, charset=null, startTime=1785146889883
+27-Jul-2026 19:08:09.884 정보 [http-nio-7070-exec-6] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@165fb68a, elapsedTime=1, endTime=1785146889884
+27-Jul-2026 19:08:10.070 정보 [http-nio-7070-exec-5] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@4de1530e, elapsedTime=1, endTime=1785146890070
+27-Jul-2026 19:08:10.071 정보 [http-nio-7070-exec-5] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%404326a4c2, contentType=PlatformXml, charset=null, startTime=1785146890071
+27-Jul-2026 19:08:10.072 정보 [http-nio-7070-exec-5] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@4326a4c2, elapsedTime=1, endTime=1785146890072
+27-Jul-2026 19:08:10.226 정보 [http-nio-7070-exec-7] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@7b8c4ae7, elapsedTime=3, endTime=1785146890226
+27-Jul-2026 19:08:10.227 정보 [http-nio-7070-exec-7] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%40754bbbe6, contentType=PlatformXml, charset=null, startTime=1785146890227
+27-Jul-2026 19:08:10.227 정보 [http-nio-7070-exec-7] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@754bbbe6, elapsedTime=0, endTime=1785146890227
+27-Jul-2026 19:08:25.205 정보 [http-nio-7070-exec-4] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@10875105, elapsedTime=2, endTime=1785146905205
+27-Jul-2026 19:08:25.206 정보 [http-nio-7070-exec-4] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%401a3f999c, contentType=PlatformXml, charset=null, startTime=1785146905206
+27-Jul-2026 19:08:25.206 정보 [http-nio-7070-exec-4] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@1a3f999c, elapsedTime=0, endTime=1785146905206
+27-Jul-2026 19:09:31.347 정보 [http-nio-7070-exec-6] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@12602099, elapsedTime=3, endTime=1785146971347
+27-Jul-2026 19:09:31.348 정보 [http-nio-7070-exec-6] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%405762bcb1, contentType=PlatformXml, charset=null, startTime=1785146971348
+27-Jul-2026 19:09:31.349 정보 [http-nio-7070-exec-6] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@5762bcb1, elapsedTime=1, endTime=1785146971349
+27-Jul-2026 19:14:22.470 정보 [http-nio-7070-exec-8] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@475015bf, elapsedTime=3, endTime=1785147262470
+27-Jul-2026 19:14:22.470 정보 [http-nio-7070-exec-8] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%4042637364, contentType=PlatformXml, charset=null, startTime=1785147262470
+27-Jul-2026 19:14:22.472 정보 [http-nio-7070-exec-8] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@42637364, elapsedTime=2, endTime=1785147262472
+27-Jul-2026 19:14:28.326 정보 [http-nio-7070-exec-6] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@d7f62b7, elapsedTime=3, endTime=1785147268326
+27-Jul-2026 19:14:28.326 정보 [http-nio-7070-exec-6] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%4066ff6e74, contentType=PlatformXml, charset=null, startTime=1785147268326
+27-Jul-2026 19:14:28.327 정보 [http-nio-7070-exec-6] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@66ff6e74, elapsedTime=1, endTime=1785147268327
+27-Jul-2026 19:19:50.824 정보 [Catalina-utility-2] org.apache.catalina.startup.HostConfig.reload 컨텍스트 []을(를) 다시 로드합니다.
+27-Jul-2026 19:19:50.824 정보 [Catalina-utility-2] org.apache.catalina.core.StandardContext.reload 이름이 []인 컨텍스트를 다시 로드하는 작업이 시작되었습니다.
+27-Jul-2026 19:19:50.902 정보 [Catalina-utility-2] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:19:50.904 정보 [Catalina-utility-2] org.apache.catalina.core.StandardContext.reload 이름이 []인 컨텍스트를 다시 로드하는 것을 완료했습니다.
+27-Jul-2026 19:20:07.318 정보 [Thread-1] org.apache.coyote.AbstractProtocol.pause 프로토콜 핸들러 ["http-nio-7070"]을(를) 일시 정지 중
+27-Jul-2026 19:20:07.322 정보 [Thread-1] org.apache.catalina.core.StandardService.stopInternal 서비스 [Catalina]을(를) 중지시킵니다.
+27-Jul-2026 19:20:07.335 정보 [Thread-1] org.apache.coyote.AbstractProtocol.stop 프로토콜 핸들러 ["http-nio-7070"]을(를) 중지시킵니다.
+27-Jul-2026 19:20:07.349 정보 [Thread-1] org.apache.coyote.AbstractProtocol.destroy 프로토콜 핸들러 ["http-nio-7070"]을(를) 소멸시킵니다.
+27-Jul-2026 19:20:09.269 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 서버 버전 이름:    Apache Tomcat/10.1.55
+27-Jul-2026 19:20:09.272 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 빌드 시각:  May 5 2026 13:33:02 UTC
+27-Jul-2026 19:20:09.272 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 버전 번호:  10.1.55.0
+27-Jul-2026 19:20:09.272 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 이름:     Windows 11
+27-Jul-2026 19:20:09.272 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 버전:     10.0
+27-Jul-2026 19:20:09.272 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 아키텍처:          amd64
+27-Jul-2026 19:20:09.272 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 자바 홈:           C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10
+27-Jul-2026 19:20:09.272 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 버전:          21.0.9+10-LTS
+27-Jul-2026 19:20:09.272 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 벤더:          Microsoft
+27-Jul-2026 19:20:09.272 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:     D:\git_prj\cursor_project\apache-tomcat-10.1.55
+27-Jul-2026 19:20:09.272 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:     D:\git_prj\cursor_project\apache-tomcat-10.1.55
+27-Jul-2026 19:20:09.284 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dstdout.encoding=UTF-8
+27-Jul-2026 19:20:09.284 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dstderr.encoding=UTF-8
+27-Jul-2026 19:20:09.284 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.config.file=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\conf\logging.properties
+27-Jul-2026 19:20:09.284 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+27-Jul-2026 19:20:09.284 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djdk.tls.ephemeralDHKeySize=2048
+27-Jul-2026 19:20:09.284 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+27-Jul-2026 19:20:09.284 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dsun.io.useCanonCaches=false
+27-Jul-2026 19:20:09.288 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang=ALL-UNNAMED
+27-Jul-2026 19:20:09.288 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+27-Jul-2026 19:20:09.288 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.io=ALL-UNNAMED
+27-Jul-2026 19:20:09.288 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util=ALL-UNNAMED
+27-Jul-2026 19:20:09.289 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+27-Jul-2026 19:20:09.289 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+27-Jul-2026 19:20:09.290 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.base=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+27-Jul-2026 19:20:09.290 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.home=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+27-Jul-2026 19:20:09.290 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.io.tmpdir=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\temp
+27-Jul-2026 19:20:09.315 정보 [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent 프로덕션 환경들에서 최적의 성능을 제공하는, APR 기반 Apache Tomcat Native 라이브러리가, 다음 java.library.path에서 발견되지 않습니다: [C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Python314\Scripts\;C:\Python314\;c:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Program Files (x86)\Microsoft\Edge\Application;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\dotnet\;C:\Program Files\PuTTY\;C:\Program Files\TortoiseSVN\bin;C:\ProgramData\chocolatey\bin;C:\openssl-0.9.8k_X64\bin\;C:\Users\sjrnfl13\AppData\Local\Android\Sdk\platform-tools\;C:\Program Files\XVision\Sense Reader;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl1;D:\Python\Scripts\;D:\Python\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;C:\dev\apache-maven-3.9.11\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Program Files\GitExtensions\;C:\Program Files\XVision\Sense Reader;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\\bin;C:\Users\sjrnfl13\.bun\bin;C:\Program Files\Go\bin;C:\apache-maven-3.9.9\bin;C:\Program Files\XVision\Sense Reader;D:\Python\Scripts\;D:\Python;C:\Users\sjrnfl13\AppData\Local\Programs\Python\Python37\Scripts\;C:\Users\sjrnfl13\AppData\Local\Programs\Python\Python37\;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Local\afreeca;C:\Users\sjrnfl13\AppData\Local\Programs\Ollama;C:\Users\sjrnfl13\AppData\Local\Microsoft\WinGet\Packages\Schniz.fnm_Microsoft.Winget.Source_8wekyb3d8bbwe;C:\Users\sjrnfl13\AppData\Local\GitHubDesktop\bin;C:\Program Files\JetBrains\PyCharm Community Edition 2024.2.3\bin;C:\Users\sjrnfl13\AppData\Local\SOOP;C:\Users\sjrnfl13\AppData\Local\Programs\Fiddler;C:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Windsurf\bin;C:\Program Files\JetBrains\PyCharm 2025.1.2\bin;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Roaming\npm;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\sjrnfl13\AppData\Local\Microsoft\WinGet\Links;C:\Users\sjrnfl13\.local\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\;C:\Users\sjrnfl13\.bun\bin;C:\Users\sjrnfl13\.bun\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity IDE\bin;C:\Users\sjrnfl13\go\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Users\sjrnfl13\.dotnet\tools;C:\Users\sjrnfl13\AppData\Roaming\Python\Python314\Scripts;.]
+27-Jul-2026 19:20:09.546 정보 [main] org.apache.coyote.AbstractProtocol.init 프로토콜 핸들러 ["http-nio-7070"]을(를) 초기화합니다.
+27-Jul-2026 19:20:09.566 정보 [main] org.apache.catalina.startup.Catalina.load [510] 밀리초 내에 서버가 초기화되었습니다.
+27-Jul-2026 19:20:09.616 정보 [main] org.apache.catalina.core.StandardService.startInternal 서비스 [Catalina]을(를) 시작합니다.
+27-Jul-2026 19:20:09.616 정보 [main] org.apache.catalina.core.StandardEngine.startInternal 서버 엔진을 시작합니다: [Apache Tomcat/10.1.55]
+27-Jul-2026 19:20:10.033 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:20:10.198 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:20:10.203 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]을(를) 배치합니다.
+27-Jul-2026 19:20:10.323 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:20:10.327 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]에 대한 배치가 [122] 밀리초에 완료되었습니다.
+27-Jul-2026 19:20:10.328 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]을(를) 배치합니다.
+27-Jul-2026 19:20:10.611 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:20:10.667 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]에 대한 배치가 [339] 밀리초에 완료되었습니다.
+27-Jul-2026 19:20:10.668 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]을(를) 배치합니다.
+27-Jul-2026 19:20:10.773 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:20:10.781 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]에 대한 배치가 [114] 밀리초에 완료되었습니다.
+27-Jul-2026 19:20:10.782 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]을(를) 배치합니다.
+27-Jul-2026 19:20:10.893 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:20:10.895 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]에 대한 배치가 [114] 밀리초에 완료되었습니다.
+27-Jul-2026 19:20:10.895 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]을(를) 배치합니다.
+27-Jul-2026 19:20:10.991 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:20:10.994 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]에 대한 배치가 [99] 밀리초에 완료되었습니다.
+27-Jul-2026 19:20:10.998 정보 [main] org.apache.coyote.AbstractProtocol.start 프로토콜 핸들러 ["http-nio-7070"]을(를) 시작합니다.
+27-Jul-2026 19:20:11.022 정보 [main] org.apache.catalina.startup.Catalina.start 서버가 [1454] 밀리초 내에 시작되었습니다.
+27-Jul-2026 19:24:21.283 정보 [Catalina-utility-2] org.apache.catalina.startup.HostConfig.reload 컨텍스트 []을(를) 다시 로드합니다.
+27-Jul-2026 19:24:21.283 정보 [Catalina-utility-2] org.apache.catalina.core.StandardContext.reload 이름이 []인 컨텍스트를 다시 로드하는 작업이 시작되었습니다.
+27-Jul-2026 19:24:21.371 정보 [Catalina-utility-2] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:24:21.373 정보 [Catalina-utility-2] org.apache.catalina.core.StandardContext.reload 이름이 []인 컨텍스트를 다시 로드하는 것을 완료했습니다.
+27-Jul-2026 19:24:21.373 정보 [Catalina-utility-2] org.apache.catalina.startup.HostConfig.reload 컨텍스트 [/examples]을(를) 다시 로드합니다.
+27-Jul-2026 19:24:21.373 정보 [Catalina-utility-2] org.apache.catalina.core.StandardContext.reload 이름이 [/examples]인 컨텍스트를 다시 로드하는 작업이 시작되었습니다.
+27-Jul-2026 19:24:21.543 정보 [Catalina-utility-2] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:24:21.558 정보 [Catalina-utility-2] org.apache.catalina.core.StandardContext.reload 이름이 [/examples]인 컨텍스트를 다시 로드하는 것을 완료했습니다.
+27-Jul-2026 19:24:21.558 정보 [Catalina-utility-2] org.apache.catalina.startup.HostConfig.reload 컨텍스트 [/host-manager]을(를) 다시 로드합니다.
+27-Jul-2026 19:24:21.558 정보 [Catalina-utility-2] org.apache.catalina.core.StandardContext.reload 이름이 [/host-manager]인 컨텍스트를 다시 로드하는 작업이 시작되었습니다.
+27-Jul-2026 19:24:21.628 정보 [Catalina-utility-2] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:24:21.630 정보 [Catalina-utility-2] org.apache.catalina.core.StandardContext.reload 이름이 [/host-manager]인 컨텍스트를 다시 로드하는 것을 완료했습니다.
+27-Jul-2026 19:24:21.631 정보 [Catalina-utility-2] org.apache.catalina.startup.HostConfig.reload 컨텍스트 [/manager]을(를) 다시 로드합니다.
+27-Jul-2026 19:24:21.631 정보 [Catalina-utility-2] org.apache.catalina.core.StandardContext.reload 이름이 [/manager]인 컨텍스트를 다시 로드하는 작업이 시작되었습니다.
+27-Jul-2026 19:24:21.701 정보 [Catalina-utility-2] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:24:21.702 정보 [Catalina-utility-2] org.apache.catalina.core.StandardContext.reload 이름이 [/manager]인 컨텍스트를 다시 로드하는 것을 완료했습니다.
+27-Jul-2026 19:24:21.702 정보 [Catalina-utility-2] org.apache.catalina.startup.HostConfig.reload 컨텍스트 [/docs]을(를) 다시 로드합니다.
+27-Jul-2026 19:24:21.702 정보 [Catalina-utility-2] org.apache.catalina.core.StandardContext.reload 이름이 [/docs]인 컨텍스트를 다시 로드하는 작업이 시작되었습니다.
+27-Jul-2026 19:24:21.766 정보 [Catalina-utility-2] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:24:21.768 정보 [Catalina-utility-2] org.apache.catalina.core.StandardContext.reload 이름이 [/docs]인 컨텍스트를 다시 로드하는 것을 완료했습니다.
+27-Jul-2026 19:24:31.777 정보 [Catalina-utility-2] org.apache.catalina.startup.HostConfig.reload 컨텍스트 []을(를) 다시 로드합니다.
+27-Jul-2026 19:24:31.777 정보 [Catalina-utility-2] org.apache.catalina.core.StandardContext.reload 이름이 []인 컨텍스트를 다시 로드하는 작업이 시작되었습니다.
+27-Jul-2026 19:24:31.847 정보 [Catalina-utility-2] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:24:31.849 정보 [Catalina-utility-2] org.apache.catalina.core.StandardContext.reload 이름이 []인 컨텍스트를 다시 로드하는 것을 완료했습니다.
+27-Jul-2026 19:26:04.090 정보 [Thread-1] org.apache.coyote.AbstractProtocol.pause 프로토콜 핸들러 ["http-nio-7070"]을(를) 일시 정지 중
+27-Jul-2026 19:26:04.095 정보 [Thread-1] org.apache.catalina.core.StandardService.stopInternal 서비스 [Catalina]을(를) 중지시킵니다.
+27-Jul-2026 19:26:04.107 정보 [Thread-1] org.apache.coyote.AbstractProtocol.stop 프로토콜 핸들러 ["http-nio-7070"]을(를) 중지시킵니다.
+27-Jul-2026 19:26:04.132 정보 [Thread-1] org.apache.coyote.AbstractProtocol.destroy 프로토콜 핸들러 ["http-nio-7070"]을(를) 소멸시킵니다.
+27-Jul-2026 19:26:07.781 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 서버 버전 이름:    Apache Tomcat/10.1.55
+27-Jul-2026 19:26:07.783 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 빌드 시각:  May 5 2026 13:33:02 UTC
+27-Jul-2026 19:26:07.783 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 버전 번호:  10.1.55.0
+27-Jul-2026 19:26:07.783 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 이름:     Windows 11
+27-Jul-2026 19:26:07.783 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 버전:     10.0
+27-Jul-2026 19:26:07.783 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 아키텍처:          amd64
+27-Jul-2026 19:26:07.783 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 자바 홈:           C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10
+27-Jul-2026 19:26:07.783 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 버전:          21.0.9+10-LTS
+27-Jul-2026 19:26:07.783 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 벤더:          Microsoft
+27-Jul-2026 19:26:07.783 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:     D:\git_prj\cursor_project\apache-tomcat-10.1.55
+27-Jul-2026 19:26:07.783 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:     D:\git_prj\cursor_project\apache-tomcat-10.1.55
+27-Jul-2026 19:26:07.795 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dstdout.encoding=UTF-8
+27-Jul-2026 19:26:07.795 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dstderr.encoding=UTF-8
+27-Jul-2026 19:26:07.795 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.config.file=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\conf\logging.properties
+27-Jul-2026 19:26:07.795 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+27-Jul-2026 19:26:07.795 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djdk.tls.ephemeralDHKeySize=2048
+27-Jul-2026 19:26:07.798 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+27-Jul-2026 19:26:07.798 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dsun.io.useCanonCaches=false
+27-Jul-2026 19:26:07.798 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang=ALL-UNNAMED
+27-Jul-2026 19:26:07.799 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+27-Jul-2026 19:26:07.799 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.io=ALL-UNNAMED
+27-Jul-2026 19:26:07.799 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util=ALL-UNNAMED
+27-Jul-2026 19:26:07.799 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+27-Jul-2026 19:26:07.799 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+27-Jul-2026 19:26:07.799 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.base=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+27-Jul-2026 19:26:07.799 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.home=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+27-Jul-2026 19:26:07.799 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.io.tmpdir=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\temp
+27-Jul-2026 19:26:07.813 정보 [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent 프로덕션 환경들에서 최적의 성능을 제공하는, APR 기반 Apache Tomcat Native 라이브러리가, 다음 java.library.path에서 발견되지 않습니다: [C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Python314\Scripts\;C:\Python314\;c:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Program Files (x86)\Microsoft\Edge\Application;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\dotnet\;C:\Program Files\PuTTY\;C:\Program Files\TortoiseSVN\bin;C:\ProgramData\chocolatey\bin;C:\openssl-0.9.8k_X64\bin\;C:\Users\sjrnfl13\AppData\Local\Android\Sdk\platform-tools\;C:\Program Files\XVision\Sense Reader;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl1;D:\Python\Scripts\;D:\Python\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;C:\dev\apache-maven-3.9.11\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Program Files\GitExtensions\;C:\Program Files\XVision\Sense Reader;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\\bin;C:\Users\sjrnfl13\.bun\bin;C:\Program Files\Go\bin;C:\apache-maven-3.9.9\bin;C:\Program Files\XVision\Sense Reader;D:\Python\Scripts\;D:\Python;C:\Users\sjrnfl13\AppData\Local\Programs\Python\Python37\Scripts\;C:\Users\sjrnfl13\AppData\Local\Programs\Python\Python37\;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Local\afreeca;C:\Users\sjrnfl13\AppData\Local\Programs\Ollama;C:\Users\sjrnfl13\AppData\Local\Microsoft\WinGet\Packages\Schniz.fnm_Microsoft.Winget.Source_8wekyb3d8bbwe;C:\Users\sjrnfl13\AppData\Local\GitHubDesktop\bin;C:\Program Files\JetBrains\PyCharm Community Edition 2024.2.3\bin;C:\Users\sjrnfl13\AppData\Local\SOOP;C:\Users\sjrnfl13\AppData\Local\Programs\Fiddler;C:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Windsurf\bin;C:\Program Files\JetBrains\PyCharm 2025.1.2\bin;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Roaming\npm;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\sjrnfl13\AppData\Local\Microsoft\WinGet\Links;C:\Users\sjrnfl13\.local\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\;C:\Users\sjrnfl13\.bun\bin;C:\Users\sjrnfl13\.bun\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity IDE\bin;C:\Users\sjrnfl13\go\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Users\sjrnfl13\.dotnet\tools;C:\Users\sjrnfl13\AppData\Roaming\Python\Python314\Scripts;.]
+27-Jul-2026 19:26:07.999 정보 [main] org.apache.coyote.AbstractProtocol.init 프로토콜 핸들러 ["http-nio-7070"]을(를) 초기화합니다.
+27-Jul-2026 19:26:08.019 정보 [main] org.apache.catalina.startup.Catalina.load [410] 밀리초 내에 서버가 초기화되었습니다.
+27-Jul-2026 19:26:08.068 정보 [main] org.apache.catalina.core.StandardService.startInternal 서비스 [Catalina]을(를) 시작합니다.
+27-Jul-2026 19:26:08.068 정보 [main] org.apache.catalina.core.StandardEngine.startInternal 서버 엔진을 시작합니다: [Apache Tomcat/10.1.55]
+27-Jul-2026 19:26:08.449 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:26:08.606 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:26:08.611 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]을(를) 배치합니다.
+27-Jul-2026 19:26:08.706 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:26:08.711 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]에 대한 배치가 [97] 밀리초에 완료되었습니다.
+27-Jul-2026 19:26:08.711 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]을(를) 배치합니다.
+27-Jul-2026 19:26:08.959 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:26:09.017 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]에 대한 배치가 [306] 밀리초에 완료되었습니다.
+27-Jul-2026 19:26:09.018 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]을(를) 배치합니다.
+27-Jul-2026 19:26:09.117 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:26:09.124 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]에 대한 배치가 [106] 밀리초에 완료되었습니다.
+27-Jul-2026 19:26:09.124 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]을(를) 배치합니다.
+27-Jul-2026 19:26:09.206 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:26:09.207 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]에 대한 배치가 [83] 밀리초에 완료되었습니다.
+27-Jul-2026 19:26:09.208 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]을(를) 배치합니다.
+27-Jul-2026 19:26:09.280 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:26:09.283 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]에 대한 배치가 [75] 밀리초에 완료되었습니다.
+27-Jul-2026 19:26:09.288 정보 [main] org.apache.coyote.AbstractProtocol.start 프로토콜 핸들러 ["http-nio-7070"]을(를) 시작합니다.
+27-Jul-2026 19:26:09.309 정보 [main] org.apache.catalina.startup.Catalina.start 서버가 [1287] 밀리초 내에 시작되었습니다.
+27-Jul-2026 19:26:53.971 정보 [Thread-1] org.apache.coyote.AbstractProtocol.pause 프로토콜 핸들러 ["http-nio-7070"]을(를) 일시 정지 중
+27-Jul-2026 19:26:53.977 정보 [Thread-1] org.apache.catalina.core.StandardService.stopInternal 서비스 [Catalina]을(를) 중지시킵니다.
+27-Jul-2026 19:26:53.998 정보 [Thread-1] org.apache.coyote.AbstractProtocol.stop 프로토콜 핸들러 ["http-nio-7070"]을(를) 중지시킵니다.
+27-Jul-2026 19:26:54.010 정보 [Thread-1] org.apache.coyote.AbstractProtocol.destroy 프로토콜 핸들러 ["http-nio-7070"]을(를) 소멸시킵니다.
+27-Jul-2026 19:26:56.102 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 서버 버전 이름:    Apache Tomcat/10.1.55
+27-Jul-2026 19:26:56.106 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 빌드 시각:  May 5 2026 13:33:02 UTC
+27-Jul-2026 19:26:56.106 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 버전 번호:  10.1.55.0
+27-Jul-2026 19:26:56.108 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 이름:     Windows 11
+27-Jul-2026 19:26:56.108 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 버전:     10.0
+27-Jul-2026 19:26:56.108 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 아키텍처:          amd64
+27-Jul-2026 19:26:56.108 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 자바 홈:           C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10
+27-Jul-2026 19:26:56.108 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 버전:          21.0.9+10-LTS
+27-Jul-2026 19:26:56.108 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 벤더:          Microsoft
+27-Jul-2026 19:26:56.108 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:     D:\git_prj\cursor_project\apache-tomcat-10.1.55
+27-Jul-2026 19:26:56.108 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:     D:\git_prj\cursor_project\apache-tomcat-10.1.55
+27-Jul-2026 19:26:56.117 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dstdout.encoding=UTF-8
+27-Jul-2026 19:26:56.118 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dstderr.encoding=UTF-8
+27-Jul-2026 19:26:56.118 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.config.file=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\conf\logging.properties
+27-Jul-2026 19:26:56.118 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+27-Jul-2026 19:26:56.118 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djdk.tls.ephemeralDHKeySize=2048
+27-Jul-2026 19:26:56.118 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+27-Jul-2026 19:26:56.119 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dsun.io.useCanonCaches=false
+27-Jul-2026 19:26:56.119 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang=ALL-UNNAMED
+27-Jul-2026 19:26:56.119 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+27-Jul-2026 19:26:56.119 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.io=ALL-UNNAMED
+27-Jul-2026 19:26:56.119 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util=ALL-UNNAMED
+27-Jul-2026 19:26:56.120 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+27-Jul-2026 19:26:56.120 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+27-Jul-2026 19:26:56.120 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.base=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+27-Jul-2026 19:26:56.120 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.home=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+27-Jul-2026 19:26:56.120 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.io.tmpdir=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\temp
+27-Jul-2026 19:26:56.139 정보 [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent 프로덕션 환경들에서 최적의 성능을 제공하는, APR 기반 Apache Tomcat Native 라이브러리가, 다음 java.library.path에서 발견되지 않습니다: [C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Python314\Scripts\;C:\Python314\;c:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Program Files (x86)\Microsoft\Edge\Application;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\dotnet\;C:\Program Files\PuTTY\;C:\Program Files\TortoiseSVN\bin;C:\ProgramData\chocolatey\bin;C:\openssl-0.9.8k_X64\bin\;C:\Users\sjrnfl13\AppData\Local\Android\Sdk\platform-tools\;C:\Program Files\XVision\Sense Reader;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl1;D:\Python\Scripts\;D:\Python\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;C:\dev\apache-maven-3.9.11\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Program Files\GitExtensions\;C:\Program Files\XVision\Sense Reader;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\\bin;C:\Users\sjrnfl13\.bun\bin;C:\Program Files\Go\bin;C:\apache-maven-3.9.9\bin;C:\Program Files\XVision\Sense Reader;D:\Python\Scripts\;D:\Python;C:\Users\sjrnfl13\AppData\Local\Programs\Python\Python37\Scripts\;C:\Users\sjrnfl13\AppData\Local\Programs\Python\Python37\;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Local\afreeca;C:\Users\sjrnfl13\AppData\Local\Programs\Ollama;C:\Users\sjrnfl13\AppData\Local\Microsoft\WinGet\Packages\Schniz.fnm_Microsoft.Winget.Source_8wekyb3d8bbwe;C:\Users\sjrnfl13\AppData\Local\GitHubDesktop\bin;C:\Program Files\JetBrains\PyCharm Community Edition 2024.2.3\bin;C:\Users\sjrnfl13\AppData\Local\SOOP;C:\Users\sjrnfl13\AppData\Local\Programs\Fiddler;C:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Windsurf\bin;C:\Program Files\JetBrains\PyCharm 2025.1.2\bin;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Roaming\npm;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\sjrnfl13\AppData\Local\Microsoft\WinGet\Links;C:\Users\sjrnfl13\.local\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\;C:\Users\sjrnfl13\.bun\bin;C:\Users\sjrnfl13\.bun\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity IDE\bin;C:\Users\sjrnfl13\go\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Users\sjrnfl13\.dotnet\tools;C:\Users\sjrnfl13\AppData\Roaming\Python\Python314\Scripts;.]
+27-Jul-2026 19:26:56.341 정보 [main] org.apache.coyote.AbstractProtocol.init 프로토콜 핸들러 ["http-nio-7070"]을(를) 초기화합니다.
+27-Jul-2026 19:26:56.363 정보 [main] org.apache.catalina.startup.Catalina.load [459] 밀리초 내에 서버가 초기화되었습니다.
+27-Jul-2026 19:26:56.433 정보 [main] org.apache.catalina.core.StandardService.startInternal 서비스 [Catalina]을(를) 시작합니다.
+27-Jul-2026 19:26:56.433 정보 [main] org.apache.catalina.core.StandardEngine.startInternal 서버 엔진을 시작합니다: [Apache Tomcat/10.1.55]
+27-Jul-2026 19:26:56.836 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:26:57.004 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:26:57.009 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]을(를) 배치합니다.
+27-Jul-2026 19:26:57.116 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:26:57.124 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]에 대한 배치가 [111] 밀리초에 완료되었습니다.
+27-Jul-2026 19:26:57.124 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]을(를) 배치합니다.
+27-Jul-2026 19:26:57.378 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:26:57.447 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]에 대한 배치가 [323] 밀리초에 완료되었습니다.
+27-Jul-2026 19:26:57.447 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]을(를) 배치합니다.
+27-Jul-2026 19:26:57.546 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:26:57.552 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]에 대한 배치가 [105] 밀리초에 완료되었습니다.
+27-Jul-2026 19:26:57.553 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]을(를) 배치합니다.
+27-Jul-2026 19:26:57.639 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:26:57.642 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]에 대한 배치가 [89] 밀리초에 완료되었습니다.
+27-Jul-2026 19:26:57.642 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]을(를) 배치합니다.
+27-Jul-2026 19:26:57.723 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:26:57.727 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]에 대한 배치가 [85] 밀리초에 완료되었습니다.
+27-Jul-2026 19:26:57.730 정보 [main] org.apache.coyote.AbstractProtocol.start 프로토콜 핸들러 ["http-nio-7070"]을(를) 시작합니다.
+27-Jul-2026 19:26:57.751 정보 [main] org.apache.catalina.startup.Catalina.start 서버가 [1386] 밀리초 내에 시작되었습니다.
+27-Jul-2026 19:27:41.137 정보 [Thread-1] org.apache.coyote.AbstractProtocol.pause 프로토콜 핸들러 ["http-nio-7070"]을(를) 일시 정지 중
+27-Jul-2026 19:27:41.143 정보 [Thread-1] org.apache.catalina.core.StandardService.stopInternal 서비스 [Catalina]을(를) 중지시킵니다.
+27-Jul-2026 19:27:41.162 정보 [Thread-1] org.apache.coyote.AbstractProtocol.stop 프로토콜 핸들러 ["http-nio-7070"]을(를) 중지시킵니다.
+27-Jul-2026 19:27:41.171 정보 [Thread-1] org.apache.coyote.AbstractProtocol.destroy 프로토콜 핸들러 ["http-nio-7070"]을(를) 소멸시킵니다.
+27-Jul-2026 19:27:46.123 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 서버 버전 이름:    Apache Tomcat/10.1.55
+27-Jul-2026 19:27:46.127 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 빌드 시각:  May 5 2026 13:33:02 UTC
+27-Jul-2026 19:27:46.127 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 버전 번호:  10.1.55.0
+27-Jul-2026 19:27:46.127 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 이름:     Windows 11
+27-Jul-2026 19:27:46.127 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 버전:     10.0
+27-Jul-2026 19:27:46.128 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 아키텍처:          amd64
+27-Jul-2026 19:27:46.128 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 자바 홈:           C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10
+27-Jul-2026 19:27:46.128 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 버전:          21.0.9+10-LTS
+27-Jul-2026 19:27:46.128 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 벤더:          Microsoft
+27-Jul-2026 19:27:46.128 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:     D:\git_prj\cursor_project\apache-tomcat-10.1.55
+27-Jul-2026 19:27:46.128 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:     D:\git_prj\cursor_project\apache-tomcat-10.1.55
+27-Jul-2026 19:27:46.136 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dstdout.encoding=UTF-8
+27-Jul-2026 19:27:46.136 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dstderr.encoding=UTF-8
+27-Jul-2026 19:27:46.137 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.config.file=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\conf\logging.properties
+27-Jul-2026 19:27:46.137 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+27-Jul-2026 19:27:46.137 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djdk.tls.ephemeralDHKeySize=2048
+27-Jul-2026 19:27:46.137 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+27-Jul-2026 19:27:46.137 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dsun.io.useCanonCaches=false
+27-Jul-2026 19:27:46.138 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang=ALL-UNNAMED
+27-Jul-2026 19:27:46.138 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+27-Jul-2026 19:27:46.138 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.io=ALL-UNNAMED
+27-Jul-2026 19:27:46.138 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util=ALL-UNNAMED
+27-Jul-2026 19:27:46.138 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+27-Jul-2026 19:27:46.139 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+27-Jul-2026 19:27:46.139 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.base=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+27-Jul-2026 19:27:46.139 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.home=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+27-Jul-2026 19:27:46.139 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.io.tmpdir=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\temp
+27-Jul-2026 19:27:46.154 정보 [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent 프로덕션 환경들에서 최적의 성능을 제공하는, APR 기반 Apache Tomcat Native 라이브러리가, 다음 java.library.path에서 발견되지 않습니다: [C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Python314\Scripts\;C:\Python314\;c:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Program Files (x86)\Microsoft\Edge\Application;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\dotnet\;C:\Program Files\PuTTY\;C:\Program Files\TortoiseSVN\bin;C:\ProgramData\chocolatey\bin;C:\openssl-0.9.8k_X64\bin\;C:\Users\sjrnfl13\AppData\Local\Android\Sdk\platform-tools\;C:\Program Files\XVision\Sense Reader;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl1;D:\Python\Scripts\;D:\Python\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;C:\dev\apache-maven-3.9.11\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Program Files\GitExtensions\;C:\Program Files\XVision\Sense Reader;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\\bin;C:\Users\sjrnfl13\.bun\bin;C:\Program Files\Go\bin;C:\apache-maven-3.9.9\bin;C:\Program Files\XVision\Sense Reader;D:\Python\Scripts\;D:\Python;C:\Users\sjrnfl13\AppData\Local\Programs\Python\Python37\Scripts\;C:\Users\sjrnfl13\AppData\Local\Programs\Python\Python37\;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Local\afreeca;C:\Users\sjrnfl13\AppData\Local\Programs\Ollama;C:\Users\sjrnfl13\AppData\Local\Microsoft\WinGet\Packages\Schniz.fnm_Microsoft.Winget.Source_8wekyb3d8bbwe;C:\Users\sjrnfl13\AppData\Local\GitHubDesktop\bin;C:\Program Files\JetBrains\PyCharm Community Edition 2024.2.3\bin;C:\Users\sjrnfl13\AppData\Local\SOOP;C:\Users\sjrnfl13\AppData\Local\Programs\Fiddler;C:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Windsurf\bin;C:\Program Files\JetBrains\PyCharm 2025.1.2\bin;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Roaming\npm;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\sjrnfl13\AppData\Local\Microsoft\WinGet\Links;C:\Users\sjrnfl13\.local\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\;C:\Users\sjrnfl13\.bun\bin;C:\Users\sjrnfl13\.bun\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity IDE\bin;C:\Users\sjrnfl13\go\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Users\sjrnfl13\.dotnet\tools;C:\Users\sjrnfl13\AppData\Roaming\Python\Python314\Scripts;.]
+27-Jul-2026 19:27:46.327 정보 [main] org.apache.coyote.AbstractProtocol.init 프로토콜 핸들러 ["http-nio-7070"]을(를) 초기화합니다.
+27-Jul-2026 19:27:46.344 정보 [main] org.apache.catalina.startup.Catalina.load [393] 밀리초 내에 서버가 초기화되었습니다.
+27-Jul-2026 19:27:46.391 정보 [main] org.apache.catalina.core.StandardService.startInternal 서비스 [Catalina]을(를) 시작합니다.
+27-Jul-2026 19:27:46.391 정보 [main] org.apache.catalina.core.StandardEngine.startInternal 서버 엔진을 시작합니다: [Apache Tomcat/10.1.55]
+27-Jul-2026 19:27:46.754 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:27:46.908 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:27:46.912 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]을(를) 배치합니다.
+27-Jul-2026 19:27:47.018 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:27:47.023 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]에 대한 배치가 [109] 밀리초에 완료되었습니다.
+27-Jul-2026 19:27:47.023 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]을(를) 배치합니다.
+27-Jul-2026 19:27:47.261 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:27:47.309 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]에 대한 배치가 [285] 밀리초에 완료되었습니다.
+27-Jul-2026 19:27:47.309 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]을(를) 배치합니다.
+27-Jul-2026 19:27:47.408 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:27:47.418 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]에 대한 배치가 [109] 밀리초에 완료되었습니다.
+27-Jul-2026 19:27:47.418 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]을(를) 배치합니다.
+27-Jul-2026 19:27:47.507 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:27:47.509 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]에 대한 배치가 [91] 밀리초에 완료되었습니다.
+27-Jul-2026 19:27:47.510 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]을(를) 배치합니다.
+27-Jul-2026 19:27:47.585 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:27:47.589 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]에 대한 배치가 [79] 밀리초에 완료되었습니다.
+27-Jul-2026 19:27:47.593 정보 [main] org.apache.coyote.AbstractProtocol.start 프로토콜 핸들러 ["http-nio-7070"]을(를) 시작합니다.
+27-Jul-2026 19:27:47.613 정보 [main] org.apache.catalina.startup.Catalina.start 서버가 [1267] 밀리초 내에 시작되었습니다.
+27-Jul-2026 19:29:49.923 정보 [Thread-1] org.apache.coyote.AbstractProtocol.pause 프로토콜 핸들러 ["http-nio-7070"]을(를) 일시 정지 중
+27-Jul-2026 19:29:49.927 정보 [Thread-1] org.apache.catalina.core.StandardService.stopInternal 서비스 [Catalina]을(를) 중지시킵니다.
+27-Jul-2026 19:29:49.946 정보 [Thread-1] org.apache.coyote.AbstractProtocol.stop 프로토콜 핸들러 ["http-nio-7070"]을(를) 중지시킵니다.
+27-Jul-2026 19:29:49.962 정보 [Thread-1] org.apache.coyote.AbstractProtocol.destroy 프로토콜 핸들러 ["http-nio-7070"]을(를) 소멸시킵니다.
+27-Jul-2026 19:29:59.130 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 서버 버전 이름:    Apache Tomcat/10.1.55
+27-Jul-2026 19:29:59.132 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 빌드 시각:  May 5 2026 13:33:02 UTC
+27-Jul-2026 19:29:59.132 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 버전 번호:  10.1.55.0
+27-Jul-2026 19:29:59.132 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 이름:     Windows 11
+27-Jul-2026 19:29:59.133 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 버전:     10.0
+27-Jul-2026 19:29:59.133 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 아키텍처:          amd64
+27-Jul-2026 19:29:59.133 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 자바 홈:           C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10
+27-Jul-2026 19:29:59.133 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 버전:          21.0.9+10-LTS
+27-Jul-2026 19:29:59.133 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 벤더:          Microsoft
+27-Jul-2026 19:29:59.133 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:     D:\git_prj\cursor_project\apache-tomcat-10.1.55
+27-Jul-2026 19:29:59.134 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:     D:\git_prj\cursor_project\apache-tomcat-10.1.55
+27-Jul-2026 19:29:59.142 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dstdout.encoding=UTF-8
+27-Jul-2026 19:29:59.142 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dstderr.encoding=UTF-8
+27-Jul-2026 19:29:59.142 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.config.file=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\conf\logging.properties
+27-Jul-2026 19:29:59.142 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+27-Jul-2026 19:29:59.143 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djdk.tls.ephemeralDHKeySize=2048
+27-Jul-2026 19:29:59.143 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+27-Jul-2026 19:29:59.143 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dsun.io.useCanonCaches=false
+27-Jul-2026 19:29:59.143 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang=ALL-UNNAMED
+27-Jul-2026 19:29:59.143 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+27-Jul-2026 19:29:59.144 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.io=ALL-UNNAMED
+27-Jul-2026 19:29:59.144 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util=ALL-UNNAMED
+27-Jul-2026 19:29:59.144 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+27-Jul-2026 19:29:59.144 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+27-Jul-2026 19:29:59.145 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.base=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+27-Jul-2026 19:29:59.145 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.home=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+27-Jul-2026 19:29:59.145 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.io.tmpdir=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\temp
+27-Jul-2026 19:29:59.159 정보 [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent 프로덕션 환경들에서 최적의 성능을 제공하는, APR 기반 Apache Tomcat Native 라이브러리가, 다음 java.library.path에서 발견되지 않습니다: [C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Python314\Scripts\;C:\Python314\;c:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Program Files (x86)\Microsoft\Edge\Application;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\dotnet\;C:\Program Files\PuTTY\;C:\Program Files\TortoiseSVN\bin;C:\ProgramData\chocolatey\bin;C:\openssl-0.9.8k_X64\bin\;C:\Users\sjrnfl13\AppData\Local\Android\Sdk\platform-tools\;C:\Program Files\XVision\Sense Reader;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl1;D:\Python\Scripts\;D:\Python\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;C:\dev\apache-maven-3.9.11\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Program Files\GitExtensions\;C:\Program Files\XVision\Sense Reader;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\\bin;C:\Users\sjrnfl13\.bun\bin;C:\Program Files\Go\bin;C:\apache-maven-3.9.9\bin;C:\Program Files\XVision\Sense Reader;D:\Python\Scripts\;D:\Python;C:\Users\sjrnfl13\AppData\Local\Programs\Python\Python37\Scripts\;C:\Users\sjrnfl13\AppData\Local\Programs\Python\Python37\;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Local\afreeca;C:\Users\sjrnfl13\AppData\Local\Programs\Ollama;C:\Users\sjrnfl13\AppData\Local\Microsoft\WinGet\Packages\Schniz.fnm_Microsoft.Winget.Source_8wekyb3d8bbwe;C:\Users\sjrnfl13\AppData\Local\GitHubDesktop\bin;C:\Program Files\JetBrains\PyCharm Community Edition 2024.2.3\bin;C:\Users\sjrnfl13\AppData\Local\SOOP;C:\Users\sjrnfl13\AppData\Local\Programs\Fiddler;C:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Windsurf\bin;C:\Program Files\JetBrains\PyCharm 2025.1.2\bin;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Roaming\npm;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\sjrnfl13\AppData\Local\Microsoft\WinGet\Links;C:\Users\sjrnfl13\.local\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\;C:\Users\sjrnfl13\.bun\bin;C:\Users\sjrnfl13\.bun\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity IDE\bin;C:\Users\sjrnfl13\go\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Users\sjrnfl13\.dotnet\tools;C:\Users\sjrnfl13\AppData\Roaming\Python\Python314\Scripts;.]
+27-Jul-2026 19:29:59.336 정보 [main] org.apache.coyote.AbstractProtocol.init 프로토콜 핸들러 ["http-nio-7070"]을(를) 초기화합니다.
+27-Jul-2026 19:29:59.354 정보 [main] org.apache.catalina.startup.Catalina.load [397] 밀리초 내에 서버가 초기화되었습니다.
+27-Jul-2026 19:29:59.410 정보 [main] org.apache.catalina.core.StandardService.startInternal 서비스 [Catalina]을(를) 시작합니다.
+27-Jul-2026 19:29:59.410 정보 [main] org.apache.catalina.core.StandardEngine.startInternal 서버 엔진을 시작합니다: [Apache Tomcat/10.1.55]
+27-Jul-2026 19:29:59.785 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:29:59.925 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:29:59.929 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]을(를) 배치합니다.
+27-Jul-2026 19:30:00.032 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:30:00.037 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]에 대한 배치가 [105] 밀리초에 완료되었습니다.
+27-Jul-2026 19:30:00.037 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]을(를) 배치합니다.
+27-Jul-2026 19:30:00.276 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:30:00.337 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]에 대한 배치가 [300] 밀리초에 완료되었습니다.
+27-Jul-2026 19:30:00.338 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]을(를) 배치합니다.
+27-Jul-2026 19:30:00.428 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:30:00.434 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]에 대한 배치가 [95] 밀리초에 완료되었습니다.
+27-Jul-2026 19:30:00.434 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]을(를) 배치합니다.
+27-Jul-2026 19:30:00.525 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:30:00.527 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]에 대한 배치가 [93] 밀리초에 완료되었습니다.
+27-Jul-2026 19:30:00.528 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]을(를) 배치합니다.
+27-Jul-2026 19:30:00.601 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 19:30:00.604 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]에 대한 배치가 [76] 밀리초에 완료되었습니다.
+27-Jul-2026 19:30:00.607 정보 [main] org.apache.coyote.AbstractProtocol.start 프로토콜 핸들러 ["http-nio-7070"]을(를) 시작합니다.
+27-Jul-2026 19:30:00.628 정보 [main] org.apache.catalina.startup.Catalina.start 서버가 [1272] 밀리초 내에 시작되었습니다.
+27-Jul-2026 19:32:39.839 정보 [http-nio-7070-exec-1] com.nexacro.java.xapi.license.A.D.A Loaded license file in JAR dir: path=D:\git_prj\cursor_project\apache-tomcat-10.1.55\lib\NexacroN_server_license.xml
+27-Jul-2026 19:32:39.852 경고 [http-nio-7070-exec-1] com.nexacro.java.xapi.license.License.isValidTime null The license is 4 days left.
+27-Jul-2026 19:32:39.856 정보 [http-nio-7070-exec-1] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@72ae5fca, elapsedTime=4, endTime=1785148359856
+27-Jul-2026 19:32:39.890 정보 [http-nio-7070-exec-1] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%4045581dbd, contentType=PlatformXml, charset=null, startTime=1785148359889
+27-Jul-2026 19:32:39.911 정보 [http-nio-7070-exec-1] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@45581dbd, elapsedTime=21, endTime=1785148359910
+27-Jul-2026 19:33:39.719 정보 [http-nio-7070-exec-4] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@50bfe702, elapsedTime=6, endTime=1785148419719
+27-Jul-2026 19:33:39.720 정보 [http-nio-7070-exec-4] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%407f6af611, contentType=PlatformXml, charset=null, startTime=1785148419720
+27-Jul-2026 19:33:39.722 정보 [http-nio-7070-exec-4] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@7f6af611, elapsedTime=2, endTime=1785148419722
+27-Jul-2026 19:33:55.233 정보 [http-nio-7070-exec-9] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@3be4c50f, elapsedTime=3, endTime=1785148435232
+27-Jul-2026 19:33:55.234 정보 [http-nio-7070-exec-9] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%406915c61b, contentType=PlatformXml, charset=null, startTime=1785148435234
+27-Jul-2026 19:33:55.235 정보 [http-nio-7070-exec-9] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@6915c61b, elapsedTime=1, endTime=1785148435235
+27-Jul-2026 19:41:26.622 정보 [http-nio-7070-exec-1] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@4a943478, elapsedTime=3, endTime=1785148886622
+27-Jul-2026 19:41:26.623 정보 [http-nio-7070-exec-1] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%407dbc1c34, contentType=PlatformXml, charset=null, startTime=1785148886623
+27-Jul-2026 19:41:26.624 정보 [http-nio-7070-exec-1] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@7dbc1c34, elapsedTime=1, endTime=1785148886624
+27-Jul-2026 19:41:26.632 정보 [http-nio-7070-exec-9] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@6ae5b210, elapsedTime=2, endTime=1785148886632
+27-Jul-2026 19:41:26.634 정보 [http-nio-7070-exec-9] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%40153cc61c, contentType=PlatformXml, charset=null, startTime=1785148886634
+27-Jul-2026 19:41:26.635 정보 [http-nio-7070-exec-9] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@153cc61c, elapsedTime=1, endTime=1785148886635
+27-Jul-2026 19:41:32.472 정보 [http-nio-7070-exec-8] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@4de1530e, elapsedTime=6, endTime=1785148892472
+27-Jul-2026 19:41:32.473 정보 [http-nio-7070-exec-8] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%404326a4c2, contentType=PlatformXml, charset=null, startTime=1785148892473
+27-Jul-2026 19:41:32.474 정보 [http-nio-7070-exec-8] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@4326a4c2, elapsedTime=1, endTime=1785148892474
+27-Jul-2026 19:41:32.483 정보 [http-nio-7070-exec-4] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@240eb4dd, elapsedTime=2, endTime=1785148892483
+27-Jul-2026 19:41:32.485 정보 [http-nio-7070-exec-4] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%40b91a4f8, contentType=PlatformXml, charset=null, startTime=1785148892485
+27-Jul-2026 19:41:32.486 정보 [http-nio-7070-exec-4] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@b91a4f8, elapsedTime=1, endTime=1785148892486
+27-Jul-2026 19:41:38.617 정보 [http-nio-7070-exec-5] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@b4ee5ca, elapsedTime=4, endTime=1785148898617
+27-Jul-2026 19:41:38.618 정보 [http-nio-7070-exec-5] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%404153e0dd, contentType=PlatformXml, charset=null, startTime=1785148898618
+27-Jul-2026 19:41:38.619 정보 [http-nio-7070-exec-5] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@4153e0dd, elapsedTime=1, endTime=1785148898619
+27-Jul-2026 19:41:38.624 정보 [http-nio-7070-exec-6] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@6b46d9d, elapsedTime=2, endTime=1785148898624
+27-Jul-2026 19:41:38.625 정보 [http-nio-7070-exec-6] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%402c88fbd0, contentType=PlatformXml, charset=null, startTime=1785148898625
+27-Jul-2026 19:41:38.626 정보 [http-nio-7070-exec-6] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@2c88fbd0, elapsedTime=1, endTime=1785148898626
+27-Jul-2026 19:50:57.430 정보 [http-nio-7070-exec-10] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@15022f32, elapsedTime=4, endTime=1785149457430
+27-Jul-2026 19:50:57.431 정보 [http-nio-7070-exec-10] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%407ecdff96, contentType=PlatformXml, charset=null, startTime=1785149457431
+27-Jul-2026 19:50:57.432 정보 [http-nio-7070-exec-10] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@7ecdff96, elapsedTime=1, endTime=1785149457432
+27-Jul-2026 19:50:57.437 정보 [http-nio-7070-exec-2] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@59756fbd, elapsedTime=1, endTime=1785149457437
+27-Jul-2026 19:50:57.438 정보 [http-nio-7070-exec-2] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%4074ca5344, contentType=PlatformXml, charset=null, startTime=1785149457438
+27-Jul-2026 19:50:57.439 정보 [http-nio-7070-exec-2] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@74ca5344, elapsedTime=1, endTime=1785149457439
+27-Jul-2026 20:16:42.645 정보 [Thread-1] org.apache.coyote.AbstractProtocol.pause 프로토콜 핸들러 ["http-nio-7070"]을(를) 일시 정지 중
+27-Jul-2026 20:16:42.651 정보 [Thread-1] org.apache.catalina.core.StandardService.stopInternal 서비스 [Catalina]을(를) 중지시킵니다.
+27-Jul-2026 20:16:42.671 정보 [Thread-1] org.apache.coyote.AbstractProtocol.stop 프로토콜 핸들러 ["http-nio-7070"]을(를) 중지시킵니다.
+27-Jul-2026 20:16:42.679 정보 [Thread-1] org.apache.coyote.AbstractProtocol.destroy 프로토콜 핸들러 ["http-nio-7070"]을(를) 소멸시킵니다.
+27-Jul-2026 20:22:09.834 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 서버 버전 이름:    Apache Tomcat/10.1.55
+27-Jul-2026 20:22:09.837 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 빌드 시각:  May 5 2026 13:33:02 UTC
+27-Jul-2026 20:22:09.837 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 버전 번호:  10.1.55.0
+27-Jul-2026 20:22:09.837 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 이름:     Windows 11
+27-Jul-2026 20:22:09.838 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 버전:     10.0
+27-Jul-2026 20:22:09.838 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 아키텍처:          amd64
+27-Jul-2026 20:22:09.838 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 자바 홈:           C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10
+27-Jul-2026 20:22:09.838 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 버전:          21.0.9+10-LTS
+27-Jul-2026 20:22:09.838 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 벤더:          Microsoft
+27-Jul-2026 20:22:09.838 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:     D:\git_prj\cursor_project\apache-tomcat-10.1.55
+27-Jul-2026 20:22:09.839 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:     D:\git_prj\cursor_project\apache-tomcat-10.1.55
+27-Jul-2026 20:22:09.846 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dstdout.encoding=UTF-8
+27-Jul-2026 20:22:09.847 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dstderr.encoding=UTF-8
+27-Jul-2026 20:22:09.847 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.config.file=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\conf\logging.properties
+27-Jul-2026 20:22:09.847 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+27-Jul-2026 20:22:09.847 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djdk.tls.ephemeralDHKeySize=2048
+27-Jul-2026 20:22:09.849 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+27-Jul-2026 20:22:09.849 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dsun.io.useCanonCaches=false
+27-Jul-2026 20:22:09.849 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang=ALL-UNNAMED
+27-Jul-2026 20:22:09.849 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+27-Jul-2026 20:22:09.850 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.io=ALL-UNNAMED
+27-Jul-2026 20:22:09.850 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util=ALL-UNNAMED
+27-Jul-2026 20:22:09.850 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+27-Jul-2026 20:22:09.850 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+27-Jul-2026 20:22:09.850 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.base=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+27-Jul-2026 20:22:09.851 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.home=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55
+27-Jul-2026 20:22:09.851 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.io.tmpdir=D:\git_prj\cursor_project\Tools\..\apache-tomcat-10.1.55\temp
+27-Jul-2026 20:22:09.868 정보 [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent 프로덕션 환경들에서 최적의 성능을 제공하는, APR 기반 Apache Tomcat Native 라이브러리가, 다음 java.library.path에서 발견되지 않습니다: [C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Python314\Scripts\;C:\Python314\;c:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Program Files (x86)\Microsoft\Edge\Application;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\dotnet\;C:\Program Files\PuTTY\;C:\Program Files\TortoiseSVN\bin;C:\ProgramData\chocolatey\bin;C:\openssl-0.9.8k_X64\bin\;C:\Users\sjrnfl13\AppData\Local\Android\Sdk\platform-tools\;C:\Program Files\XVision\Sense Reader;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl1;D:\Python\Scripts\;D:\Python\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;C:\dev\apache-maven-3.9.11\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Program Files\GitExtensions\;C:\Program Files\XVision\Sense Reader;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\\bin;C:\Users\sjrnfl13\.bun\bin;C:\Program Files\Go\bin;C:\apache-maven-3.9.9\bin;C:\Program Files\XVision\Sense Reader;D:\Python\Scripts\;D:\Python;C:\Users\sjrnfl13\AppData\Local\Programs\Python\Python37\Scripts\;C:\Users\sjrnfl13\AppData\Local\Programs\Python\Python37\;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Local\afreeca;C:\Users\sjrnfl13\AppData\Local\Programs\Ollama;C:\Users\sjrnfl13\AppData\Local\Microsoft\WinGet\Packages\Schniz.fnm_Microsoft.Winget.Source_8wekyb3d8bbwe;C:\Users\sjrnfl13\AppData\Local\GitHubDesktop\bin;C:\Program Files\JetBrains\PyCharm Community Edition 2024.2.3\bin;C:\Users\sjrnfl13\AppData\Local\SOOP;C:\Users\sjrnfl13\AppData\Local\Programs\Fiddler;C:\Users\sjrnfl13\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Windsurf\bin;C:\Program Files\JetBrains\PyCharm 2025.1.2\bin;C:\Users\sjrnfl13\AppData\Local\Microsoft\WindowsApps;C:\Users\sjrnfl13\AppData\Roaming\npm;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\sjrnfl13\AppData\Local\Microsoft\WinGet\Links;C:\Users\sjrnfl13\.local\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\;C:\Users\sjrnfl13\.bun\bin;C:\Users\sjrnfl13\.bun\bin;C:\Users\sjrnfl13\AppData\Local\Programs\Antigravity IDE\bin;C:\Users\sjrnfl13\go\bin;C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin;C:\Users\sjrnfl13\.dotnet\tools;C:\Users\sjrnfl13\AppData\Roaming\Python\Python314\Scripts;.]
+27-Jul-2026 20:22:10.054 정보 [main] org.apache.coyote.AbstractProtocol.init 프로토콜 핸들러 ["http-nio-7070"]을(를) 초기화합니다.
+27-Jul-2026 20:22:10.071 정보 [main] org.apache.catalina.startup.Catalina.load [419] 밀리초 내에 서버가 초기화되었습니다.
+27-Jul-2026 20:22:10.119 정보 [main] org.apache.catalina.core.StandardService.startInternal 서비스 [Catalina]을(를) 시작합니다.
+27-Jul-2026 20:22:10.120 정보 [main] org.apache.catalina.core.StandardEngine.startInternal 서버 엔진을 시작합니다: [Apache Tomcat/10.1.55]
+27-Jul-2026 20:22:10.520 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 20:22:10.667 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 20:22:10.671 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]을(를) 배치합니다.
+27-Jul-2026 20:22:10.770 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 20:22:10.775 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\docs]에 대한 배치가 [102] 밀리초에 완료되었습니다.
+27-Jul-2026 20:22:10.776 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]을(를) 배치합니다.
+27-Jul-2026 20:22:11.015 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 20:22:11.074 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\examples]에 대한 배치가 [299] 밀리초에 완료되었습니다.
+27-Jul-2026 20:22:11.074 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]을(를) 배치합니다.
+27-Jul-2026 20:22:11.157 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 20:22:11.163 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\host-manager]에 대한 배치가 [89] 밀리초에 완료되었습니다.
+27-Jul-2026 20:22:11.164 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]을(를) 배치합니다.
+27-Jul-2026 20:22:11.252 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 20:22:11.254 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\manager]에 대한 배치가 [91] 밀리초에 완료되었습니다.
+27-Jul-2026 20:22:11.254 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]을(를) 배치합니다.
+27-Jul-2026 20:22:11.331 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+27-Jul-2026 20:22:11.335 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\ROOT]에 대한 배치가 [81] 밀리초에 완료되었습니다.
+27-Jul-2026 20:22:11.338 정보 [main] org.apache.coyote.AbstractProtocol.start 프로토콜 핸들러 ["http-nio-7070"]을(를) 시작합니다.
+27-Jul-2026 20:22:11.358 정보 [main] org.apache.catalina.startup.Catalina.start 서버가 [1285] 밀리초 내에 시작되었습니다.
+27-Jul-2026 20:56:13.766 정보 [Catalina-utility-2] org.apache.catalina.webresources.Cache.backgroundProcess 백그라운드 캐시 퇴거 (cache eviction) 프로세스가, 컨텍스트 [/nexacroK]을(를) 위한 캐시의 [10] 퍼센트를 해제시킬 수 없었습니다. 캐시의 최대 크기를 증가시킬 것을 고려해 보십시오. 캐시 퇴거 작업 이후, 대략 [9,220] KiB의 데이터가 캐시에 남아 있습니다.
+27-Jul-2026 21:06:54.482 정보 [Catalina-utility-2] org.apache.catalina.webresources.Cache.backgroundProcess 백그라운드 캐시 퇴거 (cache eviction) 프로세스가, 컨텍스트 [/nexacroK]을(를) 위한 캐시의 [10] 퍼센트를 해제시킬 수 없었습니다. 캐시의 최대 크기를 증가시킬 것을 고려해 보십시오. 캐시 퇴거 작업 이후, 대략 [9,393] KiB의 데이터가 캐시에 남아 있습니다.
+27-Jul-2026 21:09:45.597 정보 [http-nio-7070-exec-8] com.nexacro.java.xapi.license.A.D.A Loaded license file in JAR dir: path=D:\git_prj\cursor_project\apache-tomcat-10.1.55\lib\NexacroN_server_license.xml
+27-Jul-2026 21:09:45.610 경고 [http-nio-7070-exec-8] com.nexacro.java.xapi.license.License.isValidTime null The license is 4 days left.
+27-Jul-2026 21:09:45.647 정보 [http-nio-7070-exec-8] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@6a0d48bd, elapsedTime=37, endTime=1785154185647
+27-Jul-2026 21:09:45.673 정보 [http-nio-7070-exec-8] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%4069c2ae91, contentType=PlatformXml, charset=null, startTime=1785154185672
+27-Jul-2026 21:09:45.682 정보 [http-nio-7070-exec-8] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@69c2ae91, elapsedTime=10, endTime=1785154185682
+27-Jul-2026 21:09:45.691 정보 [http-nio-7070-exec-3] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@3957dfdc, elapsedTime=2, endTime=1785154185691
+27-Jul-2026 21:09:45.692 정보 [http-nio-7070-exec-3] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%408ba03c1, contentType=PlatformXml, charset=null, startTime=1785154185692
+27-Jul-2026 21:09:45.693 정보 [http-nio-7070-exec-3] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@8ba03c1, elapsedTime=1, endTime=1785154185693
+27-Jul-2026 21:09:55.618 정보 [http-nio-7070-exec-3] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@7f4c5ba2, elapsedTime=4, endTime=1785154195618
+27-Jul-2026 21:09:55.620 정보 [http-nio-7070-exec-3] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%40860b9a3, contentType=PlatformXml, charset=null, startTime=1785154195619
+27-Jul-2026 21:09:55.621 정보 [http-nio-7070-exec-3] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@860b9a3, elapsedTime=2, endTime=1785154195621
+27-Jul-2026 21:09:55.633 정보 [http-nio-7070-exec-7] com.nexacro.java.xapi.tx.PlatformRequest.receiveData Received data: HttpPlatformRequest@51f302a9, elapsedTime=2, endTime=1785154195632
+27-Jul-2026 21:09:55.634 정보 [http-nio-7070-exec-7] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sending data: HttpPlatformResponse%40ecef375, contentType=PlatformXml, charset=null, startTime=1785154195634
+27-Jul-2026 21:09:55.635 정보 [http-nio-7070-exec-7] com.nexacro.java.xapi.tx.PlatformResponse.sendData Sent data: HttpPlatformResponse@ecef375, elapsedTime=1, endTime=1785154195635
