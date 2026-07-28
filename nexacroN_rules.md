@@ -1,4 +1,4 @@
-# nexacroN / nexacroK 코딩 규칙
+'# nexacroN / nexacroK 코딩 규칙
 
 > **필독**: nexacroN 또는 nexacroK 관련 작업 시 **반드시** 아래 메뉴얼을 먼저 참조한다.
 >
@@ -928,7 +928,7 @@ nexacro.getApplication().getVariable("USER_ID");
 ```javascript
 this.parent;                           // form → 부모 childframe
 this.getOwnerFrame();                  // form → 소속 childframe
-this.div0.form.btn0;                   // Div 내부 컴포넌트 (XML에 정적 배치된 경우)
+this.div0.form.btn0;                   // Div 내부 컴포넌트
 this.div1.form.ds2.parent.parent.name; // "form"
 
 // Div 서브 폼에서 부모 폼 컴포넌트 접근
@@ -936,41 +936,6 @@ this.parent.parent.edtSearch;          // Div → form → 컴포넌트
 
 // id 중복: 동일 레벨에서만 금지. btn0 와 div0.form.btn0 는 공존 허용
 ```
-
-### Div 내부 동적 컴포넌트 접근 규칙 (중요)
-
-`addChild(id, comp)`로 **Div에 동적 추가**한 컴포넌트는 `div.form` 컨텍스트에 등록된다.
-`div["id"]` 방식은 **동작하지 않는다** — 반드시 `div.form.all["id"]`로 접근한다.
-
-```javascript
-// ❌ 잘못된 접근 — 동작하지 않음
-var comp = this.div_area["btn_dyn_1"];        // undefined
-
-// ✅ 올바른 접근 — div.form.all[id] 사용
-var comp = this.div_area.form.all["btn_dyn_1"];   // 동작
-
-// ✅ 또는 단축 접근 (정적 배치 컴포넌트와 동일)
-var comp = this.div_area.form["btn_dyn_1"];        // 동작 (all과 동등)
-```
-
-**실전 패턴 — 동적 생성 후 삭제:**
-
-```javascript
-// 1. Div에 컴포넌트 동적 추가
-var objBtn = new nexacro.Button("btn_dyn_1", 0, 0, 120, 32, null, null);
-this.div_area.addChild("btn_dyn_1", objBtn);
-objBtn.show();
-
-// 2. 나중에 접근할 때: div.form.all[id]
-var comp = this.div_area.form.all["btn_dyn_1"];
-if (comp) {
-    this.div_area.removeChild("btn_dyn_1");
-    comp.destroy();
-}
-```
-
-> **적용 대상**: `addChild()`로 Div/Panel/PopupDiv 등 컨테이너에 추가한 모든 동적 컴포넌트.
-> XML에 정적으로 배치된 컴포넌트는 `this.btn_id` 직접 접근 가능.
 
 ---
 
@@ -1635,39 +1600,6 @@ nexacrodeploy.exe -P "C:\Test.xprj" -O "E:\Gen" -B "C:\nexacrolib" \
 - 팝업 콜백은 함수 참조가 아닌 **함수명 문자열**로 전달
 - 지원 브라우저: Chrome, Edge (최신 버전)
 - 서버 응답 콘텐츠 타입: `text/xml; charset=UTF-8` (PlatformData 포맷 사용 시)
-
-### 스크립트 상태 변수 규칙 (var vs this.)
-
-이벤트 핸들러 간 **공유 상태 변수**는 반드시 `this.변수명` (Form 속성)으로 선언한다.
-스크립트 최상위 `var` 선언은 핸들러 간 클로저 공유가 보장되지 않아 초기화 버그 발생 원인이 된다.
-
-```javascript
-// ❌ 잘못된 패턴 — 이벤트 핸들러 간 공유 불안정
-var nCount = 0;
-this.btn_create_onclick = function(obj, e) { nCount++; };     // 생성할 때는 증가
-this.btn_clear_onclick  = function(obj, e) {
-    for (var i = 1; i <= nCount; i++) { ... }  // 삭제할 때 nCount가 0으로 읽힐 수 있음
-};
-
-// ✅ 올바른 패턴 — Form 속성으로 관리
-this.FormId_onload = function(obj, e) { this.nCount = 0; };   // onload에서 초기화
-this.btn_create_onclick = function(obj, e) { this.nCount++; };
-this.btn_clear_onclick  = function(obj, e) {
-    for (var i = 1; i <= this.nCount; i++) { ... }  // 항상 정확한 값 참조
-};
-```
-
-**기준 정리:**
-
-| 변수 종류 | 선언 방법 | 이유 |
-|-----------|-----------|------|
-| 이벤트 핸들러 간 공유 카운터/플래그 | `this.변수명` (onload 초기화) | 핸들러 간 안정적 공유 |
-| 공통 로직 함수 | `this.fn_xxx = function()` | Form 메서드, `this` 컨텍스트 유지 |
-| 순수 데이터 배열(상수성) | `var aList = [...]` | 읽기 전용, 변경 없음 |
-| 루프 내 임시 변수 | `var i`, `var comp` | 함수 로컬 스코프 |
-
-> **전역 함수 패턴 금지**: `function fn_createXxx(oForm, ...)` 형태 사용 금지.
-> 항상 `this.fn_createXxx = function(...)` Form 메서드로 정의한다.
 
 ---
 
