@@ -3,8 +3,8 @@
   <Form id="DatasetSample" width="1280" height="670" onload="DatasetSample_onload">
     <Layouts>
       <Layout height="670" width="1280">
-        <Static id="stc_title" taborder="0" text="[비가시적] Dataset 동적 생성 샘플" left="10" top="10" width="700" height="28" font="bold 14 'Malgun Gothic'" forecolor="#065f46"/>
-        <Static id="stc_desc" taborder="1" text="new nexacro.Dataset() 으로 Dataset을 동적 생성하고 컬럼/행을 추가한 뒤 new nexacro.Grid()와 바인딩합니다." left="10" top="44" width="1200" height="22" forecolor="#555555"/>
+        <Static id="stc_title" taborder="0" text="[비가시적] Dataset 동적 생성 샘플" left="10" top="10" width="700" height="28" font="bold 14 'Malgun Gothic'" color="#065f46"/>
+        <Static id="stc_desc" taborder="1" text="new nexacro.Dataset() 으로 Dataset을 동적 생성하고 컬럼/행을 추가한 뒤 new nexacro.Grid()와 바인딩합니다." left="10" top="44" width="1200" height="22" color="#555555"/>
 
         <Button id="btn_createDs" taborder="2" text="Dataset + Grid 생성" left="10"  top="74" width="160" height="32" onclick="btn_createDs_onclick"/>
         <Button id="btn_addRow"   taborder="3" text="행 추가"               left="180" top="74" width="80"  height="32" onclick="btn_addRow_onclick"/>
@@ -14,11 +14,11 @@
         <Button id="btn_clearFilter" taborder="7" text="필터 해제"          left="610" top="74" width="90"  height="32" onclick="btn_clearFilter_onclick"/>
         <Button id="btn_clear"    taborder="8" text="전체 삭제"              left="710" top="74" width="90"  height="32" onclick="btn_clear_onclick"/>
 
-        <Static id="stc_info" taborder="9" text="" left="10" top="114" width="1240" height="22" forecolor="#1a56db"/>
-        <Static id="stc_result" taborder="10" text="" left="10" top="138" width="1240" height="22" forecolor="#cc0000"/>
+        <Static id="stc_info" taborder="9" text="" left="10" top="114" width="1240" height="22" color="#1a56db"/>
+        <Static id="stc_result" taborder="10" text="" left="10" top="138" width="1240" height="22" color="#cc0000"/>
 
-        <Static id="stc_log_label" taborder="11" text="▼ Dataset 상태" left="10" top="166" width="200" height="20" forecolor="#888888"/>
-        <Static id="stc_log" taborder="12" text="" left="10" top="186" width="1240" height="22" forecolor="#333333"/>
+        <Static id="stc_log_label" taborder="11" text="▼ Dataset 상태" left="10" top="166" width="200" height="20" color="#888888"/>
+        <Static id="stc_log" taborder="12" text="" left="10" top="186" width="1240" height="22" color="#333333"/>
         <Div id="div_grid" left="10" top="214" width="1250" height="446"/>
       </Layout>
     </Layouts>

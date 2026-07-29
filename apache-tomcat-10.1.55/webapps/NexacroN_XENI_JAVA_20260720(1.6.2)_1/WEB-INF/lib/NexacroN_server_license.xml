@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<license version="1.2">
+	<product>
+		<name>Nexacro N</name>
+		<version>24</version>
+		<function>Runtime,WebBrowser</function>
+	</product>
+	<customer>
+		<name>TOBESOFT</name>
+		<coreCount>0</coreCount>
+		<ipAddress>0.0.0.0</ipAddress>
+		<targetPlatform>Windows,WindowsRT,macOS,iOS,Android</targetPlatform>
+	</customer>
+	<date>
+		<activation>2026-07-01</activation>
+		<term unit="month">2</term>
+	</date>
+	<key>DCASBTC66ZB8ETFXB2B18H2N24HTZJ912</key>
+	<SignatureValue>TZWUKoqzNRNmP+QW47XhOeGN2J2v6iCzOsCVFWFgwDFxT/ckfosj/2WTozT7sWVU
+pEjchx3Y8v7vEQ2nXO8wKck0JQo3PH3fxvSA/V6Y0cpviMDgljTMp+hFiXpqz6M+
+h0J5ic0sipi8+QQpEEicBLgQ6q/hUGVAUb7tGG7TBwQO/p0Qc6I/1yAQkfUq4eB7
+Ovt0PEIM645mLWcvzohdwaaXjiErp/X1Ye17cNTVC7y9vnlS+ckTc7APVLtuoLXV
+cFCnbPAdVLezMiKYMauAH7vERf+2VZPMV9VjH4sf4MoMNckW+2/6PA3kOU0PMQ99
+O4vqhzIkkEG6dNclJFslnA==</SignatureValue>
+</license>

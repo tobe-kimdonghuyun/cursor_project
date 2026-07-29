@@ -3,13 +3,13 @@
   <Form id="TabSample" width="1280" height="670" onload="TabSample_onload">
     <Layouts>
       <Layout height="670" width="1280">
-        <Static id="stc_title" taborder="0" text="Tab 동적 생성 샘플" left="10" top="10" width="500" height="28" font="bold 14 'Malgun Gothic'" forecolor="#1a56db"/>
-        <Static id="stc_desc" taborder="1" text="new nexacro.Tab() 으로 Tab을 동적 생성하고 insertTabpage()로 탭 페이지를 추가합니다." left="10" top="44" width="900" height="22" forecolor="#555555"/>
+        <Static id="stc_title" taborder="0" text="Tab 동적 생성 샘플" left="10" top="10" width="500" height="28" font="bold 14 'Malgun Gothic'" color="#1a56db"/>
+        <Static id="stc_desc" taborder="1" text="new nexacro.Tab() 으로 Tab을 동적 생성하고 insertTabpage()로 탭 페이지를 추가합니다." left="10" top="44" width="900" height="22" color="#555555"/>
         <Button id="btn_create"  taborder="2" text="Tab 생성"      left="10"  top="74" width="100" height="32" onclick="btn_create_onclick"/>
         <Button id="btn_addPage" taborder="3" text="탭 페이지 추가" left="120" top="74" width="120" height="32" onclick="btn_addPage_onclick"/>
         <Button id="btn_delPage" taborder="4" text="탭 페이지 삭제" left="250" top="74" width="120" height="32" onclick="btn_delPage_onclick"/>
         <Button id="btn_clear"   taborder="5" text="Tab 삭제"       left="380" top="74" width="90"  height="32" onclick="btn_clear_onclick"/>
-        <Static id="stc_result" taborder="6" text="" left="484" top="80" width="760" height="22" forecolor="#cc0000"/>
+        <Static id="stc_result" taborder="6" text="" left="484" top="80" width="760" height="22" color="#cc0000"/>
         <Div id="div_area" left="10" top="116" width="1250" height="534"/>
       </Layout>
     </Layouts>

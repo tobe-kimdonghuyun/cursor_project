@@ -1,19 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <FDL version="2.1">
   <Form id="DataObjectSample" width="1280" height="670" onload="DataObjectSample_onload">
     <Layouts>
       <Layout height="670" width="1280">
-        <Static id="stc_title" taborder="0" text="[비가시적] DataObject 동적 생성 샘플" left="10" top="10" width="700" height="28" font="bold 14 'Malgun Gothic'" forecolor="#065f46"/>
-        <Static id="stc_api_url" taborder="1" text="API: GET https://jsonplaceholder.typicode.com/posts" left="10" top="44" width="800" height="22" forecolor="#1a56db"/>
-        <Static id="stc_desc2" taborder="2" text="new nexacro.DataObject() + new nexacro.Dataset() + new nexacro.Grid() 를 모두 동적으로 생성하고 REST API를 호출합니다." left="10" top="66" width="1200" height="22" forecolor="#555555"/>
-
-        <Button id="btn_create"   taborder="3" text="DataObject 동적 생성"   left="10"  top="96" width="170" height="32" onclick="btn_create_onclick"/>
-        <Button id="btn_search"   taborder="4" text="게시글 조회 (GET)"       left="190" top="96" width="150" height="32" onclick="btn_search_onclick"/>
-        <Button id="btn_users"    taborder="5" text="사용자 조회 (GET)"       left="350" top="96" width="150" height="32" onclick="btn_users_onclick"/>
-        <Button id="btn_clear"    taborder="6" text="전체 삭제"               left="510" top="96" width="90"  height="32" onclick="btn_clear_onclick"/>
-
-        <Static id="stc_status"  taborder="7" text="DataObject 미생성" left="614" top="102" width="600" height="22" forecolor="#cc0000"/>
-        <Static id="stc_result"  taborder="8" text="" left="10" top="136" width="1240" height="22" forecolor="#333333"/>
+        <Static id="stc_title" taborder="0" text="[비가시적] DataObject 동적 생성 샘플" left="10" top="10" width="700" height="28" font="bold 14 'Malgun Gothic'" color="#065f46"/>
+        <Static id="stc_api_url" taborder="1" text="API: GET https://jsonplaceholder.typicode.com/posts" left="10" top="44" width="800" height="22" color="#1a56db"/>
+        <Static id="stc_desc2" taborder="2" text="new nexacro.DataObject() + new nexacro.Dataset() + new nexacro.Grid() 를 모두 동적으로 생성하고 REST API를 호출합니다." left="10" top="66" width="1200" height="22" color="#555555"/>
+        <Button id="btn_create" taborder="3" text="DataObject 동적 생성" left="10" top="96" width="170" height="32" onclick="btn_create_onclick"/>
+        <Button id="btn_search" taborder="4" text="게시글 조회 (GET)" left="190" top="96" width="150" height="32" onclick="btn_search_onclick"/>
+        <Button id="btn_users" taborder="5" text="사용자 조회 (GET)" left="350" top="96" width="150" height="32" onclick="btn_users_onclick"/>
+        <Button id="btn_clear" taborder="6" text="전체 삭제" left="510" top="96" width="90" height="32" onclick="btn_clear_onclick"/>
+        <Static id="stc_status" taborder="7" text="DataObject 미생성" left="614" top="102" width="600" height="22" color="#cc0000"/>
+        <Static id="stc_result" taborder="8" text="" left="10" top="136" width="1240" height="22" color="#333333"/>
         <Div id="div_grid" left="10" top="164" width="1250" height="496"/>
       </Layout>
     </Layouts>
@@ -80,7 +78,8 @@ this.dobj_api_onsuccess = function(obj, e)
 
 this.dobj_api_onload = function(obj, e)
 {
-    if (e.reason != DataObject.REASON_REQUEST) return;
+    // DataObject.REASON_REQUEST 는 동적 생성 환경에서 undefined가 되므로 nexacro 전체 경로 사용
+    if (e.reason != nexacro.DataObject.REASON_REQUEST) return;
 
     var ds  = this["ds_result"];
     // Div 내 동적 생성 컴포넌트는 div.form.all[id] 로 접근
@@ -93,6 +92,7 @@ this.dobj_api_onload = function(obj, e)
         return;
     }
 
+    // 컬럼·행 전체 초기화 (엔드포인트 전환 시 컬럼 중복 방지)
     ds.clear();
     var objSample = obj.data[0];
     for (var key in objSample)
@@ -102,12 +102,12 @@ this.dobj_api_onload = function(obj, e)
         colInfo.datapath = "@." + key;
         ds.addColumnInfo(key.toUpperCase(), colInfo);
     }
-    ds.set_binddataobject(obj.id);
-    ds.set_dataobjectpath("$[*]");
-    grd.set_binddataset(ds.name);
+    this.ds_result.binddataobject = obj.id;
+    this.ds_result.dataobjectpath = "$.data[*]";
+    grd.binddataset = this.ds_result.name;
     grd.createFormat();
 
-    this.stc_status.set_text("✔ 조회 완료: " + ds.rowcount + "건 / 컬럼 수: " + ds.getColumnCount());
+    this.stc_status.set_text("✔ 조회 완료: " + ds.rowcount + "건 / 컬럼 수: " + ds.getColCount());
     this.stc_result.set_text("serviceid=" + e.serviceid + " | 첫 번째 컬럼: " + ds.getColumn(0, 0));
 };
 

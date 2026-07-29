@@ -3,26 +3,26 @@
   <Form id="VirtualFileSample" width="1280" height="670" onload="VirtualFileSample_onload">
     <Layouts>
       <Layout height="670" width="1280">
-        <Static id="stc_title" taborder="0" text="[비가시적] VirtualFile 동적 생성 샘플" left="10" top="10" width="700" height="28" font="bold 14 'Malgun Gothic'" forecolor="#065f46"/>
-        <Static id="stc_desc" taborder="1" text="new nexacro.VirtualFile() — WRE: 파일 드래그앤드롭으로 VirtualFile 획득 / NRE: 독립 생성 후 파일 R/W 가능" left="10" top="44" width="1200" height="22" forecolor="#555555"/>
+        <Static id="stc_title" taborder="0" text="[비가시적] VirtualFile 동적 생성 샘플" left="10" top="10" width="700" height="28" font="bold 14 'Malgun Gothic'" color="#065f46"/>
+        <Static id="stc_desc" taborder="1" text="new nexacro.VirtualFile() — WRE: 파일 드래그앤드롭으로 VirtualFile 획득 / NRE: 독립 생성 후 파일 R/W 가능" left="10" top="44" width="1200" height="22" color="#555555"/>
 
         <Static id="stc_env_label" taborder="2" text="실행 환경:" left="10" top="74" width="80" height="28"/>
-        <Static id="stc_env"       taborder="3" text="" left="95" top="74" width="300" height="28" forecolor="#1a56db" font="bold 13 'Malgun Gothic'"/>
+        <Static id="stc_env"       taborder="3" text="" left="95" top="74" width="300" height="28" color="#1a56db" font="bold 13 'Malgun Gothic'"/>
 
         <Button id="btn_createVF" taborder="4" text="VirtualFile 동적 생성"  left="10"  top="110" width="170" height="32" onclick="btn_createVF_onclick"/>
         <Button id="btn_writeFile" taborder="5" text="파일 쓰기 (NRE)"        left="190" top="110" width="130" height="32" onclick="btn_writeFile_onclick"/>
         <Button id="btn_readFile"  taborder="6" text="파일 읽기 (NRE)"        left="330" top="110" width="130" height="32" onclick="btn_readFile_onclick"/>
         <Button id="btn_clear"     taborder="7" text="VirtualFile 삭제"       left="470" top="110" width="130" height="32" onclick="btn_clear_onclick"/>
 
-        <Static id="stc_result" taborder="8" text="" left="614" top="116" width="630" height="22" forecolor="#cc0000"/>
+        <Static id="stc_result" taborder="8" text="" left="614" top="116" width="630" height="22" color="#cc0000"/>
 
         <!-- 드래그앤드롭 영역 (WRE) -->
-        <Static id="stc_dnd_title" taborder="9" text="▼ 드래그앤드롭 영역 (파일을 여기에 놓으면 VirtualFile 동적 생성)" left="10" top="152" width="700" height="20" forecolor="#888888"/>
+        <Static id="stc_dnd_title" taborder="9" text="▼ 드래그앤드롭 영역 (파일을 여기에 놓으면 VirtualFile 동적 생성)" left="10" top="152" width="700" height="20" color="#888888"/>
         <Static id="stc_dnd_area" taborder="10" text="파일을 여기에 드래그앤드롭 하세요" left="10" top="176" width="620" height="120"
-                background="color:#f0f9ff" forecolor="#1a56db"
+                background="color:#f0f9ff" color="#1a56db"
                 ondragenter="stc_dnd_area_ondragenter" ondragleave="stc_dnd_area_ondragleave" ondrop="stc_dnd_area_ondrop"/>
 
-        <Static id="stc_list_title" taborder="11" text="▼ 획득된 VirtualFile 목록" left="10" top="310" width="400" height="20" forecolor="#888888"/>
+        <Static id="stc_list_title" taborder="11" text="▼ 획득된 VirtualFile 목록" left="10" top="310" width="400" height="20" color="#888888"/>
         <Grid id="grd_vflist" taborder="12" left="10" top="334" width="1250" height="300" autofittype="col"/>
       </Layout>
     </Layouts>

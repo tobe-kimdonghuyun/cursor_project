@@ -19,6 +19,33 @@
 
 ---
 
+## API/함수 사용 전 레퍼런스 필수 확인 (코딩 루틴)
+
+nexacro 컴포넌트의 메서드·속성·이벤트를 코드에 작성하기 전, **반드시 `nexacro_reference/` 폴더의 해당 MD 파일을 Read 도구로 읽어 실제 존재 여부를 확인**한다.
+
+> 임의로 추측하여 함수명을 작성하면 존재하지 않는 API가 코드에 포함된다.
+> 예: `getColumnCount()` → 실제는 `getColCount()` / `set_forecolor()` → 실제는 `forecolor =`
+
+### 확인 루틴
+
+```
+1. 사용할 컴포넌트 파악  →  nexacro_reference/README.md 에서 파일 확인
+2. 해당 MD 파일 Read     →  메서드·속성·이벤트 목록에서 정확한 이름 확인
+3. 확인된 이름으로만 코드 작성
+```
+
+### 자주 틀리는 패턴
+
+| 잘못된 사용 (❌) | 실제 API (✅) | 파일 |
+|----------------|-------------|------|
+| `ds.getColumnCount()` | `ds.getColCount()` | Dataset.md |
+| `stc.set_forecolor("#f00")` | `stc.forecolor = "#f00"` | — (직접 할당) |
+| `grd.setColHidden(i, true)` | 레퍼런스에서 정확한 시그니처 확인 필요 | Grid.md |
+
+> **원칙**: 확신이 없으면 추측하지 말고 레퍼런스를 먼저 읽는다.
+
+---
+
 ## 기본 규칙
 
 - 이벤트 핸들러명: `컴포넌트명_이벤트명` (예: `btnSave_onclick`)
@@ -896,6 +923,31 @@ expr: dataset.getMin('parseInt(Salary)')  // 최소값
 application.setGlobal("USER_ID", "hong");
 var userId = application.getGlobal("USER_ID");
 ```
+
+---
+
+## 속성 설정 방식 — 직접 할당 우선
+
+nexacro 컴포넌트 속성은 **`component.속성명 = 값`** 방식으로 설정한다. `set_속성명()` setter가 존재하지 않는 속성이 많으므로 존재 여부를 따지지 않고 직접 할당을 기본으로 쓴다.
+
+```javascript
+// ✅ 권장: 직접 할당
+this.stc_title.forecolor  = "#065f46";
+this.btn_save.enable      = false;
+this.grd_main.binddataset = "dsMain";
+this.edt_name.text        = "홍길동";
+
+// ✅ setter가 확실히 존재하는 경우에만 사용
+this.stc_title.set_text("제목");
+this.edt_name.set_value("홍길동");
+
+// ❌ 존재하지 않는 setter 호출 — 런타임 오류 발생
+// this.stc_title.set_forecolor("#065f46");  // ❌ set_forecolor 없음
+```
+
+- `forecolor`, `backcolor`, `enable`, `visible`, `binddataset`, `readonly` 등 대부분 속성 → 직접 할당
+- `set_text()`, `set_value()`, `set_url()`, `set_binddataset()` 등 일부 속성만 setter 존재
+- **확인 없이 `set_` prefix를 붙이지 않는다**
 
 ---
 

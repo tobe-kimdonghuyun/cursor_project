@@ -1,5 +1,5 @@
-ProjectPath=D:\git_prj\cursor_project\nexacroK_UI\DataObjectSample\DataObjectSample.xprj
-OutputPath=D:\git_prj\cursor_project\nexacroK\DataObjectSample
+ProjectPath=D:\git_prj\cursor_project\nexacroK_UI\DynamicSample_sub\DynamicSample_sub.xprj
+OutputPath=D:\git_prj\cursor_project\nexacroK\DynamicSample_sub
 NexacroLibPath=E:\git\VSCODE_WORK900\WORK900\nexacrolib
 GenerateRule=E:\git\VSCODE_WORK900\WORK900\tools\resource\generate
 -deleteMAP=true

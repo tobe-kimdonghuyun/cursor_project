@@ -3,15 +3,15 @@
   <Form id="ListBoxSample" width="1280" height="670" onload="ListBoxSample_onload">
     <Layouts>
       <Layout height="670" width="1280">
-        <Static id="stc_title" taborder="0" text="ListBox 동적 생성 샘플" left="10" top="10" width="500" height="28" font="bold 14 'Malgun Gothic'" forecolor="#1a56db"/>
-        <Static id="stc_desc" taborder="1" text="new nexacro.ListBox() + new nexacro.Dataset() 으로 ListBox와 이너 Dataset을 동적 생성합니다." left="10" top="44" width="900" height="22" forecolor="#555555"/>
+        <Static id="stc_title" taborder="0" text="ListBox 동적 생성 샘플" left="10" top="10" width="500" height="28" font="bold 14 'Malgun Gothic'" color="#1a56db"/>
+        <Static id="stc_desc" taborder="1" text="new nexacro.ListBox() + new nexacro.Dataset() 으로 ListBox와 이너 Dataset을 동적 생성합니다." left="10" top="44" width="900" height="22" color="#555555"/>
         <Button id="btn_create"   taborder="2" text="ListBox 생성"  left="10"  top="74" width="120" height="32" onclick="btn_create_onclick"/>
         <Button id="btn_getValue" taborder="3" text="선택값 확인"    left="140" top="74" width="110" height="32" onclick="btn_getValue_onclick"/>
         <Button id="btn_clear"    taborder="4" text="전체 삭제"      left="260" top="74" width="90"  height="32" onclick="btn_clear_onclick"/>
-        <Static id="stc_count"  taborder="5" text="생성 수: 0" left="364" top="80" width="120" height="22" forecolor="#1a56db"/>
-        <Static id="stc_result" taborder="6" text="" left="10" top="114" width="1240" height="22" forecolor="#cc0000"/>
-        <Static id="stc_area_label" taborder="7" text="▼ 동적 생성 영역" left="10" top="140" width="300" height="20" forecolor="#888888"/>
-        <Div id="div_area" left="10" top="164" width="1250" height="486" scrollbartype="autohide"/>
+        <Static id="stc_count"  taborder="5" text="생성 수: 0" left="364" top="80" width="120" height="22" color="#1a56db"/>
+        <Static id="stc_result" taborder="6" text="" left="10" top="114" width="1240" height="22" color="#cc0000"/>
+        <Static id="stc_area_label" taborder="7" text="▼ 동적 생성 영역" left="10" top="140" width="300" height="20" color="#888888"/>
+        <Div id="div_area" left="10" top="164" width="1250" height="486"/>
       </Layout>
     </Layouts>
     <Script type="xscript5.1"><![CDATA[

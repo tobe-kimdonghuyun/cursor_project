@@ -3,13 +3,13 @@
   <Form id="GridSample" width="1280" height="670" onload="GridSample_onload">
     <Layouts>
       <Layout height="670" width="1280">
-        <Static id="stc_title" taborder="0" text="Grid 동적 생성 샘플" left="10" top="10" width="500" height="28" font="bold 14 'Malgun Gothic'" forecolor="#1a56db"/>
-        <Static id="stc_desc" taborder="1" text="new nexacro.Grid() + new nexacro.Dataset() 동적 생성 후 바인딩. 행 추가/삭제 가능." left="10" top="44" width="900" height="22" forecolor="#555555"/>
+        <Static id="stc_title" taborder="0" text="Grid 동적 생성 샘플" left="10" top="10" width="500" height="28" font="bold 14 'Malgun Gothic'" color="#1a56db"/>
+        <Static id="stc_desc" taborder="1" text="new nexacro.Grid() + new nexacro.Dataset() 동적 생성 후 바인딩. 행 추가/삭제 가능." left="10" top="44" width="900" height="22" color="#555555"/>
         <Button id="btn_create"  taborder="2" text="Grid+Dataset 생성" left="10"  top="74" width="150" height="32" onclick="btn_create_onclick"/>
         <Button id="btn_addRow"  taborder="3" text="행 추가"            left="170" top="74" width="90"  height="32" onclick="btn_addRow_onclick"/>
         <Button id="btn_delRow"  taborder="4" text="선택행 삭제"        left="270" top="74" width="100" height="32" onclick="btn_delRow_onclick"/>
         <Button id="btn_clear"   taborder="5" text="Grid 삭제"          left="380" top="74" width="90"  height="32" onclick="btn_clear_onclick"/>
-        <Static id="stc_result" taborder="6" text="" left="484" top="80" width="760" height="22" forecolor="#cc0000"/>
+        <Static id="stc_result" taborder="6" text="" left="484" top="80" width="760" height="22" color="#cc0000"/>
         <Div id="div_area" left="10" top="116" width="1250" height="534"/>
       </Layout>
     </Layouts>

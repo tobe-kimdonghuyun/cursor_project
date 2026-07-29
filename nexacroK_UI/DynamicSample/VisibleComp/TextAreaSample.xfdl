@@ -3,15 +3,15 @@
   <Form id="TextAreaSample" width="1280" height="670" onload="TextAreaSample_onload">
     <Layouts>
       <Layout height="670" width="1280">
-        <Static id="stc_title" taborder="0" text="TextArea 동적 생성 샘플" left="10" top="10" width="500" height="28" font="bold 14 'Malgun Gothic'" forecolor="#1a56db"/>
-        <Static id="stc_desc" taborder="1" text="new nexacro.TextArea() 로 여러 줄 텍스트 입력 컴포넌트를 동적 생성합니다." left="10" top="44" width="900" height="22" forecolor="#555555"/>
-        <Button id="btn_create"   taborder="2" text="TextArea 생성"  left="10"  top="74" width="120" height="32" onclick="btn_create_onclick"/>
-        <Button id="btn_getValue" taborder="3" text="값 읽기"         left="140" top="74" width="90"  height="32" onclick="btn_getValue_onclick"/>
-        <Button id="btn_clear"    taborder="4" text="전체 삭제"        left="240" top="74" width="90"  height="32" onclick="btn_clear_onclick"/>
-        <Static id="stc_count"  taborder="5" text="생성 수: 0" left="344" top="80" width="120" height="22" forecolor="#1a56db"/>
-        <Static id="stc_result" taborder="6" text="" left="10" top="114" width="1240" height="22" forecolor="#cc0000"/>
-        <Static id="stc_area_label" taborder="7" text="▼ 동적 생성 영역" left="10" top="140" width="300" height="20" forecolor="#888888"/>
-        <Div id="div_area" left="10" top="164" width="1250" height="486" scrollbartype="autohide"/>
+        <Static id="stc_title" taborder="0" text="TextArea 동적 생성 샘플" left="10" top="10" width="500" height="28" font="bold 14 'Malgun Gothic'" color="#1a56db"/>
+        <Static id="stc_desc" taborder="1" text="new nexacro.TextArea() 로 여러 줄 텍스트 입력 컴포넌트를 동적 생성합니다." left="10" top="44" width="900" height="22" color="#555555"/>
+        <Button id="btn_create" taborder="2" text="TextArea 생성" left="10" top="74" width="120" height="32" onclick="btn_create_onclick"/>
+        <Button id="btn_getValue" taborder="3" text="값 읽기" left="140" top="74" width="90" height="32" onclick="btn_getValue_onclick"/>
+        <Button id="btn_clear" taborder="4" text="전체 삭제" left="240" top="74" width="90" height="32" onclick="btn_clear_onclick"/>
+        <Static id="stc_count" taborder="5" text="생성 수: 0" left="344" top="80" width="120" height="22" color="#1a56db"/>
+        <Static id="stc_result" taborder="6" text="" left="10" top="114" width="1240" height="22" color="#cc0000"/>
+        <Static id="stc_area_label" taborder="7" text="▼ 동적 생성 영역" left="10" top="140" width="300" height="20" color="#888888"/>
+        <Div id="div_area" left="10" top="164" width="1250" height="486"/>
       </Layout>
     </Layouts>
     <Script type="xscript5.1"><![CDATA[
@@ -38,8 +38,8 @@ this.btn_create_onclick = function(obj, e)
 
     // TextArea 동적 생성
     var objTxa = new nexacro.TextArea("txa_dyn_" + this.nTxaCount, nLeft, nTop + 26, 400, 140, null, null);
-    objTxa.set_wordwrap(true);
-    objTxa.set_scrollbartype("autohide");
+    objTxa.wordWrap = "char";
+ 
     objTxa.set_value("TextArea " + this.nTxaCount + " 초기 내용입니다.\nnew nexacro.TextArea()로 동적 생성.\nEnter 키로 줄바꿈 가능합니다.");
     this.div_area.addChild("txa_dyn_" + this.nTxaCount, objTxa);
     objTxa.show();

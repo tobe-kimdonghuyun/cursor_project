@@ -6,7 +6,7 @@
         <Static id="stc_title" taborder="0" text="넥사크로 동적 컴포넌트 생성 샘플" left="10" top="10" width="700" height="32" font="bold 16 'Malgun Gothic'"/>
         <Static id="stc_label" taborder="1" text="화면 선택:" left="10" top="55" width="70" height="28"/>
         <Combo id="cmb_menu" taborder="2" left="85" top="52" width="380" height="32" innerdataset="dsMenu" codecolumn="CODE" datacolumn="NAME" onitemchanged="cmb_menu_onitemchanged"/>
-        <Static id="stc_desc" taborder="3" text="" left="480" top="58" width="780" height="24" forecolor="#666666"/>
+        <Static id="stc_desc" taborder="3" text="" left="480" top="58" width="780" height="24" color="#666666"/>
         <Div id="div_content" left="0" top="90" width="1280" height="670"/>
       </Layout>
     </Layouts>
@@ -34,6 +34,8 @@
           <Row><Col id="CODE">DS</Col><Col id="NAME">[비가시적] Dataset 동적 생성</Col><Col id="URL">InvisibleComp::DatasetSample.xfdl</Col><Col id="DESC">new nexacro.Dataset() — Dataset을 동적 생성하고 Grid에 바인딩하여 CRUD를 수행합니다</Col></Row>
           <Row><Col id="CODE">DO</Col><Col id="NAME">[비가시적] DataObject 동적 생성</Col><Col id="URL">InvisibleComp::DataObjectSample.xfdl</Col><Col id="DESC">new nexacro.DataObject() — REST API를 호출하고 결과를 Grid에 표시합니다</Col></Row>
           <Row><Col id="CODE">VF</Col><Col id="NAME">[비가시적] VirtualFile 동적 생성</Col><Col id="URL">InvisibleComp::VirtualFileSample.xfdl</Col><Col id="DESC">new nexacro.VirtualFile() — 파일 드래그앤드롭으로 VirtualFile을 획득하고 정보를 표시합니다</Col></Row>
+          <Row><Col id="CODE">TR1</Col><Col id="NAME">[비가시적] transaction — Promise 방식</Col><Col id="URL">InvisibleComp::TransactionSample01.xfdl</Col><Col id="DESC">this.transaction() 반환 Promise에 .then().catch()를 체이닝하여 서버 통신 결과를 처리합니다</Col></Row>
+          <Row><Col id="CODE">TR2</Col><Col id="NAME">[비가시적] transaction — async/await 방식</Col><Col id="URL">InvisibleComp::TransactionSample02.xfdl</Col><Col id="DESC">async function에서 await this.transaction()으로 절차적으로 결과를 처리합니다</Col></Row>
         </Rows>
       </Dataset>
     </Objects>
