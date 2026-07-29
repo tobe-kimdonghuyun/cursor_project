@@ -20,14 +20,14 @@
             
             // UI Components Initialize
             obj = new nexacro.Static("stc_title","10","10","500","28",null,null,null,null,null,null,this);
+            obj.set_color("#1a56db");
             obj.set_font("bold 14 \'Malgun Gothic\'");
-            obj.getSetter("forecolor").set("#1a56db");
             obj.set_taborder("0");
             obj.set_text("Button 동적 생성 샘플");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_desc","10","44","900","22",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#555555");
+            obj.set_color("#555555");
             obj.set_taborder("1");
             obj.set_text("[Button 생성] 클릭 → new nexacro.Button()으로 동적 생성. 생성된 버튼 클릭 시 동작 확인.");
             this.addChild(obj.name, obj);
@@ -43,25 +43,24 @@
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_count","234","80","120","22",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#1a56db");
+            obj.set_color("#1a56db");
             obj.set_taborder("4");
             obj.set_text("생성 수: 0");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_result","370","80","700","22",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#cc0000");
+            obj.set_color("#cc0000");
             obj.set_taborder("5");
             obj.set_text("");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_area_label","10","116","400","20",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#888888");
+            obj.set_color("#888888");
             obj.set_taborder("6");
             obj.set_text("▼ 동적 생성 영역 (버튼 클릭 시 알림 발생)");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Div("div_area","10","140","1250","510",null,null,null,null,null,null,this);
-            obj.getSetter("scrollbartype").set("autohide");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Button("Button00","540","21","133","39",null,null,null,null,null,null,this);

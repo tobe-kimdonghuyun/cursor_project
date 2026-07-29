@@ -55,7 +55,7 @@ this.btn_search_onclick = function(obj, e)
     var dobj = this["dobj_api"];
     if (!dobj) { this.stc_status.set_text("먼저 DataObject를 동적 생성하세요."); return; }
     this.stc_status.set_text("조회 중... (GET /posts)");
-    dobj.request("SEARCH_POSTS", "GET", "https://jsonplaceholder.typicode.com/posts");
+    dobj.request("SEARCH", "GET", "https://jsonplaceholder.typicode.com/posts");
 };
 
 this.btn_users_onclick = function(obj, e)
@@ -97,15 +97,16 @@ this.dobj_api_onload = function(obj, e)
     var objSample = obj.data[0];
     for (var key in objSample)
     {
-        var colInfo = new ColumnInfo();
-        colInfo.type     = "String";
-        colInfo.datapath = "@." + key;
-        ds.addColumnInfo(key.toUpperCase(), colInfo);
+        var objColInfo = new ColumnInfo();
+        objColInfo.type     = "String";
+        objColInfo.datapath = "@." + key;
+        ds.addColumnInfo(key.toUpperCase(), objColInfo);
     }
     this.ds_result.binddataobject = obj.id;
-    this.ds_result.dataobjectpath = "$.data[*]";
+    this.ds_result.dataobjectpath = "$.[*]";
     grd.binddataset = this.ds_result.name;
     grd.createFormat();
+	grd.autofittype = "col";
 
     this.stc_status.set_text("✔ 조회 완료: " + ds.rowcount + "건 / 컬럼 수: " + ds.getColCount());
     this.stc_result.set_text("serviceid=" + e.serviceid + " | 첫 번째 컬럼: " + ds.getColumn(0, 0));

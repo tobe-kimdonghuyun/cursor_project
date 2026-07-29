@@ -20,14 +20,14 @@
             
             // UI Components Initialize
             obj = new nexacro.Static("stc_title","10","10","500","28",null,null,null,null,null,null,this);
+            obj.set_color("#1a56db");
             obj.set_font("bold 14 \'Malgun Gothic\'");
-            obj.getSetter("forecolor").set("#1a56db");
             obj.set_taborder("0");
             obj.set_text("TextArea 동적 생성 샘플");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_desc","10","44","900","22",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#555555");
+            obj.set_color("#555555");
             obj.set_taborder("1");
             obj.set_text("new nexacro.TextArea() 로 여러 줄 텍스트 입력 컴포넌트를 동적 생성합니다.");
             this.addChild(obj.name, obj);
@@ -48,25 +48,24 @@
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_count","344","80","120","22",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#1a56db");
+            obj.set_color("#1a56db");
             obj.set_taborder("5");
             obj.set_text("생성 수: 0");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_result","10","114","1240","22",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#cc0000");
+            obj.set_color("#cc0000");
             obj.set_taborder("6");
             obj.set_text("");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_area_label","10","140","300","20",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#888888");
+            obj.set_color("#888888");
             obj.set_taborder("7");
             obj.set_text("▼ 동적 생성 영역");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Div("div_area","10","164","1250","486",null,null,null,null,null,null,this);
-            obj.getSetter("scrollbartype").set("autohide");
             this.addChild(obj.name, obj);
 
             // Layout Functions

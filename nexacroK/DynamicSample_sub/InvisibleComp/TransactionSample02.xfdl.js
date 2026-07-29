@@ -20,20 +20,20 @@
             
             // UI Components Initialize
             obj = new nexacro.Static("stc_title","10","10","900","28",null,null,null,null,null,null,this);
+            obj.set_color("#065f46");
             obj.set_font("bold 14 \'Malgun Gothic\'");
-            obj.getSetter("forecolor").set("#065f46");
             obj.set_taborder("0");
             obj.set_text("[비가시적] transaction — async/await 방식");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_url","10","42","1240","22",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#1a56db");
+            obj.set_color("#1a56db");
             obj.set_taborder("1");
             obj.set_text("JSP: http://172.10.12.45:7070/jsp/test_100_XML.jsp  |  출력 Dataset: output (SAMPLE_NM, SAMPLE_ID, SAMPLE_DESC, SAMPLE_DEPT_NM)");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_desc","10","66","1240","22",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#555555");
+            obj.set_color("#555555");
             obj.set_taborder("2");
             obj.set_text("async function 내에서 const [errCode, errMsg] = await this.transaction(...)으로 호출하면 절차적으로 결과를 처리할 수 있습니다.");
             this.addChild(obj.name, obj);
@@ -54,13 +54,13 @@
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_status","10","138","1240","22",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#cc0000");
+            obj.set_color("#cc0000");
             obj.set_taborder("6");
             obj.set_text("① [Dataset+Grid 생성] → ② [조회 (await)] 순서로 실행하세요.");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_log_label","10","166","400","20",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#888888");
+            obj.set_color("#888888");
             obj.set_taborder("7");
             obj.set_text("▼ 결과 로그 (ErrorCode / ErrorMsg / 건수)");
             this.addChild(obj.name, obj);

@@ -22,14 +22,14 @@
             
             // UI Components Initialize
             obj = new nexacro.Static("stc_title","10","10","700","28",null,null,null,null,null,null,this);
+            obj.set_color("#065f46");
             obj.set_font("bold 14 \'Malgun Gothic\'");
-            obj.getSetter("forecolor").set("#065f46");
             obj.set_taborder("0");
             obj.set_text("[비가시적] VirtualFile 동적 생성 샘플");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_desc","10","44","1200","22",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#555555");
+            obj.set_color("#555555");
             obj.set_taborder("1");
             obj.set_text("new nexacro.VirtualFile() — WRE: 파일 드래그앤드롭으로 VirtualFile 획득 / NRE: 독립 생성 후 파일 R/W 가능");
             this.addChild(obj.name, obj);
@@ -40,8 +40,8 @@
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_env","95","74","300","28",null,null,null,null,null,null,this);
+            obj.set_color("#1a56db");
             obj.set_font("bold 13 \'Malgun Gothic\'");
-            obj.getSetter("forecolor").set("#1a56db");
             obj.set_taborder("3");
             obj.set_text("");
             this.addChild(obj.name, obj);
@@ -67,20 +67,20 @@
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_result","614","116","630","22",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#cc0000");
+            obj.set_color("#cc0000");
             obj.set_taborder("8");
             obj.set_text("");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_dnd_title","10","152","700","20",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#888888");
+            obj.set_color("#888888");
             obj.set_taborder("9");
             obj.set_text("▼ 드래그앤드롭 영역 (파일을 여기에 놓으면 VirtualFile 동적 생성)");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_dnd_area","10","176","620","120",null,null,null,null,null,null,this);
             obj.set_background("color:#f0f9ff");
-            obj.getSetter("forecolor").set("#1a56db");
+            obj.set_color("#1a56db");
             obj.getSetter("ondragenter").set("stc_dnd_area_ondragenter");
             obj.getSetter("ondragleave").set("stc_dnd_area_ondragleave");
             obj.getSetter("ondrop").set("stc_dnd_area_ondrop");
@@ -89,7 +89,7 @@
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_list_title","10","310","400","20",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#888888");
+            obj.set_color("#888888");
             obj.set_taborder("11");
             obj.set_text("▼ 획득된 VirtualFile 목록");
             this.addChild(obj.name, obj);

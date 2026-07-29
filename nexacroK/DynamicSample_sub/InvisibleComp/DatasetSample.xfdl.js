@@ -20,14 +20,14 @@
             
             // UI Components Initialize
             obj = new nexacro.Static("stc_title","10","10","700","28",null,null,null,null,null,null,this);
+            obj.set_color("#065f46");
             obj.set_font("bold 14 \'Malgun Gothic\'");
-            obj.getSetter("forecolor").set("#065f46");
             obj.set_taborder("0");
             obj.set_text("[비가시적] Dataset 동적 생성 샘플");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_desc","10","44","1200","22",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#555555");
+            obj.set_color("#555555");
             obj.set_taborder("1");
             obj.set_text("new nexacro.Dataset() 으로 Dataset을 동적 생성하고 컬럼/행을 추가한 뒤 new nexacro.Grid()와 바인딩합니다.");
             this.addChild(obj.name, obj);
@@ -68,25 +68,25 @@
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_info","10","114","1240","22",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#1a56db");
+            obj.set_color("#1a56db");
             obj.set_taborder("9");
             obj.set_text("");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_result","10","138","1240","22",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#cc0000");
+            obj.set_color("#cc0000");
             obj.set_taborder("10");
             obj.set_text("");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_log_label","10","166","200","20",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#888888");
+            obj.set_color("#888888");
             obj.set_taborder("11");
             obj.set_text("▼ Dataset 상태");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_log","10","186","1240","22",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#333333");
+            obj.set_color("#333333");
             obj.set_taborder("12");
             obj.set_text("");
             this.addChild(obj.name, obj);

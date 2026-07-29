@@ -40,7 +40,7 @@
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_desc","480","58","780","24",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#666666");
+            obj.set_color("#666666");
             obj.set_taborder("3");
             obj.set_text("");
             this.addChild(obj.name, obj);

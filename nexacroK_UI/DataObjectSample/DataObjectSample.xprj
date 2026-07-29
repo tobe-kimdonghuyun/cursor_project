@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project version="2.1" nexacrosdk="User Setting" sdkversion="24.0.0">
   <EnvironmentDefinition url="environment.xml"/>
   <TypeDefinition url="typedefinition.xml"/>

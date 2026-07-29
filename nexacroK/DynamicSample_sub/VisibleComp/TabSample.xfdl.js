@@ -20,14 +20,14 @@
             
             // UI Components Initialize
             obj = new nexacro.Static("stc_title","10","10","500","28",null,null,null,null,null,null,this);
+            obj.set_color("#1a56db");
             obj.set_font("bold 14 \'Malgun Gothic\'");
-            obj.getSetter("forecolor").set("#1a56db");
             obj.set_taborder("0");
             obj.set_text("Tab 동적 생성 샘플");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_desc","10","44","900","22",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#555555");
+            obj.set_color("#555555");
             obj.set_taborder("1");
             obj.set_text("new nexacro.Tab() 으로 Tab을 동적 생성하고 insertTabpage()로 탭 페이지를 추가합니다.");
             this.addChild(obj.name, obj);
@@ -53,7 +53,7 @@
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_result","484","80","760","22",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#cc0000");
+            obj.set_color("#cc0000");
             obj.set_taborder("6");
             obj.set_text("");
             this.addChild(obj.name, obj);

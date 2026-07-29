@@ -20,20 +20,20 @@
             
             // UI Components Initialize
             obj = new nexacro.Static("stc_title","10","10","700","28",null,null,null,null,null,null,this);
+            obj.set_color("#065f46");
             obj.set_font("bold 14 \'Malgun Gothic\'");
-            obj.getSetter("forecolor").set("#065f46");
             obj.set_taborder("0");
             obj.set_text("[비가시적] DataObject 동적 생성 샘플");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_api_url","10","44","800","22",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#1a56db");
+            obj.set_color("#1a56db");
             obj.set_taborder("1");
             obj.set_text("API: GET https://jsonplaceholder.typicode.com/posts");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_desc2","10","66","1200","22",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#555555");
+            obj.set_color("#555555");
             obj.set_taborder("2");
             obj.set_text("new nexacro.DataObject() + new nexacro.Dataset() + new nexacro.Grid() 를 모두 동적으로 생성하고 REST API를 호출합니다.");
             this.addChild(obj.name, obj);
@@ -59,13 +59,13 @@
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_status","614","102","600","22",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#cc0000");
+            obj.set_color("#cc0000");
             obj.set_taborder("7");
             obj.set_text("DataObject 미생성");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Static("stc_result","10","136","1240","22",null,null,null,null,null,null,this);
-            obj.getSetter("forecolor").set("#333333");
+            obj.set_color("#333333");
             obj.set_taborder("8");
             obj.set_text("");
             this.addChild(obj.name, obj);
@@ -173,8 +173,8 @@
                 return;
             }
 
-            // 엔드포인트 전환 시 기존 컬럼까지 초기화해야 컬럼 중복 추가를 방지할 수 있음
-            for (var i = ds.getColCount() - 1; i >= 0; i--) { ds.deleteColumn(i); }
+            // 컬럼·행 전체 초기화 (엔드포인트 전환 시 컬럼 중복 방지)
+            ds.clear();
             var objSample = obj.data[0];
             for (var key in objSample)
             {
@@ -183,11 +183,11 @@
                 colInfo.datapath = "@." + key;
                 ds.addColumnInfo(key.toUpperCase(), colInfo);
             }
-            this.ds_result.binddataobject=obj.id;
-            this.ds_result.dataobjectpath = "$[*]";
-            grd.set_binddataset(this.ds_result.name);
+            this.ds_result.binddataobject = obj.id;
+            this.ds_result.dataobjectpath = "$.data[*]";
+            grd.binddataset = this.ds_result.name;
             grd.createFormat();
-
+            grd.autofittype = "col";
             this.stc_status.set_text("✔ 조회 완료: " + ds.rowcount + "건 / 컬럼 수: " + ds.getColCount());
             this.stc_result.set_text("serviceid=" + e.serviceid + " | 첫 번째 컬럼: " + ds.getColumn(0, 0));
         };

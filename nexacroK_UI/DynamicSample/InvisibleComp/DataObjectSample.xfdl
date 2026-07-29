@@ -106,7 +106,7 @@ this.dobj_api_onload = function(obj, e)
     this.ds_result.dataobjectpath = "$.data[*]";
     grd.binddataset = this.ds_result.name;
     grd.createFormat();
-
+    grd.autofittype = "col";
     this.stc_status.set_text("✔ 조회 완료: " + ds.rowcount + "건 / 컬럼 수: " + ds.getColCount());
     this.stc_result.set_text("serviceid=" + e.serviceid + " | 첫 번째 컬럼: " + ds.getColumn(0, 0));
 };
