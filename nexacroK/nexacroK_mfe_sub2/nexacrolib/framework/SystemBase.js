@@ -23224,18 +23224,20 @@ if (!nexacro._Init_systembase_html)
     nexacro._showModalWindow = nexacro._emptyFn;
     if (globalThis.chrome && globalThis.chrome.webview)
     {
-        nexacro._showModalSync = function (childframe, str_id, _parent_frame, arr_arg, opener)
+        nexacro._showModalSync = async function (childframe, str_id, _parent_frame, arr_arg, opener)
         {
-            if (childframe != null)
-            {
-                return childframe._showModalSync(str_id, _parent_frame, arr_arg, opener);
-            }
+            if (childframe !== null)
+                return await childframe.showModal(str_id, _parent_frame, arr_arg, opener, null, false);
+
+            throw nexacro.MakeReferenceError(this, "reference_not_define", str_id);
         };
 
-        nexacro._showModalWindow = function (childframe, str_id, parent_frame, arr_arg, opener)
+        nexacro._showModalWindow = async function (childframe, str_id, parent_frame, arr_arg, opener)
         {
-            if (childframe)
-                return childframe._showModalWindow(str_id, parent_frame, arr_arg, opener);
+            if (childframe !== null)
+                return await childframe._showModalWindow(str_id, parent_frame, arr_arg, opener);
+
+            throw nexacro.MakeReferenceError(this, "reference_not_define", str_id);
         };
     }
 
@@ -32049,6 +32051,7 @@ if (!nexacro._Init_systembase_html)
     {
         if (arguments.length < 2)
         {
+            nexacro._screeninfo = env;
             //v24 generation call arg 
             return;            
         }
@@ -32057,7 +32060,12 @@ if (!nexacro._Init_systembase_html)
 
         if (!screeninfo)
         {
-            if (env)
+            if (nexacro._screeninfo)  //v24 generation call arg 
+            {
+                screeninfo = nexacro._screeninfo;
+                delete nexacro._screeninfo;
+            }
+            else if (env)
                 screeninfo = env?.on_getAllScreenInfo();
         }
 
@@ -32413,7 +32421,10 @@ if (!nexacro._Init_systembase_html)
         var pThis = obj;
         var arr = [];
 
-        while (pThis && !pThis._is_frame)
+        /* mfe 에서 pThis 가 application 트리까지 나오는 경우 있음 <-- ._is_frame 외에 추가 보강 필요*/
+        var app = nexacro.getApplication();
+
+        while (pThis && !pThis._is_frame && app !== pThis)
         {
             if (!pThis.visible)
                 arr.push(pThis);

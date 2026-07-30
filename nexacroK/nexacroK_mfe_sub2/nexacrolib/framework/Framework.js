@@ -23224,18 +23224,20 @@ if (!nexacro._Init_systembase_html)
     nexacro._showModalWindow = nexacro._emptyFn;
     if (globalThis.chrome && globalThis.chrome.webview)
     {
-        nexacro._showModalSync = function (childframe, str_id, _parent_frame, arr_arg, opener)
+        nexacro._showModalSync = async function (childframe, str_id, _parent_frame, arr_arg, opener)
         {
-            if (childframe != null)
-            {
-                return childframe._showModalSync(str_id, _parent_frame, arr_arg, opener);
-            }
+            if (childframe !== null)
+                return await childframe.showModal(str_id, _parent_frame, arr_arg, opener, null, false);
+
+            throw nexacro.MakeReferenceError(this, "reference_not_define", str_id);
         };
 
-        nexacro._showModalWindow = function (childframe, str_id, parent_frame, arr_arg, opener)
+        nexacro._showModalWindow = async function (childframe, str_id, parent_frame, arr_arg, opener)
         {
-            if (childframe)
-                return childframe._showModalWindow(str_id, parent_frame, arr_arg, opener);
+            if (childframe !== null)
+                return await childframe._showModalWindow(str_id, parent_frame, arr_arg, opener);
+
+            throw nexacro.MakeReferenceError(this, "reference_not_define", str_id);
         };
     }
 
@@ -32049,6 +32051,7 @@ if (!nexacro._Init_systembase_html)
     {
         if (arguments.length < 2)
         {
+            nexacro._screeninfo = env;
             //v24 generation call arg 
             return;            
         }
@@ -32057,7 +32060,12 @@ if (!nexacro._Init_systembase_html)
 
         if (!screeninfo)
         {
-            if (env)
+            if (nexacro._screeninfo)  //v24 generation call arg 
+            {
+                screeninfo = nexacro._screeninfo;
+                delete nexacro._screeninfo;
+            }
+            else if (env)
                 screeninfo = env?.on_getAllScreenInfo();
         }
 
@@ -32413,7 +32421,10 @@ if (!nexacro._Init_systembase_html)
         var pThis = obj;
         var arr = [];
 
-        while (pThis && !pThis._is_frame)
+        /* mfe 에서 pThis 가 application 트리까지 나오는 경우 있음 <-- ._is_frame 외에 추가 보강 필요*/
+        var app = nexacro.getApplication();
+
+        while (pThis && !pThis._is_frame && app !== pThis)
         {
             if (!pThis.visible)
                 arr.push(pThis);
@@ -53677,7 +53688,7 @@ if (!nexacro._bInitPlatform)
             let isfocus = this._is_active_window;
             if (evt && evt.type == "mousedown")
             {
-                _focuskeep = isfocus = (this.handle == this._doc.activeElement || this.handle.contains(this._doc.activeElement));
+                _focuskeep = isfocus = (this.handle == this._doc.activeElement || (this.handle.document || this.handle).contains(this._doc.activeElement));
                 if (evt.target !== this._doc.activeElement)
                 {
                     if (this._is_active_window)
@@ -55282,7 +55293,7 @@ if (!nexacro._bInitPlatform)
     _pApplication.getActiveFrame = function ()
     {
         var frame = this._p_mainframe;
-        var _window = frame._getWindow();
+        var _window = frame?._getWindow();
         if (_window && _window._is_active_window)
             return _window.getActiveFrame();
 
@@ -55352,7 +55363,7 @@ if (!nexacro._bInitPlatform)
     _pApplication._getActiveWindow = function ()
     {
         var frame = this._p_mainframe;
-        var _window = frame._getWindow();
+        var _window = frame?._getWindow();
         if (_window && _window._is_active_window)
             return _window;
 
@@ -65283,6 +65294,9 @@ if (!nexacro._bInitPlatform)
 
 	nexacro._createModalWindowHandle = function (parent_win, name, formurl, left, top, width, height, resizable, layered, parentframe, frameopener, arrarg, ext_openstyles, openstyles, env)
 	{
+		//screeninfo, cssurl 전달 (없으면 팝업에 테마 css가 적용되지 않음)
+		let screeninfo = env?._curscreen;
+		let cssurls = env?._cssurls;
 		let popupframeoptions = {
 			"_parentframe": parentframe,
 			"_opener": frameopener,
@@ -65292,7 +65306,9 @@ if (!nexacro._bInitPlatform)
 			"_left": left,
 			"_top": top,
 			"_width": width,
-			"_height": height
+			"_height": height,
+			"_screeninfo": screeninfo,
+			"_cssurls": cssurls
 		};
 
 		if (left == null)
@@ -65379,17 +65395,16 @@ if (!nexacro._bInitPlatform)
 		let realname = name + !nexacro.isglobalmodule ? new Date().getTime().toString() : "";
 		_win_handle = _parent_win.open(url, realname, opt);
 
-		nexacro._messageToNative(hybridHandle, "NexacroWindow", "_modalWindow", params, true, true);
-
-		//console.log("after modal\n");
+		if (!_win_handle)
+			return null;
 
 		//smilekkr's wv;hybridHandle 이름 및 전체적인 구성은 js 머지 후 반드시 결정/변경 해야 함;
 		_win_handle._hybridHandle = hybridHandle; //
 
-		if (!_win_handle)
-			return null;
+		// 창을 modal로 전환(부모 입력 차단). 닫힐 때 cpp가 _onModalWindowClosed로 결과를 돌려준다.
+		nexacro._messageToNative(hybridHandle, "NexacroWindow", "_modalWindow", params, true, true);
 
-		return _win_handle.returnValue;
+		return hybridHandle;
 	};
 
 	nexacro._createModalAsyncWindowHandle = function (parent_win, target_win, name, left, top, width, height, resizable, layered, lockmode, env)
@@ -65878,8 +65893,10 @@ if (!nexacro._bInitPlatform)
 
 		if (globalThis.chrome && globalThis.chrome.webview)
 		{
+			// 대상 창 지정용 handle. 없으면 메인 창.
+			var hybridhandle = _win_handle._hybridHandle ? _win_handle._hybridHandle : "0000";
 			var params = { x: x, y: y };
-			nexacro._messageToNative("0000", "NexacroWindow", "_setWindowHandlePos", params, true);
+			nexacro._messageToNative(hybridhandle, "NexacroWindow", "_setWindowHandlePos", params, true);
 		}
 		else if (nexacro._macOSWebView)
 		{
@@ -65902,7 +65919,14 @@ if (!nexacro._bInitPlatform)
 	{
 		_win_handle.resizeTo(w, h);
 
-		if (nexacro._macOSWebView)
+		if (globalThis.chrome && globalThis.chrome.webview)
+		{
+			// 대상 창 지정용 handle. 없으면 메인 창.
+			var hybridhandle = _win_handle._hybridHandle ? _win_handle._hybridHandle : "0000";
+			var params = { width: w, height: h };
+			nexacro._messageToNative(hybridhandle, "NexacroWindow", "_setWindowHandleSize", params, true);
+		}
+		else if (nexacro._macOSWebView)
 		{
 			var params = {
 				width: w,
@@ -66619,41 +66643,43 @@ if (!nexacro._bInitPlatform)
 		return new nexacro._FontObject("12pt Verdana");
 	};
 
+    // _createVirtualWindowHandle / _closeVirtualWindowHandle / _blockScript / _unblockScript :
+    //   네이티브 동기 블로킹(showModalSync) 경로 전용이라 함께 삭제함.
     if (globalThis.chrome && globalThis.chrome.webview)
     {
-        nexacro._createVirtualWindowHandle = function (_handle)
+        // modal window 결과 전달 (자식 창 -> cpp -> 부모 창)
+        nexacro._sendModalWindowResult = function (_window, arg)
         {
-            var params = {};
+            var handle = (_window && _window.handle) ? _window.handle._hybridHandle : null;
+            if (!handle)
+                return;
 
-            return nexacro._messageToNative(_handle, "NexacroWindow", "_createVirtualWindow", params, true, true);
-        };
-        //unused
-        nexacro._closeVirtualWindowHandle = function (_handle)
-        {
-            var params = { handle: _handle };
-
-            return nexacro._messageToNative(_handle, "NexacroWindow", "_closeVirtualWindow", params, true);
-        };
-
-        nexacro._blockScript = function (handle, _virtual_handle)
-        {
-            var params = { handle: _virtual_handle };
-
-            return nexacro._messageToNative(handle, "NexacroWindow", "_blockScript", params, true);
-        };
-
-        nexacro._unblockScript = function (handle, _virtual_handle)
-        {
-            var params = { handle: _virtual_handle };
-
-            return nexacro._messageToNative(handle, "NexacroWindow", "_unblockScript", params, true);
+            var params = { returnvalue: (arg === undefined ? null : arg) };
+            nexacro._messageToNative(handle, "NexacroWindow", "_closeWindow", params, false);
         };
     }
     else
     {
-        nexacro._blockScript = nexacro._emptyFn;    
-        nexacro._unblockScript = nexacro._emptyFn;
+        nexacro._sendModalWindowResult = nexacro._emptyFn;
     }
+
+    // modal window가 닫힐 때 cpp(Cy_Window::OnDestroy)가 호출한다.
+    nexacro._modal_window_resolvers = {};
+
+    nexacro._registerModalWindowResolver = function (handle, fn)
+    {
+        nexacro._modal_window_resolvers[handle] = fn;
+    };
+
+    nexacro._onModalWindowClosed = function (handle, result)
+    {
+        var fn = nexacro._modal_window_resolvers[handle];
+        if (!fn)
+            return;
+
+        delete nexacro._modal_window_resolvers[handle];
+        fn(result);
+    };
     
     nexacro._setPopupWindowHandleVisible = function (handle, visible_flag)
 	{
@@ -67948,7 +67974,7 @@ if (!nexacro._bInitPlatform)
 	nexacro._on_apply_layered = nexacro._emptyFn;
 	nexacro._setWindowTopmost = nexacro._emptyFn;
 
-    if (!system)
+    if (system)
         system = nexacro.System;
 
 

@@ -77,7 +77,7 @@ if (!nexacro.CellInfo)
         ["expr", null, true, null, false],
         ["subsumtext", null, true, null, false],
         ["controlautosizingtype", null, true, "both", false, 2, ["none", "width", "height", "both"]],
-        ["rtl", null, false, "", false],
+        ["rtl", null, true, "", false],
         ["sortcolumn", null, false, "", false],
         ["groupcolumn", null, false, "", false],
         ["filtercolumn", null, false, "", false],
@@ -4076,6 +4076,7 @@ if (!nexacro._CellControl)
             {
                 return false;
             }
+            this.on_apply_prop_rtl();
             this.on_apply_text();
             this.on_apply_textDecoration();
 
@@ -5631,10 +5632,10 @@ if (!nexacro._CellControl)
 
     _pCellControl.on_apply_prop_rtl = function ()
     {
-        if (this._is_created) // rtl은 현재 생성할 때만 설정
+        if (this._is_created && this._refinfo._p_rtl._bindtype < 1) // bind/expr 이 아닌 경우 생성 시점에만 설정 (최적화)
             return;
 
-        var v = this.rtl = this._refinfo._getAttrValue(this._refinfo._p_rtl, this._getDataRow());
+        var v = this._refinfo._getAttrValue(this._refinfo._p_rtl, this._getDataRow());
         if (nexacro._isBoolean(v))
         {
             this._rtl = nexacro._toBoolean(v);

@@ -1748,6 +1748,9 @@ if (!nexacro.Frame)
         // TODO close windowed
         if (this._is_window && this._window && this._window._is_alive)
         {
+            // destroy 이후에는 handle을 읽을 수 없으므로 미리 확보한다.
+            var _hybrid_handle = this._window.handle ? this._window.handle._hybridHandle : null;
+
             this._window.destroy();
 
             if (nexacro._macOSWebView)
@@ -1768,7 +1771,7 @@ if (!nexacro.Frame)
                 var params = {};
                 var method = "_closeWindow";
                 var div = "NexacroWindow";
-                nexacro._messageToNative(this._window.handle ? this._window.handle._hybridHandle : "0000", div, method, params, false);
+                nexacro._messageToNative(_hybrid_handle ? _hybrid_handle : "0000", div, method, params, false);
             }
         }
         else
@@ -3517,15 +3520,6 @@ if (!nexacro.Frame)
         {
             this._setModalUnlock();
             this._runCallback();
-
-            if (this._window_type == 4) // modalsync
-            {
-                var _win = this._getWindow();
-                var _virtual_handle = this._virtual_handle;
-
-                nexacro._unblockScript(_win._handle, _virtual_handle);
-                this._virtual_handle = null;
-            }
         }
         else if (this._window_type == 5) // modalWindow
         {
@@ -4285,132 +4279,8 @@ if (!nexacro.Frame)
         return modalPromise || true;
     };
 
-    _pChildFrame._showModalSync = function (str_id, _parent_frame, arr_arg, opener)
-    {
-        //this._is_popup_frame = true; 
-
-        // TODO Widget, Tray에서 메소드 실행시 에러 발생. (사용불가)
-
-        var ret, parent_frame, id;
-        if (!(str_id instanceof nexacro.Frame) && str_id != null)
-        { // syntax 2
-            this.id = id = arguments[0];
-            parent_frame = arguments[1];
-            this._arg = arguments[2];
-            this.opener = arguments[3];
-        }
-        else
-        { // syntax 1
-            id = this.id;
-            parent_frame = arguments[0];
-            this._arg = arguments[1];
-            this.opener = arguments[2];
-        }
-
-        var child_frame = null;
-
-        if (parent_frame == null)
-        {
-            const app = this._getRootObject(); //chk
-            parent_frame = app;
-        }
-        if (parent_frame)
-            ret = parent_frame.addChild(id, this);
-
-        if (ret == -1)
-        {
-            return false;
-        }
-        else
-            child_frame = this;
-
-        if (child_frame && child_frame._arg)
-        {
-            for (var param in child_frame._arg)
-            {
-                child_frame._addVariable(param, child_frame._arg[param]);
-            }
-        }
-
-        //use window runtime only
-        var parent_window = parent_frame ? parent_frame._getWindow() : null;
-
-        if (nexacro._registerPopupFrame(id, this, parent_window) < 0)
-        {
-            throw nexacro.MakeNativeError(this, "native_exist_id", id);
-            //return false;
-        }
-
-        child_frame._is_window = false;
-        child_frame._window_type = 4; // modalsync
-
-        var left = child_frame._adjust_left;
-        var top = child_frame._adjust_top;
-        var width = child_frame._adjust_width;
-        var height = child_frame._adjust_height;
-
-        // showModal의 경우 autosize, openalign은 한번만 처리해도 된다.
-        // _loadedForm에서 처리.
-
-        if (this.autosize)
-        {
-            // calc autosize
-            var calculated_size = this._getAutosizedFrameSize(true);
-            this._p_width = width = calculated_size.width;
-            this._p_height = height = calculated_size.height;
-        }
-
-        // form 로딩 여부와 상관없이 openalign 처리
-        var after_align_pos = child_frame._getOpenAlignPos(this._getWindow(), left, top, width, height);
-        if (after_align_pos)
-        {
-            this._p_left = after_align_pos.left;
-            this._p_top = after_align_pos.top;
-        }
-
-        if (!this.opener || (this.opener && !this.opener._is_form && !this.opener._is_application))
-        {
-
-            this.opener = parent_frame ? parent_frame._p_form : null;
-
-        }
-
-        if (this._p_form)
-            this._p_form._p_opener = this.opener;
-
-        var _window = this._getWindow();
-        var wheelZoomScale = 1.0;
-        if (_window && (_window._wheelZoom != undefined) && (_window._wheelZoom != 100))
-        {
-            wheelZoomScale = _window._wheelZoom / 100.0;
-        }
-        var recalculated_pos = this._recalcModalPosition((this._p_left == null) ? null : this._p_left * wheelZoomScale, (this._p_top == null) ? null : this._p_top * wheelZoomScale, this._p_width, this._p_height);
-        this._p_left = recalculated_pos.left;
-        this._p_top = recalculated_pos.top;
-        this._p_width = recalculated_pos.width;
-        this._p_height = recalculated_pos.height;
-
-        this._setModalLock();
-        this._cancelTouchEvent();
-        this.createComponent(true);
-        this.on_created();
-        if (wheelZoomScale != 1.0)
-        {
-            var frameElem = this.getElement();
-            frameElem.setElementZoom(_window._wheelZoom);
-            frameElem.setElementSize(frameElem._unscaledwidth, frameElem._unscaledheight, false, true);
-        }
-
-        var win = this._getWindow();
-        if (win && win.handle)
-        {
-            var _virtual_handle = nexacro._createVirtualWindowHandle(win.handle);
-            this._virtual_handle = _virtual_handle;
-            nexacro._blockScript(win.handle, _virtual_handle);
-        }
-
-        return true;
-    };
+    // _pChildFrame._showModalSync : WebView2에서 데드락이 되는 네이티브 동기 블로킹 경로라 제거함.
+    //   system.showModalSync는 showModal(Promise)로 위임한다.
 
 
     //////////////////////////////////////////////////////////////////////////////////////
@@ -4523,12 +4393,41 @@ if (!nexacro.Frame)
         if (this._p_resizable)
             openstyles += "resizable=true";
         if (this._p_layered)
-            openstyles += "layered=true";
+            openstyles += (openstyles ? " " : "") + "layered=true";	// 공백으로 구분해야 파싱됨
+
+        // 팝업은 별도 인스턴스에서 ChildFrame을 새로 만들며 autosize 기본값이 true라 명시 전달해야 한다.
+        openstyles += (openstyles ? " " : "") + "autosize=" + (this._p_autosize ? "true" : "false");
 
         var ext_openstyles = "toolbar=no,menubar=no,location=no,status=no,topmost=false,noactivate=false";
 
-        return nexacro._createModalWindowHandle(parent_window, id, this._p_formurl, left, top, width, height, this._p_resizable, this._p_layered, parent_frame, this.opener, this._arg, openstyles, ext_openstyles, this._getEnvironment());
+        // 부모 창에 modal overlay(회색 배경)를 씌운다. parent_frame이 ChildFrame인 경우만 처리.
+        if (parent_frame && parent_frame._setModalLock)
+        {
+            this._setModalLock(this._overlaycolor);
+        }
 
+        // 인자 순서 주의 : (..., arrarg, ext_openstyles, openstyles, env)
+        var modal_handle = nexacro._createModalWindowHandle(parent_window, id, this._p_formurl, left, top, width, height, this._p_resizable, this._p_layered, parent_frame, this.opener, this._arg, ext_openstyles, openstyles, this._getEnvironment());
+
+        // 창이 닫힐 때(cpp 통지) resolve되는 Promise를 돌려준다.
+        var self = this;
+        return new Promise(function (resolve)
+        {
+            if (!modal_handle)
+            {
+                self._setModalUnlock();
+                resolve(undefined);
+                return;
+            }
+
+            nexacro._registerModalWindowResolver(modal_handle, function (result)
+            {
+                self._setModalUnlock();
+                self._close_argument = result;
+                self._runCallback();
+                resolve({ name: self._p_name, arg: result });
+            });
+        });
     };
     ////////////////////////////////////////////////////////////////////////////////
     // * showModeless will be deprecated!!
@@ -5047,6 +4946,9 @@ if (!nexacro.Frame)
                 this._window.returnValue = arg;
             }
 
+            // modal window인 경우 결과를 native로 먼저 넘겨야 부모 창 Promise가 값을 받는다.
+            nexacro._sendModalWindowResult(this._window, arg);
+
             var allobj = this._p_all;
             var allcnt = allobj.length - 1;
             for (var i = allcnt; i >= 0; i--)
@@ -5139,8 +5041,8 @@ if (!nexacro.Frame)
             {
                 if (this._delayed_create_window)
                 {
-                    // calc autosize
-                    calculated_size = this._getAutosizedFrameSize(nexacro._macOSWebView);
+                    // calc autosize (별도 창이므로 타이틀바/상태바 높이 포함)
+                    calculated_size = this._getAutosizedFrameSize(true);
                     width = calculated_size.width;
                     height = calculated_size.height;
 
@@ -5168,8 +5070,8 @@ if (!nexacro.Frame)
                 {
                     if (this._window)
                     {
-                        // calc autosize
-                        calculated_size = this._getAutosizedFrameSize(nexacro._macOSWebView);
+                        // calc autosize (생성 시와 동일하게 NC 높이 포함)
+                        calculated_size = this._getAutosizedFrameSize(true);
                         width = calculated_size.width;
                         height = calculated_size.height;
 
@@ -5211,8 +5113,8 @@ if (!nexacro.Frame)
                        else
                     */
                     {
-                        // calc autosize                        
-                        calculated_size = this._getAutosizedFrameSize(false);
+                        // calc autosize (별도 창이므로 타이틀바/상태바 높이 포함)
+                        calculated_size = this._getAutosizedFrameSize(true);
                         width = calculated_size.width;
                         height = calculated_size.height;
                     }
@@ -5232,6 +5134,9 @@ if (!nexacro.Frame)
                         if (this._state_openstatus == 0)
                         {
                             this._move(left, top, width, height);
+
+                            // on_update_position의 네이티브 반영이 WebView2에서 동작하지 않아 직접 반영
+                            this._window.setSize(this._adjust_width, this._adjust_height);
                         }
                         else
                         {
@@ -5258,7 +5163,8 @@ if (!nexacro.Frame)
                 {
                     if (this._window)
                     {
-                        calculated_size = this._getAutosizedFrameSize(false);
+                        // 생성 시와 동일하게 NC 높이를 포함한다.
+                        calculated_size = this._getAutosizedFrameSize(true);
                         width = calculated_size.width;
                         height = calculated_size.height;
 
@@ -5630,10 +5536,7 @@ if (!nexacro.Frame)
             win = this._getWindow();
         }
         if (!win)
-        {
-            throw new Error("nexacro k dev: not find root window obj.");
-
-        }
+            win = nexacro._getMainWindowHandle() ? nexacro._getMainWindowHandle()._linked_window : null;
 
         if (!win)
             return;
@@ -5693,6 +5596,13 @@ if (!nexacro.Frame)
                 parent = app;
             }
         }
+        if (!parent)
+        {
+            // 부모에 연결되지 않은 ChildFrame(showModalWindow)인 경우
+            var application = nexacro.getApplication();
+            if (application)
+                parent = application._p_mainframe;
+        }
 
 
         var modal_overlay_elem;
@@ -5741,10 +5651,8 @@ if (!nexacro.Frame)
             win = this._getWindow();
         }
         if (!win)
-        {
-            throw new Error("nexacro k dev: not find root window obj.");
+            win = nexacro._getMainWindowHandle() ? nexacro._getMainWindowHandle()._linked_window : null;
 
-        }
         if (!win)
             return;
 

@@ -4904,7 +4904,7 @@ if (!nexacro.DatasetBase)
     _pDatasetBase.getnullsorttype = function (v)
     {
         v = this._p_nullsorttype;
-        var env = this.getEnvironment();
+        var env = this._getEnvironment();
 
         return v ? v : env ? env._p_datasetnullsorttype : nexacro._datasetnullsorttype;
     };

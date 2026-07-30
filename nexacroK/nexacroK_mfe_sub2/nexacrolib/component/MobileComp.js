@@ -6895,7 +6895,17 @@ if (!nexacro.TextField)
         {
             this.on_invalid(true);
             if (this._p_inputtype == "number")
+            {
                 cur_value = cur_text = "";
+
+                // 표시값 초기화
+                input_elem.value = null;
+                input_elem.setElementValue("");
+
+                // 상태 초기화
+                this._invalidStatus(false);
+                this._validStatus(false);
+            }
         }
         else if (check == true)
         {
@@ -6940,11 +6950,6 @@ if (!nexacro.TextField)
 
                 input_elem._updateElementValue(cur_value);
                 this._setValue(cur_value === null ? undefined : cur_value, true);
-            }
-
-            if (nexacro._OS == "iOS" || nexacro._Browser == "Gecko")
-            {
-                input_elem._clearNumberGabageValue();
             }
         }
         this._caret_pos = input_elem.getElementCaretPos();
@@ -18006,17 +18011,16 @@ if (!nexacro.DateRangePicker)
 
         if (headline)
         {
-            const wheelzoom =  nexacro.getWheelZoom(this)/100;
             if (this._p_headlineposition == "left" ||
                 (this._headline_autoposition && (orient == 2 || orient == 3))) // landscape
             {
-                h = this._headlinewidth / wheelzoom;
+                h = this._headlinewidth;
                 headline.move(0, 0, h, this._getClientHeight());
                 pickerleft = h;
             }
             else
             {
-                h = this._headlineheight / wheelzoom;
+                h = this._headlineheight;
                 headline.move(0, 0, this._getClientWidth(), h);
                 pickertop = h;
                 pickerheight -= h;

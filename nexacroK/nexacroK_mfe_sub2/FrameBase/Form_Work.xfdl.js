@@ -62,7 +62,7 @@
 
             // Layout Functions
             //-- Default Layout : this
-            obj = new nexacro.Layout("default","Desktop_screen",700,720,this,function(p){});
+            obj = new nexacro.Layout("default","Desktop_screen_sub2",700,720,this,function(p){});
             this.addLayout(obj.name, obj);
             
             // BindItem Information

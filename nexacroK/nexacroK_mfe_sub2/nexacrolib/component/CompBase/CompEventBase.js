@@ -1093,17 +1093,21 @@ if (nexacro.Component)
 
 		if (this._is_track)
 		{
+			var trackownerframe = null;
 			if (this.getOwnerFrame)
 			{
 				if (this instanceof nexacro.ChildFrame)
 					return false;
 
-				var ownerframe = this.getOwnerFrame();
-				if (!ownerframe || !ownerframe._canDragMove())
+				trackownerframe = this.getOwnerFrame();
+				if (!trackownerframe || !trackownerframe._canDragMove())
 					return false;
 			}
 
-			nexacro._setTrackInfo(win, this, win._curWindowX, win._curWindowY, screenX, screenY);
+			// 별도 창에서는 track overlay가 mouseup을 가로채 타이틀바 버튼 click이 발생하지 않는다.
+			var no_useoverlay = !!(trackownerframe && trackownerframe._is_window);
+
+			nexacro._setTrackInfo(win, this, win._curWindowX, win._curWindowY, screenX, screenY, no_useoverlay);
 			return false;
 		}
 		else

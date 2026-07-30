@@ -1681,7 +1681,17 @@ if (!nexacro.TextField)
         {
             this.on_invalid(true);
             if (this._p_inputtype == "number")
+            {
                 cur_value = cur_text = "";
+
+                // 표시값 초기화
+                input_elem.value = null;
+                input_elem.setElementValue("");
+
+                // 상태 초기화
+                this._invalidStatus(false);
+                this._validStatus(false);
+            }
         }
         else if (check == true)
         {
@@ -1726,11 +1736,6 @@ if (!nexacro.TextField)
 
                 input_elem._updateElementValue(cur_value);
                 this._setValue(cur_value === null ? undefined : cur_value, true);
-            }
-
-            if (nexacro._OS == "iOS" || nexacro._Browser == "Gecko")
-            {
-                input_elem._clearNumberGabageValue();
             }
         }
         this._caret_pos = input_elem.getElementCaretPos();

@@ -1010,7 +1010,7 @@
         }
         catch (e)
         {
-            console.info("failed to parse expression:", e.message, "in", exprStr);
+            //console.info("failed to parse expression:", e.message, "in", exprStr);
             ast = null;
         }
 
@@ -2581,7 +2581,7 @@
         const gname = (def.names || [])[code[pc + 1]];
         return function (rt)
         {
-            rt.st[++rt.sp] = _threadedG[gname];
+            rt.st[++rt.sp] = (gname in rt.imports) ? rt.imports[gname] : _threadedG[gname];
             return nextPc;
         };
     };
@@ -3371,7 +3371,7 @@
         return steps;
     }
 
-    function assembleBytecodeThreadedRunner(bc, steps, slots)
+    function assembleBytecodeThreadedRunner(bc, steps, slots, contextImports)
     {
         const maxStack = Math.max(4, (bc.maxStack || 0) + 2);
         const { rowIdx, compIdx, dsIdx, recIdx, argsIdx } = slots;
@@ -3385,11 +3385,15 @@
             _row_: [],
             _args_: _undefined_,
             thisArg: null,
-            env: null
+            env: null,
+            imports: null
         };
+        
+        const compileTypeEnv = nexacro.getEnvironment();
+
         const runner = function (...args)
         {
-            const env = nexacro.getEnvironment();
+            let env = (contextImports?.nexacro?.getEnvironment() ?? compileTypeEnv);
             try
             {
                 rt.sp = -1;
@@ -3401,6 +3405,7 @@
                 rt._args_ = argsIdx >= 0 ? args[argsIdx] : _undefined_;
                 rt.thisArg = this;
                 rt.env = env;
+                rt.imports = contextImports || {};
                 let pc = 0;
                 let step;
                 while (pc >= 0)
@@ -3520,7 +3525,7 @@
         return this;
     };
 
-    nexacro.ExprParser.prototype.compile = function (noCache)
+    nexacro.ExprParser.prototype.compile = function (contextImports, noCache)
     {
         if (this._boundExpr == null || this._boundExpr === "") 
         {
@@ -3539,7 +3544,7 @@
             const slots = resolveThreadedCtxSlots(this._arglist);
             const threadedSteps = buildBytecodeThreadedSteps(bytecode);
 
-            exprFn = assembleBytecodeThreadedRunner(bytecode, threadedSteps, slots);
+            exprFn = assembleBytecodeThreadedRunner(bytecode, threadedSteps, slots, contextImports);
         }
 
         if (noCache !== true) 
@@ -3579,15 +3584,27 @@
     //==============================================================================
     // nexacro._createExprFunc()
     //==============================================================================
-    nexacro._createExprFunc = function (exprStr, bindTarget, arglist)
+    nexacro._createExprFunc = function (exprStr, bindTarget, arglist, contextImports)
     {
         if (exprStr == null || exprStr === "")
         {
             return null;
         }
 
+        // context varaible (use closure)
+        const keys = nexacro.__export_args_str.split(',').map(s => s.trim());
+        const values = nexacro.__export_args;
+        const nexacroExports = Object.fromEntries(
+            keys.map((key, index) => [key, values[index]])
+        );
+
+        const exprContext = {
+            ...nexacroExports,
+            ...(contextImports || {})
+        }
+
         const parser = new nexacro.ExprParser(exprStr, arglist);
         parser.parse(bindTarget);
-        return parser.compile();
+        return parser.compile(exprContext);
     };
 })();

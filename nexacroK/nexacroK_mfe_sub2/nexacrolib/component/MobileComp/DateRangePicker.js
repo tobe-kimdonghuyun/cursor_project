@@ -857,17 +857,16 @@ if (!nexacro.DateRangePicker)
 
         if (headline)
         {
-            const wheelzoom =  nexacro.getWheelZoom(this)/100;
             if (this._p_headlineposition == "left" ||
                 (this._headline_autoposition && (orient == 2 || orient == 3))) // landscape
             {
-                h = this._headlinewidth / wheelzoom;
+                h = this._headlinewidth;
                 headline.move(0, 0, h, this._getClientHeight());
                 pickerleft = h;
             }
             else
             {
-                h = this._headlineheight / wheelzoom;
+                h = this._headlineheight;
                 headline.move(0, 0, this._getClientWidth(), h);
                 pickertop = h;
                 pickerheight -= h;
