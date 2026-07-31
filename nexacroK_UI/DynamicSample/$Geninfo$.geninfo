@@ -1,33 +1,53 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <root>
-      
+          
+  
+  
   
   <GenInfo version="1.1">
-            
+                    
+    
+    
     
     <Rule>
-                  
+                              
+      
+      
       
       <ENV rule_version="1.05"/>
-                  
+                              
+      
+      
       
       <ADL rule_version="1.14"/>
-                  
+                              
+      
+      
       
       <FDL rule_version="1.04"/>
-                  
+                              
+      
+      
       
       <XCSS rule_version="1.04"/>
-                  
+                              
+      
+      
       
       <Script rule_version="1.02"/>
-                  
+                              
+      
+      
       
       <GeneratorInfo rule_version="1.4"/>
-                
+                            
+    
+    
     
     </Rule>
-            
+                    
+    
+    
     
     <Info generated="D:\git_prj\cursor_project\nexacroK\DynamicSample\" project="D:\git_prj\cursor_project\nexacroK_UI\DynamicSample\">
       <File checksum="20260728192511" errormsg="" url="typedefinition.xml"/>
@@ -65,9 +85,13 @@
       <File checksum="20260713112723" errormsg="" url="E:\git\VSCODE_WORK900\WORK900\nexacrolib\component\CompBase.json"/>
       <File checksum="20260728192430" errormsg="" url="Application_Desktop.xadl"/>
     </Info>
-          
+                  
+  
+  
   
   </GenInfo>
-    
+        
+
+
 
 </root>
