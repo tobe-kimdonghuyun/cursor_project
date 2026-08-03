@@ -55,3 +55,4 @@
 31-Jul-2026 09:00:05.724 정보 [main] org.apache.catalina.startup.HostConfig.deployDirectory 웹 애플리케이션 디렉토리 [D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\testSampleProject]에 대한 배치가 [97] 밀리초에 완료되었습니다.
 31-Jul-2026 09:00:05.733 정보 [main] org.apache.coyote.AbstractProtocol.start 프로토콜 핸들러 ["http-nio-7070"]을(를) 시작합니다.
 31-Jul-2026 09:00:05.761 정보 [main] org.apache.catalina.startup.Catalina.start 서버가 [3778] 밀리초 내에 시작되었습니다.
+31-Jul-2026 13:39:00.522 정보 [Catalina-utility-2] org.apache.catalina.webresources.Cache.backgroundProcess 백그라운드 캐시 퇴거 (cache eviction) 프로세스가, 컨텍스트 [/nexacroK]을(를) 위한 캐시의 [10] 퍼센트를 해제시킬 수 없었습니다. 캐시의 최대 크기를 증가시킬 것을 고려해 보십시오. 캐시 퇴거 작업 이후, 대략 [9,718] KiB의 데이터가 캐시에 남아 있습니다.

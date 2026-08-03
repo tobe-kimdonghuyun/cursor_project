@@ -19,7 +19,7 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 
 CHM_FILE   = r"D:\git_prj\cursor_project\DOC\NexacroN\nexacro_manual.chm"
-OUTPUT_DIR = Path(__file__).parent / "output"
+OUTPUT_DIR = Path(r"D:\git_prj\cursor_project\nexacro_reference")
 SEVENZIP   = r"C:\Program Files\7-Zip\7z.exe"
 
 # 이미 완료된 카테고리 → 덮어쓰지 않음 (--resume 없이도 건너뜀)
@@ -239,8 +239,10 @@ def _table_to_md(table_tag) -> list:
 
 
 def parse_chm_page(html_path: Path) -> str:
-    raw  = html_path.read_text(encoding="utf-8", errors="ignore")
-    soup = BeautifulSoup(raw, "html.parser")
+    # read_bytes()로 읽어 BeautifulSoup이 charset 메타 태그를 자동 감지하도록 함
+    # (일부 HTML이 charset 선언과 실제 인코딩이 다를 수 있으므로 bytes로 넘김)
+    raw_bytes = html_path.read_bytes()
+    soup = BeautifulSoup(raw_bytes, "html.parser")
     lines = []
 
     title_td = soup.find("td", class_="title")
@@ -355,6 +357,7 @@ def main():
     parser = argparse.ArgumentParser(description="nexacro CHM 전체 MD 추출기")
     parser.add_argument("--list",   action="store_true", help="파일 매핑 목록만 출력")
     parser.add_argument("--resume", action="store_true", help="이미 생성된 파일 건너뜀")
+    parser.add_argument("--only",   nargs="+", metavar="FILE", help="특정 MD 파일만 재생성 (예: DataObject.md Dataset.md)")
     args = parser.parse_args()
 
     temp_dir = tempfile.mkdtemp(prefix="nexacro_full_chm_")
@@ -387,11 +390,19 @@ def main():
         print("[4/5] MD 파일 생성 중...")
         done_cnt = skipped_cnt = failed_cnt = 0
 
+        # --only 옵션: 지정된 파일명 집합
+        only_set = set(args.only) if args.only else None
+
         for i, out_name in enumerate(sorted(groups.keys()), 1):
             out_path = OUTPUT_DIR / out_name
 
-            # 이미 완료된 파일
-            if out_name in DONE_OUTPUT_FILES:
+            # --only 모드: 지정된 파일만 처리
+            if only_set and out_name not in only_set:
+                skipped_cnt += 1
+                continue
+
+            # 이미 완료된 파일 (--only 없을 때만 적용)
+            if not only_set and out_name in DONE_OUTPUT_FILES:
                 skipped_cnt += 1
                 continue
 
