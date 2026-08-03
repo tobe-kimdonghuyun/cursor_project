@@ -238,6 +238,63 @@ def _table_to_md(table_tag) -> list:
     return lines
 
 
+def _params_table_to_md(table_tag) -> list:
+    """Parameters / Return 테이블 전용 파서.
+
+    일반 파라미터 행(colspan=1)은 마크다운 테이블로,
+    colspan >= 3 인 Sample Call 행은 코드 블록으로 별도 출력한다.
+    """
+    lines = []
+    has_header = False
+
+    for row in table_tag.find_all("tr"):
+        cells = row.find_all(["td", "th"])
+        if not cells:
+            continue
+
+        try:
+            first_colspan = int(cells[0].get("colspan", "1"))
+        except ValueError:
+            first_colspan = 1
+
+        if first_colspan >= 3:
+            # Sample Call 또는 병합 설명 행
+            pre = cells[0].find("pre")
+            if pre:
+                # <br> 이전 텍스트를 레이블로 추출
+                label_parts = []
+                for node in cells[0].children:
+                    if hasattr(node, "name") and node.name in ("br", "pre"):
+                        break
+                    s = str(node).strip()
+                    if s:
+                        label_parts.append(s)
+                label = " ".join(label_parts).strip().rstrip(":")
+                if label:
+                    lines += ["", f"**{label}**", ""]
+                code = pre.get_text()
+                if code.strip():
+                    lines += ["```javascript", code.rstrip(), "```"]
+            else:
+                text = cells[0].get_text(strip=True)
+                if text:
+                    lines.append(text)
+        else:
+            vals = [c.get_text(separator=" ", strip=True) for c in cells]
+            if not any(vals):
+                continue
+            if not has_header:
+                lines += [
+                    "| " + " | ".join(vals) + " |",
+                    "| " + " | ".join(["---"] * len(vals)) + " |",
+                ]
+                has_header = True
+            else:
+                lines.append("| " + " | ".join(vals) + " |")
+
+    return lines
+
+
 def parse_chm_page(html_path: Path) -> str:
     # read_bytes()로 읽어 BeautifulSoup이 charset 메타 태그를 자동 감지하도록 함
     # (일부 HTML이 charset 선언과 실제 인코딩이 다를 수 있으므로 bytes로 넘김)
@@ -272,9 +329,8 @@ def parse_chm_page(html_path: Path) -> str:
             lines += _setting_syntax_to_md(inner_table)
         elif section_name == "Example" and inner_table:
             lines += _setting_syntax_to_md(inner_table)
-        elif section_name in ("Parameters", "Return Value") and inner_table:
-            lines += (_table_to_md(inner_table) if not pre_el
-                      else ["```", pre_el.get_text().rstrip(), "```"])
+        elif section_name in ("Parameters", "Return") and inner_table:
+            lines += _params_table_to_md(inner_table)
         elif pre_el:
             text = pre_el.get_text().rstrip()
             lines += (["```javascript", text, "```"] if section_name == "Syntax"
