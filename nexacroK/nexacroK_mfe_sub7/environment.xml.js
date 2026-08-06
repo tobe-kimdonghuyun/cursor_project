@@ -20,6 +20,7 @@ const envLoader = function(nexacro, system, trace)
 
         env.on_init = function ()
         {
+            this.set_appkey("nexacroK_mfe_sub7");
             this.set_datatyperule("2.0");
             this.set_themeid("theme::blue");
         };
