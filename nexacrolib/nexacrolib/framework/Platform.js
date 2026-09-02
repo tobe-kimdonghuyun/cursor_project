@@ -1,4 +1,4 @@
-﻿//==============================================================================
+//==============================================================================
 //
 //  TOBESOFT Co., Ltd.
 //  Copyright 2017 TOBESOFT Co., Ltd.
@@ -12190,7 +12190,7 @@ if (!nexacro._bInitPlatform)
         return false;
     };
 
-    __pWindow._on_default_sys_resize = function (width, height, wparam)
+    __pWindow._on_default_sys_resize = function (width, height, wparam, is_keypad_switch)
     {
         var handle = this.handle;
         if (handle)
@@ -12201,7 +12201,9 @@ if (!nexacro._bInitPlatform)
             this.top = nexacro._getWindowHandlePosY(handle);
             var ret;
 
-            nexacro._checkClosePopupComponent(null);
+            if (!is_keypad_switch)
+                nexacro._checkClosePopupComponent(null);
+
             if (nexacro._Browser == "Runtime" && (nexacro._SystemType.toLowerCase() == "win32" || nexacro._SystemType.toLowerCase() == "win64"))
             {
                 // win7 이상 AeroSnap으로 최대화시 maximize 처리되지 않고 resize로 최대화 처리가 된다.
@@ -12582,7 +12584,7 @@ if (!nexacro._bInitPlatform)
 
         if (window)
         {
-            var is_embedded = window.parent.document != window.document;
+            var is_embedded = window.parent !== window;
             if (is_embedded)
             {
                 this._last_focused_elem = null;
@@ -17157,7 +17159,7 @@ if (!nexacro._bInitPlatform)
     _pEnvironment._p_datasetloadtype = "onsuccess";
 
     _pEnvironment.updates = null;
-    _pEnvironment._p_usecontextmenu = "all";
+    _pEnvironment._p_usecontextmenu = "edit";
     _pEnvironment._p_usehttpkeepalive = false;
     _pEnvironment._p_useproxykeepalive = false;
     _pEnvironment._p_usewaitcursor = true;
@@ -17179,6 +17181,7 @@ if (!nexacro._bInitPlatform)
     _pEnvironment._p_datasetsavenan = "exclude";               // include/exclude
     _pEnvironment._p_datasetsaveinfinity = "include";          // include/exclude
     _pEnvironment._p_datasetsaveinvaliddate = "exclude";       // include/exclude
+    _pEnvironment._p_datasetnullsorttype = "max";
 
     _pEnvironment._p_ssvunitseparator = "";                    //default 0x1f
     _pEnvironment._p_ssvrecordseparator = "";                  //default 0x1e    
@@ -17705,6 +17708,18 @@ if (!nexacro._bInitPlatform)
 
         if (type_enum.indexOf(v) >= 0)
             this._p_datasetsaveinvaliddate = v;
+    };
+
+    _pEnvironment.set_datasetnullsorttype = function (v)
+    {
+        if (!v) return;
+
+        var type_enum = ["max", "min", "first", "last"];
+
+        v = v.toString().toLowerCase();
+
+        if (type_enum.indexOf(v) >= 0)
+            this._p_datasetnullsorttype = v;
     };
 
     _pEnvironment.set_ssvunitseparator = function (v)
@@ -19057,7 +19072,7 @@ if (!nexacro._bInitPlatform)
         nexacro._userNotify(notifyid, message);
     };
 
-    _pEnvironment._properties = [{ name: "accessibilitybackwardkey" }, { name: "accessibilitycomponentnexthotkey" }, { name: "accessibilitycomponentprevhotkey" }, { name: "accessibilitydescreadtype" }, { name: "accessibilityfirstovermessage" }, { name: "accessibilityforwardkey" }, { name: "accessibilityheadingnexthotkey" }, { name: "accessibilityheadingprevhotkey" }, { name: "accessibilityhistorycount" }, { name: "accessibilitylastovermessage" }, { name: "accessibilityreplayhotkey" }, { name: "accessibilitytype" }, { name: "accessibilitywholereadhotkey" }, { name: "accessibilitywholereadtype" }, { name: "accessibilitycontentsearchkey" }, {name: "addcokietovariable"}, {name: "checkversion"}, {name: "codepage"}, {name: "datasetloadtype"}, {name: "datasetsaveinfinity"}, {name: "datasetsaveinvaliddate"}, {name: "datasetsavenan"}, {name: "datatyperule"}, {name: "enablecache"}, {name: "enableclipboard"}, {name: "enablecookie"}, {name: "enableevent"}, {name: "enableinspector"}, {name: "enablescreencapture"}, {name: "enabletouchevent"}, {name: "enableaccessibility"}, {name: "filesecurelevel"}, {name: "highcontrastthemeid"}, {name: "httpretry"}, {name: "httptimeout"}, {name: "icon"}, {name: "imepastemode"}, {name: "initvaluefield"}, {name: "key"}, {name: "language"}, {name: "layoutsecttype"}, {name: "loadingimage"}, {name: "locale"}, {name: "loglevel"}, {name: "mouseovertime"}, {name: "mousewheeltype"}, {name: "multivalueseparator"}, {name: "networksecurelevel"}, {name: "popuptype"}, {name: "proxyretry"}, {name: "proxytimeout"}, {name: "rtl"}, {name: "scrollbarsize"}, {name: "scrollbartype"}, {name: "scrollindicatorsize"}, {name: "services", readonly: true}, {name: "ssvrecordseparator"}, {name: "ssvunitseparator"}, {name: "stringresourceserviceurl"}, {name: "tabkeycirculation"}, {name: "themeid"}, {name: "traceduration"}, {name: "tracemode"}, {name: "usecontextmenu"}, {name: "usehttpkeepalive"}, {name: "useproxykeepalive"}, {name: "userfontid"}, {name: "userhotkey"}, {name: "usestringresource"}, {name: "usewaitcursor"}, {name: "version"}, {name: "xadl"}, {name: "usesoftkeyboard"}, {name: "usedateautocalibration"}, {name: "calendarrestoreonblur"}];
+    _pEnvironment._properties = [{ name: "accessibilitybackwardkey" }, { name: "accessibilitycomponentnexthotkey" }, { name: "accessibilitycomponentprevhotkey" }, { name: "accessibilitydescreadtype" }, { name: "accessibilityfirstovermessage" }, { name: "accessibilityforwardkey" }, { name: "accessibilityheadingnexthotkey" }, { name: "accessibilityheadingprevhotkey" }, { name: "accessibilityhistorycount" }, { name: "accessibilitylastovermessage" }, { name: "accessibilityreplayhotkey" }, { name: "accessibilitytype" }, { name: "accessibilitywholereadhotkey" }, { name: "accessibilitywholereadtype" }, { name: "accessibilitycontentsearchkey" }, { name: "addcokietovariable" }, { name: "checkversion" }, { name: "codepage" }, { name: "datasetloadtype" }, { name: "datasetsaveinfinity" }, { name: "datasetsaveinvaliddate" }, { name: "datasetsavenan" }, { name: "datatyperule" }, { name: "enablecache" }, { name: "enableclipboard" }, { name: "enablecookie" }, { name: "enableevent" }, { name: "enableinspector" }, { name: "enablescreencapture" }, { name: "enabletouchevent" }, { name: "enableaccessibility" }, { name: "filesecurelevel" }, { name: "highcontrastthemeid" }, { name: "httpretry" }, { name: "httptimeout" }, { name: "icon" }, { name: "imepastemode" }, { name: "initvaluefield" }, { name: "key" }, { name: "language" }, { name: "layoutsecttype" }, { name: "loadingimage" }, { name: "locale" }, { name: "loglevel" }, { name: "mouseovertime" }, { name: "mousewheeltype" }, { name: "multivalueseparator" }, { name: "networksecurelevel" }, { name: "popuptype" }, { name: "proxyretry" }, { name: "proxytimeout" }, { name: "rtl" }, { name: "scrollbarsize" }, { name: "scrollbartype" }, { name: "scrollindicatorsize" }, { name: "services", readonly: true }, { name: "ssvrecordseparator" }, { name: "ssvunitseparator" }, { name: "stringresourceserviceurl" }, { name: "tabkeycirculation" }, { name: "themeid" }, { name: "traceduration" }, { name: "tracemode" }, { name: "usecontextmenu" }, { name: "usehttpkeepalive" }, { name: "useproxykeepalive" }, { name: "userfontid" }, { name: "userhotkey" }, { name: "usestringresource" }, { name: "usewaitcursor" }, { name: "version" }, { name: "xadl" }, { name: "usesoftkeyboard" }, { name: "usedateautocalibration" }, { name: "calendarrestoreonblur" }, { name: "datasetnullsorttype" }];
     nexacro._defineProperties(_pEnvironment, _pEnvironment._properties);
 
     nexacro._getLoadingImageUrl = function ()
@@ -19317,6 +19332,16 @@ if (!nexacro._bInitPlatform)
     //application 환경
     nexacro._loadADL = function (project_path)
     {
+        // storage partitioning 대응: _initEnvironment의 storage 초기화(unpartitioned handle 획득 대기)가
+        // 진행 중이면 완료 후 애플리케이션을 로딩한다
+        if (nexacro._initenv_promise)
+        {
+            var pending = nexacro._initenv_promise;
+            nexacro._initenv_promise = null;
+            pending.then(function () { nexacro._loadADL(project_path); });
+            return;
+        }
+
         var application = _global_context._application = nexacro.Application;
         application.init();
 

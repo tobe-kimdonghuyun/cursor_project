@@ -1,4 +1,4 @@
-﻿//==============================================================================
+//==============================================================================
 //
 //  TOBESOFT Co., Ltd.
 //  Copyright 2017 TOBESOFT Co., Ltd.
@@ -2900,24 +2900,33 @@ if (nexacro.Grid)
         var retn;
         if (this._is_band_focus && !tabstop)
         {
-            retn = true;
-            if (type == "prev" || type == "up")
+            if (this._currentBand == "head" && this._focused_cell >= 0)
             {
-                retn = this._setAccessibilityBandFocus(type);
+                // 특정 head cell이 포커스된 상태: band focus 해제 후 방향키 처리로 이동
+                this._is_band_focus = false;
+                this._p_currentcell = this._focused_cell;
             }
             else
             {
-                if (type == "next" || (type == "down" && this._currentBand == "head"))
-                {
-                    this._p_currentcell = this._p_currentsubrow = this._p_currentcol = 0;
-                }
-
-                if (!this._moveToPosAccessibilityCell(this._p_currentrow, this._p_currentcell))
+                retn = true;
+                if (type == "prev" || type == "up")
                 {
                     retn = this._setAccessibilityBandFocus(type);
                 }
+                else
+                {
+                    if (type == "next" || (type == "down" && this._currentBand == "head"))
+                    {
+                        this._p_currentcell = this._p_currentsubrow = this._p_currentcol = 0;
+                    }
+
+                    if (!this._moveToPosAccessibilityCell(this._p_currentrow, this._p_currentcell))
+                    {
+                        retn = this._setAccessibilityBandFocus(type);
+                    }
+                }
+                return retn;
             }
-            return retn;
         }
 
         var editcell;
@@ -2985,6 +2994,11 @@ if (nexacro.Grid)
 
                 if (retn)
                 {
+                    if (this._currentBand == "head")
+                    {
+                        this._moveToPosAccessibilityCell(-1, this._focused_cell);
+                        break;
+                    }
                     if (this._showEditing)
                     {
                         this._hideEditor();
@@ -2992,11 +3006,21 @@ if (nexacro.Grid)
                     cellobj = this._getAccessibilityCurrentCell();
                     if (cellobj)
                     {
+                        cellinfo = cellobj._refinfo;
+                        var datarow = this._getDataRow(cellobj._rowidx);
+                        var display_type = cellinfo._getDisplaytype(datarow);
+
+                        // checkbox/radioitem control은 직접 focus하여 role, status 출력
+                        var is_subcomp_focus = cellobj._subComp && (display_type == "checkboxcontrol" || display_type == "radioitemcontrol");
                         if (tabstop)
                         {
                             if (this._p_autoenter == "select")
                             {
                                 this._showEditor();
+                            }
+                            else if (is_subcomp_focus)
+                            {
+                                cellobj._subComp._setFocus(false);
                             }
                             else
                             {
@@ -3006,10 +3030,6 @@ if (nexacro.Grid)
                         }
                         else
                         {
-                            cellinfo = cellobj._refinfo;
-                            var datarow = this._getDataRow(cellobj._rowidx);
-                            var display_type = cellinfo._getDisplaytype(datarow);
-
                             accessibility_enable = cellobj.accessibilityenable;
                             if (accessibility_enable)
                             {
@@ -3017,9 +3037,12 @@ if (nexacro.Grid)
                                 {
                                     this._showEditor();
                                 }
+                                else if (is_subcomp_focus)
+                                {
+                                    cellobj._subComp._setFocus(false);
+                                }
                                 else
                                 {
-                                    // Display Control에 focus X
                                     cellobj._setFocus(false);
                                 }
                                 break;
@@ -3068,22 +3091,17 @@ if (nexacro.Grid)
         {
             if (this._currentBand == "head")
             {
-                if (type == "next" && this._bodyBand && this._bodyBand._get_rows().length > 0)
-                {
-                    this._currentBand = "body";
-                    editcell = this._getFirstEditableCell(false);
-
-                    if (editcell.row !== null)
-                    {
-                        this._is_first_bodycell = true;
-                        //                      retn = this._moveToPosAccessibilityCell(editcell.row, editcell.cell);
-                        this._moveToPosAccessibilityCell(editcell.row, editcell.cell);
-                    }
-                    return true;
-                }
+                var headRetn = this._moveInHeadBand(type);
+                if (headRetn && this._currentBand == "body")
+                    this._is_first_bodycell = true;
+                return headRetn;
             }
             return false;
         }
+
+        // head band: currentcell을 _focused_cell과 동기화 (클릭 진입 시)
+        if (this._currentBand == "head" && this._focused_cell >= 0)
+            this._p_currentcell = this._focused_cell;
 
         // head or summary band keyaction for accessibility        
         if (type == "next")
@@ -4611,8 +4629,16 @@ if (nexacro._GridCellControl)
         else
         {
             // check editcontrol(edit, mask, combo, calendar, multicombo, textarea, image, checkbox)
-            // except editcontrol (button, treeitem)
-            var is_edit_control = (displaytype != "treeitemcontrol" && displaytype != "buttoncontrol");
+            var grid = this._grid;
+            var is_autoenter_select = grid ? grid._p_autoenter == "select" : false;
+
+            // except editcontrol (treeitem)
+            var is_edit_control = displaytype != "treeitemcontrol";
+            if (!is_autoenter_select)
+            {
+                // autoenter가 select가 아닐때만 buttoncontrol의 displaytext를 cell label에 보정
+                is_edit_control = is_edit_control ? (displaytype != "buttoncontrol") : is_edit_control;
+            }
             is_edit_control = is_edit_control ? (displaytype.indexOf("control") > -1) : is_edit_control;
 
             if (!is_edit_control)

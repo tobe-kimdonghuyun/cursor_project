@@ -1,4 +1,4 @@
-﻿//==============================================================================
+//==============================================================================
 //
 //  TOBESOFT Co., Ltd.
 //  Copyright 2017 TOBESOFT Co., Ltd.
@@ -1875,11 +1875,24 @@ if (!nexacro.InputEventInfo)
             }
         }
 
+        var is_sign_pushed = false;
         for (; pos < textlen;pos)
         {
             ch = text[pos];
             if ((ch >= '0' && ch <= '9') || ch == ',' || ch == '.') break;
             if (ch != ' ' && ch != '-' && ch != '+') return null;
+
+            if (ch == '-' || ch == '+')
+            {
+                if (is_sign_pushed // 첫 부호만 허용
+                    || (ch == '-' && !(this._sign_type == 0 || this._sign_type == 3))
+                    || (ch == '+' && !(this._sign_type == 1 || this._sign_type == 3)))
+                {
+                    pos++;
+                    continue;
+                }
+                is_sign_pushed = true;
+            }
 
             result_buf.push(ch);
             pos++;
@@ -3945,16 +3958,12 @@ if (!nexacro.InputEventInfo)
                 d = val.substr(6, 2);
                 break;
             case 1:
-                var n = 8;
-                if (this._edit_type_buf[0] < 40)
-                {
-                    h = val.substr(n, 2);
-                    n = 10;
-                }
-                m = val.substr(n, 2);
-                s = val.substr(n + 2, 2);
-                ss = val.substr(n + 2, 3);
-
+                // removeMask()가 고정폭 문자열(년월일 phantom 8자리 + 시분초밀리초)을 반환하므로
+                // 시간 필드는 절대위치(시@8, 분@10, 초@12, 밀리초@14)에서 추출한다. (case 2와 동일)
+                h = val.substr(8, 2);
+                m = val.substr(10, 2);
+                s = val.substr(12, 2);
+                ss = val.substr(14, 3);
                 break;
             case 2:
                 y = val.substr(0, 4);
@@ -4216,21 +4225,18 @@ if (!nexacro.InputEventInfo)
                 d2 = val.substr(7, 1);
                 break;
             case 1:
-                var n = 8;
-                if (this._edit_type_buf[0] < 40)
-                {
-                    h = val.substr(n, 2);
-                    h1 = val.substr(n, 1);
-                    h2 = val.substr(n + 1, 1);
-                    n = 10;
-                }
-                m = val.substr(n, 2);
-                m1 = val.substr(n, 1);
-                m2 = val.substr(n + 1, 1);
-                s = val.substr(n + 2, 2);
-                s1 = val.substr(n + 2, 1);
-                s2 = val.substr(n + 3, 1);
-                ss = val.substr(n + 4, 3);
+                // removeMask()가 고정폭 문자열(년월일 phantom 8자리 + 시분초밀리초)을 반환하므로
+                // 시간 필드는 절대위치(시@8, 분@10, 초@12, 밀리초@14)에서 추출한다. (case 2와 동일)
+                h = val.substr(8, 2);
+                h1 = val.substr(8, 1);
+                h2 = val.substr(9, 1);
+                m = val.substr(10, 2);
+                m1 = val.substr(10, 1);
+                m2 = val.substr(11, 1);
+                s = val.substr(12, 2);
+                s1 = val.substr(12, 1);
+                s2 = val.substr(13, 1);
+                ss = val.substr(14, 3);
                 break;
             case 2:
                 y = val.substr(0, 4);
@@ -4262,7 +4268,24 @@ if (!nexacro.InputEventInfo)
 
         var maxDay = this.getEndDay(y, M);
 
-        if (((editmask_type != 1 && !maxDay) || M === 0 || d === 0 ||
+        // 사용자가 실제로 입력하지 않은 월/일 필드가 removeMask의 phantom 값(고정폭 정렬용 "00"/"01")
+        // 때문에 0 으로 읽혀 M===0 / d===0 보정이 잘못 발동(입력값이 일의 자리로 밀리거나 전체 00 보정)
+        // 하는 것을 막는다. 해당 필드에 실제 입력 숫자가 있을 때만 0 보정을 적용한다.
+        var _m_entered = false, _d_entered = false;
+        for (var _ti = 0, _tl = this._edit_type_buf.length; _ti < _tl; _ti++)
+        {
+            var _cbch = char_buf[_ti];
+            if (_cbch != null && _cbch != " " && /\d/.test(_cbch))
+            {
+                var _cbt = this._edit_type_buf[_ti];
+                if (_cbt >= 10 && _cbt < 20)
+                    _m_entered = true;
+                else if (_cbt >= 20 && _cbt < 30)
+                    _d_entered = true;
+            }
+        }
+
+        if (((editmask_type != 1 && !maxDay) || (_m_entered && M === 0) || (_d_entered && d === 0) ||
             (M && (+M > 12)) || (d && (+d > maxDay)) ||
             (h && (+h >= 24)) || (m && (+m >= 60)) || (s && (+s >= 60)) || (ss && (+ss >= 1000))))
         {
@@ -4404,26 +4427,26 @@ if (!nexacro.InputEventInfo)
 				}
 
                 var _maxday = this.getEndDay(y, _M);
-                if (d > _maxday)
+                // 일(dd)이 실제 입력되지 않았는데 removeMask phantom 값(시 "00")이 일 위치로 압축되어
+                // 붙는 것을 막는다. 미입력 일은 공백으로 남긴다.
+                // (MM-dd mm / MM-dd ss 등 "날짜+시 없는 시간" 포맷에서 월 보정 시 dd가 00으로 채워지던 현상)
+                if (_d_entered)
                 {
-                    _date.date += _maxday;
-                }
-                else
-                {
-                    if (this._cnt_editformat_day == 2)
+                    if (d > _maxday)
+                    {
+                        _date.date += _maxday;
+                    }
+                    else if (this._cnt_editformat_day == 2)
                     {
                         _date.date += (d1 + d2);
                     }
+                    else if (d && d < 10)
+                    {
+                        _date.date += (" " + d2);
+                    }
                     else
                     {
-                        if (d && d < 10)
-                        {
-                            _date.date += (" " + d2);
-                        }
-                        else
-                        {
-                            _date.date += (d1 + d2);
-                        }
+                        _date.date += (d1 + d2);
                     }
                 }
 
@@ -4750,12 +4773,14 @@ if (!nexacro.InputEventInfo)
                     }
                 }
 
-                if (h)
+                // 초로 시작하는 time-only 포맷(ss)은 시/분이 phantom "00"(=숫자 0)이므로
+                // if(h)/if(m)에서 false 처리되어 format을 채우지 못하는 현상 수정
+                if (h !== undefined)
                 {
                     _date.date += (h1 + h2);
                 }
 
-                if (m)
+                if (m !== undefined)
                 {
                     _date.date += (m1 + m2);
                 }

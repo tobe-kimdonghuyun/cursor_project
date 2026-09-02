@@ -590,18 +590,17 @@ if (nexacro._Browser != "Runtime" && !nexacro.FlexibleControlElement)
                 handle_attr += nexacro.__getHTMLAttr_InputMode(this.inputmode);
             }           
 
-            if (this.inputtype == "password")
-                str += nexacro.__getHTMLAttr_Autocomplete("new-password");
-            else
-            {
-                if (owner_elem.linkedcontrol instanceof nexacro.SelectFieldBox)
-                {
-                    str += nexacro.__getHTMLAttr_Autocomplete("new-password");
-                    str += "enterkeyhint=\"done\""
-                }
-                else
-                    str += nexacro.__getHTMLAttr_Autocomplete("off");
-            }
+            // RP 105465 105268 작업 원복 (98780)
+			if (this.inputtype == "password")
+				str += nexacro.__getHTMLAttr_Autocomplete("new-password");
+			else
+				str += nexacro.__getHTMLAttr_Autocomplete("off");
+
+			// RP 105465 105268 spinfield 분리하여 off 적용 (인터페이스처리 해서 변경 필요)
+			if (owner_elem.linkedcontrol instanceof nexacro.SelectFieldBox)
+			{
+                str += " enterkeyhint=\"done\"";
+			}   
             
             str += handle_attr ? (" " + handle_attr) : "";
             str = this._on_createAccessibilityCommand(str);
@@ -739,6 +738,8 @@ if (nexacro._Browser != "Runtime" && !nexacro.FlexibleControlElement)
             var input_handle = this.handle;
             if (input_handle)
             {
+                // RP 105465 105268 동적 변경시 autocomplete 반영 수정
+                nexacro.__setDOMNode_Autocomplete(input_handle, (this.inputtype == "password") ? "new-password" : "off");
                 if (this.usesoftkeyboard)
                 {
                     nexacro.__changeInputDOMNodeType(input_handle, type);
@@ -1182,6 +1183,7 @@ if (nexacro._Browser != "Runtime" && !nexacro.FlexibleControlElement)
         }
 
         this._on_createAccessibilityHandle(_doc, owner_elem, handle);
+        nexacro.__setDOMNode_Autocomplete(handle, "off"); // RP 105465 105268 multilintextfield도 autocomplete off
 
         if (this.value)
         {

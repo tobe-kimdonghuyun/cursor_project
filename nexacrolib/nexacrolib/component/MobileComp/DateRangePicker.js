@@ -713,17 +713,16 @@ if (!nexacro.DateRangePicker)
 
         if (headline)
         {
-            const wheelzoom = nexacro.getWheelZoom(this)/100;
             if (this._p_headlineposition == "left" ||
                 (this._headline_autoposition && (orient == 2 || orient == 3))) // landscape
             {
-                h = this._headlinewidth / wheelzoom;
+                h = this._headlinewidth;
                 headline.move(0, 0, h, this._getClientHeight());
                 pickerleft = h;
             }
             else
             {
-                h = this._headlineheight / wheelzoom;
+                h = this._headlineheight;
                 headline.move(0, 0, this._getClientWidth(), h);
                 pickertop = h;
                 pickerheight -= h;
@@ -3274,7 +3273,9 @@ if (!nexacro.DateRangePicker)
     };
 
     _pPickerGroup.on_destroy_contents = function ()
-    {
+    {   
+        // picker가 파괴 될때 innerdataset과 event handler로 정리 RP 105885
+        this._removeEventHandlerToInnerDataset();
         this._destroyPickers();
         this._destroySplits();
         this._curr_picker = null;
@@ -3819,6 +3820,10 @@ if (!nexacro.DateRangePicker)
     _pDatePickerGroup._refreshDayAllPicker = function ()
     {
         var list = this._picker_ctrl_list;
+
+        // picker list validate RP 105885
+        if (!list)
+            return;
 
         for (var i = 0; i < list.length; i++)
         {

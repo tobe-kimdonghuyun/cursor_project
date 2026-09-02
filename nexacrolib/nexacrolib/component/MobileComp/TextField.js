@@ -48,7 +48,7 @@ if (!nexacro.TextField)
 
     _pTextField._initsoftkeyboard = undefined;
     _pTextField._p_usesoftkeyboard = true;
-    
+
     _pTextField._p_inputtype = "normal";
     _pTextField._p_text = "";
     _pTextField._p_usecontextmenu = true;
@@ -162,10 +162,10 @@ if (!nexacro.TextField)
         input_elem.setElementTextDecoration(this._textdecoration);
         input_elem.setElementTextAlign(this._p_textAlign);
 
-		if (this._padding)
-			input_elem.setElementPadding(this._padding);
+        if (this._padding)
+            input_elem.setElementPadding(this._padding);
 
-		this._undostack = new nexacro._EditUndoStack(this);
+        this._undostack = new nexacro._EditUndoStack(this);
 
         this.on_apply_iconbuttonsize();
         this.on_apply_leadingbuttonsize();
@@ -202,7 +202,7 @@ if (!nexacro.TextField)
 
     _pTextField.on_create_contents_command = function ()
     {
-        
+
         this.on_apply_prop_enable(this._real_enable);
 
         return nexacro.FieldBase.prototype.on_create_contents_command.call(this);
@@ -426,15 +426,15 @@ if (!nexacro.TextField)
     };
 
     _pTextField._getDlgCode = function (keycode, altKey, ctrlKey, shiftKey)
-	{
+    {
         if (keycode == nexacro.Event.KEY_DOWN || keycode == nexacro.Event.KEY_UP)
-		{
-			// 접근성 상태에서 accessibilitycontentsearchkey 속성이 false 일때 동작하는 상하 방향키 스크롤 방지
+        {
+            // 접근성 상태에서 accessibilitycontentsearchkey 속성이 false 일때 동작하는 상하 방향키 스크롤 방지
             if (nexacro._enableaccessibility && !nexacro._accessibilitycontentsearchkey && ctrlKey == false)
-			{
-				return { want_tab: false, want_return: false, want_escape: false, want_chars: false, want_arrows: true };
-			}
-		}
+            {
+                return { want_tab: false, want_return: false, want_escape: false, want_chars: false, want_arrows: true };
+            }
+        }
         return { want_tab: false, want_return: false, want_escape: false, want_chars: false, want_arrows: false };
     };
 
@@ -606,7 +606,7 @@ if (!nexacro.TextField)
                         return validity.valid;
                     else
                         return false // Always return false if the value is falsy && input type number
-                    
+
                 }
             }
             return -1;
@@ -624,7 +624,7 @@ if (!nexacro.TextField)
         {
             if (this._p_inputtype == "number")
                 return (isNaN(Number(value)) == false && isFinite(Number(value)) == true);
-            
+
             return true;
         }
         return false;
@@ -786,7 +786,7 @@ if (!nexacro.TextField)
         v = this._needChangeInputValue(v);
 
         var check = this._checkApplyValidate(v);
-        
+
         if (check == false)
         {
             this.on_invalid(true);
@@ -802,7 +802,7 @@ if (!nexacro.TextField)
             this._invalidStatus(false);
             this._validStatus(false);
         }
-        
+
         if (this._p_value !== v)
         {
             if (!this.applyto_bindSource("value", v))
@@ -860,7 +860,7 @@ if (!nexacro.TextField)
 
             var _form = this._getForm();
             var _cur_focus = _form ? _form.getFocus() : null;
-        
+
             if (!this._onlydisplay)
             {
                 if (this._undostack)
@@ -1044,7 +1044,7 @@ if (!nexacro.TextField)
             if (!this._onlydisplay)
                 input_elem.setElementAutoSelect(autoselect);
         }
-    };   
+    };
 
     _pTextField.set_maxlength = function (v)
     {
@@ -1539,14 +1539,14 @@ if (!nexacro.TextField)
         this._validStatus(false);
         var input_element = this._getInputElement();
         var v = this._needChangeInputValue(input_element.value);
-       // var go_next = false;
+        // var go_next = false;
 
         if (this._p_autoskip && this._maxlen > 0 && v)
         {
             if (!input_element.isComposing() && v.length >= this._maxlen)
             {
                 v = v.substr(0, this._maxlen);
-            //    go_next = true;
+                //    go_next = true;
             }
         }
 
@@ -1576,7 +1576,7 @@ if (!nexacro.TextField)
 
         //if (go_next)
         //    this._setFocusToNextComponent();
-        
+
         return retn;
     };
 
@@ -1670,8 +1670,8 @@ if (!nexacro.TextField)
         this.on_deactivate_process.call(this);
     };
 
-    _pTextField._on_input_compositionend    = _pEditPtype._on_input_compositionend;
-    _pTextField.on_click_basic_action       = _pEditPtype.on_click_basic_action;
+    _pTextField._on_input_compositionend = _pEditPtype._on_input_compositionend;
+    _pTextField.on_click_basic_action = _pEditPtype.on_click_basic_action;
 
     _pTextField._cancelValue = function ()
     {
@@ -1733,7 +1733,17 @@ if (!nexacro.TextField)
         {
             this.on_invalid(true);
             if (this._p_inputtype == "number")
+            {
                 cur_value = cur_text = "";
+
+                // 표시값 초기화
+                input_elem.value = null;
+                input_elem.setElementValue("");
+
+                // 상태 초기화
+                this._invalidStatus(false);
+                this._validStatus(false);
+            }
         }
         else if (check == true)
         {
@@ -1779,11 +1789,6 @@ if (!nexacro.TextField)
                 input_elem._updateElementValue(cur_value);
                 this._setValue(cur_value === null ? undefined : cur_value, true);
             }
-
-            if (nexacro._OS == "iOS" || nexacro._Browser == "Gecko")
-            {
-                input_elem._clearNumberGabageValue();
-            }
         }
         this._caret_pos = input_elem.getElementCaretPos();
     };
@@ -1793,10 +1798,10 @@ if (!nexacro.TextField)
     {
         var input_elem = this._input_element;
         if (input_elem)
-        {         
+        {
             var _locale = input_elem._imelocale.getLocale();
-            var i, len;     
-            var _cache_textfield_set = nexacro._cache_textfield_set[_locale];                                      
+            var i, len;
+            var _cache_textfield_set = nexacro._cache_textfield_set[_locale];
             if (_locale && _cache_textfield_set)
             {
                 // 기존 ime에서 자체적으로 만든 함수, 변수 제거 해야함
@@ -1810,7 +1815,7 @@ if (!nexacro.TextField)
                 for (i = 0, len = nexacro._edit_user_override_func.length; i < len; i++)
                 {
                     if (!_cache_textfield_set[nexacro._edit_user_override_func[i]])
-                        this[nexacro._edit_user_override_func[i]] = nexacro.TextField.prototype[nexacro._edit_user_override_func[i]];                    
+                        this[nexacro._edit_user_override_func[i]] = nexacro.TextField.prototype[nexacro._edit_user_override_func[i]];
                 }
             }
             else
@@ -1822,7 +1827,7 @@ if (!nexacro.TextField)
                     this[nexacro._edit_user_override_func[i]] = nexacro.TextField.prototype[nexacro._edit_user_override_func[i]];
                 }
 
-            }                             
+            }
         }
     };
     //--------- WRE ----------------------------------------------------------------------------------------------------------------
@@ -1884,12 +1889,12 @@ if (!nexacro.TextField)
                 }
             }
             return false;
-        };        
+        };
     }
 
-	// undo, redo, 지원
-	_pTextField._on_input_undo = _pEditPtype._on_input_undo;
-	_pTextField._on_input_redo = _pEditPtype._on_input_redo;
+    // undo, redo, 지원
+    _pTextField._on_input_undo = _pEditPtype._on_input_undo;
+    _pTextField._on_input_redo = _pEditPtype._on_input_redo;
 
     // Edit keydown basic action
     _pTextField.on_keydown_basic_before_process = _pEditPtype.on_keydown_basic_before_process;
@@ -1899,11 +1904,11 @@ if (!nexacro.TextField)
 
     // Edit keydown default action
     _pTextField.on_keydown_default_before_process = _pEditPtype.on_keydown_default_before_process;
-    _pTextField.on_keydown_default_specialkey_process = _pEditPtype.on_keydown_default_specialkey_process;    
+    _pTextField.on_keydown_default_specialkey_process = _pEditPtype.on_keydown_default_specialkey_process;
     _pTextField.on_keydown_default_action = _pEditPtype.on_keydown_default_action;
 
     // Edit filter
-    _pTextField._isFilterChar = _pEditPtype._isFilterChar;    
+    _pTextField._isFilterChar = _pEditPtype._isFilterChar;
 
     //===============================================================
     // nexacro.TextFieldBox (flexible)
@@ -2261,7 +2266,7 @@ if (!nexacro.TextField)
             var trailbutton = this._trailbutton;
             var prefixctrl = this._prefixctrl;
             var postfixctrl = this._postfixctrl;
-            
+
 
             var client_left = boxinner_rect.left;
             var client_top = boxinner_rect.top;
@@ -2383,9 +2388,9 @@ if (!nexacro.TextField)
                 }
             }
 
-            
 
-            
+
+
             /*
             else if (this._p_parent._p_labelposition == "overlap")
             {
@@ -2420,7 +2425,7 @@ if (!nexacro.TextField)
             {
                 var input_width = client_width - leadbt_w - tralbt_w - prefix_w - postfix_w;
                 var l = leadbt_w + prefix_w;
-               
+
                 if (this._isFlexible() == false)
                     input_elem.setElementPosition(client_left + l, client_top);
                 else
@@ -2452,7 +2457,7 @@ if (!nexacro.TextField)
         return left;
     };
 
-    
+
     _pTextFieldBox._setTextFielBoxLabelposition = function (labelposition)
     {
         this._textFielBoxLabelposition = labelposition;
@@ -2543,7 +2548,7 @@ if (!nexacro.TextField)
     {
         var textField = this.parent;
         if (textField)
-            textField.on_apply_imeSet();       
+            textField.on_apply_imeSet();
     };
 
     nexacro._defineProperties(_pTextField, _pTextField._properties);

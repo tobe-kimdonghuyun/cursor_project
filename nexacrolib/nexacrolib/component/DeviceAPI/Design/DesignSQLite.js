@@ -1,4 +1,4 @@
-﻿if (nexacro.LiteDBConnection)
+if (nexacro.LiteDBConnection)
 {
     var _pLiteDBConnection = nexacro.LiteDBConnection.prototype;
     _pLiteDBConnection = function (id, parent)

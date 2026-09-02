@@ -1,4 +1,4 @@
-﻿/**
+/**
  *  devPack Library
  *  @FileName 	File.js
  *  @Creator 	TOBESOFT

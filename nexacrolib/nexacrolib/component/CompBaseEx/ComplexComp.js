@@ -24041,7 +24041,7 @@ if (!nexacro.ComplexComponent)
             case "select": this._selectItemKeyInfo(key_code, alt_key, ctrl_key, shift_key); break;
             case "scroll": this._scrollItemKeyInfo(key_code, alt_key, ctrl_key, shift_key); break;
             case "expand": this._expandItemKeyInfo(key_code, alt_key, ctrl_key, shift_key); break;
-            case "custom": this._customItemKeyInfo(key_code, alt_key, ctrl_key, shift_key); break;
+            case "custom": this._customItemKeyInfo(key_code, alt_key, ctrl_key, shift_key, meta_key); break;
         }
 
         return nexacro.SimpleComponent.prototype.on_fire_sys_onkeydown.call(this, key_code, alt_key, ctrl_key, shift_key, from_comp, from_refer_comp, meta_key);

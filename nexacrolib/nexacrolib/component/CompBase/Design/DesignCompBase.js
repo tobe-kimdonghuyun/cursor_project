@@ -1,4 +1,4 @@
-﻿//==============================================================================
+//==============================================================================
 //
 //  TOBESOFT Co., Ltd.
 //  Copyright 2017 TOBESOFT Co., Ltd.
@@ -585,7 +585,7 @@ if (nexacro.Component)
 						}
 
 						abs_font = comp._getReferenceAbsoluteFont();
-						comp_width = abs_font ? abs_font._size : 1;
+						comp_width = this._getFontRefSize(abs_font);
 					}
 					else
 					{
@@ -625,7 +625,7 @@ if (nexacro.Component)
 						}
 
 						abs_font = comp._getReferenceAbsoluteFont();
-						comp_height = abs_font ? abs_font._size : 1;
+						comp_height = this._getFontRefSize(abs_font);
 					}
 					else
 					{
@@ -666,7 +666,7 @@ if (nexacro.Component)
 						}
 
 						abs_font = comp._getReferenceAbsoluteFont();
-						comp_width = abs_font ? abs_font._size : 1;
+						comp_width = this._getFontRefSize(abs_font);
 					}
 					else
 					{
@@ -707,7 +707,7 @@ if (nexacro.Component)
 						}
 
 						abs_font = comp._getReferenceAbsoluteFont();
-						comp_height = abs_font ? abs_font._size : 1;
+						comp_height = this._getFontRefSize(abs_font);
 					}
 					else
 					{
@@ -755,7 +755,7 @@ if (nexacro.Component)
 							}
 
 							abs_font = comp._getReferenceAbsoluteFont();
-							comp_width = abs_font ? abs_font._size : 1;
+							comp_width = this._getFontRefSize(abs_font);
 						}
 						else
 						{
@@ -804,7 +804,7 @@ if (nexacro.Component)
 							}
 
 							abs_font = comp._getReferenceAbsoluteFont();
-							comp_height = abs_font ? abs_font._size : 1;
+							comp_height = this._getFontRefSize(abs_font);
 						}
 						else
 						{

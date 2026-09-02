@@ -1,4 +1,4 @@
-﻿//==============================================================================
+//==============================================================================
 //
 //  TOBESOFT Co., Ltd.
 //  Copyright 2017 TOBESOFT Co., Ltd.
@@ -57,7 +57,7 @@ if (nexacro.DateRangeCalendar)
         {
             this._useclosebutton = true;
             this._headlineheight = 70;
-            this.set_displaytype("datetime");
+            //this.set_displaytype("datetime");
             this.set_startdate("20231019000000000");
             this.set_enddate("20231119000000000");
         }

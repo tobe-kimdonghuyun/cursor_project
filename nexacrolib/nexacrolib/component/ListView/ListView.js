@@ -2435,9 +2435,9 @@ if (!nexacro.ListView)
         }
     };
 
-    _pListView._customItemKeyInfo = function (keycode, alt_key, ctrl_key, shift_key)
+    _pListView._customItemKeyInfo = function (keycode, alt_key, ctrl_key, shift_key, meta_key)
     {
-        switch (this._checkCustomActionKeyInfo(keycode, alt_key, ctrl_key, shift_key))
+        switch (this._checkCustomActionKeyInfo(keycode, alt_key, ctrl_key, shift_key, meta_key))
         {
             case "select":
                 this._selectItemKeyInfo(keycode, alt_key, ctrl_key, shift_key);
@@ -2454,7 +2454,7 @@ if (!nexacro.ListView)
         }
     };
 
-    _pListView._checkCustomActionKeyInfo = function (keycode, alt_key, ctrl_key, shift_key)
+    _pListView._checkCustomActionKeyInfo = function (keycode, alt_key, ctrl_key, shift_key, meta_key)
     {
         var ret = "";
 
@@ -2470,7 +2470,7 @@ if (!nexacro.ListView)
                 if (win)
                 {
                     var keydown_elem = win._keydown_element;
-                    if (keydown_elem && this._isEditorKeyAction(keydown_elem, keycode, alt_key, ctrl_key, shift_key) == false)
+                    if (keydown_elem && this._isEditorKeyAction(keydown_elem, keycode, alt_key, ctrl_key, shift_key, meta_key) == false)
                         ret = "select";
                 }
                 break;
@@ -2508,7 +2508,7 @@ if (!nexacro.ListView)
         return true;
     };
 
-    _pListView._isEditorKeyAction = function (elem, keyCode, altKey, ctrlKey, shiftKey)
+    _pListView._isEditorKeyAction = function (elem, keyCode, altKey, ctrlKey, shiftKey, metakey)
     {
         if (this._is_editor_keyaction == false)
         {
@@ -2533,10 +2533,10 @@ if (!nexacro.ListView)
 
             if (keyCode == nexacro.Event.KEY_LEFT)
             {
-				if (ctrlKey || shiftKey || altKey)
-				{
-					return true;
-				}   
+                if (ctrlKey || shiftKey || altKey || metakey)
+                {
+                    return true;
+                }
 
                 if ((pos && pos != -1) && pos.begin != 0)
                 {
@@ -2545,38 +2545,38 @@ if (!nexacro.ListView)
             }
             else if (keyCode == nexacro.Event.KEY_RIGHT)
             {
-				if (ctrlKey || shiftKey || altKey)
-				{
-					return true;
-				}
+                if (ctrlKey || shiftKey || altKey || metakey)
+                {
+                    return true;
+                }
 
                 var elem_val = elem.getElementValue();
-				var v = elem_val ? elem_val.length : 0;
+                var v = elem_val ? elem_val.length : 0;
 
-				if ((pos && pos != -1) && pos.begin != v)
-				{
-					return true;
-				}   
+                if ((pos && pos != -1) && pos.begin != v)
+                {
+                    return true;
+                }
             }
             else if (keyCode == nexacro.Event.KEY_UP)
             {
-				if (ctrlKey || shiftKey || altKey)
-				{
-					return true;
-				}
-				
-				if (elem.usemultiline)
+                if (ctrlKey || shiftKey || altKey || metakey)
+                {
+                    return true;
+                }
+
+                if (elem.usemultiline)
                 {
                     line = elem.getElementCaretLine();
-					if (line != 1)
-					{
-						return true;
-					}
+                    if (line != 1)
+                    {
+                        return true;
+                    }
                 }
             }
             else if (keyCode == nexacro.Event.KEY_DOWN)
             {
-				if (ctrlKey || shiftKey || altKey)
+                if (ctrlKey || shiftKey || altKey || metakey)
 				{
 					return true;
 				}  
@@ -7249,21 +7249,7 @@ if (!nexacro.ListView)
         // instance
         if (itemcell instanceof nexacro._ListViewCellControl)
         {
-            if (!this._p_readonly)
-            {
-                if (this._p_cellclickbound == "control")
-                {
-                    if (from_refer_comp instanceof nexacro._CellCheckboxControl)
-                    {
-                        from_refer_comp._toggleCheck();
-                    }
-
-                }
-                else if (this._p_cellclickbound == "cell")
-                {
-                    itemcell._needToggle();
-                }
-            }
+            itemcell._needToggle("onclick", from_refer_comp);
 
             if (this.oncellclick && this.oncellclick._has_handlers)
             {
@@ -7457,11 +7443,30 @@ if (!nexacro.ListView)
         }
     };
 
+    _pListView.on_fire_sys_ontouchstart = function (touchinfos, changedtouchinfos, from_comp, from_refer_comp)
+	{
+
+        var cell = nexacro._ListViewCellControl.prototype._getActionCell(from_refer_comp);
+		if (cell)
+		{
+			cell._needToggle("onlbuttondown", from_refer_comp);
+        }
+
+		if (this.ontouchstart && this.ontouchstart._has_handlers)
+		{
+			var evt = new nexacro.TouchEventInfo(this, "ontouchstart", touchinfos, changedtouchinfos, from_comp, from_refer_comp);
+			return this.ontouchstart._fireSysEvent(this, evt);
+		}
+		return false;
+	};
+
     _pListView.on_fire_sys_onlbuttondown = function (button, alt_key, ctrl_key, shift_key, screenX, screenY, canvasX, canvasY, clientX, clientY, from_comp, from_refer_comp, meta_key)
 	{
 		var cell = nexacro._ListViewCellControl.prototype._getActionCell(from_refer_comp);
 		if (cell)
 		{
+			cell._needToggle("onlbuttondown", from_refer_comp);
+
 			var autoenter = cell._getAutoEnter();
 
 			if (autoenter != "select") // autoenter가 "select"가 아닌 경우

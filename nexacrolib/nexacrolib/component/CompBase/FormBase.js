@@ -1,4 +1,4 @@
-﻿//==============================================================================
+//==============================================================================
 //
 //  TOBESOFT Co., Ltd.
 //  Copyright 2017 TOBESOFT Co., Ltd.
@@ -8488,6 +8488,12 @@ if (!nexacro.Form)
             nexacro.Component.prototype.on_fire_onvscroll.call(this, eventid, pos, strType, evtkind);
             nexacro.Component.prototype.on_fire_onvscroll.call(this._p_parent, eventid, pos, strType, evtkind);
         };
+
+        //===============================================================
+        // nexacro._InnerForm : Logical Part (Hotkey)
+        //===============================================================
+        // hotkey는 mainform에만 등록되어 관리되기 때문에, innerform의 hotkey도 mainform에 등록되므로, Component와 동일하게 동작하도록 수정
+        _pInnerForm._processHotkey = nexacro.Component.prototype._processHotkey;
 
         _pInnerForm._parseArrangeInfo = nexacro._emptyFn;
 

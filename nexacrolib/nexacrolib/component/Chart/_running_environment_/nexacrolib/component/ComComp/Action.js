@@ -1,4 +1,4 @@
-﻿//  Copyright 2017 TOBESOFT Co., Ltd.
+//  Copyright 2017 TOBESOFT Co., Ltd.
 //  All Rights Reserved.
 //
 //  NOTICE: TOBESOFT permits you to use, modify, and distribute this file 

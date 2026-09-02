@@ -1,4 +1,4 @@
-﻿
+
 if (!nexacro.BluetoothLE)
 {
 	nexacro.BluetoothLE = function (id, parent)

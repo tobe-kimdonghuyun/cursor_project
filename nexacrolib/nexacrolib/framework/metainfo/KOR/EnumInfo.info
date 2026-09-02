@@ -2130,9 +2130,7 @@
     <Enum name="right" description="" />
   </EnumInfo>
   <EnumInfo id="UseContextMenuValueType" composit="" delimiter="" description="">
-    <Enum name="all" description="" />
     <Enum name="edit" description="" />
-    <Enum name="form" description="" />
     <Enum name="none" description="" />
   </EnumInfo>
   <EnumInfo id="VerticalAlign" composit="" delimiter="" description="top | middle | bottom">
@@ -2157,4 +2155,9 @@
     <Enum name="ws" description="" />
     <Enum name="wss" description="" />
   </EnumInfo>
+  <EnumInfo id="NullSortType" composit="false" delimiter="" description="">
+    <Enum name="min" description="" />
+    <Enum name="max" description="" />
+  </EnumInfo>
+  
 </MetaInfo>

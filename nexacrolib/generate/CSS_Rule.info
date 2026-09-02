@@ -96,6 +96,12 @@ html, body
   -ms-user-select:none;
 }
 
+body.nexaforceuserselect *
+{
+ user-select:auto !important;
+-webkit-user-select:auto !important;
+}
+
 div, header, nav, section, article, aside, footer
 {
   position:absolute;

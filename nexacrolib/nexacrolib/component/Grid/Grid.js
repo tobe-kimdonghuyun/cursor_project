@@ -1,4 +1,4 @@
-﻿//==============================================================================
+//==============================================================================
 //
 //  TOBESOFT Co., Ltd.
 //  Copyright 2017 TOBESOFT Co., Ltd.
@@ -949,7 +949,7 @@ if (!nexacro.Grid)
                 clientY += padding.top;
             }
         }
-        grid._buttondowntime = Date.now();
+        
         var retn = grid.on_fire_user_onlbuttondown(button, alt_key, ctrl_key, shift_key, screenX, screenY, canvasX, canvasY, clientX, clientY, from_comp, from_refer_comp, meta_key, true);
         var canvas_new = grid._getRecalcCanvasXY(from_refer_comp._control_element, canvasX, canvasY);
         canvasX = canvas_new[0];
@@ -1084,7 +1084,6 @@ if (!nexacro.Grid)
             }
 
             parent = grid.parent;
-            grid._buttonuptime = Date.now();
             retn = grid.on_fire_user_onlbuttonup(button, altKey, ctrlKey, shiftKey, screenX, screenY, canvasX, canvasY, clientX, clientY, orgcell, orgcell, from_elem, meta_key, true);
 
             org_canvasX = canvasX;
@@ -4214,6 +4213,16 @@ if (!nexacro.Grid)
     //===============================================================
     _pGridMultiCombo._on_bubble_touchend = function (touch_manager, touchinfos, changedtouchinfos, event_bubbles, fire_comp, refer_comp, is_userbubble)
     {
+        if (changedtouchinfos)
+        {
+            var touchinfo = nexacro._getFirstTouchInfo(changedtouchinfos);
+
+            if (touchinfo)
+            {
+                this._upelem = touchinfo._elem;;
+            }
+        }
+
         var call = true;
         if (is_userbubble)
             call = this._cellobj._common_lbuttonup(changedtouchinfos, null, null, null, null);
@@ -4226,6 +4235,8 @@ if (!nexacro.Grid)
 
     _pGridMultiCombo._on_bubble_lbuttonup = function (elem, button, alt_key, ctrl_key, shift_key, canvasX, canvasY, screenX, screenY, event_bubbles, fire_comp, refer_comp, from_elem, bubble_scope, meta_key)
     {
+        this._upelem = from_elem;
+
         var call = true;
         if (bubble_scope)
             call = this._cellobj._common_lbuttonup(null, elem, canvasX, canvasY, from_elem);
@@ -4289,6 +4300,34 @@ if (!nexacro.Grid)
 
         nexacro.MultiCombo.prototype.on_fire_user_ontouchend.call(this, touchinfos, changedtouchinfos, from_comp, from_refer_comp);
         this._cellobj.on_fire_user_ontouchend(touchinfos, changedtouchinfos, from_comp, from_refer_comp);
+
+        var window = this._getWindow();
+        var downelem = window._cur_ldown_elem;
+        var upelem = this._upelem;
+
+        this._upelem = null;
+
+        var downelemtemp = downelem;
+        while (downelemtemp)
+        {
+            if (downelemtemp == this)
+                break;
+
+            downelemtemp = downelemtemp.parent;
+        }
+
+        var upelemtemp = upelem;
+        while (upelemtemp)
+        {
+            if (upelemtemp == this)
+                break;
+
+            upelemtemp = upelemtemp.parent;
+        }
+
+        if (downelem != upelem && downelemtemp == upelemtemp)
+            this.on_fire_onclick("", false, false, false, touchinfo.screenx, touchinfo.screeny, touchinfo.canvasx, touchinfo.canvasy, touchinfo.clientx, touchinfo.clienty, from_comp, from_refer_comp, null);
+
         return true;
     };
 
@@ -4304,6 +4343,34 @@ if (!nexacro.Grid)
 
         nexacro.MultiCombo.prototype.on_fire_user_onlbuttonup.call(this, button, alt_key, ctrl_key, shift_key, screenX, screenY, canvasX, canvasY, clientX, clientY, from_comp, from_refer_comp, from_elem, meta_key);
         this._cellobj.on_fire_user_onlbuttonup(button, alt_key, ctrl_key, shift_key, screenX, screenY, canvasX, canvasY, clientX, clientY, from_comp, from_refer_comp, from_elem, meta_key);
+       
+        var window = this._getWindow();
+        var downelem = window._cur_ldown_elem;
+        var upelem = this._upelem;
+
+        this._upelem = null;
+
+        var downelemtemp = downelem;
+        while (downelemtemp)
+        {
+            if (downelemtemp == this)
+                break;
+            
+            downelemtemp = downelemtemp.parent;
+        }
+
+        var upelemtemp = upelem;
+        while (upelemtemp)
+        {
+            if (upelemtemp == this)
+                break;
+
+            upelemtemp = upelemtemp.parent;
+        }
+
+        if (downelem != upelem && downelemtemp == upelemtemp)
+            this.on_fire_onclick(button, alt_key, ctrl_key, shift_key, screenX, screenY, canvasX, canvasY, clientX, clientY, from_comp, from_refer_comp, meta_key);
+           
         return true;
     };
 
@@ -4363,6 +4430,54 @@ if (!nexacro.Grid)
     _pGridMultiCombo._on_edit_mobile_oneditclick = function (obj, e)
     {
         nexacro.MultiCombo.prototype._on_edit_mobile_oneditclick.call(this, obj, e);
+
+        var padding = this._getCurrentStylePadding();
+        var canvasX = e.canvasx + (padding ? padding.left : 0);
+        var canvasY = e.canvasy + (padding ? padding.top : 0);
+        var clientXY = this._getClientXY(canvasX, canvasY);
+
+        return this._cellobj.on_fire_onclick(e.button, e.altkey, e.ctrlkey, e.shiftkey, e.screenx, e.screeny, canvasX, canvasY, clientXY[0], clientXY[1], e.fromobject, e.fromreferenceobject, e.metakey, "control");
+    };
+    
+    _pGridMultiCombo._on_tagbox_mobile_onclick = function (obj, e)
+    {
+        nexacro.MultiCombo.prototype._on_tagbox_mobile_onclick.call(this, obj, e);
+
+        var padding = this._getCurrentStylePadding();
+        var canvasX = e.canvasx + (padding ? padding.left : 0);
+        var canvasY = e.canvasy + (padding ? padding.top : 0);
+        var clientXY = this._getClientXY(canvasX, canvasY);
+
+        return this._cellobj.on_fire_onclick(e.button, e.altkey, e.ctrlkey, e.shiftkey, e.screenx, e.screeny, canvasX, canvasY, clientXY[0], clientXY[1], e.fromobject, e.fromreferenceobject, e.metakey, "control");
+    };
+
+    _pGridMultiCombo._on_tagbutton_onclick = function (index, obj, e)
+    {
+        nexacro.MultiCombo.prototype._on_tagbutton_onclick.call(this, index, obj, e);
+
+        var padding = this._getCurrentStylePadding();
+        var canvasX = e.canvasx + (padding ? padding.left : 0);
+        var canvasY = e.canvasy + (padding ? padding.top : 0);
+        var clientXY = this._getClientXY(canvasX, canvasY);
+
+        return this._cellobj.on_fire_onclick(e.button, e.altkey, e.ctrlkey, e.shiftkey, e.screenx, e.screeny, canvasX, canvasY, clientXY[0], clientXY[1], e.fromobject, e.fromreferenceobject, e.metakey, "control");
+    };
+
+    _pGridMultiCombo._on_tagitem_mobile_onclick = function (obj, e)
+    {
+        nexacro.MultiCombo.prototype._on_tagitem_mobile_onclick.call(this, obj, e);
+
+        var padding = this._getCurrentStylePadding();
+        var canvasX = e.canvasx + (padding ? padding.left : 0);
+        var canvasY = e.canvasy + (padding ? padding.top : 0);
+        var clientXY = this._getClientXY(canvasX, canvasY);
+
+        return this._cellobj.on_fire_onclick(e.button, e.altkey, e.ctrlkey, e.shiftkey, e.screenx, e.screeny, canvasX, canvasY, clientXY[0], clientXY[1], e.fromobject, e.fromreferenceobject, e.metakey, "control");
+    };
+
+    _pGridMultiCombo._on_multicombotext_mobile_oneditclick = function (obj, e)
+    {
+        nexacro.MultiCombo.prototype._on_multicombotext_mobile_oneditclick.call(this, obj, e);
 
         var padding = this._getCurrentStylePadding();
         var canvasX = e.canvasx + (padding ? padding.left : 0);
@@ -15205,6 +15320,10 @@ if (!nexacro.Grid)
                         {
                             _rowSizeListSub[index] = newsize;
                             _rowSizeList[nRow] += (newsize - oldsize);
+
+                            if (this._isLazyAutoVscroll())
+                                this._lazy_load_rowsize[nRow] = newsize;
+
                             change = true;
 
                             this._updateRowSizeExtendEx(format._bodyrows, _rowSizeList, _rowSizeListSub, nRow, true);
@@ -15270,6 +15389,10 @@ if (!nexacro.Grid)
                             {
                                 _rowSizeListSub[index] = newsize;
                                 _rowSizeList[nRow] += (newsize - oldsize);
+
+                                if (this._isLazyAutoVscroll())
+                                    this._lazy_load_rowsize[nRow] = newsize;
+
                                 change = true;
                             }
                         }
@@ -16033,10 +16156,51 @@ if (!nexacro.Grid)
             nSubRowIndex = strBand;
             strBand = "body";
         }
+        
+        var format = this._curFormat;
+        var deleteband = "";
+        if (strBand != undefined)
+        {
+            var bandidx = parseInt(strBand, 10);
+            if (isFinite(bandidx))
+            {
+                if (bandidx == -1) deleteband = "head";
+                else if (bandidx == -2) deleteband = "summ";
+                else if (bandidx >= 0) deleteband = "body";
+            }
+            else
+            {
+                deleteband = strBand.toLowerCase();
+                if (deleteband == "summary") deleteband = "summ";
+            }
+        }
+        var oldRowsLen = (deleteband == "body" && format._bodyrows) ? format._bodyrows.length : 0;
+
         var row = this._curFormat.deleteContentsRow(strBand, nSubRowIndex, bBandIndex);
 
         if (row >= 0)
         {
+            if (deleteband == "body" && this._is_user_change_body_rowsize && oldRowsLen > 1)
+            {
+                var newRowsLen = oldRowsLen - 1;
+                var rowcount = this._rowcount;
+                var oldSub = this._rowSizeListSub;
+                var list = this._rowSizeList;
+                var newSub = [];
+                var i, j;
+
+                for (i = 0; i < rowcount; i++)
+                {
+                    for (j = 0; j < nSubRowIndex; j++)
+                        newSub[i * newRowsLen + j] = oldSub[i * oldRowsLen + j];
+                    for (j = nSubRowIndex; j < newRowsLen; j++)
+                        newSub[i * newRowsLen + j] = oldSub[i * oldRowsLen + j + 1];
+                    if (list[i] >= 0)
+                        list[i] = Math.max(0, list[i] - (oldSub[i * oldRowsLen + nSubRowIndex] || 0));
+                }
+                this._rowSizeListSub = newSub;
+            }
+
             this._clearTempBand();
             this._clearBindTypeFlag();
             this._recreate();
@@ -19247,21 +19411,21 @@ if (!nexacro.Grid)
         }
 		else if (cellobj && cellobj._type_name == "GridCellControl" && cellobj._rowidx == -1 )
         {
-			if (this._p_cellmovingtype != "none" && this._selectscrollmode !== "scroll")
-		    {
-				var colidx = cellobj._refinfo._col;
-				var info0 = this._getColMergeInfo("head", colidx);
-				var info1 = this._getColMergeInfo("body", colidx);
-				var info2 = this._getColMergeInfo("summ", colidx);
-				var dragcursor = nexacro.CursorObject("move");
+            if (this._p_cellmovingtype != "none" && this._selectscrollmode !== "scroll" && !(this._showEditing && this._showEditRowIdx == -1))
+            {
+                var colidx = cellobj._refinfo._col;
+                var info0 = this._getColMergeInfo("head", colidx);
+                var info1 = this._getColMergeInfo("body", colidx);
+                var info2 = this._getColMergeInfo("summ", colidx);
+                var dragcursor = nexacro.CursorObject("move");
 
-				if (info0[1] == 1 && (info1 == null || info1[1] == 1) && (info2 == null || info2[1] == 1))
-				{
-					this._movingcell = cellobj;
-					cellobj.parent._setTempCursor(dragcursor);
-					//this._noFireDragFlag = true;
-				}
-			}
+                if (info0[1] == 1 && (info1 == null || info1[1] == 1) && (info2 == null || info2[1] == 1))
+                {
+                    this._movingcell = cellobj;
+                    cellobj.parent._setTempCursor(dragcursor);
+                    //this._noFireDragFlag = true;
+                }
+            }
 			else
 			{
 				this._movingcell = null;
@@ -22588,7 +22752,7 @@ if (!nexacro.Grid)
         }
         else if (keyCode == nexacro.Event.KEY_ENTER)
         {
-            if (!nexacro._enableaccessibility || nexacro._enableaccessibility && this._currentBand == "body")
+            if (this._currentBand != "head" && (!nexacro._enableaccessibility || this._currentBand == "body"))
             {
                 //             if (this._p_autoenter != "select") 현재 체크 필요없어 보임. 2015.10.30
                 {
@@ -22801,7 +22965,10 @@ if (!nexacro.Grid)
 				this._moveCellAfterFocus();
 				this._iskey_movetocell = false;
 			}
-            this._keydown_elem._event_stop = true;
+            if (nexacro._Browser == "Runtime" || !nexacro._enableaccessibility || this._acceptstab)
+            {
+                this._keydown_elem._event_stop = true;
+            }
 
             return this._acceptstab;
         }
@@ -23980,6 +24147,7 @@ if (!nexacro.Grid)
                         if (!this._p_enableredraw)
                         {
                             this._enable_redraw_history.recreate = true;
+                            this._enable_redraw_history.jump_rowpos = true;
                             return;
                         }
 
@@ -24000,6 +24168,7 @@ if (!nexacro.Grid)
                             if (!this._p_enableredraw)
                             {
                                 this._enable_redraw_history.recreate = true;
+                                this._enable_redraw_history.jump_rowpos = true;
                                 return;
                             }
 
@@ -24038,6 +24207,7 @@ if (!nexacro.Grid)
                             if (!this._p_enableredraw)
                             {
                                 this._enable_redraw_history.recreate = true;
+                                this._enable_redraw_history.jump_rowpos = true;
                                 return;
                             }
 
@@ -24322,8 +24492,14 @@ if (!nexacro.Grid)
 
         if (this._enable_redraw_history.recreate)
         {
+            var jump_rowpos = this._enable_redraw_history.jump_rowpos;
             this.redraw();
             this._enable_redraw_history = {};
+            if (jump_rowpos)
+            {
+                var disprow = this._dsRowToDispRow(this._rowposition);
+                this._jumpCurrentRow(disprow);
+            }
             return;
         }
 
@@ -24880,7 +25056,11 @@ if (!nexacro.Grid)
 
                 if (cellobj)
                 {
-                    cellobj._on_focus(true, evt_name);
+                    // RP 105709
+                    if (editcell.row == -1)
+                        this._activateHeadCellEditor(cellobj, editcell.cell);
+                    else
+                        cellobj._on_focus(true, evt_name);
                 }
             }
             
@@ -25537,11 +25717,8 @@ if (!nexacro.Grid)
 			this._afterrecreatetask.destroy();
 			this._afterrecreatetask = null;
         }
-
-        var delay = Math.abs(this._buttonuptime - this._buttondowntime);
-        delay = delay > 0 ? delay : 50; // 최소 지연 시간을 50ms로 설정
-
-        this._afterrecreatetask = new nexacro._CallbackTimer(this, function (id) { return pthis._callbackAfterRecreateTimer(kind); }, delay);
+        
+        this._afterrecreatetask = new nexacro._CallbackTimer(this, function (id) { return pthis._callbackAfterRecreateTimer(kind); }, 300);
 		this._afterrecreatetask.start();
 	};
 
@@ -26105,6 +26282,10 @@ if (!nexacro.Grid)
                 this._scrollbars = 1;
         }
         */     
+
+        if (this._apply_enableredraw)
+            return;
+
         var control_elem = this._control_element;
         if (control_elem)
         {
@@ -29668,10 +29849,7 @@ if (!nexacro.Grid)
             for (var j = start; j != end; j += step)
             {
                 var editType = cells[j]._getEdittype(row);
-                var displayType = cells[j]._getDisplaytype(row);
-
-                if ((editType !== "" && editType !== "none") || 
-                    (displayType == "checkboxcontrol" || displayType == "buttoncontrol"))
+                if (editType !== "" && editType !== "none")
                 {
                     return { row: row, cell: j };
                 }
@@ -29728,10 +29906,7 @@ if (!nexacro.Grid)
             for (var j = start; j != end; j += step)
             {
                 var editType = cells[j]._getEdittype(row);
-                var displayType = cells[j]._getDisplaytype(row);
-
-                if ((editType !== "" && editType !== "none") || 
-                    (displayType == "checkboxcontrol" || displayType == "buttoncontrol"))
+                if (editType !== "" && editType !== "none")
                 {
                     return { row: row, cell: j };
                 }
@@ -34142,6 +34317,12 @@ if (!nexacro.Grid)
         if (!retn)
             return false;
 
+        if (this._movingToHeadCell)
+        {
+            this._movingToHeadCell = false;
+            return true;
+        }
+
         var evt_name;
         this._iskey_movetocell = false;
 
@@ -34186,6 +34367,26 @@ if (!nexacro.Grid)
         return true;
     };
 
+    _pGrid._activateHeadCellEditor = function (cell, cellidx)
+    {
+        var headcell = this._curFormat._headcells[cellidx];
+        var displayType = headcell ? headcell._getDisplaytype(-1) : "";
+        var editType = headcell ? headcell._getEdittype(-1) : "";
+
+        this._movingToHeadCell = true;
+        // checkbox/button 계열은 subComp 표시 상태이므로 _showEditor 미호출
+        if (displayType !== "checkboxcontrol" && displayType !== "buttoncontrol" &&
+            editType !== "checkbox" && editType !== "button")
+        {
+            cell._showEditor(true);
+        }
+        this._focused_row = -1;
+        this._focused_cell = cellidx;
+        this._currentBand = "head";
+        this.currentrow = -1;
+        return true;
+    };
+
     // headband의 editable cell이동 & body 이동 유틸
     _pGrid._moveInHeadBand = function (type)
     {
@@ -34202,12 +34403,14 @@ if (!nexacro.Grid)
             {
                 var row = -1;
                 var editType = headcells[j]._getEdittype(row);
-                var displayType = headcells[j]._getDisplaytype(row);
-
-                if ((editType !== "" && editType !== "none") || 
-                    (displayType == "checkboxcontrol" || displayType == "buttoncontrol"))
+                if (editType !== "" && editType !== "none")
                 {
-                    return this._moveToPosCell(row, j);
+                    var cell = this._getCurrentHeadCell(j, true);
+                    if (cell)
+                    {
+                        this._hideEditor(undefined, undefined, this._need_confirm_control_value);
+                        return this._activateHeadCellEditor(cell, j);
+                    }
                 }
             }
         }
@@ -34223,6 +34426,7 @@ if (!nexacro.Grid)
                 if (bFromHeadToBody)
                 {
                     this._beforebodyrowpos = -1;
+                    this._hideEditor(undefined, undefined, this._need_confirm_control_value); // RP 105709
                 }
 
                 if (this._vscrollmng)
@@ -34412,25 +34616,25 @@ if (!nexacro.Grid)
             {
                 if (colmove || this._selectinfo.currow <= 0)
                 {
-                    if (editable && this._selectinfo.currow == 0 && this._selectinfo.curcell == 0)
+                    if (this._selectinfo.currow == 0 && this._selectinfo.curcell == 0)
                     {
                         var lastHeadCell = this._getLastEditableCell("head");
                         if (lastHeadCell && lastHeadCell.row !== null)
                         {
-                            this._hideEditor();
+                            this._hideEditor(undefined, undefined, this._need_confirm_control_value);
                             var headcell = this._curFormat._headcells[lastHeadCell.cell];
                             if (headcell)
                             {                                    
                                 var cell = this._getCurrentHeadCell(lastHeadCell.cell, true);
                                 if (cell) 
                                 {
-                                    cell._showEditor(true);
-                                    this._currentBand = "head";
-                                    this._p_currentrow = -1;
-                                    return true;
+                                    return this._activateHeadCellEditor(cell, lastHeadCell.cell);
                                 }
                             }
                         }
+
+                        this._hideEditor()
+                        return false;
                     }
 
                     this._hideEditor();
@@ -34762,14 +34966,41 @@ if (!nexacro.Grid)
     {
         if (this._focused_row == -1 || this._currentBand == "head")
         {
-            if (editable)
+            if (!editable && !nexacro._enableaccessibility)
             {
-                return this._moveInHeadBand(type);
+                this._currentBand = "body";
             }
             else
             {
-                // editable이 아니면 접근성 일때만 currentband 유지
-                this._currentBand = nexacro._enableaccessibility ? this._currentBand : "body";
+                if (type == "next" || type == "prev")
+                {
+                    return this._moveInHeadBand(type);
+                }
+                else if (type == "down")
+                {
+                    if (this._bodyBand && this._bodyBand._get_rows().length > 0)
+                    {
+                        var targetCell = this._focused_cell;
+                        this._beforebodyrowpos = -1;
+                        this._hideEditor(undefined, undefined, this._need_confirm_control_value);
+                        if (this._vscrollmng)
+                            this._vscrollmng.setPos(0);
+                        this._currentBand = "body";
+                        this._focused_row = undefined;
+                        if (!this._moveToPosCell(0, targetCell))
+                        {
+                            var bodycell = this._getCurrentBodyCell(0, targetCell);
+                            if (bodycell)
+                                bodycell._apply_setfocus(this._keydown_elem ? "tabkey" : undefined, true);
+                        }
+                        return true;
+                    }
+                    return false;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
 

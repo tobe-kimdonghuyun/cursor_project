@@ -1,4 +1,4 @@
-﻿//==============================================================================
+//==============================================================================
 //
 //  TOBESOFT Co., Ltd.
 //  Copyright 2017 TOBESOFT Co., Ltd.
@@ -1553,7 +1553,6 @@ if (!nexacro.CheckBoxSet)
             var item = this._getItem(index);
             if (item)
             {
-                if (item.readonly) return;
                 item.set_selected(select);
             }
 
@@ -1625,22 +1624,19 @@ if (!nexacro.CheckBoxSet)
 
         var i;
         var rows = [];
-        var items = this._items;
 
         if (start > end)
         {
             for (i = start; end <= i; i--)
             {
-                if (items[i] && items[i].readonly == false)
-                    rows.push(i);
+                rows.push(i);
             }
         }
         else
         {
             for (i = start; i <= end; i++)
             {
-                if (items[i] && items[i].readonly == false)
-                    rows.push(i);
+                rows.push(i);
             }
         }
 
@@ -1648,7 +1644,7 @@ if (!nexacro.CheckBoxSet)
 
         if (bSelect == true)
         {
-            this._do_select(rows, true, true);
+            this._doMultiSelect(rows, true, true);
             this._insertIndex(rows);
         }
         else
@@ -1667,22 +1663,20 @@ if (!nexacro.CheckBoxSet)
         var i;
         var rows = [];
         var rowcount = this._innerdataset.rowcount;
-        var _items = this._items;
 
         for (i = 0; i < items.length; i++)
         {
             if (items[i] >= rowcount || items[i] < 0)
                 continue;
 
-            if (_items[items[i]].readonly == false)
-                rows.push(items[i]);
+            rows.push(items[i]);
         }
 
         this._change_by_script = true;
 
         if (bSelect == true)
         {
-            this._do_select(rows, true, true);
+            this._doMultiSelect(rows, true, true);
             this._insertIndex(rows);
         }
         else
@@ -1767,7 +1761,6 @@ if (!nexacro.CheckBoxSet)
         }
 
         var focused = this._statusmap ? this._statusmap['focused'] : false;
-        obj._changeUserStatus("selected", true);
         if (focused)
             obj._changeStatus("focused", true);
 
@@ -2142,7 +2135,7 @@ if (!nexacro.CheckBoxSet)
         {
             var change_item;
 
-            if (this._contains(from_elem))
+            if (up_obj === down_item)
             {
                 this.on_fire_onitemclick(this, up_obj.index, up_obj.text, up_obj.value, button, alt_key, ctrl_key, shift_key, screenX, screenY, canvasX, canvasY, clientX, clientY, meta_key);
 
@@ -2172,13 +2165,6 @@ if (!nexacro.CheckBoxSet)
                 if (!this._shiftKey)
                 {
                     this._shift_select_base_index = change_index;
-                }
-            }
-            else
-            {
-                if (!down_item.selected)
-                {
-                    down_item._changeUserStatus("selected", false);
                 }
             }
         }
@@ -3773,8 +3759,7 @@ if (!nexacro.CheckBoxSet)
         var items = this._getContentsItem();
         for (var i = 0; i < items.length; i++)
         {
-            if (items[i].readonly == false)
-                rows.push(i);
+            rows.push(i);
         }
         this._do_deselect(rows, true);
         this._removeindex(rows, undefined, isNotFireEvent);
@@ -3789,7 +3774,6 @@ if (!nexacro.CheckBoxSet)
 
         var i;
         var rows = [];
-        var items = this._items;
 
         if (!nexacro._isNumber(startRow))
         {
@@ -3804,22 +3788,21 @@ if (!nexacro.CheckBoxSet)
         {
             for (i = startRow; endRow <= i; i--)
             {
-                if (items[i].readonly == false)
-                    rows.push(i);
+                rows.push(i);
             }
         }
         else
         {
             for (i = startRow; i <= endRow; i++)
             {
-                if (items[i].readonly == false)
-                    rows.push(i);
+                rows.push(i);
             }
         }
 
         this._doMultiSelect(rows, true, true);
         this._insertIndex(rows);
     };
+
     _pCheckBoxSet._deselect_all = function (isNotFireEvent)
     {
         var rowcount = this._getInnerdatasetInfo("_rowcount");

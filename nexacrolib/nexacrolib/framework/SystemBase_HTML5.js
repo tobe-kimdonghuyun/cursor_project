@@ -1,4 +1,4 @@
-﻿//==============================================================================
+//==============================================================================
 //
 //  TOBESOFT Co., Ltd.
 //  Copyright 2017 TOBESOFT Co., Ltd.
@@ -167,7 +167,67 @@ if (nexacro._Browser != "Runtime")
             console.innerHTML = str;// + "<br>" +console.innerHTML;
         };
 
-        nexacro._traceV8CallStack = nexacro._emptyFn;
+        nexacro._traceV8CallStack = function ()
+        {
+            try
+            {
+                var e = new Error();
+                var stack = e.stack;
+                var str = "", i;
+
+                // i=0은 현재 이 function
+                for (i = 1; i < stack.length; i++)
+                {
+                    var frame = stack[i];
+                    var func = frame.getFunction();
+                    var argstr = "";
+                    for (var j = 0; j < func.arguments.length; j++)
+                    {
+                        var tempstr = func.arguments[j] + ", ";
+                        if (tempstr.length > 30)
+                            argstr += "[LONG STR], ";
+                        else
+                            argstr += tempstr;
+                    }
+
+                    var _this = frame.getThis();
+                    var _funcname = frame.getFunctionName();
+                    str += "\n   " + _this + "." + _funcname + "(arg: " + argstr + ")";
+                }
+
+                var mode = 0;
+                //var mode = 1;
+
+                var callstackstr = "";
+                switch (mode)
+                {
+                    case 0:
+                        callstackstr += ("\n===[callstack(" + (stack.length - 1) + ")]==============================\n" + str + "\n\n============================================");
+                        break;
+                    case 1:
+                        {
+                            callstackstr += ("\n===[callstack(" + (stack.length - 1) + ")]===============================\n");
+                            var strlist = str.split("\n");
+                            for (i = 0; i < strlist.length; i++)
+                            {
+                                callstackstr += (strlist[i] + "\n");
+                            }
+                            callstackstr += ("============================================");
+                        }
+                        break;
+                }
+
+                trace(callstackstr);
+            }
+            catch (e)
+            {
+                var msg = (e && e.message) ? e.message : String(e);
+
+                trace(msg);
+                callstackstr = msg;
+            }
+            return callstackstr;
+        };
         nexacro._peekWindowHandleMessageQueuePassing = nexacro._emptyFn;
         nexacro._blockWindowHandleMessage = nexacro._emptyFn;
         //==============================================================================
@@ -540,8 +600,8 @@ if (nexacro._Browser != "Runtime")
                     for (var i = 0; i < e.stack.length; i++)
                     {
                         var frame = e.stack[i];
-						var url = frame.getEvalOrigin() || frame.getScriptNameOrSourceURL() + ":" + frame.getLineNumber();
-                        msg += "\r\nat line " + frame.getLineNumber() + ", in function: " + frame.getMethodName() + " in " + decodeURI(url);
+						var url = (frame.getEvalOrigin() || frame.getScriptNameOrSourceURL()) + ":" + frame.getLineNumber();
+                        msg += "\r\n> line " + frame.getLineNumber() + ", in function: " + frame.getMethodName() + " in " + decodeURI(url);
                     }
                 }
                 return msg;
@@ -5049,6 +5109,7 @@ if (nexacro._Browser != "Runtime")
             var form_elem = refform.getElement();
             var doc = form_elem._getRootWindowHandle();
             var control_elem = pThis.getElement();
+            var is_form_print = pThis._is_form;
 
             //var clone_handle = pThis._control_element._handle.cloneNode(true);
             var i = 0;
@@ -5257,7 +5318,20 @@ if (nexacro._Browser != "Runtime")
 			}
 			else
             {
-                var bind_onload = '" onLoad="setTimeout(function () { self.print(); self.close();},100)"'; 
+                var bind_onload;
+                if (is_form_print)
+                {
+                    bind_onload = '" onLoad="setTimeout(function () { self.print(); self.close();},100)"';
+                }
+                else
+                {
+                    // 단일 component print 시 textarea 는 인쇄 직전 scroll 적용 후 강제 reflow.
+                    var src_ta = control_elem.handle.getElementsByTagName("textarea");
+                    var ta_sl = src_ta.length ? (src_ta[0].scrollLeft || 0) : 0;
+                    var ta_st = src_ta.length ? (src_ta[0].scrollTop || 0) : 0;
+
+                    bind_onload = '" onLoad="setTimeout(function () { var t=document.getElementsByTagName(\'textarea\')[0]; if(t){t.scrollLeft=' + ta_sl + ';t.scrollTop=' + ta_st + ';} void document.body.offsetHeight; self.print(); self.close();},100)"';
+                }
                 html += '<BODY class="' + classnames + bind_onload + str_bodystyle + '\">\n';
 				html += strhtml;
 				html += '</BODY>\n\n</HTML>\n\n';
@@ -17269,8 +17343,18 @@ if (nexacro._Browser != "Runtime")
         {
             if (screeninfo)
             {
-                nexacro._initLocalStorage();
-                nexacro._initScreen(screeninfo);
+                var init_fn = function ()
+                {
+                    nexacro._initLocalStorage();
+                    nexacro._initScreen(screeninfo);
+                };
+
+                // storage partitioning 대응: unpartitioned storage handle 획득 후 storage 초기화 수행
+                var storageaccess = nexacro._initStorageAccess ? nexacro._initStorageAccess() : null;
+                if (storageaccess)
+                    nexacro._initenv_promise = storageaccess.then(init_fn, init_fn);
+                else
+                    init_fn();
             }
         };
 

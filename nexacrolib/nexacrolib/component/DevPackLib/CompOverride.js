@@ -1,4 +1,4 @@
-﻿/**
+/**
  *  devPack Library
  *  @FileName 	CompOverride.js
  *  @Creator 	TOBESOFT

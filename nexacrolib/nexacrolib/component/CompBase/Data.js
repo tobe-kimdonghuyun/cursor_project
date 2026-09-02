@@ -1,4 +1,4 @@
-﻿//==============================================================================
+//==============================================================================
 //
 //  TOBESOFT Co., Ltd.
 //  Copyright 2017 TOBESOFT Co., Ltd.
@@ -81,6 +81,8 @@ if (!nexacro.Dataset)
             {
                 if (coltype == 4 || coltype < 0)
                 {
+                    var setype = this.getnullsorttype();
+
                     if ((val1 instanceof nexacro.Decimal))
                     {
                         if (val2 instanceof nexacro.Decimal)
@@ -90,12 +92,19 @@ if (!nexacro.Dataset)
                                 if (val2.isNaN())
                                     return 0;
 
-                                return 1;
+                                if (setype == "min")
+                                    return -1;
+                                else
+                                    return 1;
                             }
 
                             if (val2.isNaN())
-                                return -1;
-
+                            {
+                                if (setype == "min")
+                                    return 1;
+                                else
+                                    return -1;
+                            }
                             return (val1.hi == val2.hi) ? (val1.lo - val2.lo) : (val1.hi - val2.hi);
                         }
                         else
@@ -105,12 +114,19 @@ if (!nexacro.Dataset)
                                 if (isNaN(val2))
                                     return 0;
 
-                                return 1;
+                                if (setype == "min")
+                                    return -1;
+                                else
+                                    return 1;
                             }
 
                             if (isNaN(val2) || val2 === "")
-                                return -1;
-
+                            {
+                                if (setype == "min")
+                                    return 1;
+                                else
+                                    return -1;
+                            }
                             var v2 = (+val2);
                             return (val1.hi == v2) ? val1.lo : (val1.hi - v2);
                         }
@@ -122,15 +138,26 @@ if (!nexacro.Dataset)
                             if (val2.isNaN())
                                 return 0;
 
-                            return 1;
+                            if (setype == "min")
+                                return -1;
+                            else
+                                return 1;
                         }
 
                         if (val2.isNaN())
-                            return -1;
-
+                        {
+                            if (setype == "min")
+                                return 1;
+                            else
+                                return -1;
+                        }
                         if (val1 === "")
-                            return 1;
-
+                        {
+                            if (setype == "min")
+                                return -1;
+                            else
+                                return 1;
+                        }
                         var v1 = (+val1);
                         return (val2.hi == v1) ? -val2.lo : (v1 - val2.hi);
                     }
@@ -140,12 +167,18 @@ if (!nexacro.Dataset)
                         if (isNaN(val2))
                             return 0;
 
-                        return 1;
+                        if (setype == "min")
+                            return -1;
+                        else
+                            return 1;
                     }
 
                     if (isNaN(val2))
                     {
-                        return -1;
+                        if (setype == "min")
+                            return 1;
+                        else
+                            return -1;
                     }
 
                     if (val1 === "")
@@ -153,12 +186,19 @@ if (!nexacro.Dataset)
                         if (val2 === "")
                             return 0;
 
-                        return 1;
+                        if (setype == "min")
+                            return -1;
+                        else
+                            return 1;
                     }
 
                     if (val2 === "")
-                        return -1;
-
+                    {
+                        if (setype == "min")
+                            return 1;
+                        else
+                            return -1;
+                    }
                     if (coltype == 4)
                     {
                         var compval1 = new nexacro.Decimal(val1);
@@ -174,42 +214,69 @@ if (!nexacro.Dataset)
                 {
                     var compval1 = val1.date ? val1.date.valueOf() : val1;
                     var compval2 = val2.date ? val2.date.valueOf() : val2;
+                    var setype = this.getnullsorttype();
 
                     if (isNaN(compval1) && isNaN(compval2))
                         return 0;
 
                     if (isNaN(compval1))
-                        return 1;
-
+                    {
+                        if (setype == "min")
+                            return -1;
+                        else
+                            return 1;
+                    }
                     if (isNaN(compval2))
-                        return -1;
+                    {
+                        if (setype == "min")
+                            return 1;
+                        else
+                            return -1;
+                    }
 
                     if (compval1 === "" || compval2 === "")
                     {
-                        if (compval1 == compval2)
+                        // "" == 0 이 true 라서 1970-01-01(timestamp 0) 과 EmptyString 이 같은 값으로 판정된다. === 로 변경.
+                        if (compval1 === compval2)
                             return 0;
 
                         if (compval1 === "")
-                            return 1;
+                        {
+                            if (setype == "min")
+                                return -1;
+                            else
+                                return 1;
+                        }
 
-                        return -1;
+                        if (setype == "min")
+                            return 1;
+                        else
+                            return -1;
                     }
 
                     return compval1 - compval2;
                 }
                 else if (coltype >= 2 && coltype <= 3)  //int,float
                 {
+                    var setype = this.getnullsorttype();
+
                     if (isNaN(val1))
                     {
                         if (isNaN(val2))
                             return 0;
 
-                        return 1;
+                        if (setype == "min")
+                            return -1;
+                        else
+                            return 1;
                     }
 
                     if (isNaN(val2))
                     {
-                        return -1;
+                        if (setype == "min")
+                            return 1;
+                        else
+                            return -1;
                     }
 
                     if (val1 === "")
@@ -217,12 +284,19 @@ if (!nexacro.Dataset)
                         if (val2 === "")
                             return 0;
 
-                        return 1;
+                        if (setype == "min")
+                            return -1;
+                        else
+                            return 1;
                     }
 
                     if (val2 === "")
-                        return -1;
-
+                    {
+                        if (setype == "min")
+                            return 1;
+                        else
+                            return -1;
+                    }
                     if (+val1 == +val2)
                         return 0;
 
@@ -266,14 +340,27 @@ if (!nexacro.Dataset)
                 {
                     return (val1 == val2) ? 0 : (val1 > val2 ? 1 : -1);
                 }
-
             }
-            else if ((val1 != null) || val1 === "")   // val1 != null
+            else if (val1 == null && val2 == null)
             {
+                return 0;
+            }
+            else if (val2 == null)   // val1 != null, val2 == null
+            {
+                var setype = this.getnullsorttype();
+
+                if (setype == "min")
+                    return 1;
+
                 return -1;
             }
-            else if ((val2 != null) || val2 === "")   // val1 == null
+            else if (val1 == null)   // val1 == null, val2 != null
             {
+                var setype = this.getnullsorttype();
+
+                if (setype == "min")
+                    return -1;
+
                 return 1;
             }
             else
@@ -4465,6 +4552,7 @@ if (!nexacro.Dataset)
     _pDataset._p_savenan = undefined;
     _pDataset._p_saveinfinity = undefined;
     _pDataset._p_saveinvaliddate = undefined;
+    _pDataset._p_nullsorttype = undefined;
 
     //DataObject  
     _pDataset._p_binddataobject = null;
@@ -4673,7 +4761,11 @@ if (!nexacro.Dataset)
 
     _pDataset.set_savenan = function (v)
     {
-        if (!v) return;
+        if (!v)
+        {
+            this._p_savenan = v;
+            return;
+        }
 
         var type_enum = ["exclude", "include"];
 
@@ -4685,7 +4777,11 @@ if (!nexacro.Dataset)
 
     _pDataset.set_saveinfinity = function (v)
     {
-        if (!v) return;
+        if (!v)
+        {
+            this._p_saveinfinity = v;
+            return;
+        }
 
         var type_enum = ["exclude", "include"];
 
@@ -4697,7 +4793,11 @@ if (!nexacro.Dataset)
 
     _pDataset.set_saveinvaliddate = function (v)
     {
-        if (!v) return;
+        if (!v)
+        {
+            this._p_saveinvaliddate = v;
+            return;
+        }
 
         var type_enum = ["exclude", "include"];
 
@@ -4705,6 +4805,22 @@ if (!nexacro.Dataset)
 
         if (type_enum.indexOf(v) >= 0)
             this._p_saveinvaliddate = v;
+    };
+
+    _pDataset.set_nullsorttype = function (v)
+    {
+        if (!v)
+        {
+            this._p_nullsorttype = v;
+            return;
+        }
+
+        var type_enum = ["max", "min"];
+
+        v = v.toString().toLowerCase();
+
+        if (type_enum.indexOf(v) >= 0)
+            this._p_nullsorttype = v;
     };
 
     _pDataset.getSaveNan = function (v)
@@ -4731,6 +4847,14 @@ if (!nexacro.Dataset)
        return v ? v : env.datasetsaveinvaliddate;
     };
 
+    _pDataset.getnullsorttype = function (v)
+    {
+        v = this._p_nullsorttype;
+        var env = nexacro.getEnvironment();
+
+        return v ? v : env.datasetnullsorttype;
+    };
+
     _pDataset.set_collation = function (v)
     {
         var collation_enum = ["none", "systemlanguage", "currentlocale"];
@@ -4751,7 +4875,7 @@ if (!nexacro.Dataset)
         this.updateSortGroup(this._p_keystring, true);
     };
 
-    _pDataset._properties = [{ name: "dataobjectbindmode"}, { name: "dataobjectpath"}, { name: "enableevent"}, { name: "updatecontrol"}, { name: "rowposition"}, { name: "keystring"}, { name: "filterstr"}, { name: "loadkeymode"}, { name: "loadfiltermode"}, { name: "reversesubsum"}, { name: "useclientlayout"}, { name: "savenan"}, { name: "saveinfinity"}, { name: "saveinvaliddate"}, { name: "collation"}, { name: "colinfos", readonly: true}, { name: "colcount", readonly: true}, { name: "constcount", readonly: true}, { name: "rowcount", readonly: true}];
+    _pDataset._properties = [{ name: "dataobjectbindmode" }, { name: "dataobjectpath" }, { name: "enableevent" }, { name: "updatecontrol" }, { name: "rowposition" }, { name: "keystring" }, { name: "filterstr" }, { name: "loadkeymode" }, { name: "loadfiltermode" }, { name: "reversesubsum" }, { name: "useclientlayout" }, { name: "savenan" }, { name: "saveinfinity" }, { name: "saveinvaliddate" }, { name: "collation" }, { name: "colinfos", readonly: true }, { name: "colcount", readonly: true }, { name: "constcount", readonly: true }, { name: "rowcount", readonly: true }, { name: "nullsorttype" }];
     nexacro._defineProperties(_pDataset, _pDataset._properties);
 
     // ----------------- event handling ------------------ //
@@ -14882,13 +15006,13 @@ if (!nexacro.Dataset)
         var comma = "";
         var list = [];
         this.__writeJSONData(list, "{", depth++);
-        this.__writeJSONData(list, "\"id\": \"" + saveId + "\",", depth);
+        this.__writeJSONData(list, "\"id\":\"" + saveId + "\",", depth);
 
         var constList = this._constVars;
         var colList = this.colinfos;
         if (constList.length + colList.length)
         {
-            this.__writeJSONData(list, "\"ColumnInfo\" :", depth);
+            this.__writeJSONData(list, "\"ColumnInfo\":", depth);
             this.__writeJSONData(list, "{", depth++);
 
             if (constList.length)
@@ -14909,7 +15033,7 @@ if (!nexacro.Dataset)
                     if (colType != null && colType != 9)
                         typestr += "\"type\":\"" + constVar.type + "\"";
                     if (colSize > 0)
-                        typestr += ", \"size\":\"" + colSize + "\"";
+                        typestr += ",\"size\":\"" + colSize + "\"";
 
                     colVal = this._convertValueBySaveProp(colVal);
                     comma = "";
@@ -14921,7 +15045,7 @@ if (!nexacro.Dataset)
                             colVal = colVal.replace(/[\\]/gi, '\\\\');
                             colVal = colVal.replace(/[\"]/gi, '\\"');
                         }
-                        this.__writeJSONData(list, "{\"id\":\"" + colId + "\"," + typestr + ", \"value\":\"" + colVal + "\"}" + comma, depth);
+                        this.__writeJSONData(list, "{\"id\":\"" + colId + "\"," + typestr + ",\"value\":\"" + colVal + "\"}" + comma, depth);
                     }
                     else
                     {
@@ -14942,18 +15066,20 @@ if (!nexacro.Dataset)
                 var colType = colinfo.ntype == 9 ? "STRING" : colinfo.type ? colinfo.type : nexacro.DataUtils.toTypeName(colinfo.ntype);
                 var colSize = colinfo.ntype == 9 ? nexacro.DataUtils._default_sizes[1] : colinfo.size;
                 var colProp = colinfo.prop;
+                var coldataPath = colinfo.datapath;
+                var strColdatepath = colinfo.datapath !== undefined ? ",\"datapath\":\"" + coldataPath + "\"" : "";
 
                 comma = "";
                 if (i < colList.length - 1) comma = ",";
                 if (colProp == "NONE" || colProp == null || (typeof colProp) == "number" || colProp == "")
-                    this.__writeJSONData(list, "{ \"id\":\"" + colId + "\", \"type\":\"" + colType + "\", \"size\":\"" + colSize + "\" }" + comma, depth);
+                    this.__writeJSONData(list, "{\"id\":\"" + colId + "\",\"type\":\"" + colType + "\",\"size\":\"" + colSize + "\"" + strColdatepath + "}" + comma, depth);
                 else
                 {
                     var colSumText = colinfo.sumtext;
                     if (colSumText)
-                        this.__writeJSONData(list, "{ \"id\":\"" + colId + "\", \"type\":\"" + colType + "\", \"size\":\"" + colSize + "\", \"prop\":\"" + colProp + "\", \"sumtext\":\"" + colSumText + "\" }" + comma, depth);
+                        this.__writeJSONData(list, "{\"id\":\"" + colId + "\",\"type\":\"" + colType + "\",\"size\":\"" + colSize + "\",\"prop\":\"" + colProp + "\",\"sumtext\":\"" + colSumText + "\"" + strColdatepath + "}" + comma, depth);
                     else
-                        this.__writeJSONData(list, "{ \"id\":\"" + colId + "\", \"type\":\"" + colType + "\", \"size\":\"" + colSize + "\", \"prop\":\"" + colProp + "\" }" + comma, depth);
+                        this.__writeJSONData(list, "{\"id\":\"" + colId + "\",\"type\":\"" + colType + "\",\"size\":\"" + colSize + "\",\"prop\":\"" + colProp + "\"" + strColdatepath + "}" + comma, depth);
                 }
             }
             nexacro.__forLoop(this, 0, colList.length, __saveJSON_colinfo_loopFn);
@@ -15149,21 +15275,35 @@ if (!nexacro.Dataset)
             var value = rowRow[idx];
 
             value = this._convertValueBySaveProp(value);
-            value = colinfo._toText(value);
-            
-            if (value)
+            if (typeof value === 'object')
+                value = colinfo._toText(value);
+            if (value !== null && value !== undefined && colinfo.type === "STRING")
             {
-                value = JSON.stringify(value).slice(1, -1);             
+                value = colinfo._toText(value);
+                if (typeof value !== "string")
+                {
+                    // 숫자형 등 string이 아닌 타입일 때만 "123" 형태로 변환
+                    value = "\"" + value + "\"";
+                }
+                else
+                {
+                    // 이미 string이면 그대로 JSON.stringify (따옴표 처리)
+                    value = JSON.stringify(value);
+                }
             }
-            
+            else if (typeof value === "string")
+            {
+                value = JSON.stringify(value);
+            }
+
             if (value != null)
             {
                 if (need_comma && i < colList.length) comma = ","; //this.__addStringJSONData(list,",");
-                str += comma + " \"" + id + "\":\"" + value + "\"";
+                str += comma + "\"" + id + "\":" + value;
                 need_comma = true;
             }
         }
-        nexacro.__forLoop(this, 0,colList.length, __writeColData_loopFn);
+        nexacro.__forLoop(this, 0, colList.length, __writeColData_loopFn);
         this.__writeJSONData(list, str, depth);
     };
 

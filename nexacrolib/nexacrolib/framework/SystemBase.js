@@ -1,4 +1,4 @@
-﻿//==============================================================================
+//==============================================================================
 //
 //  TOBESOFT Co., Ltd.
 //  Copyright 2017 TOBESOFT Co., Ltd.
@@ -11474,7 +11474,7 @@ if (!nexacro._Init_systembase)
     nexacro._checkShowContextMenu = function (comp)
     {
         var environment = nexacro.getEnvironment();
-        var env_usecontextmenu = environment ? environment._p_usecontextmenu : "all";
+        var env_usecontextmenu = environment ? environment._p_usecontextmenu : "edit";
         var bForm = (comp instanceof nexacro.Form);
         var bEdit = (comp instanceof nexacro.Edit || comp instanceof nexacro.MaskEdit || comp instanceof nexacro.TextArea);
         var bSketch = comp instanceof nexacro.Sketch; //Edit도 

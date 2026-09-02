@@ -1,4 +1,4 @@
-﻿/**
+/**
  *  devPack Library
  *  @FileName 	Transaction.js
  *  @Creator 	TOBESOFT

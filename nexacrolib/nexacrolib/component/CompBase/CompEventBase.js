@@ -1,4 +1,4 @@
-﻿//==============================================================================
+//==============================================================================
 //
 //  TOBESOFT Co., Ltd.
 //  Copyright 2017 TOBESOFT Co., Ltd.
@@ -295,6 +295,11 @@ if (nexacro.Component)
                             }
 								
 						}
+
+						// 내부 진입이 차단된 상태의 말단 재focus는 포커스 변화가 없으므로
+						// onkillfocus 없이 onsetfocus만 재발화되지 않도록 처리하지 않음
+						if (this._block_inner_focus)
+							return;
 					}
 					else
 					{
@@ -368,6 +373,11 @@ if (nexacro.Component)
 					for (i = 0, n = kill_focus_arrs.length; i < n; i++)
 					{
 						lose_focus = kill_focus_arrs[i];
+
+						// focus를 받을 컴포넌트 자신이 focus path의 말단인 경우 killfocus 대상에서 제외
+						if (lose_focus == pThis)
+							continue;
+
 						if (lose_focus && lose_focus._is_alive && !lose_focus._is_killfocusing)
 						{
 							// onkillfocus 처리중 사용자가 focus를 강제로 변경하는 경우
@@ -435,6 +445,9 @@ if (nexacro.Component)
 				{
 					// 공통부모 바로 아래 컴포넌트가 포커스를 받는 경우
                     pThis._setCurFocusPathsByCurPos(pThis, _win);
+					// pThis가 이미 focus path의 말단이면 재진입 시 자기 onsetfocus를 재발화하지 않음
+					if (focuspath_index == cur_focus_paths.length - 1)
+						pThis._reenter_leaf_no_setfocus = true;
 					pThis._on_focus(false, evt_name, old_focus, old_refer_focus, new_focus, this);
 				}
 			}
@@ -447,6 +460,10 @@ if (nexacro.Component)
 		else
 		{
 			var c = this._getLastFocused();
+
+			// 이미 말단인 컨테이너로의 재진입이면 자기 onsetfocus 재발화를 건너뜀
+			var skip_reenter_setfocus = this._reenter_leaf_no_setfocus;
+			this._reenter_leaf_no_setfocus = false;
 
 			if (is_accessibility_mode)
 			{
@@ -477,7 +494,8 @@ if (nexacro.Component)
                 if (_win._is_active_window !== false || this._is_frame)
                     this._changeStatus("focused", true);
 
-				this.on_fire_onsetfocus(lose_focus, refer_lose_focus);
+				if (!skip_reenter_setfocus)
+					this.on_fire_onsetfocus(lose_focus, refer_lose_focus);
 
 				if (focus_paths)
 				{

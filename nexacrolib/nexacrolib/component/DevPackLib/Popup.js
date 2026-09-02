@@ -1,4 +1,4 @@
-﻿/**
+/**
  *  devPack Library
  *  @FileName 	Popup.js
  *  @Creator 	TOBESOFT

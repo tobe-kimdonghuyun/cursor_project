@@ -1,4 +1,4 @@
-﻿//==============================================================================
+//==============================================================================
 //
 //  TOBESOFT Co., Ltd.
 //  Copyright 2014 TOBESOFT Co., Ltd.
@@ -1282,14 +1282,22 @@ if (!nexacro.CellInfo)
         return v;
     };
 
+    _pCellInfo._is_test_show_NaN = false; // test code
     _pCellInfo._getDisplayText_localenumber = function (rowidx)
     {
         var v = this._getTextValueForDisp(rowidx);
         var locale = this._getLocale(rowidx);
+        var retn = "";
 
         if (v instanceof nexacro.Decimal)
         {
-            if (v.isNaNOrInf()) return "";
+            if (v.isNaNOrInf())
+            {
+                if (this._is_test_show_NaN)
+                    retn = "NaN";
+
+                return retn;
+            }
             return v.toLocaleString(locale);
         }
         else if (!isNaN(parseFloat(v)) && isFinite(v)) //isNumeric
@@ -1305,7 +1313,10 @@ if (!nexacro.CellInfo)
             }
         }
 
-        return "";
+        if (this._is_test_show_NaN && isNaN(v))
+            retn = v;
+
+        return retn;
     };
 
     _pCellInfo._getDisplayText_currency = function (rowidx)
@@ -2814,7 +2825,7 @@ if (!nexacro._CellControl)
         }
     };
 
-    _pCellControl._needToggle = function ()
+    _pCellControl._needToggle = function (eventname, from_comp)
     {
         var datarow = this._getDataRow();
         var cellinfo = this._refinfo;
@@ -2825,11 +2836,16 @@ if (!nexacro._CellControl)
         if (nexacro._toBoolean(view._p_readonly))
             return;
 
+        if (view._p_selectchangetype == "down" && eventname == "onclick")
+            return;
+        else if (view._p_selectchangetype == "up" && eventname == "onlbuttondown")
+            return;
+
         if (edittype == "checkbox")
         {
             if (displaytype == "checkboxcontrol")
             {
-                if (this._subComp)
+                if (this._subComp && this._isToggleTarget(from_comp))
                     this._subComp._toggleCheck();
             }
             else
@@ -2853,7 +2869,7 @@ if (!nexacro._CellControl)
         {
             if (displaytype == "radioitemcontrol")
             {
-                if (this._subComp)
+                if (this._subComp && this._isToggleTarget(from_comp))
                     this._subComp._itemSelect();
             }
             else
@@ -2871,6 +2887,14 @@ if (!nexacro._CellControl)
                 }
             }
         }
+    };
+
+    _pCellControl._isToggleTarget = function (from_comp)
+    {
+        if (this._view._p_cellclickbound == "cell" && from_comp == this)
+            return true;
+
+        return (from_comp == this._subComp);
     };
 
     _pCellControl.on_apply_subControlAlign = function (halign, valign)
@@ -8359,12 +8383,6 @@ if (!nexacro._CellControl)
         if (this._cellobj._isFakeCell())
             return false;
 
-        if (this._view && this._view.selectchangetype != "down")
-        {
-            if (nexacro._toBoolean(this._view._p_readonly) == false)
-                this._toggleCheck();
-        }
-
         return this._cellobj.on_fire_onclick(button, alt_key, ctrl_key, shift_key, screenX, screenY, canvasX, canvasY, clientX, clientY, from_comp, from_refer_comp, meta_key, "control");
     };
 
@@ -8688,12 +8706,6 @@ if (!nexacro._CellControl)
 
         if (this._cellobj._isFakeCell())
             return false;
-
-        if (this._view && this._view.selectchangetype != "down")
-        {
-            if (nexacro._toBoolean(this._view._p_readonly) == false)
-                this._itemSelect();
-        }
 
         return this._cellobj.on_fire_onclick(button, alt_key, ctrl_key, shift_key, screenX, screenY, canvasX, canvasY, clientX, clientY, from_comp, from_refer_comp, meta_key, "control");
     };

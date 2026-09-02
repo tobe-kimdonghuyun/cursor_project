@@ -1,4 +1,4 @@
-﻿/**
+/**
  *  devPack Library
  *  @FileName 	Frame.js
  *  @Creator 	TOBESOFT

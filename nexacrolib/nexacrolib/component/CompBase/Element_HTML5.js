@@ -1,4 +1,4 @@
-﻿//==============================================================================
+//==============================================================================
 //
 //  TOBESOFT Co., Ltd.
 //  Copyright 2017 TOBESOFT Co., Ltd.
@@ -4220,7 +4220,16 @@ if (nexacro._Browser != "Runtime" && !nexacro.Element)
 
 		this._on_createAccessibilityHandle(_doc, owner_elem, handle);
 
-		nexacro.__setDOMNode_Autocomplete(handle, "new-password");
+        // RP 105465 105268 작업 원복 (98780)
+        if (this.inputtype == "password")
+        {
+            nexacro.__setDOMNode_Autocomplete(handle, "new-password");
+        }
+        else
+        {
+            nexacro.__setDOMNode_Autocomplete(handle, "off");
+        }
+
         if (nexacro._OS == "iOS")
         {
             nexacro.__setDOMNode_Spellcheck(handle, "false");
@@ -4370,7 +4379,15 @@ if (nexacro._Browser != "Runtime" && !nexacro.Element)
                 handle_attr += nexacro.__getHTMLAttr_InputMode(this._keypad_type);
             }
 
-            str += nexacro.__getHTMLAttr_Autocomplete("new-password");
+            //// RP 105465 105268 작업 원복 (98780)
+            if (this.inputtype == "password")
+            {
+                str += nexacro.__getHTMLAttr_Autocomplete("new-password");
+            }
+            else
+            {
+                str += nexacro.__getHTMLAttr_Autocomplete("off");
+            }
 
             if (nexacro._OS == "iOS")
             {
@@ -5012,7 +5029,7 @@ if (nexacro._Browser != "Runtime" && !nexacro.Element)
 			type = use_password ? "password" : "text";
 		}
 
-        var input_handle = this.handle;
+        var input_handle = this.handle;        
         if (this._imedisable != bImedisable)
         {
             this._imedisable = bImedisable ? bImedisable : false;
@@ -5032,6 +5049,12 @@ if (nexacro._Browser != "Runtime" && !nexacro.Element)
 		}
 
         this.setElementInputMode(keypad_type);
+
+        // RP 105465 105268 동적 변경시 autocomplete 변경 되도록 수정
+        if (input_handle)
+        {
+            nexacro.__setDOMNode_Autocomplete(input_handle, use_password ? "new-password" : "off");
+        }
 
         /* focus 전후로 input의 type을 변경할 필요가 없음
         if (this.inputtype != type)
@@ -5809,10 +5832,6 @@ if (nexacro._Browser != "Runtime" && !nexacro.Element)
 
             nexacro._observeSysEvent(input, "mousedown", "onmousedown", this._on_sys_mousedown);
             nexacro._observeSysEvent(input, "mouseup", "onmouseup", this._on_sys_mouseup);
-            if ((nexacro._Browser == "Chrome" || (nexacro._Browser == "Edge" && nexacro._BrowserType == "WebKit")) && nexacro._BrowserVersion >= 148)
-            {
-                nexacro._observeSysEvent(input, "pointerdown", "onpointerdown", this._on_sys_pointerdown, true);
-            }
 
             nexacro._observeSysEvent(input, "focus", "onfocus", this._on_sys_focus);
             nexacro._observeSysEvent(input, "blur", "onblur", this._on_sys_blur);
@@ -7105,13 +7124,6 @@ if (nexacro._Browser != "Runtime" && !nexacro.Element)
         }
     };
 
-    _pInputElement._on_sys_pointerdown = function (evt)
-    {
-        var input = (evt.target || evt.srcElement);
-        if (evt.pointerType == "mouse" && evt.button == 0)
-            input.setPointerCapture(evt.pointerId);
-    };
-
     _pInputElement._on_sys_scroll = function (evt)
     {
         var target = (evt.target || evt.srcElement);
@@ -7653,7 +7665,8 @@ if (nexacro._Browser != "Runtime" && !nexacro.Element)
             nexacro.__setDOMNode_MaxLength(handle, this.maxlength);
         }
 
-        this._on_createAccessibilityHandle(_doc, owner_elem, handle);
+        this._on_createAccessibilityHandle(_doc, owner_elem, handle);        
+        nexacro.__setDOMNode_Autocomplete(handle, "off"); // // RP 105465 105268 textarea도 autocomplete off 처리
 
         if (this.value)
         {
@@ -7728,6 +7741,7 @@ if (nexacro._Browser != "Runtime" && !nexacro.Element)
             {
                 attr_str += nexacro.__getHTMLAttr_InputMode(this.usesoftkeyboard ? "" : "none");
             }
+            attr_str += nexacro.__getHTMLAttr_Autocomplete("off"); // RP 105465 105268 textarea도 autocomplete off
 
             var str = "";
             str += "<textarea id='" + this.name + "' class='" + this._getElementNexaClassName("nexatextarea") + "' ";
@@ -13093,7 +13107,10 @@ if (nexacro._Browser != "Runtime" && !nexacro.Element)
             nexacro.__setDOMNode_ClassName(handle, this._getElementNexaClassName("nexamodaloverlay"));
             nexacro.__setDOMNode_Id(handle, "", this.name + ":container");
             nexacro.__setDOMStyle_Pos(handle_style, 0, 0);
-            nexacro.__setDOMStyle_Size(handle_style, win.clientWidth, win.clientHeight);
+            // WheelZoom(setWheelZoom) 적용 시 WRE는 mainframe(body)에 CSS scale을 걸어 window 전체를 확대/축소한다.
+            // overlay도 그 scale된 body 내부에 생성되므로, 배율만큼 나눈 크기로 만들어야 화면 전체를 덮는다.
+            var _zoomfactor = nexacro._setzoomfactor || 1;
+            nexacro.__setDOMStyle_Size(handle_style, win.clientWidth / _zoomfactor, win.clientHeight / _zoomfactor);
 
             var owner_elem = win.frame.getElement();
             var waitcomp_elem = win.frame._getWaitComponentElement();
@@ -13130,8 +13147,10 @@ if (nexacro._Browser != "Runtime" && !nexacro.Element)
                 {
                     var _window = this._getWindow();
                     if (_window)
-                    {   // chrome에서 modal popup시에 흐려짐 현상 처리 
-                        this.setElementZoom(_window._wheelZoom);
+                    {   // chrome에서 modal popup시에 흐려짐 현상 처리 (RP 87029: transform 초기화)
+                        // overlayelment에 이미 scale된 mainframe 내부에 있어 크기도 배율만큼 영향 받음
+                        // 블러 방지 코드를 유지 하기 위해 고정값으로 처리 (RP 105401)
+                        this.setElementZoom(100);
                     }
                 }
             }

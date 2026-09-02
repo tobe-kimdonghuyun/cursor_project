@@ -1,4 +1,4 @@
-﻿//==============================================================================
+//==============================================================================
 //
 //  TOBESOFT Co., Ltd.
 //  Copyright 2023 TOBESOFT Co., Ltd.
@@ -52,16 +52,12 @@ if (!nexacro.DateRangeCalendar)
     _pDateRangeCalendar._p_backgroundcolumn = "";//backgroundcolumn
     _pDateRangeCalendar._p_bordercolumn = "";//bordercolumn
     _pDateRangeCalendar._p_cancelbuttontext = "";//cancelbuttontext
-    _pDateRangeCalendar._p_contentheight = 0;//contentheight
     _pDateRangeCalendar._p_datecolumn = "";//datecolumn
     _pDateRangeCalendar._p_displayformat = "";//displayformat
     _pDateRangeCalendar._p_displaymonthcount = 2;//displaymonthcount
     _pDateRangeCalendar._p_enddate = undefined;//enddate
     _pDateRangeCalendar._p_enddatenulltext = "";//enddatenulltext
-    _pDateRangeCalendar._p_footerheight = 0;//footerheight
     _pDateRangeCalendar._p_format = "";//format
-    _pDateRangeCalendar._p_headerheight = 0;//headerheight
-    _pDateRangeCalendar._p_helpertext = "";//helpertext
     _pDateRangeCalendar._p_hintingcolumn = "";//hintingcolumn
     _pDateRangeCalendar._p_iconbuttonsize = 0;//iconbuttonsize
     _pDateRangeCalendar._p_innerdataset = "";//innerdataset
@@ -92,8 +88,12 @@ if (!nexacro.DateRangeCalendar)
     _pDateRangeCalendar._p_delimitertext = "-"; 
     
     //internal properties
+    _pDateRangeCalendar._value_delimiter = "-"; // value(startdate-enddate) 내부 고정 구분자. 표시용 delimitertext와 분리 (RP 105992)
     _pDateRangeCalendar._want_tabs = false;
     _pDateRangeCalendar._popuptype = (nexacro._isTouchInteraction) ? "mobile" : "normal";
+    _pDateRangeCalendar._range_invalid_start = false;//역전(start>end)/startdate 범위 밖으로 인한 startdatefield invalid 표시 여부
+    _pDateRangeCalendar._range_invalid_end = false;//enddate가 mindate/maxdate 범위 밖으로 인한 enddatefield invalid 표시 여부
+    _pDateRangeCalendar._popup_field = null; // popup이 열린 field 저장
 
     /* event list */
     //Todo
@@ -114,52 +114,54 @@ if (!nexacro.DateRangeCalendar)
     };
 
     _pDateRangeCalendar._properties = [
-    /*{ name: "accessibilityaction" },
-    { name: "accessibilitydesclevel" },
-    { name: "accessibilitydescription" },
-    { name: "accessibilityenable" },
-    { name: "accessibilitylabel" },
-    { name: "accessibilityrole" },*/
-    { name: "autoselect" },
-    { name: "autoskip" },
-    { name: "backgroundcolumn" },
-    { name: "bordercolumn" }, ///bordercolumn
-    { name: "cancelbuttontext" },
-    { name: "contentheight" },
-    { name: "datecolumn" },
-    { name: "displayformat" },
-    { name: "displaymonthcount" },
-    { name: "enddate" },
-    { name: "endlabeltext" },
-    { name: "enddatenulltext" },
-    { name: "format" },
-    { name: "hintingcolumn" },
-    { name: "iconbuttonsize" },
-    { name: "innerdataset" },
-    { name: "invalidvalueaction" },
-    { name: "labelfloatingfixed" },
-    { name: "labelgap" },
-    { name: "labelposition" },
-    { name: "locale" },
-    { name: "maskchar" },
-    { name: "maxdate" },
-    { name: "mindate" },
-    { name: "okbuttontext" },
-    { name: "popupsize" },
-    { name: "popuptype" },
-    { name: "popupdirection" },
-    { name: "readonlycolumn" },
-    { name: "startdate" },
-    { name: "startlabeltext" },
-    { name: "startdatenulltext" },
-    { name: "textcolorcolumn" },
-    { name: "usecontextmenu" },
-    { name: "usedropbutton" },
-    { name: "usesoftkeyboard" },
-    { name: "value" },
-    { name: "delimitertext" },
-    { name: "text", readonly: true }
-];
+        /*{ name: "accessibilityaction" },
+        { name: "accessibilitydesclevel" },
+        { name: "accessibilitydescription" },
+        { name: "accessibilityenable" },
+        { name: "accessibilitylabel" },
+        { name: "accessibilityrole" },*/
+        { name: "autoselect" },
+        { name: "autoskip" },
+        { name: "backgroundcolumn" },
+        { name: "bordercolumn" }, ///bordercolumn
+        { name: "cancelbuttontext" },
+        { name: "datecolumn" },
+        { name: "displayformat" },
+        { name: "displaymonthcount" },
+        { name: "enddate" },
+        { name: "endlabeltext" },
+        { name: "enddatenulltext" },
+        { name: "format" },
+        { name: "hintingcolumn" },
+        { name: "iconbuttonsize" },
+        { name: "innerdataset" },
+        { name: "invalidvalueaction" },
+        { name: "labelfloatingfixed" },
+        { name: "labelgap" },
+        { name: "labelposition" },
+        { name: "locale" },
+        { name: "maskchar" },
+        { name: "maxdate" },
+        { name: "mindate" },
+        { name: "okbuttontext" },
+        { name: "popupsize" },
+        { name: "popuptype" },
+        { name: "popupdirection" },
+        { name: "readonlycolumn" },
+        { name: "startdate" },
+        { name: "startlabeltext" },
+        { name: "startdatenulltext" },
+        { name: "textcolorcolumn" },
+        { name: "usecontextmenu" },
+        { name: "usedropbutton" },
+        { name: "usesoftkeyboard" },
+        { name: "value", readonly: true },
+        { name: "delimitertext" },
+        { name: "text", readonly: true },
+        { name: "delimiter", readonly: true },
+        { name: "startdatefield", readonly: true },
+        { name: "enddatefield", readonly: true }
+    ];
 
 
     //===============================================================
@@ -172,17 +174,19 @@ if (!nexacro.DateRangeCalendar)
         if (control_elem)
         {
             const startdatefield = this._p_startdatefield = new nexacro._DateFieldControl("startdatefield", 0, 0, 0, 0, null, null, null, null, null, null, this);
-            const enddatefield = this._p_enddatefield = new nexacro._DateFieldControl("enddatefield", 0, 0, 0, 0, null, null, null, null, null, null, this);
-            this._p_delimiter = new nexacro._DelimiterControl("delimiter", 0, 0, 0, 0, null, null, null, null, null, null, this);
-            //startdatefield.set_labeltext("Start Date");
-            startdatefield.set_usedropbutton(false);
-            //enddatefield.set_labeltext("End Date");
+            startdatefield.set_value(this._p_startdate);
             startdatefield.createComponent();
+            const enddatefield = this._p_enddatefield = new nexacro._DateFieldControl("enddatefield", 0, 0, 0, 0, null, null, null, null, null, null, this);
+            enddatefield.set_value(this._p_enddate);
             enddatefield.createComponent();
+            this._p_delimiter = new nexacro._DelimiterControl("delimiter", 0, 0, 0, 0, null, null, null, null, null, null, this);
             this._p_delimiter.createComponent();
+
             this.on_apply_usecontextmenu();
             this.on_apply_usedropbutton();
             this.on_apply_usesoftkeyboard();
+            this.on_apply_startdate();
+            this.on_apply_enddate();
         }
     };
 
@@ -194,22 +198,16 @@ if (!nexacro.DateRangeCalendar)
         this.on_apply_bordercolumn();
         if (this._p_cancelbuttontext)
             this.on_apply_cancelbuttontext();
-        if (this._p_contentheight)
-           this.on_apply_contentheight();
         this.on_apply_datecolumn();
         this.on_apply_displayformat();
         if (this._p_displaymonthcount)
             this.on_apply_displaymonthcount();
         if (this._p_enddate)
             this.on_apply_enddate();
-        if (this._p_enddatenulltext)
-            this.on_apply_enddatenulltext();
+        
         if (this._p_endlabeltext)
             this.on_apply_endlabeltext();
-        this.on_apply_footerheight();
         this.on_apply_format();
-        if (this._p_helpertext)
-            this.on_apply_helpertext();
         this.on_apply_hintingcolumn();
         if (this._p_iconbuttonsize)
            this.on_apply_iconbuttonsize();
@@ -230,11 +228,12 @@ if (!nexacro.DateRangeCalendar)
         this.on_apply_readonlycolumn();
         if (this._p_startdate)
             this.on_apply_startdate();
-        if (this._p_startdatenulltext)
-            this.on_apply_startdatenulltext();
         if (this._p_startlabeltext)
             this.on_apply_startlabeltext();
         this.on_apply_textcolorcolumn();
+        // command 경로에만 있어 element 생성 경로(NRE)에서 구분자 텍스트가 비어 보이지 않던 문제 보완 (RP 105864)
+        if (this._p_delimitertext)
+            this.on_apply_delimitertext();
         this._recalcLayout();
 
         this._p_startdatefield.on_created(win);
@@ -263,22 +262,15 @@ if (!nexacro.DateRangeCalendar)
         this.on_apply_bordercolumn();
         if (this._p_cancelbuttontext)
             this.on_apply_cancelbuttontext();
-        if (this._p_contentheight)
-           this.on_apply_contentheight();
         this.on_apply_datecolumn();
         this.on_apply_displayformat();
         if (this._p_displaymonthcount)
             this.on_apply_displaymonthcount();
         if (this._p_enddate)
             this.on_apply_enddate();
-        if (this._p_enddatenulltext)
-            this.on_apply_enddatenulltext();
         if (this._p_endlabeltext)
             this.on_apply_endlabeltext();
-        this.on_apply_footerheight();
         this.on_apply_format();
-        if (this._p_helpertext)
-            this.on_apply_helpertext();
         this.on_apply_hintingcolumn();
         if (this._p_iconbuttonsize)
            this.on_apply_iconbuttonsize();
@@ -299,8 +291,7 @@ if (!nexacro.DateRangeCalendar)
         this.on_apply_readonlycolumn();
         if (this._p_startdate)
             this.on_apply_startdate();
-        if (this._p_startdatenulltext)
-            this.on_apply_startdatenulltext();
+        
         if (this._p_startlabeltext)
             this.on_apply_startlabeltext();
         this.on_apply_textcolorcolumn();
@@ -345,6 +336,14 @@ if (!nexacro.DateRangeCalendar)
             //this._p_delimiter
             this._p_delimiter.attachHandle(win);
         }
+    };
+
+    _pDateRangeCalendar.on_after_created = function ()
+    {
+        if (this._p_startdatenulltext)
+            this.on_apply_startdatenulltext();
+        if (this._p_enddatenulltext)
+            this.on_apply_enddatenulltext();
     };
 
     //===============================================================
@@ -492,27 +491,6 @@ if (!nexacro.DateRangeCalendar)
     };
     */
 
-    _pDateRangeCalendar.set_contentheight = function (v)
-    {
-        if (this._p_contentheight != v)
-        {
-            this._p_contentheight = v;
-            this.on_apply_contentheight();
-        }
-    };
-    _pDateRangeCalendar.on_apply_contentheight = function ()
-    {
-        if (this._p_startdatefield)
-        {
-            this._p_startdatefield.set_contentheight(this._p_contentheight);
-        }
-
-        if (this._p_enddatefield)
-        {
-            this._p_enddatefield.set_contentheight(this._p_contentheight);
-        }
-    };
-
     _pDateRangeCalendar.set_datecolumn = function (v)
     {
         if (this._p_datecolumn != v)
@@ -588,14 +566,24 @@ if (!nexacro.DateRangeCalendar)
 
     _pDateRangeCalendar.set_displaymonthcount = function (v)
     {
+        var displaymonthcount_enum = [1, 2, 3];
+        if(displaymonthcount_enum.indexOf(+v) == -1)
+            return;
+
         if (this._p_displaymonthcount != v)
         {
             this._p_displaymonthcount = v;
             this.on_apply_displaymonthcount();
         }
     };
+
     _pDateRangeCalendar.on_apply_displaymonthcount = function ()
     {
+        if (this._p_startdatefield)
+        {
+            this._p_startdatefield._setDisplayMonthCount(this._p_displaymonthcount);
+        }
+
         if (this._p_enddatefield)
         {
             this._p_enddatefield._setDisplayMonthCount(this._p_displaymonthcount);
@@ -606,6 +594,9 @@ if (!nexacro.DateRangeCalendar)
     {
         if (this._p_enddate != v)
         {
+            if (!this.applyto_bindSource("enddate", v))
+                return;
+
             this._p_enddate = v;
             this.on_apply_enddate();
         }
@@ -616,6 +607,8 @@ if (!nexacro.DateRangeCalendar)
         {
             this._p_enddatefield.set_value(this._p_enddate);
         }
+
+        this._checkRangeInvalid();
     };
 
     _pDateRangeCalendar.set_enddatenulltext = function (v)
@@ -650,29 +643,6 @@ if (!nexacro.DateRangeCalendar)
         }   
     };
 
-
-    _pDateRangeCalendar.set_footerheight = function (v)
-    {
-        if (this._p_footerheight != v)
-        {
-            this._p_footerheight = v;
-            this.on_apply_footerheight();
-        }
-    };
-
-    _pDateRangeCalendar.on_apply_footerheight = function ()
-    {
-        if (this._p_startdatefield)
-        {
-            this._p_startdatefield.set_footerheight(this._p_footerheight);
-        }
-
-        if (this._p_enddatefield)
-        {
-            this._p_enddatefield.set_footerheight(this._p_footerheight);
-        }
-    };
-
     _pDateRangeCalendar.set_format = function (v)
     {
         if (this._p_format != v)
@@ -691,27 +661,6 @@ if (!nexacro.DateRangeCalendar)
         if (this._p_enddatefield)
         {
             this._p_enddatefield.set_format(this._p_format);
-        }
-    };
-    
-    _pDateRangeCalendar.set_helpertext = function (v)
-    {
-        if (this._p_helpertext != v)
-        {
-            this._p_helpertext = v;
-            this.on_apply_helpertext();
-        }
-    };
-    _pDateRangeCalendar.on_apply_helpertext = function ()
-    {
-        if (this._p_startdatefield)
-        {
-            this._p_startdatefield.set_helpertext(this._p_helpertext);
-        }
-
-        if (this._p_enddatefield)
-        {
-         //   this._p_enddatefield.set_helpertext(this._p_helpertext);
         }
     };
 
@@ -746,6 +695,11 @@ if (!nexacro.DateRangeCalendar)
     };
     _pDateRangeCalendar.on_apply_iconbuttonsize = function ()
     {
+        if (this._p_startdatefield)
+        {
+            this._p_startdatefield.set_iconbuttonsize(this._p_iconbuttonsize);
+        }
+
         if (this._p_enddatefield)
         {
             this._p_enddatefield.set_iconbuttonsize(this._p_iconbuttonsize);
@@ -1009,6 +963,8 @@ if (!nexacro.DateRangeCalendar)
         {
             this._p_enddatefield._setMaxDate(this._p_maxdate);
         }
+
+        this._checkRangeInvalid();
     };
 
     _pDateRangeCalendar.set_mindate = function (v)
@@ -1030,6 +986,48 @@ if (!nexacro.DateRangeCalendar)
         if (this._p_enddatefield)
         {
             this._p_enddatefield._setMinDate(this._p_mindate);
+        }
+
+        this._checkRangeInvalid();
+    };
+
+    // startdate/enddate/mindate/maxdate 값이 역전(startdate > enddate)되거나
+    // start/end 값이 [mindate, maxdate] 범위를 벗어나면 startdatefield에 invalidstatus를 표시한다.
+    // 바인딩으로 들어온 값은 보정(swap/무시)하지 않고 그대로 유지한다.
+    // 순서·범위 판정은 편집 경로(_confirmValue)와 동일하게 _isValidValue로 일원화한다.
+    _pDateRangeCalendar._checkRangeInvalid = function ()
+    {
+        var startdatefield = this._p_startdatefield;
+        var enddatefield = this._p_enddatefield;
+        if (!startdatefield || !enddatefield)
+            return;
+
+        // mindate/maxdate 범위 위반은 해당 field에, 역전(start>end)은 startdatefield에 대표 표시한다.
+        var reversed = this._p_startdate && this._p_enddate && this._p_startdate > this._p_enddate;
+        var start_invalid = reversed || !startdatefield._isInRangeValue(this._p_startdate);
+        var end_invalid = !enddatefield._isInRangeValue(this._p_enddate);
+
+        // range 사유로 설정한 invalid만 해제하여, 필드 자체의 값 invalid(파싱 실패 등)를 덮어쓰지 않는다.
+        if (start_invalid)
+        {
+            startdatefield._invalidStatus(true, true);
+            this._range_invalid_start = true;
+        }
+        else if (this._range_invalid_start)
+        {
+            startdatefield._invalidStatus(false, true);
+            this._range_invalid_start = false;
+        }
+
+        if (end_invalid)
+        {
+            enddatefield._invalidStatus(true, true);
+            this._range_invalid_end = true;
+        }
+        else if (this._range_invalid_end)
+        {
+            enddatefield._invalidStatus(false, true);
+            this._range_invalid_end = false;
         }
     };
 
@@ -1133,6 +1131,9 @@ if (!nexacro.DateRangeCalendar)
         //Todo
         if (this._p_startdate != v)
         {
+            if (!this.applyto_bindSource("startdate", v))
+                return;
+
             this._p_startdate = v;
             this.on_apply_startdate();
         }
@@ -1143,8 +1144,9 @@ if (!nexacro.DateRangeCalendar)
         if (this._p_startdatefield)
         {
             this._p_startdatefield.set_value(this._p_startdate);
-        }  
+        }
         //this._on_apply_value();
+        this._checkRangeInvalid();
     };
 
     _pDateRangeCalendar.set_startdatenulltext = function (v)
@@ -1276,36 +1278,16 @@ if (!nexacro.DateRangeCalendar)
     };
     _pDateRangeCalendar.on_apply_usedropbutton = function ()
     {
-        //Todo
+        if (this._p_startdatefield)
+        {
+            this._p_startdatefield.set_usedropbutton(this._p_usedropbutton);
+        }
+
         if (this._p_enddatefield)
         {
             this._p_enddatefield.set_usedropbutton(this._p_usedropbutton);
         }
     };
-    /*
-    _pDateRangeCalendar.set_usehelpertext = function (v)
-    {
-        //Todo
-        if (this._p_usehelpertext != v)
-        {
-            this._p_usehelpertext = v;
-            this.on_apply_usehelpertext();
-        }
-    };
-    _pDateRangeCalendar.on_apply_usehelpertext = function ()
-    {
-        //Todo
-        if (this._p_startdatefield)
-        {
-            this._p_startdatefield.set_usehelpertext(this._p_usehelpertext);
-        }
-
-        if (this._p_enddatefield)
-        {
-            this._p_enddatefield.set_usehelpertext(this._p_usehelpertext);
-        }
-    };
-    */
 
     _pDateRangeCalendar.set_usesoftkeyboard = function (v)
     {
@@ -1345,23 +1327,27 @@ if (!nexacro.DateRangeCalendar)
         let endValue = null;
         const value = this._p_value;
 
-        if (value.includes("-"))
+        if (value && value.includes(this._value_delimiter))
         {
-            const [start, end] = value.split("-");
+            const [start, end] = value.split(this._value_delimiter);
             startValue = start;
             endValue = end;
-        } 
+        }
         else
         {
             startValue = value;
         }
+        // 문자열 "null"/"undefined"를 null로 변환한다 ("" 는 invalidvalueaction 결과이므로 보존) (RP 105992)
+        startValue = (startValue === "null" || startValue === "undefined") ? null : startValue;
+        endValue = (endValue === "null" || endValue === "undefined") ? null : endValue;
         if (this._p_startdatefield)
         {
             this._p_startdatefield.set_value(startValue);
-            this._p_enddatefield._setStartdate(startValue);
         }
-        if (this._p_startdatefield)
+        if (this._p_enddatefield)
+        {
             this._p_enddatefield.set_value(endValue);
+        }
     };
 
     _pDateRangeCalendar.set_delimitertext = function (v)
@@ -1378,6 +1364,8 @@ if (!nexacro.DateRangeCalendar)
         if (this._p_delimiter)
         {
             this._p_delimiter.set_text(this._p_delimitertext);
+            // 텍스트 폭에 맞춰 delimiter/datefield 영역을 다시 계산한다 (RP 105891)
+            this._recalcLayout();
         }
     };
 
@@ -1517,12 +1505,14 @@ if (!nexacro.DateRangeCalendar)
         var is_changed = false;
         if (e._apply_value)
         {
-            var curvalue = e._startdate;
-            this.set_startdate(curvalue);
-            var endvalue = e._enddate == "" ? null : e._enddate;
+            var startvalue = e._startdate;
+            this.set_startdate(startvalue);
+            startvalue = nexacro._isNull(this._p_startdate) ? "null" : startvalue; // startdate 문자열 처리
+            var endvalue = e._enddate == "" ? (e._startdate || null) : e._enddate;
             this.set_enddate(endvalue);
-            var curvalue = this._p_startdate + "-" + this._p_enddate;
-            var curtext = startdatefield._default_text + "" + this._p_delimitertext + enddatefield._default_text;//this._makeBufferTextFromValue(curvalue);
+            endvalue = nexacro._isNull(this._p_enddate) ? "null" : endvalue; // enddate 문자열 처리
+            var curvalue = startvalue + this._value_delimiter + endvalue; // value는 문자열로 처리 null/undefined는 null 처리
+            var curtext = startdatefield._default_text + this._p_delimitertext + enddatefield._default_text;//this._makeBufferTextFromValue(curvalue);
             is_changed = this._on_value_change(pretext, prevalue, curtext, curvalue);
         }
 
@@ -1534,10 +1524,17 @@ if (!nexacro.DateRangeCalendar)
         }
         if (!this._onlydisplay)
         {
-            enddatefield.setFocus();
-            const end_input = enddatefield._input_element;
-            if (end_input.setElementFocus)
-                end_input.setElementFocus();
+            // 팝업이 닫히면 startdatefiled부터 입력 가능하도록 수정 RP 105853
+            startdatefield._setInitCaret();
+            startdatefield._setFocus(false);
+            this._setLastFocusedControl(startdatefield); // 값 확정후 탭키 이동시 오류 보정
+        }
+
+        // 닫힐 때 popup_field label unfloat(값 있으면 유지). 외부 닫기 포함 모든 경로 처리. (RP 105861)
+        if (this._popup_field)
+        {
+            this._popup_field._setLabelFloating(false, true);
+            this._popup_field = null;
         }
 
         //fire event
@@ -1550,9 +1547,9 @@ if (!nexacro.DateRangeCalendar)
         var startdate = null, enddate = null;
         if (v != null && v !== "")
         {
-            var arr = String(v).split("-");
-            startdate = (arr[0] === "" || arr[0] === "null" || arr[0] === "undefined") ? null : arr[0];
-            enddate = (arr[1] === undefined || arr[1] === "" || arr[1] === "null" || arr[1] === "undefined") ? null : arr[1];
+            var arr = String(v).split(this._value_delimiter);
+            startdate = (arr[0] === "null" || arr[0] === "undefined") ? null : arr[0];
+            enddate = (arr[1] === "null" || arr[1] === "undefined") ? null : arr[1];
         }
         return [startdate, enddate];
     };
@@ -1581,12 +1578,13 @@ if (!nexacro.DateRangeCalendar)
             ret = false;
         }
         */
-        else if (this._bind_event)
-        {
-            var ret_apply = this.applyto_bindSource("value", postvalue);
-            if (!ret_apply || this._p_value === prevalue)
-                ret = false;
-        }
+        // value는 readonly 속성이라 bind 대상이 아님
+        // else if (this._bind_event)
+        // {
+        //     var ret_apply = this.applyto_bindSource("value", postvalue);
+        //     if (!ret_apply || this._p_value === prevalue)
+        //         ret = false;
+        // }
 
         if (!ret)
         {
@@ -1674,11 +1672,50 @@ if (!nexacro.DateRangeCalendar)
 
     _pDateRangeCalendar.on_killfocus_basic_action = function (new_focus, new_refer_focus)
     {
-        var curvalue = this._p_startdate + "-" + this._p_enddate;
-        var curtext = this._p_startdatefield._default_text + "" + this._p_delimitertext + this._p_enddatefield._default_text;//this._makeBufferTextFromValue(curvalue);
+        var curvalue = this._p_startdate + this._value_delimiter + this._p_enddate;
+        var curtext = this._p_startdatefield._default_text + this._p_delimitertext + this._p_enddatefield._default_text;//this._makeBufferTextFromValue(curvalue);
         if (this._p_value != curvalue)
         {
             this._on_value_change(this._p_text, this._p_value, curtext, curvalue);
+        }
+    };
+
+    _pDateRangeCalendar.on_getBindableProperties = function ()
+    {
+        return ["startdate", "enddate"];
+    };
+
+    _pDateRangeCalendar.on_init_bindSource = function (columnid, propid, ds)
+    {
+        if (propid == "startdate" || propid == "enddate")
+        {
+            this["set_" + propid](undefined);
+        }
+    };
+
+    _pDateRangeCalendar.on_change_bindSource = function (propid, ds, row, col)
+    {
+        if (propid == "startdate" || propid == "enddate")
+        {
+            var v = ds.getColumn(row, col);
+            if (typeof (v) == "object")
+                v = this._convertValueType(v, v, true);
+
+            if (propid == "startdate")
+            {
+                if (this._p_startdatefield)
+                {
+                    this._p_startdatefield.set_value(v);
+                }
+            }
+            else if (propid == "enddate")
+            {
+                if (this._p_enddatefield)
+                {
+                    this._p_enddatefield.set_value(v);
+                }
+            }
+            this._on_apply_value();
         }
     };
 
@@ -1701,8 +1738,23 @@ if (!nexacro.DateRangeCalendar)
             const delimiter_size = delimiter._on_getFitSize();
             const delimiter_width = delimiter_size[0];
             const available_width = client_width - delimiter_width;
-            let startdatefield_width = available_width * 0.43;
+            let startdatefield_width = available_width * 0.5;
             let enddatefield_width = available_width - startdatefield_width; // 나머지 전부
+
+            // delimiter는 datefield의 box(입력영역) 위치에 맞춰 정렬한다.
+            // datefield는 상단 floating label 공간(header)과 하단 helper line(footer)만큼
+            // box가 안쪽으로 배치되므로, delimiter도 동일한 box 영역에 위치시켜야
+            // labelposition 등으로 box 위치가 바뀌어도 delimiter가 따라간다.
+            let delimiter_top = client_top;
+            let delimiter_height = client_height;
+            if (startdatefield)
+            {
+                let header_height = startdatefield.getFloatingLabelSpace ? startdatefield.getFloatingLabelSpace() : 0;
+                let footer_height = startdatefield._getHelperLineHeight ? startdatefield._getHelperLineHeight() : 0;
+                delimiter_top = client_top + header_height;
+                delimiter_height = client_height - header_height - footer_height;
+            }
+
             if (startdatefield)
             {
                 startdatefield.move(client_left, client_top, startdatefield_width, client_height, null, null);
@@ -1710,7 +1762,7 @@ if (!nexacro.DateRangeCalendar)
 
             if (delimiter)
             {
-                delimiter.move(client_left + startdatefield_width, client_top, delimiter_width, client_height, null, null);
+                delimiter.move(client_left + startdatefield_width, delimiter_top, delimiter_width, delimiter_height, null, null);
             }
 
             if (enddatefield)
@@ -1721,7 +1773,7 @@ if (!nexacro.DateRangeCalendar)
     };
 
 
-    _pDateRangeCalendar._showPopup = function ()
+    _pDateRangeCalendar._showPopup = function (popup_field)
     {
         /* 접근성 작업 후 Accessibility_Comp.js에 이관 */
         //if (nexacro._enableaccessibility)
@@ -1742,6 +1794,8 @@ if (!nexacro.DateRangeCalendar)
 
             if (ret)
             {
+                // 팝업은 enddatefield에 단일 앵커한다. popup_field는 어느 field에서 열었는지(label 제어용)만 기록. (RP 105861)
+                this._popup_field = popup_field ? popup_field : this._p_startdatefield;
                 let enddatefield = this._p_enddatefield;
                 enddatefield._createPopupDatePickerControl();
                 var popupcontrol = enddatefield._popupcontrol;
@@ -1831,8 +1885,21 @@ if (!nexacro.DateRangeCalendar)
                 {
                     _window._setCaptureLock(this, true, false);
                 }
+
+                // enddatefield 앵커라 startdatefield를 눌러도 enddatefield label만 뜨는 문제 보정. (RP 105861)
+                this._setPopupFieldLabelFloating();
             }
         }
+    };
+
+    // 팝업을 연 field label은 float, 반대 field label은 unfloat(값 있으면 유지). (RP 105861)
+    _pDateRangeCalendar._setPopupFieldLabelFloating = function ()
+    {
+        if (!this._popup_field)
+            return;
+        this._popup_field._setLabelFloating(true, true);
+        var other_field = (this._popup_field === this._p_startdatefield) ? this._p_enddatefield : this._p_startdatefield;
+        other_field._setLabelFloating(false, true);
     };
 
     _pDateRangeCalendar._getDlgCode = function (keycode, altKey, ctrlKey, shiftKey)
@@ -1943,7 +2010,7 @@ if (!nexacro.DateRangeCalendar)
         /*
         else if (key_code == nexacro.Event.KEY_ENTER)
         {
-            var curvalue = this._p_startdate + "-" + this._p_enddate;
+            var curvalue = this._p_startdate +  this._value_delimiter + this._p_enddate;
             var curtext = this._p_startdatefield._default_text + "" + this._p_delimitertext + this._p_enddatefield._default_text;//this._makeBufferTextFromValue(curvalue);
             if (this._p_value != curvalue)
             {
@@ -1959,7 +2026,7 @@ if (!nexacro.DateRangeCalendar)
 	{
         if (keycode == nexacro.Event.KEY_ENTER)
         {
-            var curvalue = this._p_startdate + "-" + this._p_enddate;
+            var curvalue = this._p_startdate +  this._value_delimiter + this._p_enddate;
             var curtext = this._p_startdatefield._default_text + "" + this._p_delimitertext + this._p_enddatefield._default_text;//this._makeBufferTextFromValue(curvalue);
             if (this._p_value != curvalue)
             {
@@ -2063,8 +2130,8 @@ if (!nexacro.DateRangeCalendar)
 
     _pDateRangeCalendar._on_apply_value = function ()
     {
-        var curvalue = (this._p_startdate ? this._p_startdate : null) + "-" + (this._p_enddate ? this._p_enddate : null);
-        var curtext = this._p_startdatefield._default_text + "" + this._p_delimitertext + this._p_enddatefield._default_text;//this._makeBufferTextFromValue(curvalue);
+        var curvalue = (nexacro._isNull(this._p_startdate) ? "null" : this._p_startdate) + this._value_delimiter + (nexacro._isNull(this._p_enddate) ? "null" : this._p_enddate);
+        var curtext = this._p_startdatefield._default_text + this._p_delimitertext + this._p_enddatefield._default_text;//this._makeBufferTextFromValue(curvalue);
         //trace("curvalue", curvalue, "this._p_value", this._p_value)
         this._on_value_change(this._p_text, this._p_value, curtext, curvalue);
     };
@@ -2159,7 +2226,7 @@ if (!nexacro.DateRangeCalendar)
         let daterangecalendar = this.parent;
         if (daterangecalendar)
         {
-            daterangecalendar._showPopup();
+            daterangecalendar._showPopup(this); // 클릭한 field를 label 제어용으로 전달 (RP 105861)
         }
     };
 
@@ -2173,7 +2240,7 @@ if (!nexacro.DateRangeCalendar)
 
         datepicker = this._p_datetimepicker = new nexacro._DateRangePickerControl("daterangepicker", 0, 0, 0, 0, null, null, null, null, null, null, this);
         datepicker._excluded_flex = true;
-        datepicker._setControl();
+        //datepicker._setControl();
         datepicker._is_popup_child = true;
         datepicker.set_displaymonthcount(this._displaymonthcount ? this._displaymonthcount : 2);
         datepicker.set_type("range");
@@ -2191,9 +2258,15 @@ if (!nexacro.DateRangeCalendar)
         var size = this._p_popupsize;
         let displaymonthcount = datepicker._p_displaymonthcount;
         if (!size)
-            size = 220 * displaymonthcount + " 250";
-
-        size = size.split(/\s+/);
+        {
+            size = []; // 배열로 변환
+            size.push(220 * displaymonthcount);
+            size.push(250);
+        }
+        else
+        {
+            size = size.split(/\s+/);
+        }
 
         var width = +size[0];
         var height = size[1] ? +size[1] : width;
@@ -2223,15 +2296,15 @@ if (!nexacro.DateRangeCalendar)
     };
 
     _pDateFieldControl._on_datepicker_oncloseup = function (obj, e)
-    {          
-        this.parent._on_datepicker_oncloseup(obj, e);
+    {
+        var datecalendar = this._p_parent;
+        if (!datecalendar)
+            return;
+
+        datecalendar._on_datepicker_oncloseup(obj, e);
+
         if (this._isPopupVisible())
             this._closePopup(this._p_autoskip);
-
-        if (!this._onlydisplay)
-        {
-            this._input_element.setElementFocus();
-        }
     };
    
     _pDateFieldControl._setEventHandlerToDatePicker = function ()
@@ -2305,11 +2378,14 @@ if (!nexacro.DateRangeCalendar)
         else
         {
             this._showPopup();
-            //this._setDatePickerValue(this._getConfirmValue()); 
+            //this._setDatePickerValue(this._getConfirmValue());
             if (!this._p_autoselect)
             {
                 this._setInitCaret();
             }
+            // _setInitCaret이 enddatefield picker에 focus를 줘 label을 다시 띄우므로 이후 보정. (RP 105861)
+            if (this.parent)
+                this.parent._setPopupFieldLabelFloating();
         }
 
         return false;
@@ -2325,10 +2401,10 @@ if (!nexacro.DateRangeCalendar)
     {
         var ret = false;
         if (this.id == "enddatefield")
-        {             
+        {
             if (this._popupcontrol)
                 ret = this._popupcontrol._p_visible;
-            
+
             return ret;
         }
         const drc = this.parent;
@@ -2356,7 +2432,7 @@ if (!nexacro.DateRangeCalendar)
                     pc._attached_comp._setFocus(false);
                 }
             }
-            
+
         }
     };
 
@@ -2410,14 +2486,16 @@ if (!nexacro.DateRangeCalendar)
     _pDateFieldControl.on_killfocus_basic_action = function (new_focus, new_refer_focus)
     {
         nexacro.DateField.prototype.on_killfocus_basic_action.call(this, new_focus, new_refer_focus);
-        if (this.id == "startdatefield" && this._p_parent)
-        {
-            this._p_parent._setStartdate(this._p_value);
-        } 
-        else if (this.id == "enddatefield" && this._p_parent)
-        {
-            this._p_parent._setEnddate(this._p_value);
-        }     
+        this.on_apply_value();
+
+        // if (this.id == "startdatefield" && this._p_parent)
+        // {
+        //     this._p_parent._setStartdate(this._p_value);
+        // } 
+        // else if (this.id == "enddatefield" && this._p_parent)
+        // {
+        //     this._p_parent._setEnddate(this._p_value);
+        // }     
     };
     
     /*
@@ -2543,7 +2621,7 @@ if (!nexacro.DateRangeCalendar)
         var pre_text = this._default_text;
         var input_value = input_elem._getInputValue();
         var cur_value, cur_text;
-       
+
         if (this._p_value != null) // 입력을 한번도 안한 경우
         {
             if (input_value == this._getEmptyText() || input_value == "")
@@ -2590,6 +2668,13 @@ if (!nexacro.DateRangeCalendar)
 
         if (this._on_value_change(pre_text, pre_value, this._p_text, this._p_value))
         {
+            // value 확정시 startdatefield로 focus 이동 (RP 105853). 단 tab-out(killfocus) 중엔 정상 tab 이동을 가로채지 않도록 skip.
+            var startdatefield = this.parent._p_startdatefield;
+            if (startdatefield && this != startdatefield && !this._is_killfocusing)
+            {
+                startdatefield._setFocus(false);
+                this.parent._setLastFocusedControl(startdatefield); // 값 확정후 탭키 이동시 오류 보정
+            }
             this.on_fire_onchanged(this, pre_value, this._p_value);
         }
         else
@@ -2601,7 +2686,28 @@ if (!nexacro.DateRangeCalendar)
 
     _pDateFieldControl._isValidValue = function (cur_value)
     {
-        return this.id =="enddatefield" && this.parent._p_startdate && cur_value < this.parent._p_startdate || this.id =="startdatefield" && this.parent._p_enddate && cur_value > this.parent._p_enddate ? false : true;
+        // 순서(start <= end) 검증
+        if (this.id == "enddatefield" && this.parent._p_startdate && cur_value < this.parent._p_startdate)
+            return false;
+        if (this.id == "startdatefield" && this.parent._p_enddate && cur_value > this.parent._p_enddate)
+            return false;
+
+        // mindate/maxdate 범위 검증 (편집 영역에서도 범위 밖 값을 invalid로 처리 - RP 105862)
+        return this._isInRangeValue(cur_value);
+    }
+
+    // mindate/maxdate 범위 검증 (범위 위반 field 판정용으로 분리)
+    _pDateFieldControl._isInRangeValue = function (cur_value)
+    {
+        if (cur_value)
+        {
+            if (this._mindate && cur_value < this._mindate)
+                return false;
+            if (this._maxdate && cur_value > this._maxdate)
+                return false;
+        }
+
+        return true;
     }
 
     //===============================================================
@@ -2647,12 +2753,22 @@ if (!nexacro.DateRangeCalendar)
     nexacro._DateRangePickerControl.prototype = _pDateRangePickerControl;
     _pDateRangePickerControl._type_name = "DateRangePickerControl";
 
+    /* internal variable */
+    _pDateRangePickerControl._is_subcontrol = true;
+
     _pDateRangePickerControl._isUseOKButton = function ()
     {
         return true;
     };
 
-
+    _pDateRangePickerControl.applyto_bindSource = function (propid, Val)
+    {
+        var daterangecalendar = this._p_parent._p_parent;
+        if (daterangecalendar && (propid == "startdate" || propid == "enddate"))
+        {
+            return daterangecalendar.applyto_bindSource(propid, Val);
+        }
+    };
     _pDateRangePickerControl = null;
 
 }

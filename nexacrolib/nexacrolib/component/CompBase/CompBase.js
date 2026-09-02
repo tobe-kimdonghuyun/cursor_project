@@ -1,4 +1,4 @@
-﻿//==============================================================================
+//==============================================================================
 //
 //  TOBESOFT Co., Ltd.
 //  Copyright 2017 TOBESOFT Co., Ltd.
@@ -3106,6 +3106,21 @@ if (!nexacro.Component)
         var bContainerFocus = !bInnerFocus;
         var block_inner, from_child = false;
 
+        // 반환값(이전에 focus를 가진 오브젝트)은 focus path 조작 전에 확보
+        var last_focused = this._find_lastFocused();
+        if (!last_focused)
+        {
+            // 컨테이너 자신이 focus를 가진 경우 _last_focused가 없으므로 focus path의 말단을 이전 focus로 반환
+            var cur_focus_paths = win.getCurrentFocusPaths();
+            if (cur_focus_paths && cur_focus_paths.length > 0)
+            {
+                var focus_leaf = cur_focus_paths[cur_focus_paths.length - 1];
+                if (focus_leaf && focus_leaf._is_component && !focus_leaf._is_frame)
+                    last_focused = focus_leaf;
+            }
+        }
+        var focus_aborted = false;
+
         if (bContainerFocus)
         {
             // 내가 Container이면 하위 탐색을 하지 않도록함.
@@ -3118,10 +3133,48 @@ if (!nexacro.Component)
                 // 명시적으로 호출한 경우 LastFocus제거. 상위로 올라갈수 있도록함.
                 if (this._last_focused)
                 {
-                    if (win._indexOfCurrentFocusPaths(this._last_focused) >= 0)
+                    var last_focused_idx = win._indexOfCurrentFocusPaths(this._last_focused);
+                    if (last_focused_idx >= 0)
                     {
                         from_child = true;
+
+                        // focus path에서 제거되는 하위 컴포넌트들의 onkillfocus 이벤트 발생 (하위 -> 상위 순)
+                        var kill_focus_arrs = win.getCurrentFocusPaths().slice(last_focused_idx).reverse();
                         win._removeFromCurrentFocusPath(this._last_focused);
+
+                        for (var k = 0, kill_len = kill_focus_arrs.length; k < kill_len; k++)
+                        {
+                            var lose_focus = kill_focus_arrs[k];
+                            if (lose_focus && lose_focus._is_alive && !lose_focus._is_killfocusing && lose_focus._p_enableevent)
+                            {
+                                lose_focus._is_killfocusing = true;
+
+                                var focus_path_before = win.getCurrentFocusPaths().slice(0);
+                                lose_focus.on_fire_onkillfocus(this, this);
+                                var focus_path_after = win.getCurrentFocusPaths();
+
+                                lose_focus._is_killfocusing = false;
+
+                                // onkillfocus 처리중 사용자가 focus를 변경한 경우 진행중인 focus 처리 중단
+                                var is_focus_changed = (focus_path_before.length != focus_path_after.length);
+                                if (!is_focus_changed)
+                                {
+                                    for (var j = 0; j < focus_path_before.length; j++)
+                                    {
+                                        if (focus_path_before[j] != focus_path_after[j])
+                                        {
+                                            is_focus_changed = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (is_focus_changed)
+                                {
+                                    focus_aborted = true;
+                                    break;
+                                }
+                            }
+                        }
                     }
                     else
                     {
@@ -3132,7 +3185,7 @@ if (!nexacro.Component)
         }
 
         // 브라우저에 의해 조절되기 전에 미리 resetScroll처리
-        if (bResetScroll)
+        if (bResetScroll && !focus_aborted)
         {
             var _p = this._p_parent;
 
@@ -3184,7 +3237,6 @@ if (!nexacro.Component)
             }
         }
 
-        var last_focused = this._find_lastFocused();
         var evt_name = "focus";
         //if (focus_direction >= 0)
         //    evt_name = "tabkey";
@@ -3214,10 +3266,13 @@ if (!nexacro.Component)
         //evt_name = this._focus_direction;
         this._focus_direction = -1;
 
-        this._on_focus(true, evt_name);
-        if (from_child)
+        if (!focus_aborted)
         {
-            this._apply_setfocus(evt_name);
+            this._on_focus(true, evt_name);
+            if (from_child)
+            {
+                this._apply_setfocus(evt_name);
+            }
         }
 
         if (this._block_inner_focus && !block_inner)

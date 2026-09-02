@@ -1,4 +1,4 @@
-﻿/**
+/**
  *  devPack Library
  *  @FileName 	ExtLib.js
  *  @Creator 	TOBESOFT

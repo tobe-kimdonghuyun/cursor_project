@@ -1,4 +1,4 @@
-﻿/**
+/**
  *  devPack Library
  *  @FileName 	Comp.js
  *  @Creator 	TOBESOFT

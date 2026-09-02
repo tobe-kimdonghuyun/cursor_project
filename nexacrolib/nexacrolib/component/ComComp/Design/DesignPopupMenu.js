@@ -1,4 +1,4 @@
-ï»¿//==============================================================================
+//==============================================================================
 //
 //  TOBESOFT Co., Ltd.
 //  Copyright 2017 TOBESOFT Co., Ltd.
@@ -45,7 +45,7 @@ if (nexacro.PopupMenu)
         var offset_left = (form._adjust_width / 4) - (this._adjust_width / 2);
         var offset_top = (form._adjust_height / 2) - (this._adjust_height / 2);
 
-        /*  sonarQubeï¿½ï¿½ ï¿½É¸ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½Ã³ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Æ·ï¿½ this.trackPopup() È£ï¿½ï¿½ï¿½ï¿½
+        /*  sonarQube¿¡ °É¸², ±âÁ¸³»¿ë ÁÖ¼®Ã³¸®ÇÏ°í ¾Æ·¡ this.trackPopup() È£ÃâÇÔ
         if (this.isPopup())
         {
          //  this._closePopup();
@@ -137,7 +137,7 @@ if (nexacro.PopupMenu)
             if (ds && this._p_levelcolumn && this._p_captioncolumn && this._p_idcolumn)
             {
                 var item_index = 0;
-                var row_index = this.datarow; // datarow ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ï¿½ï¿½
+                var row_index = this.datarow; // datarow ³»ºÎº¯¼öÀÓ
                 var ds_len = ds.getRowCount();
 
                 var top = 0;
@@ -189,7 +189,7 @@ if (nexacro.PopupMenu)
                         popupmenuitem._setHotkeyText(hotkey || "");
                         popupmenuitem._setUserdata(userdata);
 
-                        // ï¿½ï¿½ï¿½ï¿½ ï¿½ß¿ï¿½
+                        // ¼ø¼­ Áß¿ä
                         check = nexacro._toBoolean(check);
 
                         if (check)

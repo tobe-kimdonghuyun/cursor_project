@@ -1,4 +1,4 @@
-﻿if (nexacro._OS == "Android" && nexacro._isHybrid && nexacro._isHybrid())
+if (nexacro._OS == "Android" && nexacro._isHybrid && nexacro._isHybrid())
 {
 // Platform: cordova-android
 // cordova-js 6.1.0

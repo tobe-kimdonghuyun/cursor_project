@@ -1,4 +1,4 @@
-﻿//==============================================================================
+//==============================================================================
 //
 //  TOBESOFT Co., Ltd.
 //  Copyright 2025 TOBESOFT Co., Ltd.
@@ -174,6 +174,7 @@ if (!nexacro.SelectField)
         nexacro.TextField.prototype.on_after_created_ext.call(this);
 
         this._setEventHandlerToBox();
+        this.redraw();
     };
 
     _pSelectField._setEventHandlerToTrailingButton = function ()

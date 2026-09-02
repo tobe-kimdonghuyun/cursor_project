@@ -1,4 +1,4 @@
-﻿/**
+/**
  *  devPack Library
  *  @FileName 	Excel.js
  *  @Creator 	TOBESOFT

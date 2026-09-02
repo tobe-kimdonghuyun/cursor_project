@@ -1,4 +1,4 @@
-ï»¿//==============================================================================
+//==============================================================================
 //
 //  TOBESOFT Co., Ltd.
 //  Copyright 2017 TOBESOFT Co., Ltd.
@@ -269,7 +269,7 @@ if (!nexacro.WebBrowser)
         {
             this._setAccessibilityStatFocus(evt_name);
 
-            //RP 74655 Runtimeï¿½ï¿½ï¿½ï¿½ comboï¿½ï¿½ disable ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¿ï¿½ï¿½ ï¿½Ì»ï¿½ ï¿½ï¿½ï¿½ï¿½
+            //RP 74655 Runtime¿¡¼­ combo°¡ disable ÀÏ °æ¿ì Æ÷Ä¿½º ÀÌ»ó Çö»ó
             //if (nexacro._Browser == "Runtime" && !this._isEnable()) return;
         }
         this._apply_setfocus(evt_name, self_flag, refer_lose_focus, refer_new_focus);

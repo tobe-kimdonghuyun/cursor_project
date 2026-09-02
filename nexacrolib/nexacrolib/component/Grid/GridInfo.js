@@ -1,4 +1,4 @@
-﻿//==============================================================================
+//==============================================================================
 //
 //  TOBESOFT Co., Ltd.
 //  Copyright 2017 TOBESOFT Co., Ltd.
@@ -296,29 +296,32 @@ if (!nexacro.GridFormat)
 			var cell_substyle;
 			var cell_substyle_val;
 			var change_val = [];
-			while (checklist.length)
-			{
-				var prop = checklist[0];
-				if (prop)
-				{
-					cell_substyle = cell_style[prop];
-					cell_substyle_val = cell_substyle.value;
-					if (cell_substyle.style == "none")
-					{
-						cell_substyle_val = "0px solid transparent"
-					}
-					else 
-					{
-						if (cell_substyle.color == "")
-						{
-							is_change = true;
-							cell_substyle_val += " " + color;
-						}
-					}
-				}
-				change_val.push(cell_substyle_val);
-				checklist.shift();
-			}
+            if (cell_style)
+            {
+                while (checklist.length)
+                {
+                    var prop = checklist[0];
+                    if (prop)
+                    {
+                        cell_substyle = cell_style[prop];
+                        cell_substyle_val = cell_substyle.value;
+                        if (cell_substyle.style == "none")
+                        {
+                            cell_substyle_val = "0px solid transparent"
+                        }
+                        else 
+                        {
+                            if (cell_substyle.color == "")
+                            {
+                                is_change = true;
+                                cell_substyle_val += " " + color;
+                            }
+                        }
+                    }
+                    change_val.push(cell_substyle_val);
+                    checklist.shift();
+                }
+            }
 
 			if (is_change)
 			{
@@ -333,7 +336,7 @@ if (!nexacro.GridFormat)
 			// set cached style
 			if (is_cached)
 			{
-                cellinfo._setStyleCache("border", rowidx, is_selected, odd, "", cell_style.value);
+                cellinfo._setStyleCache("border", rowidx, is_selected, odd, "", cell_style ? cell_style.value : "");
 			}
 		}
 		else

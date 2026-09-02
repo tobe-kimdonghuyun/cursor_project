@@ -1,4 +1,4 @@
-﻿if (nexacro.MainFrame)
+if (nexacro.MainFrame)
 {
     var _pMainFrame = nexacro.MainFrame.prototype;
    

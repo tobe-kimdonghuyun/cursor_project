@@ -2590,14 +2590,23 @@ if (!nexacro.DateField)
 
     _pDateField._findRangeFromPos = function (pos)
     {
+        // 구분자 없는 format(yyyyMMdd 등)에서 인접 세그먼트가 경계를 공유(year.end == month.beg)하면
+        // beg <= pos <= end(양끝 포함) 순회가 월/일 시작위치를 앞 세그먼트(연도)로 판정하여,
+        // edit에서 월/일 선택 후 방향키 시 값이 변하지 않고 연도로 포커싱되는 문제가 있음(RP 105886).
+        // pos에서 시작하는 세그먼트를 우선 반환한다. (구분자 있는 format은 경계 미공유로 동작 동일)
+        var match = null;
         for (var prop in this._range)
         {
-            if (this._range[prop] != null)
+            var range = this._range[prop];
+            if (range != null && range.beg <= pos && pos <= range.end)
             {
-                if (this._range[prop].beg <= pos && pos <= this._range[prop].end)
-                    return this._range[prop];
+                if (range.beg == pos)
+                    return range;
+                if (match == null)
+                    match = range;
             }
         }
+        return match;
     };
 
     _pDateField._findNextRange = function (endpos, area)

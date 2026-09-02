@@ -1,4 +1,4 @@
-﻿if (nexacro._Browser != "Runtime")
+if (nexacro._Browser != "Runtime")
 {
     !function (e) { if ("object" == typeof exports && "undefined" != typeof module) module.exports = e(); else if ("function" == typeof define && define.amd) define([], e); else { var f; "undefined" != typeof window ? f = window : "undefined" != typeof global ? f = global : "undefined" != typeof self && (f = self); if (f) f.SockJS = e() } }(function ()
     {

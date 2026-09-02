@@ -1,4 +1,4 @@
-﻿//==============================================================================
+//==============================================================================
 //
 //  TOBESOFT Co., Ltd.
 //  Copyright 2017 TOBESOFT Co., Ltd.
@@ -207,10 +207,46 @@ if (nexacro._Browser != "Runtime" && !nexacro._init_platform_HTML5)
 
 			return nexacro._syshandler_onmouseup(_cur_win.nexacro_HTMLSysEvent, evt.target, evt);
 		};
+
+		_cur_win._syshandler_onpointerdown_forward = function (evt)
+		{
+			var elem = nexacro.__findParentElement(evt.target);
+
+			if (elem instanceof nexacro.InputElement)
+			{
+				if (evt.pointerType == "mouse" && evt.button == 0)
+				{
+					var body = document.body;
+					if (body)
+					{
+						body._pointerdown_elem = elem;
+						body.classList.add("nexaforceuserselect");
+						elem._body_pointer_events_disabled = true;
+					}
+				}
+            }
+		};
+
 		_cur_win._syshandler_lock_onmouseup_forward = function (evt)
 		{
 			if (nexacro._Browser == "Gecko")
 				window.event = evt;
+			else if ((nexacro._Browser == "Chrome" || (nexacro._Browser == "Edge" && nexacro._BrowserType == "WebKit")) && nexacro._BrowserVersion >= 148)
+			{
+				var body = document.body;
+				if (body)
+				{
+					var elem = body._pointerdown_elem;
+					if (elem)
+					{
+						if (elem._body_pointer_events_disabled)
+						{
+							body.classList.remove("nexaforceuserselect");
+							elem._body_pointer_events_disabled = false;
+						}
+					}
+                }
+            }
 
 			return nexacro._syshandler_lock_onmouseup(_cur_win.nexacro_HTMLSysEvent, evt.target, evt);
 		};
@@ -485,6 +521,9 @@ if (nexacro._Browser != "Runtime" && !nexacro._init_platform_HTML5)
 
 		_cur_win._syshandler_onkeydown_forward = function (evt)
 		{
+			if (nexacro._Browser == "Gecko")
+				_cur_win.event = evt;
+
 			evt = _cur_win.event || evt;
 
 			if (!nexacro.__getWindowHandleEnable(_cur_win))
@@ -514,6 +553,9 @@ if (nexacro._Browser != "Runtime" && !nexacro._init_platform_HTML5)
 		};
 		_cur_win._syshandler_onkeyup_forward = function (evt)
 		{
+			if (nexacro._Browser == "Gecko")
+				_cur_win.event = evt;
+
 			evt = _cur_win.event || evt;
 
 			if (!nexacro.__getWindowHandleEnable(_cur_win))
@@ -921,6 +963,7 @@ if (nexacro._Browser != "Runtime" && !nexacro._init_platform_HTML5)
 		this._syshandler_onmessage_forward = _cur_win._syshandler_onmessage_forward;
 		this._syshandler_onmousedown_forward = _cur_win._syshandler_onmousedown_forward;
 		this._syshandler_onmouseup_forward = _cur_win._syshandler_onmouseup_forward;
+		this._syshandler_onpointerdown_forward = _cur_win._syshandler_onpointerdown_forward;
 		this._syshandler_lock_onmouseup_forward = _cur_win._syshandler_lock_onmouseup_forward;
 		this._syshandler_onmousemove_forward = _cur_win._syshandler_onmousemove_forward;
 		this._syshandler_lock_onmousemove_forward = _cur_win._syshandler_lock_onmousemove_forward;
@@ -961,6 +1004,7 @@ if (nexacro._Browser != "Runtime" && !nexacro._init_platform_HTML5)
 		_cur_win._syshandler_onmessage_forward = null;
 		_cur_win._syshandler_onmousedown_forward = null;
 		_cur_win._syshandler_onmouseup_forward = null;
+		_cur_win._syshandler_onpointerdown_forward = null;
 		_cur_win._syshandler_lock_onmouseup_forward = null;
 		_cur_win._syshandler_onmousemove_forward = null;
 		_cur_win._syshandler_lock_onmousemove_forward = null;
@@ -1036,6 +1080,12 @@ if (nexacro._Browser != "Runtime" && !nexacro._init_platform_HTML5)
 				nexacro._observeSysEvent(body, "gesturestart", "ongesturestart", this._syshandler_ongesturestart_forward);
 			}
 		}
+
+		if ((nexacro._Browser == "Chrome" || (nexacro._Browser == "Edge" && nexacro._BrowserType == "WebKit")) && nexacro._BrowserVersion >= 148)
+		{
+			nexacro._observeSysEvent(body, "pointerdown", "onpointerdown", this._syshandler_onpointerdown_forward);
+		}
+
 		nexacro._observeSysEvent(body, "dblclick", "ondblclick", this._syshandler_ondblclick_forward);
 		nexacro._observeSysEvent(body, "keydown", "onkeydown", this._syshandler_onkeydown_forward);
 		nexacro._observeSysEvent(body, "keypress", "onkeypress", this._syshandler_onkeypress_forward);
@@ -1106,6 +1156,12 @@ if (nexacro._Browser != "Runtime" && !nexacro._init_platform_HTML5)
 				nexacro._stopSysObserving(body, "gesturestart", "ongesturestart", this._syshandler_ongesturestart_forward);
 			}
 		}
+
+		if ((nexacro._Browser == "Chrome" || (nexacro._Browser == "Edge" && nexacro._BrowserType == "WebKit")) && nexacro._BrowserVersion >= 148)
+		{
+			nexacro._stopSysObserving(body, "pointerdown", "onpointerdown", this._syshandler_onpointerdown_forward);
+		}
+
 		nexacro._stopSysObserving(body, "dblclick", "ondblclick", this._syshandler_ondblclick_forward);
 		nexacro._stopSysObserving(body, "keydown", "onkeydown", this._syshandler_onkeydown_forward);
 		nexacro._stopSysObserving(body, "keypress", "onkeypress", this._syshandler_onkeypress_forward);
@@ -1194,6 +1250,7 @@ if (nexacro._Browser != "Runtime" && !nexacro._init_platform_HTML5)
 		this._syshandler_onmessage_forward = null;
 		this._syshandler_onmousedown_forward = null;
 		this._syshandler_onmouseup_forward = null;
+		this._syshandler_onpointerdown_forward = null;
 		this._syshandler_lock_onmouseup_forward = null;
 		this._syshandler_onmousemove_forward = null;
 		this._syshandler_lock_onmousemove_forward = null;
@@ -1325,7 +1382,10 @@ if (nexacro._Browser != "Runtime" && !nexacro._init_platform_HTML5)
 		var popupframe = nexacro._getLocalStorage(storagekey, 2);
 
 		nexacro._popupframeoption = {};
-		nexacro._popupframeoption[name] = JSON.parse(popupframe);
+		if (popupframe)
+			nexacro._popupframeoption[name] = JSON.parse(popupframe);
+		else
+			nexacro._popupframeoption[name] = { "_formurl": urlparams.formname }; // storage partitioning 등으로 popupframeoption을 얻지 못한 경우 url param으로 최소 복구
 
 		if (parent_win)
 		{
@@ -2539,6 +2599,8 @@ if (nexacro._Browser != "Runtime" && !nexacro._init_platform_HTML5)
 	nexacro._syshandler_ondeactivate = function (_sysEvent/*, evt*/)
 	{
 		var win = nexacro._findWindow(_sysEvent._win_win);
+		if (!win) return false;
+
 		win._fire_activate = true;
 
 		if (win && win._fire_activate)
@@ -2710,6 +2772,24 @@ if (nexacro._Browser != "Runtime" && !nexacro._init_platform_HTML5)
 								}
 							}
 						}
+						else if (last_focused_elem instanceof nexacro.InputElement)
+						{
+							var p = last_focused_elem;
+							var is_input_in_popup = false;
+
+							while (p && !p._is_frame)
+							{
+								if (p._is_popup_control)
+								{
+									is_input_in_popup = true;
+									break;
+                                }
+								p = p.parent;
+                            }
+
+							if (is_input_in_popup)
+								is_keypad_switch = true;	// popup안에 있는 input에 focus가 발생되서 resize가 발생된 상황은 키패드 활성 여부로인해 발생된 것으로 판단
+                        }
 					}
 					else if (nexacro._OS == "iOS")
 					{
@@ -2756,7 +2836,7 @@ if (nexacro._Browser != "Runtime" && !nexacro._init_platform_HTML5)
 				}
 
 				// onresize
-				ret = win._on_sys_resize(w, h);
+				ret = win._on_sys_resize(w, h, null, is_keypad_switch);
 
 				// onresize_after
 				if (nexacro._OS == "iOS" && parseFloat(nexacro._OSVersion) >= 8)
@@ -3255,6 +3335,34 @@ if (nexacro._Browser != "Runtime" && !nexacro._init_platform_HTML5)
 			{
 				_StringResource: nexacro._StringResource
 			};
+		}
+
+		// storage partitioning 대응: popup이 사용할 storage 정보를 popup window에 매달아 전달
+		// - _nx_own_storage : popup이 자신의 window.localStorage를 사용할지 여부
+		// - _nx_storage_owner        : 소유 창(메인 앱 창)의 localStorage를 직접 사용
+		try
+		{
+			if (nexacro._sa_handle || window._nx_own_storage === true)
+			{				
+				_win_handle._nx_own_storage = true; // 현재 창이 unpartitioned(1st-party) storage 사용 중 - popup은 자신의 storage가 같은 버킷
+			}
+			else
+			{
+				// popup에서 popup을 여는 경우 전달받은 소유 창(메인 앱 창)을 그대로 릴레이하고,
+				// iframe에 임베드된 메인 창이면 자신의 storage(파티션 버킷)를 popup이 직접 사용하도록 전달
+				var storage_owner = window._nx_storage_owner;
+				if (!storage_owner && window != window.top)
+					storage_owner = window;
+
+				if (storage_owner && !storage_owner.closed)
+					_win_handle._nx_storage_owner = storage_owner;
+				else
+					_win_handle._nx_own_storage = true;	// 파티셔닝 없음(iframe이 아닌 최상위 창) - popup은 자신의 window.localStorage 사용
+			}
+		}
+		catch (e)
+		{
+			nexacro._settracemsg(e);
 		}
 
 		nexacro.__createOpenWindowHandleAfter(_win_handle);
@@ -3764,7 +3872,7 @@ if (nexacro._Browser != "Runtime" && !nexacro._init_platform_HTML5)
 		var _win_handle = win.handle;
 		if (_win_handle)
 		{
-			var is_embedded = _win_handle.parent.document != _win_handle.document;
+			var is_embedded = _win_handle.parent !== _win_handle;
 			if (is_embedded)
 			{
 				win._last_focused_elem = null;
@@ -4043,10 +4151,88 @@ if (nexacro._Browser != "Runtime" && !nexacro._init_platform_HTML5)
 	};
 
 
+	// 크로스 오리진 페이지에 iframe으로 포함된 앱은 storage partitioning(Chrome 115+)으로
+	// 최상위 창(popup 등)과 다른 storage 버킷을 보게 되므로,
+	// Storage Access API로 unpartitioned(1st-party) storage handle을 얻어 사용한다.
+	// (secure context 필요. 권한이 이미 승인된 경우에만 사용자 상호작용 없이 획득됨 - MDN Storage_Access_API/Using 참고)
+	nexacro._sa_handle = null;
+	nexacro._initStorageAccess = function ()
+	{
+		if (nexacro._sa_promise !== undefined)
+			return nexacro._sa_promise;
+
+		try
+		{
+			if (window == window.top || !window.isSecureContext || !document.requestStorageAccess)
+				return nexacro._sa_promise = null;
+		}
+		catch (e)
+		{
+			return nexacro._sa_promise = null;
+		}
+
+		var success = false;
+		var timedout = false;
+
+		var request = document.requestStorageAccess({ cookies: true, localStorage: true })
+		.then(function (handle)
+		{
+			// 권한이 이미 승인된 경우(사전 승인 또는 3rd-party cookie 허용 환경)에만 도달
+			if (!timedout && handle && handle.localStorage)
+			{
+				nexacro._sa_handle = handle;
+				success = true;
+			}
+		})
+		.catch(function (e)
+		{			
+			nexacro._settracemsg(e); // 권한 없음(사용자 상호작용/프롬프트 필요), 미지원 브라우저 등 - 파티션된 자체 storage로 동작
+		});
+
+		var timeout = new Promise(function (resolve)
+		{
+			setTimeout(function ()
+			{
+				if (!success)
+					timedout = true;	// 이후에 도착하는 handle은 무시 (세션 도중 storage 버킷 전환 방지)
+				resolve();
+			}, 200);
+		});
+
+		return nexacro._sa_promise = Promise.race([request, timeout]);
+	};
+
+	// popup 창: open 시점에 opener가 popup window에 매달아 준 storage 정보 사용 (__createOpenWindowHandle 참고)
+	// - _nx_own_storage : 자신의 window.localStorage 사용
+	//                                   (opener가 unpartitioned storage 사용 중이거나 파티셔닝이 없는 환경)
+	// - _nx_storage_owner        : opener가 파티션된 자체 storage 사용 중(iframe + http 등)
+	//                                   → 소유 창(메인 앱 창)의 storage를 직접 사용
 	nexacro._getLocalStorageObject = function ()
 	{
+		if (nexacro._sa_handle)
+			return nexacro._sa_handle.localStorage;
+
 		if (nexacro._isLocalStorageSupport())
+		{
+			if (window._popup === true && window._nx_own_storage !== true)
+			{
+				var owner = window._nx_storage_owner;
+				if (owner && owner != window)
+				{
+					try
+					{
+						if (!owner.closed && owner.localStorage)
+							return owner.localStorage;
+					}
+					catch (e)
+					{
+						nexacro._settracemsg(e);
+					}
+					window._nx_storage_owner = null; // 소유 창이 닫히거나 접근 불가 - 자신의 storage로 전환
+				}
+			}
 			return window.localStorage;
+		}
 		else
 		{
 			if (!nexacro._enginevar)
@@ -4967,6 +5153,7 @@ if (nexacro._Browser != "Runtime" && !nexacro._init_platform_HTML5)
 		{
 			setTimeout(function ()
 			{
+				__set_attribute("target-densitydpi", "");
 				viewport.setAttribute('content', contents.toString());
 
 				var win = window;
@@ -4984,6 +5171,8 @@ if (nexacro._Browser != "Runtime" && !nexacro._init_platform_HTML5)
 		}
 		else
 		{
+			if (nexacro._OS != "Android")
+				__set_attribute("target-densitydpi", "");
 			viewport.setAttribute('content', contents.toString());
 		}
 

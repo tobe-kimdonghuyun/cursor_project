@@ -448,7 +448,7 @@ if (!nexacro.MultiCombo)
 
     _pMultiCombo.on_init_bindSource = function (columnid, propid, ds)
     {
-        if (this._p_type == "filter" || this._p_type == "filterlike" || this._p_type == "caseifilter" || this._p_type == "caseifilterlike")
+        if (this._isFilterType())
         {
             this._createFilteredDataset();
         }
@@ -464,13 +464,12 @@ if (!nexacro.MultiCombo)
     {
         if (propid == "value")
         {
-            if (this._p_type == "filter" || this._p_type == "filterlike" || this._p_type == "caseifilter" || this._p_type == "caseifilterlike")
-            {
-                this._createFilteredDataset();
-            }
-
             var val = ds.getColumn(row, col);
             val = this._convertValueType(val, true);
+
+            // RP 105829 value 변경 없어도 value 동작 하는 현상 수정
+            if (this._p_value === val)
+                return;
 
             ds = this._selectDataset();
 
@@ -499,6 +498,11 @@ if (!nexacro.MultiCombo)
 
                 if (values == undefined)
                 {
+                    if (this._isFilterType())
+                    {
+                        this._createFilteredDataset(); // 값이 없으면 기존대로 filter 초기화 RP 105748
+                    }
+
                     value = values;
                     if (this._p_value != value)
                     {
@@ -517,36 +521,38 @@ if (!nexacro.MultiCombo)
                 }
                 else
                 {
-                    var rows = [];
-                    for (i = 0; i < values.length; i++)
+                    var texts = [];
+                    // values 배열로 인자 받아들여서 배열로 반환 하여 수정
+                    var indexes = this._getIndexesFromValue(values);
+                    if (indexes.length === 0)
                     {
-                        value = values[i];
-                        index = this._getIndexFromValue(ds, value);
-                        if (index > -1)
+                        values = val;
+                    }
+                    else
+                    {
+                        for (i = 0; i < indexes.length; i++)
                         {
-                            text = this._getItemText(index);
-                            rows.push(index);
-
-                            if (i == 0)
-                            {
-                                this._p_index = index.toString();
-                                this._p_text = text;
-                                this._p_value = value;
+                            index = indexes[i];
+                            if (index > -1)
+                            {                                
+                                this._select_add(index);
+                                text = this._getItemText(index);
+                                texts.push(text);
                             }
-                            else
-                            {
-                                this._p_index += "," + index;
-                                this._p_text += textseparator + text;
-                                this._p_value += valueseparator + value;
-                            }
-
-                            this._select_add(index);
                         }
+
+                        indexes = indexes.join(",");
+                        texts = texts.join(textseparator);
+                        values = values.join(valueseparator);
                     }
 
-                    this.redraw();
+                    this._setIndex(indexes);
+                    this._setText(texts);
+                    this._setValue(values);
+
+                    this._redrawWithFilterText(); // filter 상태 유지 RP 105748
                     //this._setDefaultProps(this._p_index, this._p_value, this._p_text)
-                }
+                }                
             }
         }
     };
@@ -728,6 +734,10 @@ if (!nexacro.MultiCombo)
         if (!nexacro._isString(v) && v != undefined)
             return;
 
+        // RP 105829 value 변경 없어도 value 동작 하는 현상 수정
+        if (this._p_value === v)
+            return;
+
         var values = v;
 
         if (values == undefined)
@@ -764,8 +774,8 @@ if (!nexacro.MultiCombo)
         var control_elem = this.getElement();
         if (control_elem)
         {
-            var indexes = "";
-            var texts = "";
+            var indexes = [];
+            var texts = [];
 
             var ds = this._selectDataset();
             if (ds)
@@ -789,47 +799,33 @@ if (!nexacro.MultiCombo)
                     this._select_remove(range[i]);
                 }
 
-                if (values == undefined)
+                // set_value 는 배열, _p_value 호출부는 문자열을 넘기므로 문자열만 split
+                if (values && !nexacro._isArray(values))
                 {
-                    index = this._getIndexFromValue(ds, values).toString();
-                    if (index > -1)
-                    {
-                        text = this._getItemText(index);
-                    }
-                    this._select_add(index);
-
-                    this._setIndex(index);
-                    this._setText(text);
+                    values = values.split(valueseparator);
                 }
-                else
-                {
-                    if (!nexacro._isArray(values))
-                        values = values.split(valueseparator);
 
-                    for (i = 0; i < values.length; i++)
+                // values 배열로 인자 받아들여서 배열로 반환 하여 수정
+                indexes = this._getIndexesFromValue(values);
+                if (indexes.length > 0)
+                {
+                    for (i = 0; i < indexes.length; i++)
                     {
-                        index = this._getIndexFromValue(ds, values[i]).toString();
+                        index = indexes[i];
                         if (index > -1)
                         {
                             text = this._getItemText(index);
-
+                            texts.push(text);
                             this._select_add(index);
-
-                            if (i == 0)
-                            {
-                                indexes = index;
-                                texts = text;
-                            }
-                            else
-                            {
-                                indexes += "," + index;
-                                texts += textseparator + text;
-                            }
                         }
                     }
-                    this._setIndex(indexes);
-                    this._setText(texts);
+
+                    indexes = indexes.join(",");
+                    texts = texts.join(textseparator);
                 }
+
+                this._setIndex(indexes);
+                this._setText(texts);
 
                 if (!this.applyto_bindSource("value", this._p_value))
                 {
@@ -1052,6 +1048,14 @@ if (!nexacro.MultiCombo)
             if (tagboxedit)
             {
                 tagboxedit.set_autoselect(autoselect);
+            }
+        }
+        else
+        {
+            var multicombotext = this.multicombotext;
+            if (multicombotext)
+            {
+                multicombotext.set_autoselect((this._p_type == "dropdown") ? false : autoselect);
             }
         }
     };
@@ -1313,7 +1317,7 @@ if (!nexacro.MultiCombo)
             ds._setEventHandler("onvaluechanged", this._on_dataset_onvaluechanged, this);
             ds._setEventHandler("onrowsetchanged", this._on_dataset_onrowsetchanged, this);
 
-            if (this._p_type == "filter" || this._p_type == "filterlike" || this._p_type == "caseifilter" || this._p_type == "caseifilterlike")
+            if (this._isFilterType())
             {
                 this._createFilteredDataset();
             }
@@ -1355,7 +1359,7 @@ if (!nexacro.MultiCombo)
             }
         }
 
-        if (this._p_type == "filter" || this._p_type == "filterlike" || this._p_type == "caseifilter" || this._p_type == "caseifilterlike")
+        if (this._isFilterType())
         {
             this._createFilteredDataset();
         }
@@ -1399,7 +1403,7 @@ if (!nexacro.MultiCombo)
             }
         }
 
-        if (this._p_type == "filter" || this._p_type == "filterlike" || this._p_type == "caseifilter" || this._p_type == "caseifilterlike")
+        if (this._isFilterType())
         {
             this._createFilteredDataset();
         }
@@ -1443,7 +1447,7 @@ if (!nexacro.MultiCombo)
             }
         }
 
-        if (this._p_type == "filter" || this._p_type == "filterlike" || this._p_type == "caseifilter" || this._p_type == "caseifilterlike")
+        if (this._isFilterType())
         {
             this._createFilteredDataset();
         }
@@ -1722,7 +1726,7 @@ if (!nexacro.MultiCombo)
         {
             ds = this._selectDataset(true);
 
-            if ((this._p_type == "filter" || this._p_type == "filterlike" || this._p_type == "caseifilter" || this._p_type == "caseifilterlike") && ds.rowcount == 0)
+            if (this._isFilterType() && ds.rowcount == 0)
             {
                 ds = this._innerdataset;
             }
@@ -2119,7 +2123,7 @@ if (!nexacro.MultiCombo)
         {
             ds = this._selectDataset(true);
 
-            if ((this._p_type == "filter" || this._p_type == "filterlike" || this._p_type == "caseifilter" || this._p_type == "caseifilterlike") && ds.rowcount == 0)
+            if (this._isFilterType() && ds.rowcount == 0)
             {
                 ds = this._innerdataset;
             }
@@ -2198,9 +2202,6 @@ if (!nexacro.MultiCombo)
 
         if (index >= 0)
         {
-            var isReadonly = this._getItemReadonly(index);
-            if (isReadonly) return;
-
             if (bSelect == true)
             {
                 this._select_add(index);
@@ -2208,7 +2209,9 @@ if (!nexacro.MultiCombo)
             }
             else
             {
-                this._select_remove(index);
+                // RP 105996 : _select_add와 달리 _select_remove는 raw index를 받는다(내부 변환 없음).
+                // 공개 API 인자는 view index이므로 raw로 맞춰야 필터 상태에서도 해제된다.
+                this._select_remove(this._convertToRawIndex(index));
                 this._removeindex(index, true);
             }
         }
@@ -2324,6 +2327,69 @@ if (!nexacro.MultiCombo)
         this._setMulticomboSelectall();
     };
 
+    // RP 105748 : filter 유지 상태에서 redraw() 후 검색어(입력값)를 보존한다.
+    // redraw()는 선택값이 있으면 _setEditValue("")로 입력창을 비우므로, 필터가 적용돼 있을 때는
+    // redraw 전에 검색어를 저장했다가 이후 되돌려 "목록은 필터됐는데 입력값만 사라지는" 불일치를 막는다.
+    // (마우스 선택 및 Ctrl+Space 선택 등 필터를 유지하는 선택 경로에서 공통 사용)
+    _pMultiCombo._redrawWithFilterText = function ()
+    {
+		var keep = null;
+        var ds = this._selectDataset();
+		// multicomboedit는 tagmode/dropdown 타입에선 생성되지 않아 edit가 null이다.
+		// 그 경우 keep이 null로 남아 아래 else에서 필터를 초기화한다(tagmode는 RP 99970 동작 유지).
+		var edit = this._p_multicombolist && this._p_multicombolist.multicomboedit;
+		if (edit)
+        {
+			keep = edit._p_value;
+		}
+
+        this.redraw();
+
+        if (keep != null && keep !== "")
+        {
+            this._setEditValue(keep);
+
+            // RP 105748 : 검색어를 유지할 때 검색 입력창에 포커스도 유지해, 캐럿이 검색창에 남고
+            // 이어서 타이핑(필터 갱신)이 가능하도록 한다. (Select All 등 재포커스가 없던 경로 보완)
+            if (edit && this._isPopupVisible())
+            {
+                edit._apply_setfocus();
+            }
+        }
+        else
+        {
+            // RP 105996 : 여기서 지우는 filterstr은 MultiCombo가 검색어로 건 것이며 filter 타입의
+            // _filtereddataset에만 존재한다. 비filter 타입은 _selectDataset()이 사용자 innerdataset을
+            // 반환하므로, 그대로 두면 사용자가 건 filter를 임의로 해제하게 된다.
+            if (this._isFilterType() && ds && ds._p_filterstr != "")
+            {
+                ds.set_filterstr("");
+                var popupcontrol = this._popupcontrol;
+                if (popupcontrol)
+                {
+                    // RP 105654 : _popupAuto()가 팝업을 재배치하면서 리스트(_p_multicombolist)의
+                    // capture lock을 중복 등록한다. window._releaseCaptureLock()은 첫 항목 하나만
+                    // 제거하므로, 드롭다운을 닫아도 window._capture_complist에 리스트가 잔여로 남아
+                    // 모든 마우스 이벤트가 가로채져 화면이 락(freeze)된다.
+                    // 재팝업 전에 기존 리스트 capture를 해제하여 중복 등록을 방지한다.
+                    var _capture_window = this._getWindow();
+                    if (_capture_window)
+                    {
+                        _capture_window._releaseCaptureLock(this._p_multicombolist);
+                    }
+                    popupcontrol._popupAuto();
+                }
+
+                var checkboxset = this._p_multicombolist && this._p_multicombolist.checkboxset;
+                if (checkboxset)
+                {
+                    checkboxset._redrawListBoxContents(true);
+                    checkboxset._onRecalcScrollSize();
+                }
+            }
+        }
+    };
+
     _pMultiCombo.updateToDataset = function ()
     {
         return this.applyto_bindSource("value", this._p_value);
@@ -2349,13 +2415,11 @@ if (!nexacro.MultiCombo)
         }
     };
 
-    _pMultiCombo.selectAll = function ()
-    {
-        if (this._p_readonly) return;
-
-        var rowcount = this._innerdataset.rowcount;
-        if (rowcount < this._select_multi.length)
-        {
+	_pMultiCombo.selectAll = function ()
+	{
+		var rowcount = this._innerdataset.rowcount;
+		if (rowcount < this._select_multi.length)
+		{
             return;
         }
 
@@ -2387,13 +2451,8 @@ if (!nexacro.MultiCombo)
             {
                 for (i = start; i >= end; i--)
                 {
-                    isReadonly = this._getItemReadonly(i);
-                    if (!isReadonly)
-                    {
-                        this._select_add(i);
-                        rows.push(i);
-                    }
-
+                    this._select_add(i);
+                    rows.push(i);
                 }
                 this._insertIndex(rows, true);
             }
@@ -2401,12 +2460,9 @@ if (!nexacro.MultiCombo)
             {
                 for (i = start; i >= end; i--)
                 {
-                    isReadonly = this._getItemReadonly(i);
-                    if (!isReadonly)
-                    {
-                        this._select_remove(i);
-                        rows.push(i);
-                    }
+                    // RP 105996 : _select_remove는 raw index 기준이므로 view index를 변환해 넘긴다.
+                    this._select_remove(this._convertToRawIndex(i));
+                    rows.push(i);
                 }
                 this._removeindex(rows, true);
             }
@@ -2417,12 +2473,8 @@ if (!nexacro.MultiCombo)
             {
                 for (i = start; i <= end; i++)
                 {
-                    isReadonly = this._getItemReadonly(i);
-                    if (!isReadonly)
-                    {
-                        this._select_add(i);
-                        rows.push(i);
-                    }
+                    this._select_add(i);
+                    rows.push(i);
                 }
                 this._insertIndex(rows, true);
             }
@@ -2430,12 +2482,9 @@ if (!nexacro.MultiCombo)
             {
                 for (i = start; i <= end; i++)
                 {
-                    isReadonly = this._getItemReadonly(i);
-                    if (!isReadonly)
-                    {
-                        this._select_remove(i);
-                        rows.push(i);
-                    }
+                    // RP 105996 : _select_remove는 raw index 기준이므로 view index를 변환해 넘긴다.
+                    this._select_remove(this._convertToRawIndex(i));
+                    rows.push(i);
                 }
                 this._removeindex(rows, true);
             }
@@ -2446,8 +2495,6 @@ if (!nexacro.MultiCombo)
 
     _pMultiCombo.setSelectItems = function (items, bSelect)
     {
-        if (this._p_readonly) return;
-
         bSelect = nexacro._toBoolean(bSelect);
 
         var i, isReadonly;
@@ -2457,9 +2504,6 @@ if (!nexacro.MultiCombo)
         {
             for (i = 0; i < items.length; i++)
             {
-                isReadonly = this._getItemReadonly(items[i]);
-                if (isReadonly) continue;
-
                 this._select_add(items[i]);
                 rows.push(items[i]);
             }
@@ -2469,10 +2513,8 @@ if (!nexacro.MultiCombo)
         {
             for (i = 0; i < items.length; i++)
             {
-                isReadonly = this._getItemReadonly(items[i]);
-                if (isReadonly) continue;
-
-                this._select_remove(items[i]);
+                // RP 105996 : _select_remove는 raw index 기준이므로 view index를 변환해 넘긴다.
+                this._select_remove(this._convertToRawIndex(items[i]));
                 rows.push(items[i]);
             }
             this._removeindex(rows, true);
@@ -2534,7 +2576,7 @@ if (!nexacro.MultiCombo)
         }
         else
         {
-            if (this._p_type == "filter" || this._p_type == "filterlike" || this._p_type == "caseifilter" || this._p_type == "caseifilterlike")
+            if (this._isFilterType())
             {
                 this._clearFilteredDataset();
             }
@@ -2545,7 +2587,7 @@ if (!nexacro.MultiCombo)
 
     _pMultiCombo._on_dataset_onvaluechanged = function (obj, e)
     {
-        if (this._p_type == "filter" || this._p_type == "filterlike" || this._p_type == "caseifilter" || this._p_type == "caseifilterlike")
+        if (this._isFilterType())
         {
             this._createFilteredDataset();
         }
@@ -2563,7 +2605,7 @@ if (!nexacro.MultiCombo)
     {
         if (e.reason == nexacro.NormalDataset.REASON_FILTER)
         {
-            if (this._p_type == "filter" || this._p_type == "filterlike" || this._p_type == "caseifilter" || this._p_type == "caseifilterlike")
+            if (this._isFilterType())
             {
                 this._createFilteredDataset();
             }
@@ -2688,7 +2730,7 @@ if (!nexacro.MultiCombo)
         if (this._isPopupVisible())
         {
             // filter 일 때 재정렬된 값 으로 인자 넘기게 수정
-            if (this._p_type == "filter" || this._p_type == "filterlike" || this._p_type == "caseifilter" || this._p_type == "caseifilterlike")
+            if (this._isFilterType())
             {
                 for (i = 0; i < this._filtereddataset._viewRecords.length; i++)
                 {
@@ -2810,7 +2852,7 @@ if (!nexacro.MultiCombo)
         {
             if (cur_index >= 0)
             {
-                if (this._p_type == "filter" || this._p_type == "filterlike" || this._p_type == "caseifilter" || this._p_type == "caseifilterlike")
+                if (this._isFilterType())
                 {
                     rawidx = this._getRawIndex(ds, cur_index);
                     rawidx = (rawidx == -1) ? cur_index : rawidx;
@@ -2941,12 +2983,13 @@ if (!nexacro.MultiCombo)
                 {
                     checkboxset._select_withmouseevent(curobj.index, curobj);
                 }
-                else 
+                else
                 {
                     checkboxset._select_withmouseevent(this._filtereddataset._viewRecords[curobj.index]._rawidx, curobj);
                 }
 
-                this.redraw();
+                // RP 105748 : Ctrl+Space 선택 시에도 필터·입력값(검색어)을 유지한다.
+                this._redrawWithFilterText();
             }
         }
         // alt + A 전체선택
@@ -2999,7 +3042,7 @@ if (!nexacro.MultiCombo)
         if (this._isPopupVisible())
         {
             // filter 일 때 재정렬된 값 으로 인자 넘기게 수정
-            if (this._p_type == "filter" || this._p_type == "filterlike" || this._p_type == "caseifilter" || this._p_type == "caseifilterlike")
+            if (this._isFilterType())
             {
                 for (i = 0; i < this._filtereddataset._viewRecords.length; i++)
                 {
@@ -3127,7 +3170,7 @@ if (!nexacro.MultiCombo)
         {
             if (cur_index >= 0)
             {
-                if (this._p_type == "filter" || this._p_type == "filterlike" || this._p_type == "caseifilter" || this._p_type == "caseifilterlike")
+                if (this._isFilterType())
                 {
                     rawidx = this._getRawIndex(ds, cur_index);
                     rawidx = (rawidx == -1) ? cur_index : rawidx;
@@ -3257,7 +3300,7 @@ if (!nexacro.MultiCombo)
                 {
                     checkboxset._select_withmouseevent(curobj.index, curobj);
                 }
-                else 
+                else
                 {
 
                     var ds = this._selectDataset();
@@ -3266,7 +3309,8 @@ if (!nexacro.MultiCombo)
                     checkboxset._select_withmouseevent(cur_index, curobj);
                 }
 
-                this.redraw();
+                // RP 105748 : Ctrl+Space 선택 시에도 필터·입력값(검색어)을 유지한다.
+                this._redrawWithFilterText();
             }
         }
         // alt + A 전체선택
@@ -3839,10 +3883,12 @@ if (!nexacro.MultiCombo)
 
         tagboxedit._apply_setfocus();
 
-        if (e.button == "lbutton")
+        if (e.button == "lbutton" || e.button == "touch")
             this._on_dropdown();
 
     };
+
+    _pMultiCombo._on_tagitem_mobile_onclick = function (obj, e) {};
 
     _pMultiCombo._on_list_onitemclick = function (obj, e)
     {
@@ -3858,7 +3904,7 @@ if (!nexacro.MultiCombo)
         this.on_fire_onitemclick(obj, cur_index, cur_text, cur_value, e.button, e.altkey, e.ctrlkey, e.shiftkey, e.screenx, e.screeny, e.canvasx, e.canvasy, e.clientx, e.clienty, e.metakey);
 
         var ds;
-        if (this._p_type == "filter" || this._p_type == "filterlike" || this._p_type == "caseifilter" || this._p_type == "caseifilterlike")
+        if (this._isFilterType())
         {
             ds = this._selectDataset();
             cur_index = this._getRawIndex(ds, e.index);
@@ -3872,30 +3918,12 @@ if (!nexacro.MultiCombo)
         checkboxset._select_withmouseevent(cur_index, obj);
        
         this._is_close_popup_by_select = true;
-      
-        this.redraw();
-        if (ds && ds._p_filterstr != "")
-        {
-            ds.set_filterstr("");
-            var popupcontrol = this._popupcontrol;
-            if (popupcontrol)
-            {
-                // RP 105654 : _popupAuto()가 팝업을 재배치하면서 리스트(_p_multicombolist)의
-                // capture lock을 중복 등록한다. window._releaseCaptureLock()은 첫 항목 하나만
-                // 제거하므로, 드롭다운을 닫아도 window._capture_complist에 리스트가 잔여로 남아
-                // 모든 마우스 이벤트가 가로채져 화면이 락(freeze)된다.
-                // 재팝업 전에 기존 리스트 capture를 해제하여 중복 등록을 방지한다.
-                var _capture_window = this._getWindow();
-                if (_capture_window)
-                {
-                    _capture_window._releaseCaptureLock(this._p_multicombolist);
-                }
-                popupcontrol._popupAuto();
-            }
 
-            checkboxset._redrawListBoxContents(true);
-            checkboxset._onRecalcScrollSize();
-        }    
+        // RP 105748 : filter 타입에서 마우스로 아이템을 선택해도 필터(검색어)를 유지한다.
+        // 기존에는 RP 99970으로 인해 선택 시 ds.set_filterstr("")로 필터를 초기화하여 여러 항목을 연속선택 불가했음
+        // 키액션(Ctrl+Space, "팝업 유지")과도 동작과 동일
+        // 필터가 유지되는 경우 입력값(검색어)도 함께 유지되어야 하므로 _redrawWithFilterText()로 redraw한다.
+        this._redrawWithFilterText();
 
         if (this._tagmode)
         {
@@ -4208,7 +4236,7 @@ if (!nexacro.MultiCombo)
     };
 
 
-    _pMultiCombo._on_tagbutton_onclick = function (index, obj)
+    _pMultiCombo._on_tagbutton_onclick = function (index, obj, evt)
     {
         if (!this._p_enable || this._p_readonly || !this._p_visible)
         {
@@ -4243,6 +4271,12 @@ if (!nexacro.MultiCombo)
     //===============================================================
     // nexacro.MultiCombo : Logical part
     //===============================================================
+    _pMultiCombo._isFilterType = function ()
+    {
+        var type = this._p_type;
+        return (type == "filter" || type == "filterlike" || type == "caseifilter" || type == "caseifilterlike");
+    };
+
     _pMultiCombo._createMultiComboTagBoxControl = function ()
     {
         if (this._p_multicombotext)
@@ -4567,9 +4601,9 @@ if (!nexacro.MultiCombo)
     _pMultiCombo._recheckValue = function ()
     {
         var val = this._p_value;
-        var indexes = "";
-        var texts = "";
-        var values = "";
+        var indexes = [];
+        var texts = [];
+        var values = [];
         var i;
 
         var ds = this._innerdataset;
@@ -4578,30 +4612,30 @@ if (!nexacro.MultiCombo)
             var env = nexacro.getEnvironment();
             var valueseparator = env.multivalueseparator ? env.multivalueseparator : ",";
             var textseparator = this._p_textseparator;
-            val = val.split(valueseparator);
+            values = val ? val.split(valueseparator) : val;
 
-            var index, text, value;
-            for (i = 0; i < val.length; i++)
+            var index, text;
+
+            // values 배열로 인자 받아들여서 배열로 반환 하여 수정
+            indexes = this._getIndexesFromValue(values);
+            if (indexes.length === 0)
             {
-                value = val[i];
-                index = this._getIndexFromValue(ds, value);
-                if (index > -1)
+                values = val;
+            }
+            else
+            {
+                for (i = 0; i < indexes.length; i++)
                 {
-                    text = this._getItemText(index);
-
-                    if (indexes == "")
+                    index = indexes[i];
+                    if (index > -1)
                     {
-                        indexes = index.toString();
-                        texts = text;
-                        values = value;
-                    }
-                    else
-                    {
-                        indexes += "," + index;
-                        texts += textseparator + text;
-                        values += valueseparator + value;
+                        text = this._getItemText(index);
+                        texts.push(text);
                     }
                 }
+                indexes = indexes.join(",");
+                texts = texts.join(textseparator);
+                values = values.join(valueseparator);
             }
         }
         else
@@ -4680,7 +4714,7 @@ if (!nexacro.MultiCombo)
 
     _pMultiCombo._selectDataset = function (bInit)
     {
-        if (this._p_type == "filter" || this._p_type == "filterlike" || this._p_type == "caseifilter" || this._p_type == "caseifilterlike")
+        if (this._isFilterType())
         {
             if (!this._filtereddataset)
             {
@@ -4930,6 +4964,23 @@ if (!nexacro.MultiCombo)
         return viewIndex;
     };
 
+    // RP 105996 : _convertToRawIndex의 역변환. _select_multi(raw 기준)에 담긴 index를
+    // view 기준 API(_getItemText/_insertIndex/_removeindex)로 되돌린다. 숨겨진 항목은 -1.
+    _pMultiCombo._convertToViewIndex = function (rawIndex)
+    {
+        var ds = this._innerdataset;
+        if (ds && ds._viewRecords && ds._rawRecords && ds._viewRecords != ds._rawRecords)
+        {
+            for (var i = 0, len = ds._viewRecords.length; i < len; i++)
+            {
+                if (ds._viewRecords[i]._rawidx == rawIndex)
+                    return i;
+            }
+            return -1;
+        }
+        return rawIndex;
+    };
+
     _pMultiCombo._select_remove = function (selectIdx)
     {
         var idx = this._select_indexOfkey(selectIdx);
@@ -4955,62 +5006,110 @@ if (!nexacro.MultiCombo)
         return false;
     };
 
-    _pMultiCombo._clear_all = function (change_by_script, isNotFireEvent)
+    _pMultiCombo._clear_all = function (change_by_script, isNotFireEvent, is_filtered)
     {
         var checkboxset = this._p_multicombolist && this._p_multicombolist.checkboxset;
         var selecteditems = this._select_multi.items;
         var selectedcount = this._select_multi.length;
         var rows = [];
 
+        var ds = this._selectDataset();
+        var view_records = ds._viewRecords;
+        var use_fds = !!this._filtereddataset && (ds === this._filtereddataset);
         for (var i = selectedcount - 1; i >= 0; i--)
         {
             var idx = selecteditems[i];
-            if (!this._getItemReadonly(idx))
+            // RP 105996 : selecteditems는 이미 innerdataset raw index다(_convertToRawIndex를 다시
+            // 태우면 이중 변환). 표시 위치를 찾으려면 raw → innerdataset view index로 역변환한다.
+            var view_index = this._convertToViewIndex(idx);
+
+            // RP 105748 : 필터 적용 시 체크박스 항목은 "보이는 뷰 위치"로 인덱싱되므로 뷰 위치(viewpos)를 구한다.
+            // RP 105996 : _filtereddataset을 도는 경우 그 _rawidx가 innerdataset view index이므로 그것으로 맞춘다.
+            var viewpos = view_index;
+            if (use_fds)
             {
-                if (checkboxset)
+                viewpos = -1;
+                if (view_index >= 0)
                 {
-                    var item = checkboxset._getItem(idx);
-                    if (item)
+                    for (var j = 0, len = view_records.length; j < len; j++)
                     {
-                        item.set_selected(false);
+                        if (view_records[j]._rawidx == view_index)
+                        {
+                            viewpos = j;
+                            break;
+                        }
                     }
                 }
-                this._select_remove(idx);
-                rows.push(idx);
             }
+
+            // 제거 판정은 "뷰 소속(viewpos)"으로만 한다. is_filtered 이면 보이는(뷰) 항목만
+            // 해제하고 가려진 선택(viewpos < 0)은 유지한다. (렌더 여부와 무관 → 가상화로
+            // 화면 밖 항목도 정상 해제)
+            if (is_filtered && viewpos < 0)
+                continue;
+
+            // 체크박스 시각 해제는 실제로 렌더된(_getItem 이 존재하는) 항목에만 적용한다.
+            if (checkboxset && viewpos >= 0)
+            {
+                var item = checkboxset._getItem(viewpos);
+                if (item)
+                    item.set_selected(false);
+            }
+            this._select_remove(idx);
+            // RP 105996 : _removeindex는 view index 기준이므로 raw가 아닌 view index를 넘긴다.
+            if (view_index >= 0)
+                rows.push(view_index);
         }
-        
+
         this._removeindex(rows, change_by_script, isNotFireEvent);
 
         if (this._p_multicombolist)
             this._p_multicombolist._setSelectedSelectall(false)
     };
 
-    _pMultiCombo._select_all = function (change_by_script)
-    {
+    _pMultiCombo._select_all = function (change_by_script, is_filtered)
+    {   
         var checkboxset = this._p_multicombolist && this._p_multicombolist.checkboxset;
-        var rowcount = this._innerdataset.rowcount;
         var rows = [];
 
+        // RP 105748 : view_only가 true이고 필터가 적용된 경우, 보이는(필터된) 항목만 선택한다.
+        // (Select All 체크박스 전용. 공개 API/Alt+A는 기존처럼 전체 선택)
+        var view_records = null;
+        var use_fds = false;
+        if (is_filtered && this._filtereddataset)
+        {
+            view_records = this._filtereddataset._viewRecords;
+            use_fds = true;
+        }
+        else if (this._innerdataset)
+		{
+			view_records = this._innerdataset._viewRecords;
+        }
+
+        if (!view_records)
+            return;
+
+        var rowcount = view_records.length;
         for (var i = 0; i < rowcount; i++)
         {
-            if (!this._getItemReadonly(i))
+            // RP 105996 : _select_add/_insertIndex는 innerdataset view index를 받는다(내부에서 raw 변환).
+            // _filtereddataset을 도는 경우 그 _rawidx가 곧 innerdataset view index이고, innerdataset을
+            // 도는 경우는 i 자체가 view index다. raw를 넘기면 변환이 두 번 일어나 항목이 밀린다.
+            var view_index = use_fds ? view_records[i]._rawidx : i;
+            if (checkboxset)
             {
-                if (checkboxset)
+                var item = checkboxset._getItem(i);
+                if (item)
                 {
-                    var item = checkboxset._getItem(i);
-                    if (item)
-                    {
-                        item.set_selected(true);
-                    }
+                    item.set_selected(true);
                 }
-                this._select_add(i);
-                rows.push(i);
             }
+            this._select_add(view_index);
+            rows.push(view_index);
         }
 
         this._insertIndex(rows, change_by_script);
-        
+
         if (this._p_multicombolist)
             this._p_multicombolist._setSelectedSelectall(true)
     };
@@ -5021,17 +5120,23 @@ if (!nexacro.MultiCombo)
         const row_cnt = this._getViewItemCount();
         if (row_cnt > 0)
         {
-            const sel_cnt = this.getSelectedCount();
+            // RP 105748 : Select All 체크박스 판정은 "보이는(필터된) 항목" 기준.
+            //  - 체크(선택): 보이는 항목만 선택 (필터 밖 항목은 건드리지 않음)
+            //  - 언체크(해제): 보이는 항목만 해제 (필터로 가려진 선택은 유지 → 체크와 대칭,
+            //    다른 검색어로 누적한 선택이 유지되도록)
+            // (공개 API selectAll()·Alt+A "전체 선택"은 전체 대상 그대로 유지)
+            const sel_cnt = this._getViewSelectedCount();
             if (row_cnt == sel_cnt)
             {
-               this._clear_all();
+               this._clear_all(false, false, true);
             }
             else
             {
-                this._select_all();                
+                this._select_all(false, true);
                 ret = true;
             }
-            this.redraw();
+            // RP 105748 : Select All 체크/해제 후에도 필터 상태의 검색어(입력값)를 유지한다.
+            this._redrawWithFilterText();
         }
         return ret;
     };
@@ -5040,9 +5145,36 @@ if (!nexacro.MultiCombo)
     {
         const ds = this._filtereddataset ? this._filtereddataset : this._innerdataset;
         if (ds)
-        {            
-            return ds.rowcount;            
+        {
+            return ds.rowcount;
         }
+    };
+
+    // RP 105748 : 현재 목록에 "보이는 항목" 중 선택된 개수를 반환한다.
+    // _getViewItemCount과 동일하게 filtereddataset(필터 타입)/innerdataset(그 외) 둘 다 처리하여
+    // "보이는 항목 수 vs 보이는 항목 중 선택 수" 비교 기준을 일치시킨다.
+    _pMultiCombo._getViewSelectedCount = function ()
+    {
+        var ds = this._filtereddataset ? this._filtereddataset : this._innerdataset;
+        var view_records = ds && ds._viewRecords;
+        if (!view_records)
+        {
+            return this.getSelectedCount();
+        }
+
+        // RP 105996 : _select_multi 키는 innerdataset raw index다. _filtereddataset의 _rawidx는
+        // innerdataset view index이므로 raw로 변환해야 "보이는 항목 중 선택 수"가 맞는다.
+        var use_fds = (ds === this._filtereddataset);
+        var cnt = 0;
+        for (var i = 0, len = view_records.length; i < len; i++)
+        {
+            var view_index = use_fds ? view_records[i]._rawidx : i;
+            if (this._select_indexOfkey(this._convertToRawIndex(view_index)) >= 0)
+            {
+                cnt++;
+            }
+        }
+        return cnt;
     };
 
     _pMultiCombo._changeIndex = function (v, change_by_script, isNotFireEvent)
@@ -5503,7 +5635,7 @@ if (!nexacro.MultiCombo)
         if (ds && column)
         {
             var rtn = this._getColumn(ds, index, column);
-            if (rtn == undefined && (this._p_type == "filter" || this._p_type == "filterlike" || this._p_type == "caseifilter" || this._p_type == "caseifilterlike") && this._filtereddataset)
+            if (rtn == undefined && this._isFilterType() && this._filtereddataset)
             {
                 rtn = this._filtereddataset.getColumn(index, column);
             }
@@ -5522,7 +5654,7 @@ if (!nexacro.MultiCombo)
         if (ds && column)
         {
             var rtn = this._getColumn(ds, index, column);
-            if (rtn == undefined && (this._p_type == "filter" || this._p_type == "filterlike" || this._p_type == "caseifilter" || this._p_type == "caseifilterlike") && this._filtereddataset)
+            if (rtn == undefined && this._isFilterType() && this._filtereddataset)
             {
                 rtn = this._filtereddataset.getColumn(index, column);
             }
@@ -5543,7 +5675,7 @@ if (!nexacro.MultiCombo)
             if (column)
             {
                 var rtn = this._getColumn(ds, index, column);
-                if (rtn == undefined && (this._p_type == "filter" || this._p_type == "filterlike" || this._p_type == "caseifilter" || this._p_type == "caseifilterlike") && this._filtereddataset)
+                if (rtn == undefined && this._isFilterType() && this._filtereddataset)
                 {
                     rtn = this._filtereddataset.getColumn(index, column);
                 }
@@ -5560,43 +5692,59 @@ if (!nexacro.MultiCombo)
         return null;
     };
 
-    _pMultiCombo._getIndexFromValue = function (ds, value)
+    // values 배열로 인자 받아들여서 배열로 반환 하여 수정
+    _pMultiCombo._getIndexesFromValue = function (values)
     {
-        if (value instanceof nexacro.Decimal)
+        var indexes = [];
+        var ds = this._innerdataset;
+        var column = this._p_codecolumn || this._p_datacolumn;
+        if (!ds._isValidColumn(column)) return indexes;
+
+        if (!nexacro._isArray(values))
         {
-            value = value.toString();
+            values = [values];
         }
 
-        var column = this._p_codecolumn || this._p_datacolumn;
-        if (!ds._isValidColumn(column)) return -1;
-
         var row_count = this._getRowCount(ds);
-        for (var i = 0; i < row_count; i++)
+        for (var value of values)
         {
-            var v = this._getItemValue(i);
-            if (v instanceof nexacro.Decimal)
+            if (value instanceof nexacro.Decimal)
             {
-                v = v.toString();
+                value = value.toString();
             }
 
-            if (value == v)
+            for (var i = 0; i < row_count; i++)
             {
-                var newval = value;
-                var preval = v;
-
-                if (newval === 0)
-                    newval = newval + "";
-                if (preval === 0)
-                    preval = preval + "";
-
-                if (newval == preval)
+                // RP 105996 : row_count(=view 기준)와 _getItemValue(=view 기준 조회)에 raw index를
+                // 넣으면 다른 행을 읽는다. 반환 index도 _select_add/_setIndex가 받는 view 기준으로 맞춘다.
+                var v = this._getItemValue(i);
+                if (v instanceof nexacro.Decimal)
                 {
-                    return i;
+                    v = v.toString();
+                }
+
+                if (value == v)
+                {
+                    var newval = value;
+                    var preval = v;
+
+                    if (newval === 0)
+                        newval = newval + "";
+                    if (preval === 0)
+                        preval = preval + "";
+
+                    if (newval == preval)
+                    {
+                        // 동일 value가 중복 입력돼도 같은 index를 중복 push 하지 않음 (first-only)
+                        if (indexes.indexOf(i) < 0)
+                            indexes.push(i);
+                        break; // 처음 매치된 index만 사용
+                    }
                 }
             }
         }
 
-        return -1;
+        return indexes;
     };
 
     _pMultiCombo._getIndexFromText = function (ds, text)
@@ -5611,26 +5759,7 @@ if (!nexacro.MultiCombo)
         }
 
         return -1;
-    };
-
-    _pMultiCombo._getRawToListindex = function (idx)
-    {
-        if (this._p_type == "filter" || this._p_type == "filterlike" || this._p_type == "caseifilter" || this._p_type == "caseifilterlike")
-        {
-            var fds = this._getFilteredDataset();
-            var fdsArr = fds._viewRecords;
-            var row_count = fdsArr.length;
-
-            for (var i = 0; i < row_count; i++)
-            {
-                if (fdsArr[i]._rawidx == idx)
-                {
-                    return i;
-                }
-            }
-        }
-        return idx;
-    };
+    };  
 
     _pMultiCombo._getRawIndex = function (fds, idx)
     {
@@ -5841,7 +5970,10 @@ if (!nexacro.MultiCombo)
             const row_cnt = this._getViewItemCount();
             if (row_cnt > 0)
             {
-                const sel_cnt = this.getSelectedCount();
+                // RP 105748 : 필터 적용 시 보이는 항목만 대상으로 Select All 상태를 판단한다.
+                // 기존에는 전체 선택 수(getSelectedCount)와 보이는 항목 수(row_cnt)를 비교했기 때문에,
+                // 필터로 보이는 항목이 줄면 보이는 항목이 모두 선택돼 있어도 Select All 체크가 해제됐다.
+                const sel_cnt = this._getViewSelectedCount();
                 if (row_cnt == sel_cnt)
                 {
                     //selectall true
@@ -6652,7 +6784,10 @@ if (!nexacro.MultiCombo)
     {
         var popupcontainer = this._p_parent;
         var multicombo = popupcontainer.parent;
-        var idx = this._select_indexOfkey(selectIdx);
+        // RP 106005 : _select_add와 대칭으로 view index를 받아 raw index로 변환해 제거한다.
+        // (선택 목록 _select_multi의 키는 raw index — 기존에는 변환이 없어 필터 상태에서 해제 불가)
+        var raw_index = multicombo._convertToRawIndex(selectIdx);
+        var idx = this._select_indexOfkey(raw_index);
         var info = this._select_multi;
 
         if (idx < info.length && idx >= 0)
@@ -6676,7 +6811,7 @@ if (!nexacro.MultiCombo)
                     this._p_value = undefined;
             }
 
-            if (info.tagselect == selectIdx)
+            if (info.tagselect == raw_index)
             {
                 info.tagselect = -1;
             }
@@ -6686,6 +6821,15 @@ if (!nexacro.MultiCombo)
         return false;
     };
 
+    // RP 106005 : 선택 목록(_select_multi)의 키는 raw index이므로 view index를 변환해 판정한다.
+    // (_do_select/_do_deselect 경로의 선택 여부 판정이 필터 상태에서 어긋나 해제가 무시되던 원인)
+    _pMultiComboCheckBoxSetControl._is_selected = function (idx)
+    {
+        var popupcontainer = this._p_parent;
+        var multicombo = popupcontainer.parent;
+        return this._select_indexOf(multicombo._convertToRawIndex(idx)) !== -1;
+    };
+
     _pMultiComboCheckBoxSetControl._select_withmouseevent = function (idx, obj)
     {
         var obj_idx, item, i;
@@ -6693,12 +6837,15 @@ if (!nexacro.MultiCombo)
         var multicombo = popupcontainer.parent;
         var rows = [];
 
-        var filtered_ds = multicombo._filtereddataset._viewRecords;
+        // RP 106005 : _filtereddataset은 filter 계열 타입에서만 생성된다(그 외 초기값 ""),
+        // 무조건 참조하면 비filter 타입 + innerdataset filter + shift클릭에서 undefined.length 오류.
+        var filtered_ds = multicombo._filtereddataset ? multicombo._filtereddataset._viewRecords : null;
 
         if (this._shiftKey)
         {
-            // type filter일 때  shift + click 영역 선택
-            if (this._innerdataset._rawRecords != this._innerdataset._viewRecords)
+            // type filter에서 검색어 필터가 적용된 경우의 shift + click 영역 선택
+            // (idx가 innerdataset view index이므로 리스트 표시 위치(obj_idx)로 역매핑이 필요)
+            if (filtered_ds && this._innerdataset._rawRecords != this._innerdataset._viewRecords)
             {
                 for (i = 0; i < filtered_ds.length; i++)
                 {
@@ -6709,6 +6856,7 @@ if (!nexacro.MultiCombo)
                     }
                 }
                 item = this._getItem(obj_idx);
+                if (!item) return;
 
                 var startIdx = this._shift_select_base_index < filtered_ds.length ? this._shift_select_base_index : 0;
                 var endIdx = obj_idx;
@@ -6722,22 +6870,21 @@ if (!nexacro.MultiCombo)
                     endIdx = this._getInnerdatasetInfo("_rowcount");
                 }
 
+                // RP 106005 : readonly 판정은 데이터 기준(_getItemReadonly)으로, 시각 갱신은 렌더된
+                // 항목에만 적용한다. (기존 _item.readonly 참조는 렌더 밖 항목에서 null 오류)
                 if (startIdx > endIdx)
                 {
                     for (i = startIdx; endIdx <= i; i--)
                     {
-                        var _item = this._getItem(i);
-                        if (_item.readonly == false)
+                        var view_idx = filtered_ds[i]._rawidx;
+                        if (!multicombo._getItemReadonly(view_idx))
                         {
-                            if (!item.selected)
+                            var _item = this._getItem(i);
+                            if (_item)
                             {
-                                _item.set_selected(true);
+                                _item.set_selected(!item.selected);
                             }
-                            else
-                            {
-                                _item.set_selected(false);
-                            }
-                            rows.push(filtered_ds[i]._rawidx);
+                            rows.push(view_idx);
                         }
                     }
                 }
@@ -6745,18 +6892,15 @@ if (!nexacro.MultiCombo)
                 {
                     for (i = startIdx; i <= endIdx; i++)
                     {
-                        var _item = this._getItem(i);
-                        if (_item.readonly == false)
+                        var view_idx = filtered_ds[i]._rawidx;
+                        if (!multicombo._getItemReadonly(view_idx))
                         {
-                            if (!item.selected)
+                            var _item = this._getItem(i);
+                            if (_item)
                             {
-                                _item.set_selected(true);
+                                _item.set_selected(!item.selected);
                             }
-                            else
-                            {
-                                _item.set_selected(false);
-                            }
-                            rows.push(filtered_ds[i]._rawidx);
+                            rows.push(view_idx);
                         }
                     }
                 }
@@ -6776,17 +6920,19 @@ if (!nexacro.MultiCombo)
             }
             else
             {
-                var items = this._getContentsItem();
                 var startIdx = this._shift_select_base_index ? this._shift_select_base_index : 0;
                 var endIdx = idx;
 
                 item = this._getItem(idx);
+                if (!item) return;
 
+                // RP 106005 : readonly 판정을 데이터 기준으로 변경. 기존 _getContentsItem() 배열 참조는
+                // 렌더 밖 범위에서 undefined 오류가 나고, 스크롤 상태에 따라 위치가 어긋난다.
                 if (startIdx > endIdx)
                 {
                     for (i = startIdx; endIdx <= i; i--)
                     {
-                        if (items[i].readonly == false)
+                        if (!multicombo._getItemReadonly(i))
                             rows.push(i);
                     }
                 }
@@ -6794,7 +6940,7 @@ if (!nexacro.MultiCombo)
                 {
                     for (i = startIdx; i <= endIdx; i++)
                     {
-                        if (items[i].readonly == false)
+                        if (!multicombo._getItemReadonly(i))
                             rows.push(i);
                     }
                 }
@@ -6821,7 +6967,7 @@ if (!nexacro.MultiCombo)
             }
 
             // type filter일때
-            if (this._innerdataset._rawRecords != this._innerdataset._viewRecords && (multicombo._p_type == "filter" || multicombo._p_type == "filterlike" || multicombo._p_type == "caseifilter" || multicombo._p_type == "caseifilterlike"))
+            if (this._innerdataset._rawRecords != this._innerdataset._viewRecords && multicombo._isFilterType())
             {
                 for (i = 0; i < filtered_ds.length; i++)
                 {
@@ -6853,6 +6999,7 @@ if (!nexacro.MultiCombo)
                 item.set_selected(false);
 
                 this._is_clicked = true;
+                // RP 106005 : _select_remove가 _select_add와 대칭으로 내부에서 raw 변환하므로 view index를 넘긴다.
                 this._select_remove(idx);
                 this._is_clicked = false;
                 multicombo._removeindex(idx);
@@ -7069,31 +7216,25 @@ if (!nexacro.MultiCombo)
         item.set_index(index);
         item.set_selected(false);
         item.set_readonly(rdnly);
-        this._select_multi = this._p_parent._p_parent._select_multi;
+        var multicombo = this._p_parent._p_parent;
+        this._select_multi = multicombo._select_multi;
         // 선택 유지, Type = filter일 때 선택 반영
         var viewRecord = ds._viewRecords[index];
         if (!viewRecord)
             return null;
-        
-        var filtered_idx = viewRecord._rawidx;
-        if (ds._viewRecords != ds._rawRecords)
+
+        // RP 105996 : _select_multi는 innerdataset raw index로 저장된다. 표시 위치(index)를 같은 기준으로
+        // 맞춰야 비교가 성립한다. _filtereddataset은 innerdataset의 "보이는 행"만 복사한 것이라
+        // 그 _rawidx가 innerdataset view index이므로, raw까지 한 단계 더 변환한다.
+        var view_index = (ds === multicombo._filtereddataset) ? viewRecord._rawidx : index;
+        var select_key = multicombo._convertToRawIndex(view_index);
+
+        for (var i = 0; i < this._select_multi.length; i++)
         {
-            for (var i = 0; i < this._select_multi.length; i++)
+            if (this._select_multi.items[i] == select_key)
             {
-                if (this._select_multi.items[i] == ds._rawRecords[filtered_idx]._rawidx)
-                {
-                    item.set_selected(true);
-                }
-            }
-        }
-        else
-        {
-            for (var i = 0; i < this._select_multi.length; i++)
-            {
-                if (index == this._select_multi.items[i])
-                {
-                    item.set_selected(true);
-                }
+                item.set_selected(true);
+                break;
             }
         }
 
@@ -8334,6 +8475,7 @@ if (!nexacro.MultiCombo)
         this._multicombotags[index].set_value(multicombo._getItemValue(index));
         this._multicombotags[index].set_text(multicombo._getItemText(index));
 
+        this._multicombotags[index]._setEventHandler("onclick", multicombo._on_tagitem_mobile_onclick, multicombo);
         this._multicombotags[index].createComponent(this._is_created ? false : true);
     };
 
@@ -8697,6 +8839,8 @@ if (!nexacro.MultiCombo)
             var tagtext = this.tagtext = new nexacro.Static("tagtext", 0, 0, 0, 0, null, null, null, null, null, null, this);
             this.tagtext._setControl();
             this.tagtext.createComponent();
+            this.tagtext._setEventHandler("onclick", this._on_tagtext_onclick, this);
+
             tagtext.set_text(this._p_text);
 
             if (this._p_parent._displaymode)
@@ -8826,6 +8970,11 @@ if (!nexacro.MultiCombo)
         }
     };
 
+    _pTagBoxControl._on_tagtext_onclick = function (obj, e)
+    {
+        return this.on_fire_onclick(e.button, e.altkey, e.ctrlkey, e.shiftkey, e.screenx, e.screeny, e.canvasx, e.canvasy, e.clientx, e.clienty, obj, obj, e.metakey);
+    };
+
     //===============================================================
     // nexacro._TagBoxControl : Methods
     //===============================================================
@@ -8893,7 +9042,7 @@ if (!nexacro.MultiCombo)
 
         var tagobj = obj.parent;
 
-        root_comp._on_tagbutton_onclick(this._p_parent._p_index, tagobj);
+        root_comp._on_tagbutton_onclick(this._p_parent._p_index, tagobj, evt);
     };
 
     //===============================================================
