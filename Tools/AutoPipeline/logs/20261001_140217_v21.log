@@ -1,0 +1,50 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20261001140217
+Username: DESKTOP-FV2U6FS\tobesoft
+RunAs User: DESKTOP-FV2U6FS\tobesoft
+Configuration Name: 
+Machine: DESKTOP-FV2U6FS (Microsoft Windows NT 10.0.26200.0)
+Host Application: powershell -NoProfile -ExecutionPolicy Bypass -File D:\git\cursor_project\Tools\AutoPipeline\auto_pipeline.ps1 -Target v21 -Branch RELEASE/NOT_EXIST_21 -NoBrowser
+Process ID: 6972
+PSVersion: 5.1.26100.9444
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9444
+BuildVersion: 10.0.26100.9444
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+
+---- [v21] 0 Preflight ----
+  Source  : D:\git\RELEASE\NOT_EXIST_21 (RELEASE/NOT_EXIST_21, -Branch)
+  Repo    : https://tfs2.tobesoft.com:9443/tfs/XPLATFORM/_git/WORK800
+  Project : D:\nexacro UI\TC_NexaV21\TC_NexaV21.xprj (TC_NexaV21)
+  Output  : D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21
+  JAVA    : C:\Program Files\Microsoft\jdk-25.0.4.101-hotspot\bin\java.exe
+  Jar     : D:\git\cursor_project\Tools\AutoPipeline\work\jar\NexacroN_Deploy_JAVA_20260825(1.1.90)_1
+  Publish : C:\Users\tobesoft\cursor\apache-tomcat-11.0.25\webapps\nexacroN_v21\21.0.0.2100\TC_NexaV21
+  Host    : 172.10.12.46
+  Browser : off
+  [DONE] 0 Preflight (3.7s)
+
+---- [v21] 1 Source ----
+PS>TerminatingError(): "Branch not found on remote: RELEASE/NOT_EXIST_21 (https://tfs2.tobesoft.com:9443/tfs/XPLATFORM/_git/WORK800)"
+>> TerminatingError(): "Branch not found on remote: RELEASE/NOT_EXIST_21 (https://tfs2.tobesoft.com:9443/tfs/XPLATFORM/_git/WORK800)"
+>> TerminatingError(): "Branch not found on remote: RELEASE/NOT_EXIST_21 (https://tfs2.tobesoft.com:9443/tfs/XPLATFORM/_git/WORK800)"
+[ERROR] [v21] Branch not found on remote: RELEASE/NOT_EXIST_21 (https://tfs2.tobesoft.com:9443/tfs/XPLATFORM/_git/WORK800)
+
+==============================================
+ AutoPipeline summary
+==============================================
+ [v21] FAIL
+   Branch  : RELEASE/NOT_EXIST_21
+   Steps   : 0 Preflight 3.7s
+   Error   : Branch not found on remote: RELEASE/NOT_EXIST_21 (https://tfs2.tobesoft.com:9443/tfs/XPLATFORM/_git/WORK800)
+ Log: D:\git\cursor_project\Tools\AutoPipeline\logs\20261001_140217_v21.log
+==============================================
+**********************
+Windows PowerShell transcript end
+End time: 20261001140222
+**********************

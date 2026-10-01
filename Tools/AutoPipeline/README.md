@@ -10,23 +10,27 @@
 
 ## 1. 사용법
 
-실행 파일은 두 가지이며 **동작과 옵션이 같다**. 위치를 옮겨 쓸 경우 단일 파일 버전을 사용한다 (자세한 내용은 10장).
+실행 파일은 세 가지이며 **동작과 옵션이 같다**. 위치를 옮겨 쓸 경우 단일 파일 버전 또는 exe 를 사용한다 (10장, 13장).
 
 | 실행 파일 | 구성 | 위치 |
 |---|---|---|
 | `auto_pipeline.bat` + `auto_pipeline.ps1` | bat 이 ps1 호출 | bat·ps1·txt 가 **같은 폴더**에 있어야 함 |
 | `auto_pipeline_standalone.bat` | bat 한 파일에 PowerShell 포함 | **어디로 옮겨도 됨** (`PIPELINE_HOME` 으로 txt 폴더 지정) |
+| `auto_pipeline.exe` | Python 이식 → Nuitka 로 네이티브 컴파일 (소스 미포함) | **어디로 옮겨도 됨** (`-Home` / `PIPELINE_HOME` / exe 폴더 / 기본 경로) |
 
 ```bat
-auto_pipeline.bat            [v21|v24|all] [-UpdateJar] [-SkipGit] [-OnlyIfChanged] [-OpenBrowser|-NoBrowser] [-DevTools]
-auto_pipeline_standalone.bat [v21|v24|all] [-UpdateJar] [-SkipGit] [-OnlyIfChanged] [-OpenBrowser|-NoBrowser] [-DevTools] [-Help]
+auto_pipeline.bat            [v21|v24|all] [-Branch <name>] [-SourceType git|package] [-Build <folder>] [-UpdateJar] [-SkipGit] [-OnlyIfChanged] [-OpenBrowser|-NoBrowser] [-DevTools]
+auto_pipeline_standalone.bat [v21|v24|all] [-Branch <name>] [-SourceType git|package] [-Build <folder>] [-UpdateJar] [-SkipGit] [-OnlyIfChanged] [-OpenBrowser|-NoBrowser] [-DevTools] [-Help]
 ```
 
 | 인자 / 옵션 | 설명 |
 |---|---|
 | `v21` / `v24` / `all` | 실행 대상. 생략 시 `all` (v21 → v24 순차 실행) |
+| `-Branch <이름>` | **이번 실행만** txt 의 `Branch` 대신 이 브랜치 사용 (txt 는 바뀌지 않음). `v21` / `v24` 처럼 대상 하나일 때만 가능 |
+| `-SourceType git` / `package` | **이번 실행만** 소스 방식 변경. `git` = git 소스로 nexacrolib 구성(기본), `package` = 빌드된 `nexacrolib.zip` 사용 (12장) |
+| `-Build <빌드 폴더>` | **이번 실행만** package 의 빌드 폴더 지정 (예: `-Build 2026.7.30.9(24.0.0.9991)`). 대상 하나일 때만 가능 |
 | `-UpdateJar` | 서버의 최신 Deploy JAVA 엔진을 확인하여 `work\jar` 에 설치. 설치본과 같으면 다운로드 생략 |
-| `-SkipGit` | git fetch/checkout/pull 생략 (현재 로컬 소스로 배포) |
+| `-SkipGit` | 원격 확인 / clone / fetch / pull 생략 (현재 로컬 소스로 배포). SourceDir 가 git 저장소로 이미 있어야 함 |
 | `-OnlyIfChanged` | 원격 커밋이 마지막 성공 이후 바뀌지 않았으면 해당 대상 건너뜀 (스케줄러용) |
 | `-OpenBrowser` | 이번 실행만 Chrome 실행 (설정 `OpenBrowser=N` 이어도 실행) |
 | `-NoBrowser` | 이번 실행만 Chrome 실행 안 함 (설정 `OpenBrowser=Y` 이어도 생략, `-OpenBrowser` 보다 우선) |
@@ -49,6 +53,9 @@ auto_pipeline.bat v21
 
 rem v21, v24 모두 실행 + Chrome 으로 결과 확인
 auto_pipeline.bat all -OpenBrowser
+
+rem 이번만 RELEASE 브랜치로 v21 배포 (D:\git\RELEASE\REL_... 가 없으면 full clone 후 진행)
+auto_pipeline.bat v21 -Branch RELEASE/REL_26.05.19.00_21.0.0.2100
 
 rem 소스 갱신 없이 v24 재배포 + Chrome + DevTools
 auto_pipeline.bat v24 -SkipGit -OpenBrowser -DevTools
@@ -80,6 +87,11 @@ Tools\AutoPipeline\
 ├── auto_pipeline.bat      ← 실행 진입점 (인자 정리 후 ps1 호출)
 ├── auto_pipeline.ps1      ← 파이프라인 본체 (단계 0~5)
 ├── auto_pipeline_standalone.bat ← 단일 파일 버전 (bat + PowerShell 통합, 위치 이동 가능)
+├── auto_pipeline.exe      ← Python 이식 + Nuitka 컴파일 버전 (13장)
+├── python\
+│   ├── auto_pipeline.py   ← exe 의 소스 (표준 라이브러리만 사용)
+│   ├── build_exe.bat      ← Nuitka 빌드 스크립트 → build\auto_pipeline.exe → ..\auto_pipeline.exe 복사
+│   └── build\             ← 빌드 결과
 ├── pipeline_v21.txt       ← v21 설정
 ├── pipeline_v24.txt       ← v24 설정
 ├── README.md              ← 이 문서
@@ -95,7 +107,7 @@ Tools\AutoPipeline\
     │   ├── output\<프로젝트명>\       ← 빌드 중간 산출물 (-O). 프로젝트명 = xprj 파일명 (예: TC_NexaV21)
     │   ├── deploy\                  ← 배포 결과물 (-D) → Tomcat 으로 미러링
     │   ├── chrome_profile\          ← v21 전용 Chrome 프로필
-    │   └── last_success_hash.txt    ← 마지막 성공 커밋 (-OnlyIfChanged 비교용)
+    │   └── last_success_hash_<브랜치>.txt ← 브랜치별 마지막 성공 커밋 (-OnlyIfChanged 비교용)
     └── v24\  (동일 구조)
 ```
 
@@ -143,21 +155,38 @@ flowchart TD
     EN -- No --> S0
 
     %% Step 0
-    S0["🔍 [0] Preflight\nSourceDir / ProjectPath / TomcatHome / JarDir 존재\n게시 폴더 확인 (webapps 안, Tomcat 기본 앱 전체 아님)\nJAVA_HOME\bin\java.exe 확인\nJar\**\start.bat 탐색 → JarRoot\nChrome 실행 여부 결정 (실행 시 chrome.exe 확인)"]
+    S0["🔍 [0] Preflight\nBranch 결정 (-Branch > txt) / SourceDir 의 {Branch} 치환\nProjectPath / TomcatHome 존재\n게시 폴더 확인 (webapps 안, Tomcat 기본 앱 전체 아님)\nJAVA_HOME\bin\java.exe 확인\nJar\**\start.bat 탐색 → JarRoot\nChrome 실행 여부 결정 (실행 시 chrome.exe 확인)"]
     S0 --> S0R{통과?}
     S0R -- No --> FAIL
-    S0R -- Yes --> S1
+    S0R -- Yes --> ST{"SourceType?\n(-SourceType > txt, 기본 git)"}
+    ST -- git --> S1
+    ST -- package --> PK["📦 [1] Package (12장)\nzip 위치 결정 → 로컬 캐시 복사\n→ nexacrolib\ + generate\ 압축 해제\n→ 버전 확인 (BOM 변환 없음)"]
+    PK --> PKr{성공?}
+    PKr -- No --> FAIL
+    PKr -- "같은 zip & -OnlyIfChanged" --> UNCH
+    PKr -- Yes --> S3
 
     %% Step 1
-    S1{"📥 [1] Git update\n-SkipGit?"}
-    S1 -- Yes --> S1H
-    S1 -- No --> S1a["git status --porcelain\n로컬 변경 있으면 중단"]
-    S1a --> S1b["git fetch origin 브랜치"]
-    S1b --> S1c{"-OnlyIfChanged\n& 원격 해시 == 마지막 성공 해시?"}
-    S1c -- Yes --> UNCH["⏭ UNCHANGED\n(이 대상 건너뜀)"]
-    S1c -- No --> S1d["git checkout 브랜치\ngit pull --ff-only origin 브랜치"]
-    S1d --> S1H["커밋 해시 / 메시지 기록"]
-    S1H --> S2
+    S1{"📥 [1] Source\n-SkipGit?"}
+    S1 -- Yes --> S1e
+    S1 -- No --> S1a{"1-a 브랜치명 버전(NN.0.0.N)\n== ExpectedVersion?"}
+    S1a -- 다름 --> FAIL
+    S1a -- 같음/없음 --> S1b["1-b git ls-remote --heads RepoUrl 브랜치\n(약 1초)"]
+    S1b --> S1b2{원격에 브랜치 있음?}
+    S1b2 -- No --> FAIL
+    S1b2 -- Yes --> S1c{"-OnlyIfChanged\n& 원격 해시 == 브랜치별 마지막 성공?"}
+    S1c -- Yes --> UNCH["⏭ UNCHANGED\n(clone/fetch 없이 건너뜀)"]
+    S1c -- No --> S1s{"1-c SourceDir 상태"}
+    S1s -- "없음 / 빈 폴더" --> S1n["디스크 여유 확인 (기본 40GB)\ngit clone -c core.longpaths=true\n-b 브랜치 --single-branch RepoUrl SourceDir"]
+    S1n --> S1nr{clone 성공?}
+    S1nr -- No --> S1nx["이번에 만든 폴더만 삭제"] --> FAIL
+    S1nr -- Yes --> S1e
+    S1s -- "git 아님 (내용 있음)" --> FAIL
+    S1s -- "git 저장소" --> S1u{"origin == RepoUrl\n& index.lock 없음\n& 현재 브랜치 == 브랜치\n& 로컬 수정 없음?"}
+    S1u -- No --> FAIL
+    S1u -- Yes --> S1p["git fetch origin 브랜치\ngit pull --ff-only origin 브랜치"]
+    S1p --> S1e["1-d Lib\FrameworkJS\nexacrolib.json\nTools\Lib\TiMetainfoLib\res 확인\n커밋 해시 / 메시지 기록"]
+    S1e --> S2
 
     %% Step 2
     S2["📦 [2] Framework copy\nwork\대상\nexacrolib 초기화\nLib\FrameworkJS\{component,framework,resources}\n+ nexacrolib.json 복사"]
@@ -198,7 +227,7 @@ flowchart TD
     S5 -- 실행 --> S5a["chrome.exe\n--user-data-dir=work\대상\chrome_profile\n--disk-cache-size=1 --new-window URL"]
     S5a --> OK
 
-    OK["✅ SUCCESS\nlast_success_hash.txt 갱신"] --> NEXT
+    OK["✅ SUCCESS\nlast_success_hash_브랜치.txt 갱신"] --> NEXT
     UNCH --> NEXT
     DIS --> NEXT
     FAIL["❌ FAIL\n오류 메시지 기록"] --> NEXT
@@ -257,7 +286,7 @@ flowchart TD
 
 | 점검 항목 | 실패 시 |
 |---|---|
-| `SourceDir`, `ProjectPath`, `TomcatHome` 경로 존재 | FAIL |
+| `ProjectPath`, `TomcatHome` 경로 존재 (`SourceDir` 는 없을 수 있으므로 [1] 에서 처리) | FAIL |
 | 게시 폴더가 `webapps` 안인지 (`..` 등으로 밖을 가리키면 거부) | FAIL |
 | `PublishSubDir` 가 비어 있을 때 `WebContext` 가 Tomcat 기본 앱(`ROOT`, `manager`, `host-manager`, `docs`, `examples`)이 아닌지 | FAIL |
 | `JavaHome`(설정) 또는 `%JAVA_HOME%` 의 `bin\java.exe` 존재 | FAIL |
@@ -268,23 +297,56 @@ flowchart TD
 - Java: `C:\Program Files\Microsoft\jdk-25.0.4.101-hotspot` (시스템 `JAVA_HOME`, JDK 25)
 - Jar: `AutoPipeline\work\jar\NexacroN_Deploy_JAVA_20260825(1.1.90)_1`
 
-### [1] Git update — 엔진 소스 갱신
+### [1] Source — 엔진 소스 준비 (없으면 clone, 있으면 업데이트)
 
-```
-git status --porcelain              ← 출력이 있으면 중단 (로컬 수정 보호)
-git fetch origin <Branch>
-(-OnlyIfChanged) origin/<Branch> 해시 == last_success_hash.txt → UNCHANGED 로 건너뜀
-git checkout <Branch>
-git pull --ff-only origin <Branch>  ← fast-forward 만 허용 (merge 커밋 생성 안 함)
-```
+**브랜치 / 폴더 결정** ([0] 이전)
 
-- `GIT_TERMINAL_PROMPT=0` 으로 인증 프롬프트 대기를 막음 (인증 실패 시 즉시 FAIL)
-- 커밋 해시와 메시지를 요약에 기록
+| 우선순위 | 브랜치 |
+|---|---|
+| 1 | 실행 옵션 `-Branch <이름>` (이번 실행만) |
+| 2 | txt 의 `Branch=` |
 
-| 대상 | SourceDir | Branch |
+`SourceDir=D:\git\{Branch}` 의 `{Branch}` 를 브랜치명으로 바꾸고, `/` 는 하위 폴더(`\`)가 된다.
+
+| Branch | SourceDir | 비고 |
 |---|---|---|
-| v21 | `D:\git\master_21` | `master_21` |
-| v24 | `D:\git\master` | `master` |
+| `master` / `main` / `master_21` / `main_21` | `D:\git\master` 등 | 기존 폴더 그대로 사용 |
+| `RELEASE/REL_26.05.19.00_21.0.0.2100` | `D:\git\RELEASE\REL_26.05.19.00_21.0.0.2100` | 브랜치마다 새 폴더 (git_sourcecode.md 와 같은 규칙) |
+| `FEATURE/...` | `D:\git\FEATURE\...` | 브랜치마다 새 폴더 |
+
+**처리 순서**
+
+```
+1-a 브랜치명 버전 사전 검사
+    브랜치명의 마지막 '_NN.0.0.N' 앞 2자리가 ExpectedVersion 과 다르면 FAIL (clone 전에 차단)
+    예) v21 에 RELEASE/REL_26.08.25.00_24.0.0.1100 → "is v24 but ExpectedVersion=21"
+    날짜(26.05.19.00, 22.11.01.01)는 버전으로 보지 않음. 버전이 없는 이름(master_21, FEATURE/...)은 검사 생략
+
+1-b git ls-remote --heads <RepoUrl> refs/heads/<Branch>      (약 1초)
+    결과 없음 → FAIL "Branch not found on remote"
+    -OnlyIfChanged 이고 원격 해시 == last_success_hash_<브랜치>.txt → UNCHANGED (clone/fetch 하지 않음)
+
+1-c SourceDir 상태별 처리
+```
+
+| SourceDir 상태 | 처리 |
+|---|---|
+| 없음 / 빈 폴더 | 디스크 여유 확인(`CloneMinFreeGB`, 기본 40GB) → **full clone**<br>`git clone -c core.longpaths=true -b <Branch> --single-branch <RepoUrl> <SourceDir>`<br>실패 시 이번 실행에서 만든 폴더만 삭제 |
+| git 저장소 | `origin` == `RepoUrl` / `.git\index.lock` 없음 / 현재 브랜치 == Branch / 로컬 수정 없음 확인 후<br>`git fetch origin <Branch>` → `git pull --ff-only origin <Branch>` |
+| git 저장소인데 origin 이 다름 | FAIL (다른 저장소 보호) |
+| git 저장소인데 브랜치가 다름 | FAIL (브랜치별 폴더 규칙 위반, `SourceDir=...\{Branch}` 안내) |
+| 내용이 있는데 git 아님 | FAIL (**삭제하지 않음**) |
+
+```
+1-d 필수 경로 확인: Lib\FrameworkJS\nexacrolib.json, Tools\Lib\TiMetainfoLib\res
+    커밋 해시 / 메시지 기록 → [2]
+```
+
+- clone 명령은 `git_sourcecode.md` 의 명령과 같고, Windows 긴 경로(260자) 대응 `core.longpaths=true` 만 추가했다
+- **처음 clone 은 약 7~9GB 다운로드 + 약 20GB 체크아웃**이라 수십 분 걸릴 수 있다 (시간 제한 없음). 이후 실행은 fetch/pull 만 한다
+- `GIT_TERMINAL_PROMPT=0` 으로 인증 프롬프트 대기를 막음 (인증 실패 시 즉시 FAIL)
+- `RepoUrl` 이 없으면 clone 하지 않고, 기존 SourceDir 의 `origin` 으로 원격 확인/업데이트만 한다
+- TFS 서버는 partial clone(`--filter`)을 지원하지 않는다 (프로토콜 v0, `filter` capability 없음). `--depth`(shallow)는 지원
 
 ### [2] Framework copy — nexacrolib / generate 구성
 
@@ -381,7 +443,11 @@ chrome.exe --user-data-dir="work\<대상>\chrome_profile"
 # Run this target: Y | N (default Y). N = skipped even when run as 'v21' or 'all'.
 Enabled=Y
 ExpectedVersion=21
-SourceDir=D:\git\master_21
+# Source: cloned from RepoUrl (full, single-branch) when SourceDir does not exist.
+# {Branch} -> branch name, '/' becomes a sub folder (RELEASE/x -> D:\git\RELEASE\x).
+# Branch can be overridden for one run: auto_pipeline*.bat v21 -Branch <name>
+RepoUrl=https://tfs2.tobesoft.com:9443/tfs/XPLATFORM/_git/WORK800
+SourceDir=D:\git\{Branch}
 Branch=master_21
 ProjectPath=D:\nexacro UI\TC_NexaV21\TC_NexaV21.xprj
 WorkDir=D:\git\cursor_project\Tools\AutoPipeline\work\v21
@@ -406,8 +472,15 @@ ChromePath=C:\Program Files\Google\Chrome\Application\chrome.exe
 |---|---|---|
 | `Enabled` | ➖ | 이 대상 실행 여부 `Y` / `N`. **비우거나 없으면 `Y` (실행)**. `N` 이면 `DISABLED` 로 건너뜀 |
 | `ExpectedVersion` | ✅ | `21` / `24`. 버전 검증, RULE 옵션, Template\24 복사 여부 결정 |
-| `SourceDir` | ✅ | 엔진 소스 git 저장소 루트 |
-| `Branch` | ✅ | checkout / pull 할 브랜치 |
+| `RepoUrl` | ➖ | 엔진 소스 git 저장소 주소. 있으면 SourceDir 가 없을 때 **full clone**. 없으면 기존 SourceDir 의 origin 으로 업데이트만 |
+| `SourceDir` | ✅ | 엔진 소스 폴더. `{Branch}` 토큰 사용 가능 (`D:\git\{Branch}` → `D:\git\master_21`, `D:\git\RELEASE\REL_...`) |
+| `Branch` | ✅ | 받을 / 업데이트할 브랜치. 실행 옵션 `-Branch` 가 있으면 그 값이 우선 (이번 실행만) |
+| `CloneMinFreeGB` | ➖ | clone 전에 필요한 디스크 여유 공간(GB). 기본 `40` |
+| `SourceType` | ➖ | `git`(기본) / `package`. `-SourceType` 이 우선 (이번 실행만) |
+| `PackageRoot` | ➖ | package 공유 폴더 루트. 예: `\\59.10.169.25\Deploy_v24\Total_Package` (v21 은 미정, 비어 있음) |
+| `PackageBuild` | ➖ | `latest`(기본, 가장 최근 빌드) 또는 빌드 폴더 이름. `-Build` 가 우선 |
+| `PackageZip` | ➖ | 사용할 zip 이름. 기본 `nexacrolib.zip` |
+| `PackagePath` | ➖ | zip 파일 또는 빌드 폴더의 전체 경로. 지정하면 `PackageRoot` / `PackageBuild` / `-Build` 보다 우선 |
 | `ProjectPath` | ✅ | 배포할 `.xprj` |
 | `WorkDir` | ✅ | 버전별 작업 폴더. 삭제 작업은 이 폴더 안에서만 허용 |
 | `JarDir` | ✅ | Deploy JAVA 엔진 폴더. `[jar]` 단계로 갱신하려면 `AutoPipeline\work` 안이어야 함 |
@@ -490,6 +563,19 @@ ChromePath=C:\Program Files\Google\Chrome\Application\chrome.exe
 | `Refusing to replace Tomcat built-in app` | `ROOT` 등 기본 앱 전체를 지정함. `PublishSubDir` 로 하위 폴더를 지정 |
 | 게시 중 `Remove-Item` 오류 (파일 사용 중) | 해당 폴더의 파일을 다른 프로그램이 열고 있음. 닫고 재실행 |
 | `Source repo has local changes` | `SourceDir` 에서 `git status` 로 수정 파일 정리 |
+| `Branch '...' is vNN but ExpectedVersion=..` | 다른 버전의 브랜치를 지정함. v21 은 `_21.0.0.N`, v24 는 `_24.0.0.N` 브랜치 사용 |
+| `Branch not found on remote` | 브랜치명 철자 (`git ls-remote --heads <RepoUrl>` 로 목록 확인) |
+| `SourceDir is on branch 'x', expected 'y'` | 고정 SourceDir 에 다른 브랜치를 지정함. `SourceDir=D:\git\{Branch}` 사용 |
+| `SourceDir origin ... differs from RepoUrl` | SourceDir 가 다른 저장소의 clone 임. 경로 또는 RepoUrl 확인 |
+| `SourceDir exists but is not a git repository` | 그 폴더에 git 이 아닌 파일이 있음 (삭제하지 않음). 비우거나 다른 경로 지정 |
+| `index.lock exists` | 다른 git 작업이 진행 중이거나 비정상 종료됨. 확인 후 `.git\index.lock` 삭제 |
+| `Not enough disk space to clone` | 드라이브 여유 공간 확보 또는 `CloneMinFreeGB` 조정 |
+| `git clone failed` | 네트워크 / 인증 / 경로. 만든 폴더는 자동 삭제되므로 그대로 재실행 가능 |
+| `SourceType=package needs PackageRoot or PackagePath` | txt 에 `PackageRoot` 또는 `PackagePath` 지정 (v21 은 아직 미정) |
+| `Package branch folder not found` | `PackageRoot\<Branch 마지막 부분>` 폴더 확인 (`RELEASE/REL_x` → `REL_x`) |
+| `Package zip not found` | 빌드 폴더 이름(`-Build` / `PackageBuild`) 과 `PackageZip` 확인 |
+| `Unexpected package layout` | zip 최상위에 `nexacrolib\`, `generate\` 가 없음. zip 종류 확인 |
+| `Version mismatch: package=...` | v21 / v24 에 맞지 않는 패키지. `PackageRoot` / 브랜치 확인 |
 | `git fetch failed` | 네트워크 / TFS 인증 (`git -C <SourceDir> fetch` 직접 실행) |
 | `Version mismatch` | `SourceDir` / `Branch` 가 `ExpectedVersion` 과 맞는지 |
 | `Deploy failed (exit N)` | 로그의 Java 출력 |
@@ -529,7 +615,7 @@ flowchart TD
     B --> C["powershell -Command\n자기 파일(AP_SELF) 읽기\n:__PS_BEGIN__ 이후 텍스트 → scriptblock 실행"]
     C --> C1{PowerShell 부분 찾음?}
     C1 -- No --> E2["❌ exit 2"]
-    C1 -- Yes --> D["인자 해석\nv21 | v24 | all, -UpdateJar, -SkipGit,\n-OnlyIfChanged, -OpenBrowser, -NoBrowser, -DevTools, -Help"]
+    C1 -- Yes --> D["인자 해석\nv21 | v24 | all, -Branch, -UpdateJar, -SkipGit,\n-OnlyIfChanged, -OpenBrowser, -NoBrowser, -DevTools, -Help"]
     D --> D1{알 수 없는 인자?}
     D1 -- Yes --> E2
     D1 -- No --> H{-Help?}
@@ -617,3 +703,221 @@ bat 을 AutoPipeline 폴더 밖(임시 폴더)으로 복사하여 실행.
 | `PIPELINE_HOME=D:\nowhere` + bat 폴더에 txt 없음 | 확인한 두 경로와 수정 안내 출력, exit 2 |
 | `all -SkipGit -NoBrowser` | 설정 폴더 = AutoPipeline 인식, v21 SUCCESS (배포 Fail 0, `http://172.10.12.46:8080/nexacroN_v21/21.0.0.2100/TC_NexaV21/index.html`), v24 DISABLED, exit 0 |
 | 상대 경로 (`WorkDir=work\v21`, `ProjectPath=..\proj\A.xprj`) | txt 폴더 기준 절대 경로로 변환됨 |
+
+---
+
+## 11. 소스 준비 (clone / 브랜치 지정) 확인 결과 (2026-10-01)
+
+**서버 확인**
+
+| 항목 | 결과 |
+|---|---|
+| 원격 브랜치 조회 (`ls-remote`) | 0.9초, 인증 프롬프트 없음. `master` / `main` / `master_21` / `main_21` / `RELEASE/REL_26.05.19.00_21.0.0.2100` / `RELEASE/REL_26.08.25.00_24.0.0.1100` 존재 |
+| partial clone (`--filter=blob:none`) | **미지원** (프로토콜 v0, capability 에 `filter` 없음) |
+| shallow (`--depth`) | 지원 |
+| 기존 clone 크기 | `.git` 7~9GB + 작업 폴더 약 20GB (브랜치당) |
+
+**동작 테스트**
+
+| # | 테스트 | 결과 |
+|---|---|---|
+| T1 | `all -Branch main_21` (두 실행 파일) | `-Branch needs a single target`, exit 2 |
+| T2 | `v21 -Branch RELEASE/REL_26.08.25.00_24.0.0.1100` | clone 전에 `is v24 but ExpectedVersion=21` 로 FAIL |
+| T3 | `v21 -Branch RELEASE/NOT_EXIST_21` | `Branch not found on remote` 로 FAIL |
+| T4 | `v21` (txt 기본 `master_21`, 기존 `D:\git\master_21`) | ls-remote → fetch → pull(`Already up to date`) → 배포·게시 SUCCESS |
+| T5 | SourceDir 없음 → clone (작은 저장소로 대체 테스트) | `git clone -c core.longpaths=true -b main --single-branch` 수행, 브랜치 폴더 생성, `core.longpaths=true` 저장 확인 |
+| T6 | T5 폴더로 재실행 | clone 하지 않고 fetch + pull |
+| T7 | 기존 clone 인데 RepoUrl 다름 | `origin ... differs from RepoUrl` 로 FAIL, 폴더 유지 |
+| T8 | 내용 있는 git 아닌 폴더 | `not a git repository (not touched)` 로 FAIL, 파일 유지 |
+| T9 | `auto_pipeline.bat v21 -Branch master_21` | SUCCESS, `last_success_hash_master_21.txt` 기록 |
+
+- 버전 사전 검사 규칙 확인: `RELEASE/REL_26.05.19.00_21.0.0.2100` → 21, `..._24.0.0.1100_AS` → 24, `FEATURE/.../GS_TUTORIAL_22.11.01.01`·`master_21` → 검사 생략
+- WORK800 의 실제 full clone(약 27GB)은 테스트하지 않았다. 처음 RELEASE 브랜치를 지정해 실행할 때 수행된다
+- 테스트 중 PowerShell `Remove-Item` 이 260자 넘는 경로를 지우지 못하는 문제를 발견하여, 폴더 삭제(작업 폴더 초기화 / 게시 폴더 교체 / clone 실패 정리 / jar staging)를 robocopy 기반 `Remove-Tree` 로 교체했다
+
+---
+
+## 12. 소스 방식 선택: git / package (`SourceType`)
+
+nexacrolib 와 generate 를 **git 소스로 직접 구성**할지, **이미 빌드된 `nexacrolib.zip` 을 받아 쓸지** 선택한다.
+
+| 방식 | [1] | [2] | 특징 |
+|---|---|---|---|
+| `git` (기본) | Source: clone / fetch / pull | Framework copy + UTF-8 BOM 변환 + generate 구성 | 최신 커밋 기준. 처음 clone 은 오래 걸림 |
+| `package` | Package: 공유 폴더의 zip 사용 | **생략** | 빌드 서버가 만든 결과물 그대로 사용. **BOM 변환 없음**. 약 7MB 라 빠름 |
+
+[3] Deploy 이후는 두 방식이 같다. v21 / v24 모두 기본값은 `git` 이다.
+
+### 12-1. 설정
+
+```ini
+SourceType=git                       # git | package
+PackageRoot=\\59.10.169.25\Deploy_v24\Total_Package
+PackageBuild=latest                  # latest | 빌드 폴더 이름
+PackageZip=nexacrolib.zip
+PackagePath=                         # (선택) zip 또는 빌드 폴더 전체 경로 → 위 설정보다 우선
+```
+
+| 대상 | PackageRoot |
+|---|---|
+| v24 | `\\59.10.169.25\Deploy_v24\Total_Package` |
+| v21 | (미정 — 확인 후 지정. 비어 있으면 package 실행 시 오류 안내) |
+
+### 12-2. zip 위치 결정
+
+```
+PackagePath 있음 → 그 경로 (.zip 이면 그대로, 폴더면 폴더\PackageZip)
+없음            → PackageRoot \ <브랜치 폴더> \ <빌드 폴더> \ PackageZip
+
+  브랜치 폴더 = Branch 의 마지막 부분    master → master,  RELEASE/REL_26.08.25.00_24.0.0.1100 → REL_26.08.25.00_24.0.0.1100
+  빌드 폴더   = -Build > PackageBuild(이름) > latest
+  latest      = "yyyy.M.d.N(...)" 이름의 날짜·순번을 숫자로 비교한 최신 폴더
+                (문자열 정렬이면 main 에서 2026.9.3.1 이 선택되지만, 숫자 비교로 2026.9.21.1 을 정확히 선택)
+```
+
+**예**: `Branch=master`, `PackageBuild=latest` →
+`\\59.10.169.25\Deploy_v24\Total_Package\master\2026.7.30.9(24.0.0.9991)\nexacrolib.zip`
+
+### 12-3. [1] Package 처리 순서
+
+```
+1-a zip 위치 결정 (12-2). 폴더 / zip 이 없으면 FAIL
+1-b -OnlyIfChanged 이고 "zip 경로 | 크기 | 수정 시각" 이 last_success_package_<브랜치>.txt 와 같으면 → UNCHANGED
+1-c 로컬 캐시로 복사: work\<대상>\package\nexacrolib.zip
+    캐시의 크기·수정 시각이 같으면 복사 생략 (공유 폴더에서 직접 압축 해제하지 않음)
+1-d work\<대상>\nexacrolib 초기화 → 압축 해제 (zip 최상위 = nexacrolib\, generate\)
+1-e nexacrolib\nexacrolib.json, generate 존재 확인 + 버전 앞 2자리 == ExpectedVersion
+    → [2] Framework copy 생략, [3] Deploy 로 진행
+```
+
+### 12-4. 사용 예
+
+```bat
+rem txt 는 git 그대로, 이번만 v24 를 최신 패키지로
+auto_pipeline_standalone.bat v24 -SourceType package
+
+rem 특정 빌드로
+auto_pipeline_standalone.bat v24 -SourceType package -Build 2026.7.30.9(24.0.0.9991)
+
+rem main 브랜치의 최신 패키지 (35개 빌드 중 최신 자동 선택)
+auto_pipeline_standalone.bat v24 -SourceType package -Branch main
+
+rem 스케줄러용: 새 패키지가 올라왔을 때만
+auto_pipeline_standalone.bat v24 -SourceType package -OnlyIfChanged -NoBrowser
+```
+
+### 12-5. 공유 폴더 확인 결과 (2026-10-01)
+
+| 항목 | 내용 |
+|---|---|
+| 구조 | `Total_Package\<브랜치>\<빌드 폴더>\nexacrolib*.zip` |
+| 브랜치 폴더 | `master`, `main`, `REL_..._24.0.0.N`, `FEATURE_...`, `SITE_...` 등 (git 의 `RELEASE/` 접두어 없음) |
+| 빌드 수 | `master` 1개, `main` 35개, `REL_...` 각 1개 |
+| zip 종류 | `nexacrolib.zip`(사용), `_NoOptions`, `_All_Merge`, `_CompM_FrameMC` |
+| `nexacrolib.zip` 구성 | `nexacrolib\` (version 24.0.0.9991, `framework\Framework.json`) + `generate\` (`CSS_Rule*.info` + `Template*`) |
+
+### 12-6. 테스트 결과 (2026-10-01, 임시 설정 폴더 사용 — 실제 v24 설정은 Enabled=N 이므로)
+
+| # | 테스트 | 결과 |
+|---|---|---|
+| P1 | `v24 -SourceType package` (latest) | master\2026.7.30.9 선택 → 캐시 복사 → 압축 해제 → 배포 Success 465 / Fail 0 → 게시 SUCCESS |
+| P2 | 같은 조건 + `-OnlyIfChanged` | `Same package as last success` → UNCHANGED (0.1초) |
+| P3 | `auto_pipeline.bat` + `-Build 2026.7.30.9(24.0.0.9991)` | 괄호 포함 인자 정상 전달, UNCHANGED |
+| P4 | 없는 빌드 `-Build 2099.1.1.1(24.0.0.0)` | `Package zip not found` 로 FAIL |
+| P5 | `-SourceType svn` (두 실행 파일) | `-SourceType must be git or package`, exit 2 |
+| P6 | `Get-LatestBuild` (main 35개) | `2026.9.21.1(24.0.0.1130)` (문자열 정렬이면 `2026.9.3.1`) |
+| P7 | `v21 -SourceType package` (PackageRoot 비어 있음) | `needs PackageRoot or PackagePath` 로 FAIL |
+| P8 | `v21` (기본 git) 회귀 확인 | SUCCESS, `[1] Source` → `[2] Framework copy` 정상 |
+
+- package 방식은 배포 단계의 Merge 가 0건이다 (git 방식 v24 는 Merge 105건). `nexacrolib.zip` 의 라이브러리가 이미 머지된 상태로 보인다
+- 배포 로그의 `[Fatal Error] :1:1: ...` 한 줄과 화면 2개 생성 실패는 git 방식에서도 동일하게 나오는 JEBI_TOPS_V24 프로젝트 쪽 메시지다
+
+---
+
+## 13. exe 버전 (`auto_pipeline.exe`)
+
+`auto_pipeline_standalone.bat` 의 PowerShell 로직을 **Python 으로 이식**하고, **Nuitka 로 네이티브 exe 로 컴파일**한 버전.
+txt 설정·옵션·단계·출력 메시지는 standalone 과 같다.
+
+### 13-1. 사용법
+
+```bat
+auto_pipeline.exe [v21|v24|all] [-Branch <name>] [-SourceType git|package] [-Build <folder>]
+                  [-UpdateJar] [-SkipGit] [-OnlyIfChanged] [-OpenBrowser|-NoBrowser] [-DevTools]
+                  [-Home <설정 폴더>] [-Help]
+```
+
+**설정 폴더 결정** (pipeline_v21.txt / pipeline_v24.txt 가 있는 첫 번째 폴더, logs\ 도 여기에 생성)
+
+| 순서 | 후보 |
+|---|---|
+| 1 | `-Home <폴더>` 옵션 (exe 전용) |
+| 2 | 환경변수 `PIPELINE_HOME` |
+| 3 | exe 가 있는 폴더 |
+| 4 | 기본 경로 `D:\git\cursor_project\Tools\AutoPipeline` (exe 에 내장) |
+
+→ exe 만 다른 위치로 복사해도 4순위로 AutoPipeline 설정을 찾는다. 설정 폴더가 바뀌면 `-Home` 또는 `PIPELINE_HOME` 사용.
+
+**종료 코드**: 0 = 성공 / UNCHANGED / DISABLED, 1 = 실패, 2 = 인자 오류·설정 폴더 없음
+
+### 13-2. 소스 보호 방식
+
+| 도구 | exe 안의 코드 | 압축을 풀면 |
+|---|---|---|
+| PyInstaller (사용 안 함) | Python 바이트코드(.pyc) | pyinstxtractor + 디컴파일러로 **소스가 거의 그대로 복원**됨 |
+| **Nuitka (사용)** | Python 코드를 **C 로 변환 후 기계어로 컴파일** | `.pyd` / `.dll` 만 나옴. **.py / .pyc 없음** |
+
+빌드 옵션: `--onefile` (단일 exe), `--python-flag=no_docstrings,no_asserts` (docstring / assert 제거), `--mingw64` (C 컴파일러)
+
+**확인 결과 (2026-10-01)** — exe 실행 중 임시 폴더(`%TEMP%\onefile_*`)에 풀리는 파일을 직접 검사
+
+| 항목 | 결과 |
+|---|---|
+| 풀린 파일 | 15개: `auto_pipeline.dll`(컴파일된 본체), `python312.dll`, `vcruntime140*.dll`, `libssl/libcrypto`, 표준 모듈 `.pyd` 9개 |
+| `.py` / `.pyc` | **0개** |
+| 소스 코드 문자열 (`def invoke_target`, `import zipfile`) | exe·풀린 파일 어디에도 없음 |
+| 주석 / docstring (`# Same-name folder ...`, `Long path (>260 chars) ...`) | 없음 |
+| 프로그램 문자열 (오류 메시지, `pipeline_v21.txt`, 서버 주소 등) | `auto_pipeline.dll` 에 **남아 있음** (실행에 필요한 값이라 제거 불가) |
+| 실행 종료 후 임시 폴더 | 자동 삭제됨 |
+
+> 기계어로 컴파일되므로 소스 복원은 매우 어렵지만, 디스어셈블러로 동작을 분석하는 것까지 완전히 막는 방법은 없다.
+
+### 13-3. 빌드 방법
+
+```bat
+python\build_exe.bat
+```
+
+| 필요 항목 | 설치 상태 (이 PC) |
+|---|---|
+| Python 3.12 | `%LOCALAPPDATA%\Programs\Python\Python312` (winget 사용자 설치) |
+| Nuitka 4.2.2 + ordered-set + zstandard | pip 설치 |
+| MinGW64 (gcc 15.2) | 첫 빌드 때 Nuitka 가 자동 다운로드 → `%LOCALAPPDATA%\Nuitka\Nuitka\Cache` |
+
+- 첫 빌드는 MinGW 다운로드 포함 수 분, 이후 빌드는 1~2분
+- 결과: `python\build\auto_pipeline.exe` → `AutoPipeline\auto_pipeline.exe` 로 복사 (약 6.4MB)
+- 빌드 경고 `Cannot find Windows Runtime DLLs` : UCRT 는 포함하지 않음. Windows 10 / 11 에는 기본 포함이라 문제 없음
+- 로직을 고칠 때는 `python\auto_pipeline.py` 수정 → `build_exe.bat` 재실행. **ps1 / standalone 과 동작을 맞추려면 세 곳 모두 수정**
+
+### 13-4. PowerShell 버전과의 차이
+
+| 항목 | PowerShell (ps1 / standalone) | exe (Python) |
+|---|---|---|
+| 설정 폴더 | standalone: `PIPELINE_HOME` → bat 폴더 | `-Home` → `PIPELINE_HOME` → exe 폴더 → 내장 기본 경로 |
+| 로그 | `Start-Transcript` | 같은 내용을 직접 기록 (`logs\yyyyMMdd_HHmmss_<대상>.log`) |
+| 긴 경로(260자↑) 삭제·복사 | robocopy | `\\?\` 경로 접두어 사용 |
+| IP 자동 탐색 | 기본 게이트웨이 있는 어댑터 | 기본 경로(default route) 의 로컬 IP (같은 결과: `172.10.12.46`) |
+| package 의 `last_success_package_*.txt` 형식 | 수정 시각을 ISO 문자열로 기록 | 초 단위 숫자로 기록 → **두 버전을 번갈아 쓰면 -OnlyIfChanged 가 한 번은 재배포** |
+| git 방식 `last_success_hash_*.txt` | 커밋 해시 | 같음 (호환) |
+
+### 13-5. 테스트 결과 (2026-10-01)
+
+| # | 테스트 | 결과 |
+|---|---|---|
+| X1 | `.py` 로 `v21` git 실행 | SUCCESS — 배포 Success 323 / Fail 0, 파일 157, 게시·URL 확인 (PowerShell 버전과 동일 수치) |
+| X2 | `.py` 로 `v24 -SourceType package -Home <임시>` | SUCCESS — 배포 Success 465 / Fail 0 |
+| X3 | 같은 조건 + `-OnlyIfChanged` / `-Build 2026.7.30.9(24.0.0.9991)` | UNCHANGED |
+| X4 | 없는 `-Build` | `Package zip not found`, exit 1 |
+| X5 | **exe 를 다른 폴더로 복사** 후 `v21` | 기본 경로로 설정 폴더 인식, SUCCESS (배포 Fail 0) |
+| X6 | exe 종료 코드 | `-Help` 0 / 모르는 인자 2 / `all -Branch` 2 / v21 package(PackageRoot 없음) 1 |
+| X7 | exe 실행 중 풀린 파일 검사 | 13-2 표 참고 (.py / .pyc 0개) |

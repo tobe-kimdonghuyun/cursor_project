@@ -1,7 +1,7 @@
 @echo off
 rem ============================================================
 rem  auto_pipeline.bat - wrapper for auto_pipeline.ps1
-rem  Usage: auto_pipeline.bat [v21^|v24^|all] [-UpdateJar] [-SkipGit] [-OnlyIfChanged] [-OpenBrowser^|-NoBrowser] [-DevTools]
+rem  Usage: auto_pipeline.bat [v21^|v24^|all] [-Branch name] [-SourceType git^|package] [-Build folder] [-UpdateJar] [-SkipGit] [-OnlyIfChanged] [-OpenBrowser^|-NoBrowser] [-DevTools]
 rem ============================================================
 setlocal
 rem capture before shift: shift also moves %0

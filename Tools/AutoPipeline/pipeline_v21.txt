@@ -2,8 +2,22 @@
 # Run this target: Y | N (default Y). N = skipped even when run as 'v21' or 'all'.
 Enabled=Y
 ExpectedVersion=21
-SourceDir=D:\git\master_21
+# Source: cloned from RepoUrl (full, single-branch) when SourceDir does not exist.
+# {Branch} -> branch name, '/' becomes a sub folder (RELEASE/x -> D:\git\RELEASE\x).
+# Branch can be overridden for one run: auto_pipeline*.bat v21 -Branch <name>
+RepoUrl=https://tfs2.tobesoft.com:9443/tfs/XPLATFORM/_git/WORK800
+SourceDir=D:\git\{Branch}
 Branch=master_21
+# Source type: git (default, above) | package (prebuilt nexacrolib.zip = nexacrolib\ + generate\)
+# One run only: auto_pipeline*.bat v21 -SourceType package [-Build "<build folder>"]
+SourceType=git
+# package: PackageRoot\<last part of Branch>\<PackageBuild>\<PackageZip>   (RELEASE/REL_x -> REL_x)
+#          PackageBuild = latest | build folder name. PackagePath = zip or build folder (overrides all three)
+# PackageRoot for v21: not decided yet
+PackageRoot=
+PackageBuild=latest
+PackageZip=nexacrolib.zip
+PackagePath=
 ProjectPath=D:\nexacro UI\TC_NexaV21\TC_NexaV21.xprj
 WorkDir=D:\git\cursor_project\Tools\AutoPipeline\work\v21
 JarDir=D:\git\cursor_project\Tools\AutoPipeline\work\jar

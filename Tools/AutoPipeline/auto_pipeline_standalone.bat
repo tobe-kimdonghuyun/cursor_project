@@ -5,7 +5,8 @@ rem  Single-file AutoPipeline: this bat contains the whole PowerShell pipeline.
 rem  The bat can be copied/moved anywhere; it finds the config folder below.
 rem
 rem  Usage:
-rem    auto_pipeline_standalone.bat [v21^|v24^|all] [-UpdateJar] [-SkipGit] [-OnlyIfChanged]
+rem    auto_pipeline_standalone.bat [v21^|v24^|all] [-Branch name] [-SourceType git^|package] [-Build folder]
+rem                                 [-UpdateJar] [-SkipGit] [-OnlyIfChanged]
 rem                                 [-OpenBrowser^|-NoBrowser] [-DevTools] [-Help]
 rem
 rem  PIPELINE_HOME : folder that holds pipeline_v21.txt / pipeline_v24.txt.
@@ -32,6 +33,7 @@ rem ---- Everything below is PowerShell. cmd never reaches here (exit /b above).
 
 # ---- Arguments (parsed from %*, since a scriptblock run this way has no param() binding) ----
 $Target = 'all'
+$Branch = ''; $SourceType = ''; $Build = ''
 $UpdateJar = $false; $SkipGit = $false; $OnlyIfChanged = $false
 $OpenBrowser = $false; $NoBrowser = $false; $DevTools = $false
 $argList = @("$env:AP_ARGS".Trim() -split '\s+' | Where-Object { $_ })
@@ -40,6 +42,21 @@ for ($k = 0; $k -lt $argList.Count; $k++) {
     switch -Regex ($a.ToLower()) {
         '^(v21|v24|all)$'   { $Target = $Matches[1]; break }
         '^-target$'         { $k++; $Target = "$($argList[$k])".Trim('"').ToLower(); break }
+        '^-branch$'         {
+            $k++; $Branch = "$($argList[$k])".Trim('"')
+            if (-not $Branch -or $Branch.StartsWith('-')) { Write-Host '[ERROR] -Branch needs a branch name'; exit 2 }
+            break
+        }
+        '^-sourcetype$'     {
+            $k++; $SourceType = "$($argList[$k])".Trim('"').ToLower()
+            if (@('git', 'package') -notcontains $SourceType) { Write-Host "[ERROR] -SourceType must be git or package (got '$SourceType')"; exit 2 }
+            break
+        }
+        '^-build$'          {
+            $k++; $Build = "$($argList[$k])".Trim('"')
+            if (-not $Build -or $Build.StartsWith('-')) { Write-Host '[ERROR] -Build needs a build folder name'; exit 2 }
+            break
+        }
         '^-updatejar$'      { $UpdateJar = $true; break }
         '^-skipgit$'        { $SkipGit = $true; break }
         '^-onlyifchanged$'  { $OnlyIfChanged = $true; break }
@@ -47,8 +64,12 @@ for ($k = 0; $k -lt $argList.Count; $k++) {
         '^-nobrowser$'      { $NoBrowser = $true; break }
         '^-devtools$'       { $DevTools = $true; break }
         '^(-help|-h|/\?)$'  {
-            Write-Host 'Usage: auto_pipeline_standalone.bat [v21|v24|all] [-UpdateJar] [-SkipGit] [-OnlyIfChanged]'
+            Write-Host 'Usage: auto_pipeline_standalone.bat [v21|v24|all] [-Branch <name>] [-UpdateJar] [-SkipGit] [-OnlyIfChanged]'
             Write-Host '                                    [-OpenBrowser|-NoBrowser] [-DevTools]'
+            Write-Host '                                    [-SourceType git|package] [-Build <folder>]'
+            Write-Host '  -Branch     : this run only, overrides Branch= in pipeline_<target>.txt (v21 or v24 only)'
+            Write-Host '  -SourceType : this run only, overrides SourceType= (default git; package = prebuilt nexacrolib.zip)'
+            Write-Host '  -Build      : this run only, package build folder (default PackageBuild=latest)'
             Write-Host "Config folder (PIPELINE_HOME): $env:PIPELINE_HOME"
             exit 0
         }
@@ -56,6 +77,8 @@ for ($k = 0; $k -lt $argList.Count; $k++) {
     }
 }
 if (@('v21', 'v24', 'all') -notcontains $Target) { Write-Host "[ERROR] Invalid target: $Target"; exit 2 }
+if ($Branch -and $Target -eq 'all') { Write-Host '[ERROR] -Branch needs a single target (v21 or v24)'; exit 2 }
+if ($Build -and $Target -eq 'all')  { Write-Host '[ERROR] -Build needs a single target (v21 or v24)'; exit 2 }
 
 # ---- Config folder: PIPELINE_HOME, else this bat's folder (first one that has pipeline_*.txt) ----
 $ROOT = $null
@@ -113,7 +136,7 @@ function Read-PipelineConfig([string]$Path) {
     }
     # Relative paths are resolved against the folder that holds the config file
     $base = Split-Path -Parent ([IO.Path]::GetFullPath($Path))
-    foreach ($key in 'SourceDir', 'ProjectPath', 'WorkDir', 'JarDir', 'TomcatHome', 'JavaHome', 'ChromePath') {
+    foreach ($key in 'SourceDir', 'ProjectPath', 'WorkDir', 'JarDir', 'TomcatHome', 'JavaHome', 'ChromePath', 'PackageRoot', 'PackagePath') {
         $v = $cfg[$key]
         if ($v -and -not [IO.Path]::IsPathRooted($v)) { $cfg[$key] = [IO.Path]::GetFullPath((Join-Path $base $v)) }
     }
@@ -138,6 +161,19 @@ function Invoke-Native([string]$Exe, [string[]]$Arguments) {
     return $code
 }
 
+# Run a native exe and return its exit code and output lines (not echoed).
+function Invoke-NativeCapture([string]$Exe, [string[]]$Arguments) {
+    $prev = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try {
+        $out  = @(& $Exe @Arguments 2>&1 | ForEach-Object { "$_" })
+        $code = $LASTEXITCODE
+    } finally {
+        $ErrorActionPreference = $prev
+    }
+    return [pscustomobject]@{ Code = $code; Lines = $out }
+}
+
 # Refuse to delete anything outside an allowed root.
 function Assert-Under([string]$Path, [string]$Root) {
     $p = [IO.Path]::GetFullPath($Path).TrimEnd('\')
@@ -149,7 +185,7 @@ function Assert-Under([string]$Path, [string]$Root) {
 
 function Reset-Dir([string]$Path, [string]$Root) {
     Assert-Under $Path $Root
-    if (Test-Path -LiteralPath $Path) { Remove-Item -LiteralPath $Path -Recurse -Force }
+    Remove-Tree $Path
     New-Item -ItemType Directory -Force -Path $Path | Out-Null
 }
 
@@ -166,6 +202,17 @@ function Copy-Tree([string]$Src, [string]$Dst, [switch]$Mirror) {
         $ErrorActionPreference = $prev
     }
     if ($code -ge 8) { throw "robocopy failed ($code): $Src -> $Dst" }
+}
+
+# Delete a folder tree. robocopy /MIR from an empty folder handles paths longer than 260 chars,
+# which Remove-Item in PowerShell 5.1 cannot (deep git sources / deploy output).
+function Remove-Tree([string]$Path) {
+    if (-not (Test-Path -LiteralPath $Path)) { return }
+    $empty = Join-Path ([IO.Path]::GetTempPath()) ('ap_empty_' + [guid]::NewGuid().ToString('N'))
+    New-Item -ItemType Directory -Force -Path $empty | Out-Null
+    try { Copy-Tree $empty $Path -Mirror } finally { Remove-Item -LiteralPath $empty -Force }
+    Remove-Item -LiteralPath $Path -Recurse -Force
+    if (Test-Path -LiteralPath $Path) { throw "Could not delete: $Path" }
 }
 
 function Get-NexacroVersion([string]$JsonFile) {
@@ -245,7 +292,7 @@ function Update-DeployJar([string]$JarDir) {
     Reset-Dir $JarDir $WORK_ROOT
     Get-ChildItem -LiteralPath $pkgDir | Move-Item -Destination $JarDir -Force
     Set-Content -LiteralPath $marker -Value $pkg.Name
-    Remove-Item -LiteralPath $staging -Recurse -Force
+    Remove-Tree $staging
     Write-Host "  Installed -> $JarDir"
     return "$($pkg.Name) (updated)"
 }
@@ -280,7 +327,21 @@ function Wait-Url([string]$Url, [int]$TimeoutSec) {
     return $false
 }
 
-function Invoke-Step($Ctx, [string]$Name, [scriptblock]$Body) {
+# Newest build folder. Names look like 2026.9.21.1(24.0.0.1130): compare date + sequence as numbers
+# (a string sort would put 2026.9.3 after 2026.9.21). Other names fall back to LastWriteTime.
+function Get-LatestBuild([string]$Dir) {
+    $dirs = @(Get-ChildItem -LiteralPath $Dir -Directory)
+    if (-not $dirs) { throw "No build folders in $Dir" }
+    $key = {
+        $m = [regex]::Match($_.Name, '^(\d{4})\.(\d+)\.(\d+)\.(\d+)')
+        if ($m.Success) { [long]('{0:D4}{1:D2}{2:D2}{3:D4}' -f [int]$m.Groups[1].Value, [int]$m.Groups[2].Value, [int]$m.Groups[3].Value, [int]$m.Groups[4].Value) } else { 0 }
+    }
+    return ($dirs | Sort-Object -Descending -Property @{ Expression = $key }, LastWriteTime | Select-Object -First 1).Name
+}
+
+# -When $false skips the step entirely (no header, no timing).
+function Invoke-Step($Ctx, [string]$Name, [scriptblock]$Body, [bool]$When = $true) {
+    if (-not $When) { return }
     Write-Host ''
     Write-Host "---- [$($Ctx.Target)] $Name ----"
     $sw = [Diagnostics.Stopwatch]::StartNew()
@@ -307,6 +368,17 @@ function Invoke-Target($Ctx) {
         return
     }
 
+    # Branch: -Branch (this run only) wins over Branch= in config.
+    # SourceDir may contain {Branch}; '/' in a branch becomes a sub folder (RELEASE/x -> RELEASE\x).
+    if ($Branch) { $cfg.Branch = $Branch }
+    $Ctx.Branch    = $cfg.Branch
+    $cfg.SourceDir = $cfg.SourceDir.Replace('{Branch}', $cfg.Branch.Replace('/', '\'))
+
+    # Source type: -SourceType (this run only) wins over SourceType= in config. Default git.
+    $srcType = "$(if ($SourceType) { $SourceType } elseif ($cfg.SourceType) { $cfg.SourceType } else { 'git' })".ToLower()
+    if (@('git', 'package') -notcontains $srcType) { throw "SourceType must be git or package (got '$srcType')" }
+    $Ctx.SourceType = $srcType
+
     # Project name = .xprj file name (e.g. TC_NexaV21). Usable as {Project} in WebContext / PublishSubDir.
     $project = [IO.Path]::GetFileNameWithoutExtension($cfg.ProjectPath)
     $Ctx.Project = $project
@@ -322,7 +394,9 @@ function Invoke-Target($Ctx) {
     $genDir    = Join-Path $libRoot 'generate'
     $outDir    = Join-Path (Join-Path $work 'output') $project
     $deployDir = Join-Path $work 'deploy'
-    $hashFile  = Join-Path $work 'last_success_hash.txt'
+    # Last success marker per source type + branch (-OnlyIfChanged): git = commit hash, package = zip path|size|time
+    $hashKey   = $cfg.Branch -replace '[\\/:*?"<>|]', '_'
+    $hashFile  = Join-Path $work $(if ($srcType -eq 'package') { "last_success_package_$hashKey.txt" } else { "last_success_hash_$hashKey.txt" })
 
     # Publish target: webapps\<WebContext>[\<PublishSubDir>]
     $webapps    = Join-Path $cfg.TomcatHome 'webapps'
@@ -336,7 +410,8 @@ function Invoke-Target($Ctx) {
 
     # ---- [0] Preflight ----
     Invoke-Step $Ctx '0 Preflight' {
-        foreach ($p in $cfg.SourceDir, $cfg.ProjectPath, $cfg.TomcatHome) {
+        # SourceDir is checked in [1]: it may not exist yet (cloned from RepoUrl)
+        foreach ($p in $cfg.ProjectPath, $cfg.TomcatHome) {
             if (-not (Test-Path -LiteralPath $p)) { throw "Path not found: $p" }
         }
         # The publish folder is deleted before copying, so it must be inside webapps
@@ -362,7 +437,15 @@ function Invoke-Target($Ctx) {
         # URL host: ServerHost in config, or auto-detected local IPv4 when empty / 'auto'
         $Ctx.Host = if ($cfg.ServerHost -and $cfg.ServerHost -ne 'auto') { $cfg.ServerHost } else { Get-LocalIPv4 }
 
-        Write-Host "  Source  : $($cfg.SourceDir) ($($cfg.Branch))"
+        Write-Host "  Type    : $srcType$(if ($SourceType) { ' (-SourceType)' })"
+        if ($srcType -eq 'git') {
+            Write-Host "  Source  : $($cfg.SourceDir) ($($cfg.Branch)$(if ($Branch) { ', -Branch' }))"
+            Write-Host "  Repo    : $(if ($cfg.RepoUrl) { $cfg.RepoUrl } else { '(RepoUrl not set: existing SourceDir only)' })"
+        } elseif ($cfg.PackagePath) {
+            Write-Host "  Package : $($cfg.PackagePath) (PackagePath)"
+        } else {
+            Write-Host "  Package : $($cfg.PackageRoot)\$($cfg.Branch.Split('/')[-1])\$(if ($Build) { "$Build (-Build)" } elseif ($cfg.PackageBuild) { $cfg.PackageBuild } else { 'latest' })"
+        }
         Write-Host "  Project : $($cfg.ProjectPath) ($project)"
         Write-Host "  Output  : $outDir"
         Write-Host "  JAVA    : $($Ctx.Java)"
@@ -372,29 +455,158 @@ function Invoke-Target($Ctx) {
         Write-Host "  Browser : $(if ($Ctx.OpenBrowser) { 'open Chrome' } else { 'off' })"
     }
 
-    # ---- [1] Git update ----
-    Invoke-Step $Ctx '1 Git update' {
-        $src = $cfg.SourceDir
+    # ---- [1] Package (SourceType=package): prebuilt nexacrolib.zip = nexacrolib\ + generate\ ----
+    #      Replaces [1] Source and [2] Framework copy. No UTF-8 BOM conversion (already built).
+    Invoke-Step $Ctx '1 Package' -When ($srcType -eq 'package') {
+        $zipName = if ($cfg.PackageZip) { $cfg.PackageZip } else { 'nexacrolib.zip' }
+
+        # 1-a Locate the zip: PackagePath (zip or build folder) > PackageRoot\<branch folder>\<build>\<zip>
+        if ($cfg.PackagePath) {
+            if ($Build) { Write-Host '  [WARN] -Build ignored: PackagePath is set' }
+            $zipSrc = if ($cfg.PackagePath -match '\.zip$') { $cfg.PackagePath } else { Join-Path $cfg.PackagePath $zipName }
+        } else {
+            if (-not $cfg.PackageRoot) { throw 'SourceType=package needs PackageRoot or PackagePath in the config' }
+            # Package folders use the last part of the branch (RELEASE/REL_x -> REL_x)
+            $brDir = Join-Path $cfg.PackageRoot $cfg.Branch.Split('/')[-1]
+            if (-not (Test-Path -LiteralPath $brDir)) { throw "Package branch folder not found: $brDir" }
+            $buildName = if ($Build) { $Build }
+                         elseif ($cfg.PackageBuild -and $cfg.PackageBuild -ne 'latest') { $cfg.PackageBuild }
+                         else { Get-LatestBuild $brDir }
+            $zipSrc = Join-Path (Join-Path $brDir $buildName) $zipName
+        }
+        if (-not (Test-Path -LiteralPath $zipSrc)) { throw "Package zip not found: $zipSrc" }
+        $zipItem = Get-Item -LiteralPath $zipSrc
+        $pkgId   = "$zipSrc|$($zipItem.Length)|$($zipItem.LastWriteTimeUtc.ToString('o'))"
+        Write-Host "  Zip     : $zipSrc"
+        Write-Host ("  Size    : {0:N1} MB, {1}" -f ($zipItem.Length / 1MB), $zipItem.LastWriteTime)
+
+        # 1-b -OnlyIfChanged: same zip (path + size + time) as the last success
+        if ($OnlyIfChanged -and (Test-Path -LiteralPath $hashFile) -and (Get-Content -LiteralPath $hashFile -Raw).Trim() -eq $pkgId) {
+            Write-Host '  [SKIP] Same package as last success'
+            $Ctx.Status = 'UNCHANGED'
+            return
+        }
+
+        # 1-c Copy to a local cache first (do not extract over the share); skip when already cached
+        $cacheDir = Join-Path $work 'package'
+        $cacheZip = Join-Path $cacheDir $zipItem.Name
+        $cached   = Get-Item -LiteralPath $cacheZip -ErrorAction SilentlyContinue
+        if ($cached -and $cached.Length -eq $zipItem.Length -and $cached.LastWriteTimeUtc -eq $zipItem.LastWriteTimeUtc) {
+            Write-Host "  [SKIP] Already cached: $cacheZip"
+        } else {
+            New-Item -ItemType Directory -Force -Path $cacheDir | Out-Null
+            Copy-Item -LiteralPath $zipSrc -Destination $cacheZip -Force
+            Write-Host "  Copied  -> $cacheZip"
+        }
+
+        # 1-d Extract into work\<target>\nexacrolib (the zip root holds nexacrolib\ and generate\)
+        Reset-Dir $libRoot $work
+        Add-Type -AssemblyName System.IO.Compression.FileSystem
+        [IO.Compression.ZipFile]::ExtractToDirectory($cacheZip, $libRoot)
+
+        # 1-e Layout + version check
+        foreach ($need in 'nexacrolib\nexacrolib.json', 'generate') {
+            if (-not (Test-Path -LiteralPath (Join-Path $libRoot $need))) { throw "Unexpected package layout, missing '$need' in $zipSrc" }
+        }
+        $ver = Get-NexacroVersion (Join-Path $libDir 'nexacrolib.json')
+        if (-not $ver) { throw 'Could not read version from nexacrolib.json in the package' }
+        if ($ver.Substring(0, 2) -ne $cfg.ExpectedVersion) {
+            throw "Version mismatch: package=$ver, ExpectedVersion=$($cfg.ExpectedVersion). Wrong PackageRoot/branch?"
+        }
+        $Ctx.Version   = $ver
+        $Ctx.Package   = $zipSrc
+        $Ctx.PackageId = $pkgId
+        Write-Host "  Version : $ver"
+        Write-Host "  Extracted -> $libRoot (nexacrolib + generate)"
+    }
+
+    # ---- [1] Source: clone when SourceDir is missing, otherwise update ----
+    Invoke-Step $Ctx '1 Source' -When ($srcType -eq 'git') {
+        $src    = $cfg.SourceDir
+        $br     = $cfg.Branch
+        $isRepo = Test-Path -LiteralPath (Join-Path $src '.git')
+
         if ($SkipGit) {
             Write-Host '  [SKIP] -SkipGit'
+            if (-not $isRepo) { throw "-SkipGit needs an existing git repository: $src" }
         } else {
-            $dirty = & git -C $src status --porcelain
-            if ($dirty) { throw "Source repo has local changes, aborting: $src" }
+            # 1-a A branch like RELEASE/REL_26.05.19.00_21.0.0.2100 must match ExpectedVersion (fail before a long clone).
+            #     Only NN.0.0.N counts as a version (dates such as 26.05.19.00 / 22.11.01.01 do not).
+            $mv = [regex]::Matches($br, '_(\d{2})\.0\.0\.\d+(?=_|$)') | Select-Object -Last 1
+            if ($mv -and $mv.Groups[1].Value -ne $cfg.ExpectedVersion) {
+                throw "Branch '$br' is v$($mv.Groups[1].Value) but ExpectedVersion=$($cfg.ExpectedVersion)"
+            }
 
-            if ((Invoke-Native git @('-C', $src, 'fetch', 'origin', $cfg.Branch)) -ne 0) { throw 'git fetch failed' }
+            # 1-b Remote branch check (~1s); also gives the remote hash for -OnlyIfChanged
+            $url = $cfg.RepoUrl
+            if (-not $url) {
+                if (-not $isRepo) { throw "SourceDir not found and RepoUrl is not set: $src" }
+                $url = (& git -C $src remote get-url origin).Trim()
+            }
+            $ls = Invoke-NativeCapture git @('ls-remote', '--heads', $url, "refs/heads/$br")
+            if ($ls.Code -ne 0) { throw "git ls-remote failed: $($ls.Lines -join ' ')" }
+            $line = $ls.Lines | Where-Object { $_ -match "`trefs/heads/$([regex]::Escape($br))$" } | Select-Object -First 1
+            if (-not $line) { throw "Branch not found on remote: $br ($url)" }
+            $remoteHash = ($line -split "`t")[0].Trim()
+            Write-Host "  Remote : $br @ $remoteHash"
 
             if ($OnlyIfChanged -and (Test-Path -LiteralPath $hashFile)) {
-                $remote = (& git -C $src rev-parse "origin/$($cfg.Branch)").Trim()
-                $last   = (Get-Content -LiteralPath $hashFile -Raw).Trim()
-                if ($remote -eq $last) {
+                $last = (Get-Content -LiteralPath $hashFile -Raw).Trim()
+                if ($remoteHash -eq $last) {
                     Write-Host "  [SKIP] No new commits since last success ($last)"
                     $Ctx.Status = 'UNCHANGED'
                     return
                 }
             }
 
-            if ((Invoke-Native git @('-C', $src, 'checkout', $cfg.Branch)) -ne 0) { throw 'git checkout failed' }
-            if ((Invoke-Native git @('-C', $src, 'pull', '--ff-only', 'origin', $cfg.Branch)) -ne 0) { throw 'git pull failed' }
+            # 1-c SourceDir state
+            $exists  = Test-Path -LiteralPath $src
+            $isEmpty = $exists -and -not (Get-ChildItem -LiteralPath $src -Force | Select-Object -First 1)
+
+            if (-not $exists -or $isEmpty) {
+                # Full single-branch clone (same as git_sourcecode.md) + Windows long path support
+                $drive  = [IO.Path]::GetPathRoot([IO.Path]::GetFullPath($src))
+                $freeGB = [math]::Floor((New-Object IO.DriveInfo($drive)).AvailableFreeSpace / 1GB)
+                $needGB = if ($cfg.CloneMinFreeGB) { [int]$cfg.CloneMinFreeGB } else { 40 }
+                if ($freeGB -lt $needGB) { throw "Not enough disk space to clone: ${freeGB}GB free on $drive (need ${needGB}GB)" }
+
+                Write-Host "  SourceDir not found -> full clone ($freeGB GB free on $drive). The first clone can take tens of minutes."
+                New-Item -ItemType Directory -Force -Path (Split-Path -Parent $src) | Out-Null
+                $code = Invoke-Native git @('clone', '-c', 'core.longpaths=true', '-b', $br, '--single-branch', $url, $src)
+                if ($code -ne 0) {
+                    # Remove only what this run created (keep a folder that existed empty)
+                    Remove-Tree $src
+                    if ($isEmpty) { New-Item -ItemType Directory -Force -Path $src | Out-Null }
+                    throw "git clone failed (exit $code): $br -> $src"
+                }
+            } elseif (-not $isRepo) {
+                throw "SourceDir exists but is not a git repository (not touched): $src"
+            } else {
+                # Existing clone: must be the same repo and branch, then fast-forward only
+                if ($cfg.RepoUrl) {
+                    $origin = (& git -C $src remote get-url origin).Trim()
+                    $a = $origin.TrimEnd('/') -replace '\.git$', ''
+                    $b = $cfg.RepoUrl.TrimEnd('/') -replace '\.git$', ''
+                    if ($a -ne $b) { throw "SourceDir origin '$origin' differs from RepoUrl '$($cfg.RepoUrl)'" }
+                }
+                if (Test-Path -LiteralPath (Join-Path $src '.git\index.lock')) {
+                    throw "index.lock exists (another or aborted git process): $(Join-Path $src '.git\index.lock')"
+                }
+                $cur = (& git -C $src rev-parse --abbrev-ref HEAD).Trim()
+                if ($cur -ne $br) {
+                    throw "SourceDir is on branch '$cur', expected '$br'. Use SourceDir=...\{Branch} so each branch has its own folder."
+                }
+                $dirty = & git -C $src status --porcelain
+                if ($dirty) { throw "Source repo has local changes, aborting: $src" }
+
+                if ((Invoke-Native git @('-C', $src, 'fetch', 'origin', $br)) -ne 0) { throw 'git fetch failed' }
+                if ((Invoke-Native git @('-C', $src, 'pull', '--ff-only', 'origin', $br)) -ne 0) { throw 'git pull failed' }
+            }
+        }
+
+        # 1-d Folders the pipeline reads
+        foreach ($need in 'Lib\FrameworkJS\nexacrolib.json', 'Tools\Lib\TiMetainfoLib\res') {
+            if (-not (Test-Path -LiteralPath (Join-Path $src $need))) { throw "Required path missing in source: $(Join-Path $src $need)" }
         }
         $Ctx.Hash = (& git -C $src rev-parse HEAD).Trim()
         $Ctx.Msg  = (& git -C $src log -1 '--format=%s') -join ' '
@@ -404,7 +616,7 @@ function Invoke-Target($Ctx) {
     if ($Ctx.Status -eq 'UNCHANGED') { return }
 
     # ---- [2] Build nexacrolib + generate rule ----
-    Invoke-Step $Ctx '2 Framework copy' {
+    Invoke-Step $Ctx '2 Framework copy' -When ($srcType -eq 'git') {
         $fwSrc = Join-Path $cfg.SourceDir 'Lib\FrameworkJS'
         Reset-Dir $libRoot $work
         New-Item -ItemType Directory -Force -Path $libDir | Out-Null
@@ -480,7 +692,7 @@ function Invoke-Target($Ctx) {
         if (Test-Path -LiteralPath $pubDir) {
             $old = @(Get-ChildItem -LiteralPath $pubDir -Recurse -File -Force).Count
             Write-Host "  Existing folder found, deleting ($old file(s)): $pubDir"
-            Remove-Item -LiteralPath $pubDir -Recurse -Force
+            Remove-Tree $pubDir
         }
         Copy-Tree $deployDir $pubDir
         Write-Host "  Copied -> $pubDir"
@@ -513,7 +725,7 @@ function Invoke-Target($Ctx) {
         Write-Host "  Opened: $($Ctx.Url)"
     }
 
-    Set-Content -LiteralPath $hashFile -Value $Ctx.Hash
+    Set-Content -LiteralPath $hashFile -Value $(if ($srcType -eq 'package') { $Ctx.PackageId } else { $Ctx.Hash })
     $Ctx.Status = 'SUCCESS'
 }
 
@@ -553,7 +765,7 @@ foreach ($jd in ($jarDirs | Select-Object -Unique)) {
 }
 
 foreach ($t in $targets) {
-    $ctx = @{ Target = $t; Status = 'FAIL'; Version = ''; Hash = ''; Msg = ''; Url = ''; Error = '';
+    $ctx = @{ Target = $t; Status = 'FAIL'; Branch = ''; Version = ''; Hash = ''; Msg = ''; Url = ''; Error = '';
               Steps = New-Object System.Collections.ArrayList }
     try {
         Invoke-Target $ctx
@@ -571,6 +783,8 @@ Write-Host '=============================================='
 foreach ($j in $jarResults) { Write-Host " [jar] $j" }
 foreach ($r in $results) {
     Write-Host " [$($r.Target)] $($r.Status)"
+    if ($r.Branch)  { Write-Host "   Branch  : $($r.Branch)$(if ($r.SourceType) { " ($($r.SourceType))" })" }
+    if ($r.Package) { Write-Host "   Package : $($r.Package)" }
     if ($r.Version) { Write-Host "   Version : $($r.Version)" }
     if ($r.Hash)    { Write-Host "   Commit  : $($r.Hash) $($r.Msg)" }
     if ($r.Url)     { Write-Host "   URL     : $($r.Url)" }
