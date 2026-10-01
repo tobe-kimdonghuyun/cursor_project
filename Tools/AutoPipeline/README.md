@@ -10,8 +10,16 @@
 
 ## 1. 사용법
 
+실행 파일은 두 가지이며 **동작과 옵션이 같다**. 위치를 옮겨 쓸 경우 단일 파일 버전을 사용한다 (자세한 내용은 10장).
+
+| 실행 파일 | 구성 | 위치 |
+|---|---|---|
+| `auto_pipeline.bat` + `auto_pipeline.ps1` | bat 이 ps1 호출 | bat·ps1·txt 가 **같은 폴더**에 있어야 함 |
+| `auto_pipeline_standalone.bat` | bat 한 파일에 PowerShell 포함 | **어디로 옮겨도 됨** (`PIPELINE_HOME` 으로 txt 폴더 지정) |
+
 ```bat
-auto_pipeline.bat [v21|v24|all] [-UpdateJar] [-SkipGit] [-OnlyIfChanged] [-OpenBrowser|-NoBrowser] [-DevTools]
+auto_pipeline.bat            [v21|v24|all] [-UpdateJar] [-SkipGit] [-OnlyIfChanged] [-OpenBrowser|-NoBrowser] [-DevTools]
+auto_pipeline_standalone.bat [v21|v24|all] [-UpdateJar] [-SkipGit] [-OnlyIfChanged] [-OpenBrowser|-NoBrowser] [-DevTools] [-Help]
 ```
 
 | 인자 / 옵션 | 설명 |
@@ -71,6 +79,7 @@ auto_pipeline.bat all -UpdateJar -OnlyIfChanged -NoBrowser
 Tools\AutoPipeline\
 ├── auto_pipeline.bat      ← 실행 진입점 (인자 정리 후 ps1 호출)
 ├── auto_pipeline.ps1      ← 파이프라인 본체 (단계 0~5)
+├── auto_pipeline_standalone.bat ← 단일 파일 버전 (bat + PowerShell 통합, 위치 이동 가능)
 ├── pipeline_v21.txt       ← v21 설정
 ├── pipeline_v24.txt       ← v24 설정
 ├── README.md              ← 이 문서
@@ -485,5 +494,126 @@ ChromePath=C:\Program Files\Google\Chrome\Application\chrome.exe
 | `Version mismatch` | `SourceDir` / `Branch` 가 `ExpectedVersion` 과 맞는지 |
 | `Deploy failed (exit N)` | 로그의 Java 출력 |
 | `URL not ready within 60s` | Tomcat 로그 (`TomcatHome\logs`), 시작 페이지 이름 (`StartPage` 지정) |
+| `pipeline_v21.txt / pipeline_v24.txt not found` (standalone) | `auto_pipeline_standalone.bat` 맨 위 `set "PIPELINE_HOME=..."` 경로 확인 |
+| `Unknown argument` (standalone) | 옵션 철자 확인 (`-Help` 로 목록 출력) |
 
 로그 위치: `Tools\AutoPipeline\logs\yyyyMMdd_HHmmss_<대상>.log`
+
+---
+
+## 10. 단일 파일 버전 (`auto_pipeline_standalone.bat`)
+
+`auto_pipeline.bat` + `auto_pipeline.ps1` 을 **bat 한 파일로 합친 버전**. bat 파일의 위치가 바뀌어도 동작하도록 만들었다.
+기존 `auto_pipeline.bat` / `auto_pipeline.ps1` 은 그대로 유지되며, 두 방식 모두 같은 `pipeline_*.txt` 를 사용한다.
+
+### 10-1. 파일 구조
+
+```
+auto_pipeline_standalone.bat
+├── [bat 부분]  (cmd 가 실행)
+│   ├── set "PIPELINE_HOME=D:\git\cursor_project\Tools\AutoPipeline"   ← txt 폴더 지정 (사용자 수정)
+│   ├── AP_SELF / AP_BATDIR / AP_ARGS 환경변수 설정
+│   ├── powershell -Command "자기 자신을 읽어 :__PS_BEGIN__ 아래를 실행"
+│   └── exit /b %ERRORLEVEL%        ← cmd 는 여기서 끝나므로 아래 내용을 읽지 않음
+└── [PowerShell 부분]  (:__PS_BEGIN__ 아래, PowerShell 이 실행)
+    ├── 인자 해석 (v21|v24|all, -UpdateJar, -SkipGit, ...)
+    ├── 설정 폴더 결정 (PIPELINE_HOME → bat 폴더)
+    └── auto_pipeline.ps1 과 동일한 파이프라인 ([jar] → [0]~[5] → 요약)
+```
+
+### 10-2. 실행 흐름
+
+```mermaid
+flowchart TD
+    A([▶ auto_pipeline_standalone.bat 실행\n어느 위치에서든]) --> B["bat 부분\nPIPELINE_HOME / AP_SELF / AP_BATDIR / AP_ARGS 설정"]
+    B --> C["powershell -Command\n자기 파일(AP_SELF) 읽기\n:__PS_BEGIN__ 이후 텍스트 → scriptblock 실행"]
+    C --> C1{PowerShell 부분 찾음?}
+    C1 -- No --> E2["❌ exit 2"]
+    C1 -- Yes --> D["인자 해석\nv21 | v24 | all, -UpdateJar, -SkipGit,\n-OnlyIfChanged, -OpenBrowser, -NoBrowser, -DevTools, -Help"]
+    D --> D1{알 수 없는 인자?}
+    D1 -- Yes --> E2
+    D1 -- No --> H{-Help?}
+    H -- Yes --> E0["사용법 + PIPELINE_HOME 출력\nexit 0"]
+    H -- No --> R1{"PIPELINE_HOME 에\npipeline_*.txt 있음?"}
+    R1 -- Yes --> ROOT["설정 폴더 = PIPELINE_HOME"]
+    R1 -- No --> R2{"bat 폴더에\npipeline_*.txt 있음?"}
+    R2 -- Yes --> ROOT2["설정 폴더 = bat 폴더"]
+    R2 -- No --> E3["❌ txt 를 찾지 못함\n(PIPELINE_HOME 수정 안내)\nexit 2"]
+    ROOT --> P["로그: 설정폴더\logs\\n작업: txt 의 WorkDir / JarDir\n(상대 경로는 설정 폴더 기준)"]
+    ROOT2 --> P
+    P --> PIPE["[jar] → [0] Preflight → [1] Git → [2] Framework\n→ [3] Deploy → [4] Publish → [5] Chrome\n(3장 흐름도와 동일)"]
+    PIPE --> END(["요약 출력 / 종료 코드 0 또는 1\n→ bat 의 exit /b 로 전달"])
+
+    style A fill:#4CAF50,color:#fff
+    style END fill:#4CAF50,color:#fff
+    style E2 fill:#f44336,color:#fff
+    style E3 fill:#f44336,color:#fff
+```
+
+### 10-3. 설정 폴더 (`PIPELINE_HOME`) 결정
+
+bat 맨 위의 한 줄로 지정한다.
+
+```bat
+set "PIPELINE_HOME=D:\git\cursor_project\Tools\AutoPipeline"
+```
+
+| 순서 | 후보 | 사용 조건 |
+|---|---|---|
+| 1 | `PIPELINE_HOME` 에 적은 폴더 | 그 폴더에 `pipeline_v21.txt` 또는 `pipeline_v24.txt` 가 있음 |
+| 2 | bat 파일이 있는 폴더 | 위가 아니고, bat 폴더에 `pipeline_*.txt` 가 있음 |
+| — | 둘 다 아님 | 오류 종료 (exit 2), 확인한 두 경로 출력 |
+
+- `logs\` 는 결정된 설정 폴더 아래에 생성된다
+- Jar 갱신 허용 범위(`work\`)도 설정 폴더 기준이다
+
+**사용 예**
+
+| 상황 | 방법 |
+|---|---|
+| bat 만 바탕화면 등 다른 곳으로 복사 | 그대로 실행 (`PIPELINE_HOME` 이 AutoPipeline 폴더를 가리킴) |
+| AutoPipeline 폴더를 통째로 이동 | bat 과 txt 가 같이 옮겨지므로 2순위(bat 폴더)로 자동 인식. 단, txt 의 절대 경로(`WorkDir` 등)는 수정 필요 → 상대 경로 권장 (10-4) |
+| 설정 폴더를 여러 개 운영 | bat 을 복사해 각각 `PIPELINE_HOME` 만 다르게 지정 |
+
+### 10-4. txt 의 상대 경로 지원 (standalone 전용)
+
+`auto_pipeline_standalone.bat` 은 txt 의 아래 키가 **상대 경로이면 txt 가 있는 폴더 기준**으로 변환한다.
+
+대상 키: `SourceDir`, `ProjectPath`, `WorkDir`, `JarDir`, `TomcatHome`, `JavaHome`, `ChromePath`
+
+```ini
+WorkDir=work\v21        → <설정 폴더>\work\v21
+JarDir=work\jar         → <설정 폴더>\work\jar
+```
+
+> ⚠ 기존 `auto_pipeline.ps1` 은 상대 경로를 변환하지 않는다. 두 실행 파일을 같이 쓰려면 txt 는 지금처럼 **절대 경로를 유지**한다.
+
+### 10-5. 기존 ps1 과의 차이
+
+| 항목 | `auto_pipeline.ps1` | `auto_pipeline_standalone.bat` |
+|---|---|---|
+| 파일 수 | bat + ps1 (2개) | 1개 |
+| 설정 폴더 | ps1 이 있는 폴더 고정 | `PIPELINE_HOME` → bat 폴더 |
+| 인자 처리 | PowerShell `param()` | 직접 해석 (모르는 인자는 오류) |
+| `-Help` | 없음 | 있음 |
+| txt 상대 경로 | 미지원 | 지원 |
+| 파이프라인 로직 | — | ps1 과 동일 |
+
+**주의**
+- 오류 메시지의 줄 번호는 bat 파일의 실제 줄 번호와 다르다 (PowerShell 부분만 기준으로 계산됨)
+- 편집기에서 bat 으로 인식되어 PowerShell 문법 강조가 되지 않는다
+- 파이프라인 로직을 수정할 때는 `auto_pipeline.ps1` 과 `auto_pipeline_standalone.bat` **양쪽을 같이 수정**해야 동작이 같게 유지된다
+- PowerShell 부분은 ASCII 문자만 사용한다 (한글 주석을 넣으면 인코딩 문제가 생길 수 있음)
+- 줄바꿈은 CRLF 로 저장한다
+
+### 10-6. 확인 결과 (2026-10-01)
+
+bat 을 AutoPipeline 폴더 밖(임시 폴더)으로 복사하여 실행.
+
+| 테스트 | 결과 |
+|---|---|
+| `-Help` | 사용법 + `Config folder (PIPELINE_HOME): D:\git\cursor_project\Tools\AutoPipeline` 출력, exit 0 |
+| `v21 -Foo` | `[ERROR] Unknown argument: -Foo`, exit 2 |
+| `PIPELINE_HOME=D:\nowhere` + bat 폴더에 txt 없음 | 확인한 두 경로와 수정 안내 출력, exit 2 |
+| `all -SkipGit -NoBrowser` | 설정 폴더 = AutoPipeline 인식, v21 SUCCESS (배포 Fail 0, `http://172.10.12.46:8080/nexacroN_v21/21.0.0.2100/TC_NexaV21/index.html`), v24 DISABLED, exit 0 |
+| 상대 경로 (`WorkDir=work\v21`, `ProjectPath=..\proj\A.xprj`) | txt 폴더 기준 절대 경로로 변환됨 |
