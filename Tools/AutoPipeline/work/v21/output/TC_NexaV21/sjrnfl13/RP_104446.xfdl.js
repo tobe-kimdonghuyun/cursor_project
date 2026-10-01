@@ -1,0 +1,99 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("Form_Work");
+            this.set_titletext("Form_Work");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1280,720);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+
+            
+            // UI Components Initialize
+            obj = new Div("divMain","93","61","803","526",null,null,null,null,null,null,this);
+            obj.set_background("red");
+            obj.set_taborder("0");
+            obj.set_text("Div00");
+            this.addChild(obj.name, obj);
+
+            obj = new Div("divChart1","17","26","719","397",null,null,null,null,null,null,this.divMain.form);
+            obj.set_background("blue");
+            obj.set_taborder("0");
+            obj.set_text("Div00");
+            this.divMain.addChild(obj.name, obj);
+
+            obj = new Edit("edtChart1KPI","35","317","371","53",null,null,null,null,null,null,this.divMain.form.divChart1.form);
+            obj.set_taborder("0");
+            this.divMain.form.divChart1.addChild(obj.name, obj);
+
+            obj = new WebView("WebView00","40","83","391","184",null,null,null,null,null,null,this.divMain.form.divChart1.form);
+            obj.set_taborder("1");
+            obj.set_url("https://images.pexels.com/photos/34787357/pexels-photo-34787357.jpeg");
+            this.divMain.form.divChart1.addChild(obj.name, obj);
+
+            obj = new Edit("Edit00","145","2","229","46",null,null,null,null,null,null,this);
+            obj.set_taborder("1");
+            this.addChild(obj.name, obj);
+
+            // Layout Functions
+            //-- Default Layout : this.divMain.form.divChart1.form
+            obj = new Layout("default","",0,0,this.divMain.form.divChart1.form,function(p){});
+            this.divMain.form.divChart1.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.divMain.form
+            obj = new Layout("default","",0,0,this.divMain.form,function(p){});
+            this.divMain.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this
+            obj = new Layout("default","Desktop_screen",1280,720,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+        this.registerScript("RP_104446.xfdl", function() {
+
+        this.divMain_divChart1_edtChart1KPI_onkeyup = function(obj,e)
+        {
+        	if(e.keycode == 13){
+        		alert("onkeyup");
+        		this.Edit00.set_value("onkeyup");
+        	}
+        };
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.divMain.form.divChart1.form.edtChart1KPI.addEventHandler("onkeyup",this.divMain_divChart1_edtChart1KPI_onkeyup,this);
+        };
+
+        this.loadIncludeScript("RP_104446.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

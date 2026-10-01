@@ -1,0 +1,23 @@
+# AutoPipeline config - Nexacro N v21
+# Run this target: Y | N (default Y). N = skipped even when run as 'v21' or 'all'.
+Enabled=Y
+ExpectedVersion=21
+SourceDir=D:\git\master_21
+Branch=master_21
+ProjectPath=D:\nexacro UI\TC_NexaV21\TC_NexaV21.xprj
+WorkDir=D:\git\cursor_project\Tools\AutoPipeline\work\v21
+JarDir=D:\git\cursor_project\Tools\AutoPipeline\work\jar
+TomcatHome=C:\Users\tobesoft\cursor\apache-tomcat-11.0.25
+TomcatPort=8080
+# URL host: auto (= this PC's IPv4) or a fixed IP / host name
+ServerHost=auto
+# Publish -> TomcatHome\webapps\<WebContext>\<PublishSubDir>  ({Project} = xprj file name)
+# URL     -> http://<ServerHost>:<TomcatPort>/<WebContext>/<PublishSubDir>/<StartPage>
+WebContext= nexacroN_v21\21.0.0.2100\TC_NexaV21
+PublishSubDir=
+StartPage=
+# Open Chrome after publish: Y | N (default N). -OpenBrowser / -NoBrowser override.
+OpenBrowser=Y
+ChromePath=C:\Program Files\Google\Chrome\Application\chrome.exe
+-MERGE
+-COMPRESS

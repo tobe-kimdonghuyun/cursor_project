@@ -1,0 +1,24 @@
+# AutoPipeline config - Nexacro N v24
+# Run this target: Y | N (default Y). N = skipped even when run as 'v24' or 'all'.
+Enabled=N
+ExpectedVersion=24
+SourceDir=D:\git\master
+Branch=master
+ProjectPath=D:\nexacro UI\JEBI_TOPS_V24\JEBI_TOPS_V24.xprj
+WorkDir=D:\git\cursor_project\Tools\AutoPipeline\work\v24
+JarDir=D:\git\cursor_project\Tools\AutoPipeline\work\jar
+TomcatHome=C:\Users\tobesoft\cursor\apache-tomcat-11.0.25
+TomcatPort=8080
+# URL host: auto (= this PC's IPv4) or a fixed IP / host name
+ServerHost=auto
+# Publish -> TomcatHome\webapps\<WebContext>\<PublishSubDir>  ({Project} = xprj file name)
+# URL     -> http://<ServerHost>:<TomcatPort>/<WebContext>/<PublishSubDir>/<StartPage>
+WebContext=auto_v24
+PublishSubDir=
+StartPage=
+# Open Chrome after publish: Y | N (default N). -OpenBrowser / -NoBrowser override.
+OpenBrowser=N
+ChromePath=C:\Program Files\Google\Chrome\Application\chrome.exe
+-MERGE
+-COMPRESS
+f

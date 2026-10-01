@@ -1,0 +1,101 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("TextArea_sample");
+            this.set_titletext("New Form");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1280,720);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("Dataset00", this);
+            obj._setContents({"ColumnInfo" : {"Column" : [{"id" : "Column0","size" : "256","type" : "STRING"}]},"Rows" : [{"Column0" : "qweqweqweqweqwrqweqweqweqweqweqwe"},{"Column0" : "qwrqwrqwrqwrqwrqwr"},{},{},{}]});
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Grid("Grid00","78","10","332","230",null,null,null,null,null,null,this);
+            obj.set_autoenter("select");
+            obj.set_binddataset("Dataset00");
+            obj.set_taborder("0");
+            obj._setContents("<Formats><Format id=\"default\"><Columns><Column size=\"120\"/></Columns><Rows><Row band=\"head\" size=\"24\"/><Row size=\"50\"/></Rows><Band id=\"head\"><Cell text=\"Column0\"/></Band><Band id=\"body\"><Cell displaytype=\"textareacontrol\" edittype=\"textarea\" text=\"bind:Column0\" wordWrap=\"char\"/></Band></Format></Formats>");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("Button00","477","55","136","70",null,null,null,null,null,null,this);
+            obj.set_taborder("1");
+            obj.set_text("Button00");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("Button01","640","51","117","78",null,null,null,null,null,null,this);
+            obj.set_taborder("2");
+            obj.set_text("체크");
+            this.addChild(obj.name, obj);
+
+            obj = new TextArea("TextArea00","476","155","300","138",null,null,null,null,null,null,this);
+            obj.set_taborder("3");
+            obj.set_value("정상");
+            this.addChild(obj.name, obj);
+
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",1280,720,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+        this.registerScript("RP_104719.xfdl", function() {
+
+        this.Button00_onclick = function(obj,e)
+        {
+        	 nexacro.open("modeless", "sjrnfl13::RP_104719_1.xfdl",  this.getOwnerFrame(), {a:'aaa', b:'bbb'}, "showontaskbar=false showtitlebar=true", 0, 0);
+
+        };
+
+        this.Button01_onclick = function(obj,e)
+        {
+
+        	var arrPopFrame = nexacro.getPopupFrames() ;
+
+        	trace(arrPopFrame[0].name);
+        	this.TextArea00.deleteText();
+        	this.TextArea00.insertText("nexacro.getPopupFrames.name : "+arrPopFrame[0].name);
+
+
+        };
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.Button00.addEventHandler("onclick",this.Button00_onclick,this);
+            this.Button01.addEventHandler("onclick",this.Button01_onclick,this);
+        };
+
+        this.loadIncludeScript("RP_104719.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

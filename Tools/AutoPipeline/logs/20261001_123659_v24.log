@@ -1,0 +1,878 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20261001123659
+Username: DESKTOP-FV2U6FS\tobesoft
+RunAs User: DESKTOP-FV2U6FS\tobesoft
+Configuration Name: 
+Machine: DESKTOP-FV2U6FS (Microsoft Windows NT 10.0.26200.0)
+Host Application: powershell -NoProfile -ExecutionPolicy Bypass -File D:\git\cursor_project\Tools\AutoPipeline\auto_pipeline.ps1 -Target v24
+Process ID: 22788
+PSVersion: 5.1.26100.9444
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9444
+BuildVersion: 10.0.26100.9444
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+
+---- [v24] 0 Preflight ----
+  Source  : D:\git\master (master)
+  Project : D:\nexacro UI\JEBI_TOPS_V24\JEBI_TOPS_V24.xprj
+  JAVA    : C:\Program Files\Microsoft\jdk-25.0.4.101-hotspot\bin\java.exe
+  Jar     : D:\git\cursor_project\Tools\Jar\NexacroN_Deploy_JAVA_20260825(1.1.90)_1
+  Publish : C:\Users\tobesoft\cursor\apache-tomcat-11.0.25\webapps\auto_v24
+  [DONE] 0 Preflight (0s)
+
+---- [v24] 1 Git update ----
+  [CMD] git -C D:\git\master fetch origin master
+    From https://tfs2.tobesoft.com:9443/tfs/XPLATFORM/_git/WORK800
+     * branch                  master     -> FETCH_HEAD
+       5d733c5d8a..1a69f17dad  master     -> origin/master
+  [CMD] git -C D:\git\master checkout master
+    Already on 'master'
+    Your branch is behind 'origin/master' by 8 commits, and can be fast-forwarded.
+      (use "git pull" to update your local branch)
+  [CMD] git -C D:\git\master pull --ff-only origin master
+    From https://tfs2.tobesoft.com:9443/tfs/XPLATFORM/_git/WORK800
+     * branch                  master     -> FETCH_HEAD
+    Updating 5d733c5d8a..1a69f17dad
+    Fast-forward
+     Lib/FrameworkJS/component/ComComp/Panel.js         | 19 ++++++++-----
+     Lib/FrameworkJS/component/Grid/Grid.js             |  8 +++---
+     Lib/FrameworkJS/framework/Platform_HTML5.js        | 11 +++++---
+     Lib/FrameworkJS/framework/SystemBase.js            | 14 +++++-----
+     Lib/FrameworkJS/framework/SystemBase_HTML5.js      | 21 ++++++++++++++-
+     Lib/FrameworkLib/HandleAPI/Cy_ElementHandleAPI.cpp | 31 +++++++++++++++++++++-
+     6 files changed, 82 insertions(+), 22 deletions(-)
+  Hash : 1a69f17dad6cee892fd40d7d1aa9f99da2eb917c
+  Msg  : RP 106325 Chrome(System WebView) 154 업데이트 이후 Android 16 이하에서 click()으로 system calendar 팝업이 열리지 않는 현상 수정 (showPicker 우선 사용, 미지원/예외 시 기존 click 유지)
+  [DONE] 1 Git update (15.6s)
+
+---- [v24] 2 Framework copy ----
+  Version : 24.0.0.9999
+  UTF-8 BOM converted: 254 file(s)
+  Generate rule ready: D:\git\cursor_project\Tools\AutoPipeline\work\v24\nexacrolib\generate
+  [DONE] 2 Framework copy (13.9s)
+
+---- [v24] 3 Deploy ----
+  [CMD] C:\Program Files\Microsoft\jdk-25.0.4.101-hotspot\bin\java.exe -Dlog4j.configurationFile=D:\git\cursor_project\Tools\Jar\NexacroN_Deploy_JAVA_20260825(1.1.90)_1\log4j2.xml -classpath D:\git\cursor_project\Tools\Jar\NexacroN_Deploy_JAVA_20260825(1.1.90)_1\libs\* com.nexacro.build.cli.Main -P D:\nexacro UI\JEBI_TOPS_V24\JEBI_TOPS_V24.xprj -B D:\git\cursor_project\Tools\AutoPipeline\work\v24\nexacrolib\nexacrolib -O D:\git\cursor_project\Tools\AutoPipeline\work\v24\output -GENERATERULE D:\git\cursor_project\Tools\AutoPipeline\work\v24\nexacrolib\generate -D D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy -MERGE -COMPRESS
+    [INFO]  Start Nexacro Deploying
+    [INFO]
+    [INFO]  --------------------------- Start generating ---------------------------
+    [INFO]  Project path       : D:\nexacro UI\JEBI_TOPS_V24\JEBI_TOPS_V24.xprj
+    [INFO]  Output path        : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\
+    [INFO]  Library path       : D:\git\cursor_project\Tools\AutoPipeline\work\v24\nexacrolib\nexacrolib
+    [INFO]  Generate rule path : D:\git\cursor_project\Tools\AutoPipeline\work\v24\nexacrolib\generate\
+    [INFO]  Deploy path        : D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\environment.xml.js"
+    [INFO]  Successfully copied theme images.
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\theme_desktop_chrome.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\theme_desktop_firefox.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\theme_desktop_opera.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\theme_desktop_runtime.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\theme_desktop_safari.css
+    [INFO]  Successfully generated map.js file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\theme.desktop.map.js
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\theme_mobile_small_chrome.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\theme_mobile_small_firefox.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\theme_mobile_small_opera.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\theme_mobile_small_runtime.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\theme_mobile_small_safari.css
+    [INFO]  Successfully generated map.js file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\theme.mobile_small.map.js
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\theme_mobile_medium_chrome.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\theme_mobile_medium_firefox.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\theme_mobile_medium_opera.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\theme_mobile_medium_runtime.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\theme_mobile_medium_safari.css
+    [INFO]  Successfully generated map.js file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\theme.mobile_medium.map.js
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\theme_mobile_large_chrome.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\theme_mobile_large_firefox.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\theme_mobile_large_opera.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\theme_mobile_large_runtime.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\theme_mobile_large_safari.css
+    [INFO]  Successfully generated map.js file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\theme.mobile_large.map.js
+    [INFO]  Successfully generated theme : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\Application_Desktop.xadl.js"
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\xcssrc_test_desktop_chrome.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\xcssrc_test_desktop_firefox.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\xcssrc_test_desktop_opera.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\xcssrc_test_desktop_runtime.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\xcssrc_test_desktop_safari.css
+    [INFO]  Successfully generated map.js file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\xcssrc_test.desktop.map.js
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\xcssrc_test_mobile_small_chrome.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\xcssrc_test_mobile_small_firefox.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\xcssrc_test_mobile_small_opera.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\xcssrc_test_mobile_small_runtime.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\xcssrc_test_mobile_small_safari.css
+    [INFO]  Successfully generated map.js file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\xcssrc_test.mobile_small.map.js
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\xcssrc_test_mobile_medium_chrome.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\xcssrc_test_mobile_medium_firefox.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\xcssrc_test_mobile_medium_opera.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\xcssrc_test_mobile_medium_runtime.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\xcssrc_test_mobile_medium_safari.css
+    [INFO]  Successfully generated map.js file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\xcssrc_test.mobile_medium.map.js
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\xcssrc_test_mobile_large_chrome.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\xcssrc_test_mobile_large_firefox.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\xcssrc_test_mobile_large_opera.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\xcssrc_test_mobile_large_runtime.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\xcssrc_test_mobile_large_safari.css
+    [INFO]  Successfully generated map.js file : D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_theme_\blue\xcssrc_test.mobile_large.map.js
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\Base\MainPage.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\Base\HelpPage.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\Application_Desktop.xadl.quickview.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\Application_Tablet.xadl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\Application_Tablet.xadl.quickview.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\Application_Phone.xadl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\Application_Phone.xadl.quickview.js"
+    [Fatal Error] :1:1: ���ѷα׿����� �������� ������ �ʽ��ϴ�.
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_font_\SpoqaHanSansNeo-Bold.otf"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_font_\SpoqaHanSansNeo-Medium.otf"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\_resource_\_font_\SpoqaHanSansNeo-Regular.otf"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_000000_filename.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_100340_Edit.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_100554_Grid.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_100771_Field.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101006_DateRangePicker.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101131_PopupDateRangePicker.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101184_Grid.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101187_Grid.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101192_Grid.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101221_pop.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101221_showModalWindow.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101246_Grid.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101248_BIGDECIMAL.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101270_Div_Fluid.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101299_Grid_currency.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101335_WebView.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101352_Grid_combo.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101363_WebView.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101378_style.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101428_WebView.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101434_transaction.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101440_Edit.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101469_Combo.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101476_fittocontents.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101476_fittocontents_sub.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101478_Panel.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101481_Combo.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101487_Panel.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101505_Step.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101505_Step_sub.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101526_fittocontents.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101669_openalign_main.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101669_openalign_sub.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101670_fluid_main.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101670_fluid_sub.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101671_fluid_main.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101671_fluid_sub.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_101672_fluid.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_102961_Grid.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_104668_grid_autoenter.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_104956_MaskEdit.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_105079_MaskEdit.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_105085_Combo.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_105102_Combo.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_105102_Combo_sub.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_105156_Grid.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_105187_Panel.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_105188_Panel.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_105282_MultiCombo.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_105453_Dataset.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_98872_Grid.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_98941_Calendar.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_98968_Dataset.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_99334_MultiCombo.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_0\RP_99604_Dataset.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_1\RP_101130_frm_Bottom.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_1\RP_101130_frm_Main.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_1\RP_101146_template01.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_1\RP_101148_popSiteMap3.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_1\RP_101153_Form_Main_copy0.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_1\RP_101172_calendarTest.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_1\RP_101185_RP_99986_grid_enableredraw_r.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_1\RP_101202_1111_LIF072M00_sample.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_1\RP_101231_setSelect.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_1\RP_101255_Form_Work.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_1\RP_101369_temp_form.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_1\RP_101373_EmptyValue.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_1\RP_101382_COM000P032.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_1\RP_101477_sample_excel_copyPaste_combo.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_1\RP_101477_test_pop.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_1\RP_101501_font_error_688734.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_1\RP_101625_MultiCombo_E_oninput.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_1\RP_101634_Form_Work.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_1\RP_102078_datefield_onchanged.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_1\RP_104669_grid_selecttype.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_1\RP_104815_testTemp1.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_1\RP_105985_tss12015_multicombo_readonly_02.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_1\RP_105996_testSample_20260806.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_1\RP_106259_Form_Work.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_2\RP_101215_grd.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_2\RP_101367_multicombo.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_2\RP_101441_readonly.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_2\RP_101489_static.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_2\RP_102444_tree.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_3\RP_100549.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_3\RP_100612.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_3\RP_100682_Form_Work.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_3\RP_100712_Form_Work.xfdl.js"
+    [ERROR]  Cannot find the file : "TestSample_QC::RP_100712_stepForm.xfdl"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_3\RP_100712_stepForm.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_3\RP_97016_Form_Work.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_3\RP_98660_daterangeSample.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_3\RP_98775_Form_Work.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_3\RP_98790_ListboxMultiselect.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_3\RP_98833_combocontrolExpr.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_3\RP_98845_TextField_maxlength_ime.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_3\RP_98878_Form_Work.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_3\RP_98934_CalendarAutoskip.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_3\RP_99021_div_test.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_3\RP_99021_main.xfdl.js"
+    [ERROR]  Cannot find the file : "TestSample_QC::RP_99021_div_test.xfdl"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_3\RP_99334_multicombo.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_3\RP_99335_oninput_language.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_3\RP_99474_RowHeight.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\NativeScroll_Click_00.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\NativeScroll_Div_01.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\NativeScroll_FileUpload_01.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\NativeScroll_Grid_01.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\NativeScroll_ListBox_01.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\NativeScroll_ListView_01.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\NativeScroll_MultiLineTextField_01.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\NativeScroll_PopupDiv_01.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\NativeScroll_TabPage_01.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\NativeScroll_TextArea_01.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\NativeScroll_View_01.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_100537.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_100544.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_100549.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_100550.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_100665.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_100837.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_100838.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_101067.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_101118.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_101204.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_102842.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_102844.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_102868.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_102869.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_103246.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_103561.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_103905.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_103965.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_104502.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_104555.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_104806.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_104827.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_105284.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_105284_1.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_105316.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_105317.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_105337.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_105346.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_105401.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_105401_1.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_105449.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_105734.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_105736.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_105829.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_106005.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_106047.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_4\RP_106048.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_104585\RP_104585_Form_ChangeURL.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_104585\RP_104585_Form_Cover.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_104585\RP_104585_Form_Main.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_104591.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_104818\RP_104818_frmFooter.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_104818\RP_104818_frmMain.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_104824.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_104995.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_105056.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_105110.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_105156.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_105187.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_105188.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_105853.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_105854.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_105857.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_105858.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_105860.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_105861.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_105862.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_105863.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_105884.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_105885.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_105886.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_105887.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_105889.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_105890.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_105891.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_105892.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_105972.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_105992.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_106032.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\svc_5\RP_106034.xfdl.js"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_100340.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_100549.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_100554.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_100612.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_100682.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_100712.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_100771.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101006.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101130_fm_Bottom.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101131.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101146_template01.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101148_popSiteMap3.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101153_Form_Main_copy0.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101184.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101185_RP_99986_grid_enableredraw_r.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101187.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101192.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101202_1111_LIF072M00_sample.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101215.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101221.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101231_setSelect.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101246.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101248.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101255_Form_Work.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101270.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101299.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101335.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101352.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101363.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101367.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101369_temp_form.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101373_EmptyValue.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101378.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101382_COM000P032.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101428.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101434.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101440.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101441.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101469.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101476.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101477_sample_excel_copyPaste_combo.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101478.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101481.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101487.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101489.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101501_font_error_688734.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101505.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101625_MultiCombo_E_oninput.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101634_Form_Work.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101669.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101670.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101671.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_101672.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_102078_datefield_onchanged.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_102444.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_102961.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_97016.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_98660.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_98775.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_98790.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_98833.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_98845.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_98872.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_98878.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_98934.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_98941.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_98968.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_99021.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_99334.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_99335.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_99474.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\TestCase\TestCase_RP_99604.xlsx"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\license\NexacroN_client_license.xml"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\WAV\bb.mp4"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\WAV\Free-WAV-Sample.wav"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\etc_file\RP_101221.html"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\etc_file\RP_101249_dummyXML.jsp"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\etc_file\RP_101249_selectCmmCode.do"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\etc_file\RP_101335.html"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\etc_file\RP_101352.do"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\etc_file\RP_101363.html"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\etc_file\RP_101428.html"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\etc_file\RP_101434.jsp"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\etc_file\RP_101440.html"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\etc_file\RP_98872.xml"
+    [INFO]  Successfully copied module : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\nexacrolib\framework\Framework.json"
+    [INFO]  Successfully copied module : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\nexacrolib\resources\Resource.json"
+    [INFO]  Successfully copied module : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\nexacrolib\component\Accessibility.json"
+    [INFO]  Successfully copied module : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\nexacrolib\component\MobileComp.json"
+    [INFO]  Successfully copied module : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\nexacrolib\component\ListView.json"
+    [INFO]  Successfully copied module : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\nexacrolib\component\Grid.json"
+    [INFO]  Successfully copied module : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\nexacrolib\component\ComComp.json"
+    [INFO]  Successfully copied module : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\nexacrolib\component\DeviceAPI.json"
+    [INFO]  Successfully copied module : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\nexacrolib\component\CompBase.json"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\environment.xml.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\start.json"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\start_macos.json"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\start_android.json"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\start_ios.json"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\index.html"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\launch.html"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\popup.html"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\Run.zip"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\Run.zip"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\output\quickview.html"
+    [INFO]  ------------------------------------------------------------------------
+    [INFO]  Finish generating ( 8.05 sec ) : Success 250, Fail 2, Copy 321, Skip 0
+    [INFO]  ------------------------------------------------------------------------
+    [INFO]
+    [INFO]  --------------------------- Start deploying ----------------------------
+    [INFO]  ------ Start compress
+    [INFO]  Didn't set the files to ignore
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_3\RP_100712_stepForm.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_105886.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_105854.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\Application_Tablet.xadl.quickview.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_1\RP_101477_test_pop.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\NativeScroll_MultiLineTextField_01.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_105079_MaskEdit.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\NativeScroll_TextArea_01.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_104827.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_105889.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_105401.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101192_Grid.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_100340_Edit.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101526_fittocontents.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_105857.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_104824.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_3\RP_99335_oninput_language.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_105992.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_1\RP_101373_EmptyValue.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_104591.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_2\RP_102444_tree.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\environment.xml.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\NativeScroll_Div_01.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_105317.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101487_Panel.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_105401_1.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_1\RP_102078_datefield_onchanged.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_1\RP_101202_1111_LIF072M00_sample.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_3\RP_97016_Form_Work.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101299_Grid_currency.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_105734.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_105890.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_100665.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101221_showModalWindow.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101476_fittocontents_sub.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_106032.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_104818\RP_104818_frmMain.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_2\RP_101215_grd.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101478_Panel.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101335_WebView.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_3\RP_100682_Form_Work.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_98941_Calendar.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_101118.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_105102_Combo.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_000000_filename.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101672_fluid.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_100771_Field.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_101067.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_103905.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101378_style.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\_resource_\_theme_\blue\xcssrc_test.mobile_medium.map.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_105829.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_102961_Grid.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_104585\RP_104585_Form_Cover.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_106034.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\NativeScroll_TabPage_01.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\Application_Tablet.xadl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_105858.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\NativeScroll_Grid_01.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\NativeScroll_View_01.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_105853.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_106005.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_105449.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101184_Grid.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_1\RP_101255_Form_Work.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_3\RP_98934_CalendarAutoskip.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_105887.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101476_fittocontents.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\NativeScroll_FileUpload_01.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_1\RP_104669_grid_selecttype.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101469_Combo.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_105102_Combo_sub.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_3\RP_99334_multicombo.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_105156.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_99334_MultiCombo.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101505_Step_sub.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_104585\RP_104585_Form_Main.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_2\RP_101489_static.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101671_fluid_main.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_3\RP_99474_RowHeight.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\Application_Desktop.xadl.quickview.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\_resource_\_theme_\blue\xcssrc_test.mobile_large.map.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\Application_Desktop.xadl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\_resource_\_theme_\blue\theme.mobile_small.map.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_100838.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\Application_Phone.xadl.quickview.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_99604_Dataset.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_105337.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_102842.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101428_WebView.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_105056.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_1\RP_106259_Form_Work.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_1\RP_101153_Form_Main_copy0.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_103965.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_103246.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\NativeScroll_ListView_01.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_100837.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_102844.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101440_Edit.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_98872_Grid.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_105892.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_105736.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_105453_Dataset.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\NativeScroll_ListBox_01.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_105863.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\_resource_\_theme_\blue\theme.mobile_medium.map.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_3\RP_98790_ListboxMultiselect.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_105187_Panel.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_1\RP_101501_font_error_688734.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_105282_MultiCombo.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_100554_Grid.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_1\RP_101231_setSelect.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_105188_Panel.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_105972.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_106047.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_105884.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\_resource_\_theme_\blue\xcssrc_test.desktop.map.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_98968_Dataset.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_1\RP_101172_calendarTest.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_105284_1.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_3\RP_100712_Form_Work.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_104585\RP_104585_Form_ChangeURL.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_104818\RP_104818_frmFooter.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_1\RP_104815_testTemp1.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\NativeScroll_PopupDiv_01.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_2\RP_101367_multicombo.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\_resource_\_theme_\blue\theme.mobile_large.map.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\_resource_\_theme_\blue\xcssrc_test.mobile_small.map.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_3\RP_98845_TextField_maxlength_ime.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_1\RP_101477_sample_excel_copyPaste_combo.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_2\RP_101441_readonly.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_105187.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\_resource_\_theme_\blue\theme.desktop.map.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_1\RP_101130_frm_Bottom.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_105156_Grid.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101221_pop.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_105860.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_1\RP_101369_temp_form.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101248_BIGDECIMAL.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101669_openalign_sub.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_3\RP_100612.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_1\RP_101148_popSiteMap3.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_1\RP_101185_RP_99986_grid_enableredraw_r.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_104502.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_100550.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_104956_MaskEdit.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_105085_Combo.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101352_Grid_combo.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_104668_grid_autoenter.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101270_Div_Fluid.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_1\RP_105996_testSample_20260806.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_106048.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101669_openalign_main.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_1\RP_101382_COM000P032.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\NativeScroll_Click_00.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_105284.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_3\RP_99021_div_test.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\Application_Phone.xadl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_105110.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_1\RP_101625_MultiCombo_E_oninput.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\Base\HelpPage.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_105891.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_1\RP_101634_Form_Work.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_104555.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_100544.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101481_Combo.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_3\RP_100549.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_1\RP_101146_template01.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_102868.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_105862.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101670_fluid_sub.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_100537.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101187_Grid.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101434_transaction.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101246_Grid.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_105188.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_104806.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_1\RP_105985_tss12015_multicombo_readonly_02.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_102869.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_3\RP_98775_Form_Work.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_105861.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101505_Step.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101670_fluid_main.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_3\RP_98878_Form_Work.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_103561.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_3\RP_98833_combocontrolExpr.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_104995.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_105346.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101671_fluid_sub.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_1\RP_101130_frm_Main.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_3\RP_99021_main.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_100549.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_5\RP_105885.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_105316.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\Base\MainPage.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_4\RP_101204.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101006_DateRangePicker.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_3\RP_98660_daterangeSample.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101131_PopupDateRangePicker.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\svc_0\RP_101363_WebView.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Action.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\VideoPlayer.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Tab.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\FormBase.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\SystemBase_Runtime.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\DeviceAPI\SQLite.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\ViewTransition.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\DateRangePicker.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\TextField.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Spin.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\FileDownTransfer.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\lang\ja\ime.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Platform_HTML5.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\VirtualFile.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\Element_HTML5.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\CheckBoxSet.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\FrameBase.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\ScrollBar.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\GoogleMap.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\Data.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBaseEx\SimpleComp.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\FileDialog.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Plugin.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\WebBrowser.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\Element_Runtime.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\SpinField.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\DeviceAPI\DeviceObjs.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\DeviceAPI\TCPClientSocket.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\Accessibility\Accessibility_Runtime.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Platform_Runtime.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\BasicObjs.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\MobileElement_Runtime.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\EditBase.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Dataset.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\FileUpTransfer.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\DatePicker.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\ErrorDefine.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\TimePickerControl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Panel.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\Step.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Edit.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\ProgressBar.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\TitleBar.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Button.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\SystemBase.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\StatusBar.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\DeviceAPI\BluetoothLE.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\lang\zh\ime.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\MobileElement_HTML5.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Device_Windows.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Device.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Div.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\View.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Sketch.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\MaskEdit.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Platform.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\DeviceAPI\SQLite_Runtime.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Radio.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\PopupDateRangePicker.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\TextArea.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\ExportObject.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\FileDownload.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\Grid\GridInfo.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\ImageViewer.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Calendar.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\MobileCompBase.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\CheckBox.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Tray.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\DeviceAPI\DeviceObjs_Runtime.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\Animation.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\SpinnerControl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\DateField.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\Grid\Grid.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\Accessibility\Accessibility_HTML5.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\CssObjs.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\SelectField.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\lang\ko\ime.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\PopupDiv.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\GroupBox.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\DateRangeCalendar.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\DataObject.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\DeviceAPI\Mobile.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\SystemBase_HTML5.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\MultiCombo.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\WebView.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\Accessibility\Accessibility_Comp.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\CompBase.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\Accessibility\Accessibility.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBaseEx\ComplexComp.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\ListBox.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\PopupMenu.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\FileUpload.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\CompEventBase.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\MultiLineTextField.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Combo.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Static.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\ImportObject.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Menu.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Device_Android.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Cell.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\DomObject.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Device_iOS.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Crypto.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\LocaleSupport.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ListView\ListView.js"
+    [INFO]  ------ Finish compress : Success 305, Fail 0, Copy 257
+    [INFO]
+    [INFO]  ------ Start merge
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\Element_HTML5.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\Element_Runtime.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\CompBase.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\CompEventBase.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\Data.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\EditBase.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\FormBase.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\TitleBar.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\StatusBar.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\FrameBase.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\ScrollBar.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\Step.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\Animation.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBase\ViewTransition.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Dataset.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\DataObject.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\DomObject.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Static.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Button.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Edit.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\MaskEdit.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\TextArea.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\lang\ko\ime.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\lang\zh\ime.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\lang\ja\ime.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\ImageViewer.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\CheckBox.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Radio.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\ListBox.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Combo.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Div.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\ProgressBar.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\PopupDiv.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Menu.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\PopupMenu.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Spin.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\DatePicker.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Calendar.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\GroupBox.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Tab.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\FileDialog.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\FileDownload.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\FileDownTransfer.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\FileUpload.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\FileUpTransfer.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\VideoPlayer.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\WebBrowser.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\GoogleMap.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Sketch.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\ExportObject.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\ImportObject.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Tray.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Plugin.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\VirtualFile.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\View.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Action.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\WebView.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\CheckBoxSet.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\MultiCombo.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Cell.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ComComp\Panel.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\Grid.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\Grid\GridInfo.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\Grid.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\Grid\Grid.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ListView.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBaseEx\SimpleComp.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ListView.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\CompBaseEx\ComplexComp.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ListView.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\ListView\ListView.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\DeviceAPI.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\DeviceAPI\SQLite.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\DeviceAPI.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\DeviceAPI\SQLite_Runtime.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\DeviceAPI.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\DeviceAPI\DeviceObjs.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\DeviceAPI.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\DeviceAPI\DeviceObjs_Runtime.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\DeviceAPI.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\DeviceAPI\Mobile.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\DeviceAPI.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\DeviceAPI\BluetoothLE.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\DeviceAPI.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\DeviceAPI\TCPClientSocket.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\MobileCompBase.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\MobileElement_HTML5.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\MobileElement_Runtime.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\SpinnerControl.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\TextField.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\MultiLineTextField.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\DateField.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\TimePickerControl.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\DateRangePicker.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\PopupDateRangePicker.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\DateRangeCalendar.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\SpinField.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\MobileComp\SelectField.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\Accessibility.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\Accessibility\Accessibility.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\Accessibility.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\Accessibility\Accessibility_Comp.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\Accessibility.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\Accessibility\Accessibility_HTML5.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\Accessibility.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\component\Accessibility\Accessibility_Runtime.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\SystemBase.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\LocaleSupport.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\SystemBase_HTML5.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\SystemBase_Runtime.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\BasicObjs.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\ErrorDefine.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Platform_HTML5.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Platform_Runtime.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Platform.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\CssObjs.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Device.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Device_Android.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Device_Windows.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Device_iOS.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v24\deploy\nexacrolib\framework\Crypto.js)
+    [INFO]  ------ Finish merge : Success 105, Fail 0
+    [INFO]
+    [INFO]  ------ Make bootstrap
+    [INFO]  ------------------------------------------------------------------------
+    [INFO]  Finish deploying ( 74.39 sec ) : Success 667, Fail 0 (Merge 105, Copy 257, Compress 305, Compile 0)
+    [INFO]  ------------------------------------------------------------------------
+    [INFO]
+    [INFO]  Finish Nexacro Deploying
+  Deployed files: 465
+  [DONE] 3 Deploy (84.6s)
+
+---- [v24] 4 Publish ----
+  Tomcat listening on 8080
+  Mirrored -> C:\Users\tobesoft\cursor\apache-tomcat-11.0.25\webapps\auto_v24
+PS>TerminatingError(Invoke-WebRequest): "HTTP 상태 404 – 찾을 수 없음body {font-family:Tahoma,Arial,sans-serif;} h1, h2, h3, b {color:white;background-color:#525D76;} h1 {font-size:22px;} h2 {font-size:16px;} h3 {font-size:14px;} p {font-size:12px;} a {color:black;} .line {height:1px;background-color:#525D76;border:none;}HTTP 상태 404 – 찾을 수 없음타입 상태 보고메시지 요청된 리소스 [&#47;auto_v24&#47;index.html]은(는) 가용하지 않습니다.설명 Origin 서버가 대상 리소스를 위한 현재의 representation을 찾지 못했거나, 그것이 존재하는지를 밝히려 하지 않습니다.Apache Tomcat/11.0.25"
+  Ready: http://localhost:8080/auto_v24/index.html
+  [DONE] 4 Publish (5.6s)
+
+---- [v24] 5 Chrome ----
+  Opened: http://localhost:8080/auto_v24/index.html
+  [DONE] 5 Chrome (0.4s)
+
+==============================================
+ AutoPipeline summary
+==============================================
+ [v24] SUCCESS
+   Version : 24.0.0.9999
+   Commit  : 1a69f17dad6cee892fd40d7d1aa9f99da2eb917c RP 106325 Chrome(System WebView) 154 업데이트 이후 Android 16 이하에서 click()으로 system calendar 팝업이 열리지 않는 현상 수정 (showPicker 우선 사용, 미지원/예외 시 기존 click 유지)
+   URL     : http://localhost:8080/auto_v24/index.html
+   Steps   : 0 Preflight 0s | 1 Git update 15.6s | 2 Framework copy 13.9s | 3 Deploy 84.6s | 4 Publish 5.6s | 5 Chrome 0.4s
+ Log: D:\git\cursor_project\Tools\AutoPipeline\logs\20261001_123659_v24.log
+==============================================
+**********************
+Windows PowerShell transcript end
+End time: 20261001123859
+**********************

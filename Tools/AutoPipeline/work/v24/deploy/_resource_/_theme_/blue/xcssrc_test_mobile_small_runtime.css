@@ -1,0 +1,9 @@
+.Edit.RP101378[status=disabled] {
+  background:#DCDCDC;
+  color:red;
+}
+
+.Edit.RP101378[userstatus=nulltext][status=disabled] {
+  background:#DCDCDC;
+  color:blue;
+}
