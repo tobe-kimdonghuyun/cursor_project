@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.nexalap.server</groupId>
+    <artifactId>nexalap-server</artifactId>
+    <version>26.0.200</version>
+  </parent>
+  <artifactId>nexalap-server-web</artifactId>
+  <version>26.0.200</version>
+  <packaging>${packaging}</packaging>
+  <organization>
+    <name>TOBESOFT</name>
+  </organization>
+  <properties>
+    <org.slf4j.version>2.0.16</org.slf4j.version>
+    <java.version>21</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <spring.boot.version>3.5.6</spring.boot.version>
+    <product.version>26.0.200</product.version>
+    <packaging>jar</packaging>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>com.nexalap.server</groupId>
+      <artifactId>nexalap-server-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.nexalap.server</groupId>
+      <artifactId>nexalap-server-connector-db</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.nexalap.server</groupId>
+      <artifactId>nexalap-server-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${org.slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>rest-assured</artifactId>
+      <version>5.5.6</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>5.10.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest</artifactId>
+      <version>2.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-fileupload2-jakarta</artifactId>
+      <version>2.0.0-M1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.zaxxer</groupId>
+      <artifactId>SparseBitSet</artifactId>
+      <version>1.3</version>
+    </dependency>
+    <dependency>
+      <groupId>com.nexacro</groupId>
+      <artifactId>uiadapter-jakarta-excel</artifactId>
+      <version>1.5.4.3-20251212.041706-2</version>
+      <exclusions>
+        <exclusion>
+          <groupId>ch.qos.logback</groupId>
+          <artifactId>logback-classic</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.session</groupId>
+      <artifactId>spring-session-data-redis</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.tomcat.embed</groupId>
+      <artifactId>tomcat-embed-jasper</artifactId>
+    </dependency>
+  </dependencies>
+  <repositories>
+    <repository>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>mvn2</id>
+      <url>https://repo1.maven.org/maven2/</url>
+    </repository>
+  </repositories>
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
+    <finalName>nexalap-server-${project.version}</finalName>
+    <plugins>
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-bin</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/bin</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${basedir}/bin</directory>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy-config-and-repository</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/config</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${basedir}/config</directory>
+                  <excludes>
+                    <exclude>application*.properties</exclude>
+                  </excludes>
+                  <filtering>false</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.6.0</version>
+        <executions>
+          <execution>
+            <id>copy-dependencies</id>
+            <phase>install</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/lib</outputDirectory>
+              <includeScope>runtime</includeScope>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>rename-application-properties</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <mkdir dir="${project.build.directory}/config" />
+                <copy file="${basedir}/config/application-${env}.properties" tofile="${project.build.directory}/config/application.properties" />
+                <mkdir dir="${project.build.directory}/repository" />
+                <copy todir="${project.build.directory}/repository">
+                  <fileset dir="${basedir}/repository/template" />
+                </copy>
+                <mkdir dir="${project.build.directory}/license" />
+                <condition property="license.prod">
+                  <equals arg2="prod" arg1="${env}" />
+                </condition>
+                <copy todir="${project.build.directory}/license">
+                  <fileset dir="${basedir}/license">
+                    <include name="THIRD_PARTY_LICENSES.txt" />
+                    <include name="NexaLAP_client_license.xml" />
+                    <include name="NexaLAP_server_license.xml" />
+                  </fileset>
+                </copy>
+                <copy unless:set="license.prod" xmlns:unless="ant:unless" todir="${project.build.directory}/license">
+                  <fileset dir="${basedir}/license">
+                    <include name="LICENSE_en_perpetual_onprem.txt" />
+                    <include name="LICENSE_ko_perpetual_onprem.txt" />
+                  </fileset>
+                </copy>
+                <copy if:set="license.prod" todir="${project.build.directory}/license" xmlns:if="ant:if">
+                  <fileset dir="${basedir}/license">
+                    <include name="LICENSE_en_subscription_self-hosted.txt" />
+                    <include name="LICENSE_ko_subscription_self-hosted.txt" />
+                  </fileset>
+                </copy>
+              </target>
+            </configuration>
+          </execution>
+          <execution>
+            <id>rename-project-jars</id>
+            <phase>install</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <move todir="${project.build.directory}/lib">
+                  <fileset dir="${project.build.directory}/lib">
+                    <include name="nexalap-server-*.jar" />
+                  </fileset>
+                  <regexpmapper from="^nexalap-server-(.*)" to="nexalap-server-\1" />
+                </move>
+                <move todir="${project.build.directory}/lib">
+                  <fileset dir="${project.build.directory}/lib">
+                    <include name="nexalap-service-*.jar" />
+                  </fileset>
+                  <regexpmapper from="^nexalap-service-(.*)" to="nexalap-server-service-\1" />
+                </move>
+              </target>
+            </configuration>
+          </execution>
+          <execution>
+            <id>rename-fat-jar-internal-libs</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <unzip src="${project.build.directory}/${project.build.finalName}.jar" dest="${project.build.directory}/fat-jar-work" />
+                <move todir="${project.build.directory}/fat-jar-work/BOOT-INF/lib">
+                  <fileset dir="${project.build.directory}/fat-jar-work/BOOT-INF/lib">
+                    <include name="nexalap-server-*.jar" />
+                  </fileset>
+                  <regexpmapper from="^nexalap-server-(.*)" to="nexalap-server-\1" />
+                </move>
+                <move todir="${project.build.directory}/fat-jar-work/BOOT-INF/lib">
+                  <fileset dir="${project.build.directory}/fat-jar-work/BOOT-INF/lib">
+                    <include name="nexalap-service-*.jar" />
+                  </fileset>
+                  <regexpmapper from="^nexalap-service-(.*)" to="nexalap-server-service-\1" />
+                </move>
+                <replaceregexp file="${project.build.directory}/fat-jar-work/BOOT-INF/classpath.idx" match="nexalap-server-" replace="nexalap-server-" flags="g" />
+                <replaceregexp file="${project.build.directory}/fat-jar-work/BOOT-INF/classpath.idx" match="nexalap-service-" replace="nexalap-server-service-" flags="g" />
+                <delete file="${project.build.directory}/${project.build.finalName}.jar" />
+                <zip destfile="${project.build.directory}/${project.build.finalName}.jar" compress="false">
+                  <zipfileset includes="META-INF/MANIFEST.MF" dir="${project.build.directory}/fat-jar-work" />
+                  <zipfileset excludes="META-INF/MANIFEST.MF,BOOT-INF/lib/**" dir="${project.build.directory}/fat-jar-work" />
+                </zip>
+                <delete dir="${project.build.directory}/fat-jar-work" />
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>${spring.boot.version}</version>
+        <executions>
+          <execution>
+            <id>repackage</id>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+            <configuration>
+              <layout>ZIP</layout>
+            </configuration>
+          </execution>
+          <execution>
+            <id>build-info</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>build-info</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>create-classes-jar</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+              <classifier>classes</classifier>
+              <includes>
+                <include>**/*.class</include>
+              </includes>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <archive>
+            <manifest>
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+            </manifest>
+            <manifestEntries>
+              <Implementation-Title>NexaLAP Server</Implementation-Title>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <profiles>
+    <profile>
+      <activation>
+        <property>
+          <name>env</name>
+          <value>local</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+              <excludes>
+                <exclude>com/nexalap/server/schedule/LicenseRefreshService.java</exclude>
+              </excludes>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>war-packaging</id>
+      <activation>
+        <property>
+          <name>packaging</name>
+          <value>war</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>repackage</id>
+                <configuration>
+                  <layout>WAR</layout>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <artifactId>maven-war-plugin</artifactId>
+            <configuration>
+              <failOnMissingWebXml>false</failOnMissingWebXml>
+              <archive>
+                <manifest>
+                  <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                </manifest>
+                <manifestEntries>
+                  <Implementation-Title>NexaLAP Server</Implementation-Title>
+                </manifestEntries>
+              </archive>
+              <webResources>
+                <resource>
+                  <directory>${project.build.directory}/config</directory>
+                  <includes>
+                    <include>application.properties</include>
+                  </includes>
+                  <targetPath>WEB-INF/config</targetPath>
+                </resource>
+                <resource>
+                  <directory>${project.build.directory}/config</directory>
+                  <includes>
+                    <include>log4j2.xml</include>
+                  </includes>
+                  <targetPath>WEB-INF/config</targetPath>
+                </resource>
+                <resource>
+                  <directory>${project.build.directory}/config</directory>
+                  <includes>
+                    <include>banner.txt</include>
+                  </includes>
+                  <targetPath>WEB-INF/config</targetPath>
+                </resource>
+                <resource>
+                  <directory>license</directory>
+                  <targetPath>WEB-INF/license</targetPath>
+                </resource>
+              </webResources>
+            </configuration>
+          </plugin>
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>rename-fat-jar-internal-libs</id>
+                <phase>none</phase>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <artifactId>maven-jar-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>create-classes-jar</id>
+                <phase>none</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+      <dependencies>
+        <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-tomcat</artifactId>
+          <scope>provided</scope>
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
+</project>

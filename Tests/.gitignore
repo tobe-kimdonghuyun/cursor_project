@@ -1,0 +1,19 @@
+# result/report/log/screenshot는 실행할 때마다 생기는 산출물이라 git으로 추적하지 않는다.
+# testcases/scenarios/env/schedule는 소스 데이터라 그대로 추적한다.
+# project/module 하위 어느 깊이에 생기든 전부 무시하되, 폴더 구조를 git에 남기기 위한
+# .gitkeep만 예외로 추적한다.
+result/**
+!result/**/
+!result/**/.gitkeep
+
+report/**
+!report/**/
+!report/**/.gitkeep
+
+log/**
+!log/**/
+!log/**/.gitkeep
+
+screenshot/**
+!screenshot/**/
+!screenshot/**/.gitkeep

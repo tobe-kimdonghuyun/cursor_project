@@ -1,0 +1,11 @@
+# dbconnector
+com.nexalap.server.connector.db.DbConnector
+
+# RestAPI Connector
+com.nexalap.server.connector.restapi.RestApiConnector
+
+# S3 Connector
+com.nexalap.server.connector.s3.S3Connector
+
+# PlatformData(Legacy) Connector
+com.nexalap.server.connector.platformdata.PlatformDataConnector

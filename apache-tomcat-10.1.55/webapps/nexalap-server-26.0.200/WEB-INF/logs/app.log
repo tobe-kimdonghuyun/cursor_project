@@ -1,0 +1,192 @@
+[2026/09/07 17:43:27.471][INFO ] [com.nexalap.server.NexaLAPServerApplication] Starting NexaLAPServerApplication v26.0.200 using Java 21.0.9 with PID 39684 (D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\nexalap-server-26.0.200\WEB-INF\classes started by sjrnfl13 in D:\git_prj\cursor_project\Tools)
+[2026/09/07 17:43:27.483][DEBUG] [com.nexalap.server.NexaLAPServerApplication] Running with Spring Boot v3.5.6, Spring v6.2.11
+[2026/09/07 17:43:27.485][INFO ] [com.nexalap.server.NexaLAPServerApplication] No active profile set, falling back to 1 default profile: "default"
+[2026/09/07 17:43:30.008][INFO ] [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 2469 ms
+[2026/09/07 17:43:30.986][INFO ] [com.nexalap.server.auth.config.FileBasedAuthConfigRepository] FileBasedAuthConfigRepository initialized: repositoryRoot=D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\nexalap-server-26.0.200\WEB-INF\repository
+[2026/09/07 17:43:31.082][INFO ] [com.nexalap.server.auth.oidc.OidcDiscoveryService] OidcDiscoveryService initialized: discoveryCache expireHours=1
+[2026/09/07 17:43:31.111][INFO ] [com.nexalap.server.auth.filter.SessionAuthFilter] SessionAuthFilter initialized with 4 strategies: [extension, httpsession, saml, oidc]
+[2026/09/07 17:43:31.128][INFO ] [com.nexalap.server.auth.oidc.OidcSessionRegistry] OidcSessionRegistry: findByIndexRepo = null (in-memory mode)
+[2026/09/07 17:43:31.130][INFO ] [com.nexalap.server.auth.saml.SamlSessionRegistry] SamlSessionRegistry: findByIndexRepo = null (in-memory mode)
+[2026/09/07 17:43:31.487][WARN ] [com.nexalap.server.connector.platformdata.util.PlatformDataReauthTokenService] 'platformdata.reauth.token.secret-key' property is not configured. Fallback to an instance-specific random signing key. For clustered or load-balanced deployments, configure the same secret key on all server instances to ensure stable account session establishment.
+[2026/09/07 17:43:31.502][INFO ] [com.nexalap.server.service.file.FileStorageService] 파일 저장 디렉토리 생성: D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\nexalap-server-26.0.200\WEB-INF\repository\tempFiles
+[2026/09/07 17:43:31.609][INFO ] [com.nexalap.server.connector.restapi.RestApiDataSourceProvider] RestApiDataSourceProvider initialized
+[2026/09/07 17:43:31.695][DEBUG] [com.nexalap.server.service.extension.ExtensionRegistry] ExtensionRegistry 정적 참조 등록
+[2026/09/07 17:43:31.743][INFO ] [com.nexalap.server.connector.platformdata.PlatformDataDataSourceProvider] PlatformDataDataSourceProvider initialized
+[2026/09/07 17:43:31.745][WARN ] [com.nexalap.server.connector.platformdata.util.PlatformDataCredentialEncryptor] platformdata.credential.encrypt.key 미설정 — PlatformData 자격증명 암호화 비활성화
+[2026/09/07 17:43:31.763][WARN ] [com.nexalap.server.connector.restapi.auth.redis.AesTokenEncryptor] oauth2.token.encrypt.key 미설정 — OAuth2 토큰 암호화 비활성화
+[2026/09/07 17:43:32.484][INFO ] [org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver] Exposing 1 endpoint beneath base path '/actuator'
+[2026/09/07 17:43:32.780][INFO ] [com.nexalap.server.SystemInitializer] [NexaLAP Server] License Path : D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\nexalap-server-26.0.200\WEB-INF\license\NexaLAP_server_license.xml
+[2026/09/07 17:43:32.780][ERROR] [com.nexalap.server.SystemInitializer] License file not found: D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\nexalap-server-26.0.200\WEB-INF\license\NexaLAP_server_license.xml
+java.io.FileNotFoundException: D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\nexalap-server-26.0.200\WEB-INF\license\NexaLAP_server_license.xml (지정된 파일을 찾을 수 없습니다)
+	at java.base/java.io.FileInputStream.open0(Native Method) ~[?:?]
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:213) ~[?:?]
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:152) ~[?:?]
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:106) ~[?:?]
+	at com.nexalap.server.SystemInitializer.l1(SourceFile:175) ~[nexalap-server-core-26.0.200.jar:26.0.200]
+	at com.nexalap.server.SystemInitializer.initialize(SourceFile:102) ~[nexalap-server-core-26.0.200.jar:26.0.200]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:172) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiateWithFactoryMethod(SimpleInstantiationStrategy.java:89) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:169) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:489) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1375) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1205) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373) [spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) [spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) [spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1221) [spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1187) [spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1123) [spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:987) [spring-context-6.2.11.jar:6.2.11]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) [spring-context-6.2.11.jar:6.2.11]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) [spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) [spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) [spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) [spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.web.servlet.support.SpringBootServletInitializer.run(SpringBootServletInitializer.java:194) [spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.web.servlet.support.SpringBootServletInitializer.createRootApplicationContext(SpringBootServletInitializer.java:174) [spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.web.servlet.support.SpringBootServletInitializer.onStartup(SpringBootServletInitializer.java:102) [spring-boot-3.5.6.jar:3.5.6]
+	at com.nexalap.server.NexaLAPServerApplication.onStartup(NexaLAPServerApplication.java:108) [classes/:26.0.200]
+	at org.springframework.web.SpringServletContainerInitializer.onStartup(SpringServletContainerInitializer.java:171) [spring-web-6.2.11.jar:6.2.11]
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4456) [catalina.jar:10.1.55]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164) [catalina.jar:10.1.55]
+	at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:597) [catalina.jar:10.1.55]
+	at org.apache.catalina.core.ContainerBase.addChild(ContainerBase.java:569) [catalina.jar:10.1.55]
+	at org.apache.catalina.core.StandardHost.addChild(StandardHost.java:665) [catalina.jar:10.1.55]
+	at org.apache.catalina.startup.HostConfig.deployWAR(HostConfig.java:962) [catalina.jar:10.1.55]
+	at org.apache.catalina.startup.HostConfig$DeployWar.run(HostConfig.java:1900) [catalina.jar:10.1.55]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) [?:?]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) [?:?]
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81) [tomcat-util.jar:10.1.55]
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:123) [?:?]
+	at org.apache.catalina.startup.HostConfig.deployWARs(HostConfig.java:766) [catalina.jar:10.1.55]
+	at org.apache.catalina.startup.HostConfig.deployApps(HostConfig.java:417) [catalina.jar:10.1.55]
+	at org.apache.catalina.startup.HostConfig.start(HostConfig.java:1618) [catalina.jar:10.1.55]
+	at org.apache.catalina.startup.HostConfig.lifecycleEvent(HostConfig.java:300) [catalina.jar:10.1.55]
+	at org.apache.catalina.util.LifecycleBase.fireLifecycleEvent(LifecycleBase.java:109) [catalina.jar:10.1.55]
+	at org.apache.catalina.util.LifecycleBase.setStateInternal(LifecycleBase.java:389) [catalina.jar:10.1.55]
+	at org.apache.catalina.util.LifecycleBase.setState(LifecycleBase.java:336) [catalina.jar:10.1.55]
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:774) [catalina.jar:10.1.55]
+	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:783) [catalina.jar:10.1.55]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164) [catalina.jar:10.1.55]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201) [catalina.jar:10.1.55]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191) [catalina.jar:10.1.55]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) [?:?]
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81) [tomcat-util.jar:10.1.55]
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145) [?:?]
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747) [catalina.jar:10.1.55]
+	at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:201) [catalina.jar:10.1.55]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164) [catalina.jar:10.1.55]
+	at org.apache.catalina.core.StandardService.startInternal(StandardService.java:410) [catalina.jar:10.1.55]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164) [catalina.jar:10.1.55]
+	at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:868) [catalina.jar:10.1.55]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164) [catalina.jar:10.1.55]
+	at org.apache.catalina.startup.Catalina.start(Catalina.java:758) [catalina.jar:10.1.55]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:342) [bootstrap.jar:10.1.55]
+	at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:473) [bootstrap.jar:10.1.55]
+[2026/09/07 17:43:32.798][ERROR] [com.nexalap.server.SystemInitializer] Shutting down application: License file not found
+[2026/09/07 17:43:32.824][INFO ] [com.nexalap.server.connector.db.util.DataSourceCleanup] [DataSourceCleanup] Shutting down all DataSource pools...
+[2026/09/07 17:43:32.824][INFO ] [com.nexalap.server.connector.db.DataSourceRegistry] [DataSourceRegistry] All DataSourceHolder instances closed.
+[2026/09/07 17:45:19.632][INFO ] [com.nexalap.server.NexaLAPServerApplication] Starting NexaLAPServerApplication v26.0.200 using Java 21.0.9 with PID 42704 (D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\nexalap-server-26.0.200\WEB-INF\classes started by sjrnfl13 in D:\git_prj\cursor_project\Tools)
+[2026/09/07 17:45:19.644][DEBUG] [com.nexalap.server.NexaLAPServerApplication] Running with Spring Boot v3.5.6, Spring v6.2.11
+[2026/09/07 17:45:19.646][INFO ] [com.nexalap.server.NexaLAPServerApplication] No active profile set, falling back to 1 default profile: "default"
+[2026/09/07 17:45:21.912][INFO ] [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 2219 ms
+[2026/09/07 17:45:22.891][INFO ] [com.nexalap.server.auth.config.FileBasedAuthConfigRepository] FileBasedAuthConfigRepository initialized: repositoryRoot=D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\nexalap-server-26.0.200\WEB-INF\repository
+[2026/09/07 17:45:22.992][INFO ] [com.nexalap.server.auth.oidc.OidcDiscoveryService] OidcDiscoveryService initialized: discoveryCache expireHours=1
+[2026/09/07 17:45:23.024][INFO ] [com.nexalap.server.auth.filter.SessionAuthFilter] SessionAuthFilter initialized with 4 strategies: [extension, httpsession, saml, oidc]
+[2026/09/07 17:45:23.042][INFO ] [com.nexalap.server.auth.oidc.OidcSessionRegistry] OidcSessionRegistry: findByIndexRepo = null (in-memory mode)
+[2026/09/07 17:45:23.044][INFO ] [com.nexalap.server.auth.saml.SamlSessionRegistry] SamlSessionRegistry: findByIndexRepo = null (in-memory mode)
+[2026/09/07 17:45:23.448][WARN ] [com.nexalap.server.connector.platformdata.util.PlatformDataReauthTokenService] 'platformdata.reauth.token.secret-key' property is not configured. Fallback to an instance-specific random signing key. For clustered or load-balanced deployments, configure the same secret key on all server instances to ensure stable account session establishment.
+[2026/09/07 17:45:23.468][INFO ] [com.nexalap.server.service.file.FileStorageService] 파일 저장 디렉토리 생성: D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\nexalap-server-26.0.200\WEB-INF\repository\tempFiles
+[2026/09/07 17:45:23.653][INFO ] [com.nexalap.server.connector.restapi.RestApiDataSourceProvider] RestApiDataSourceProvider initialized
+[2026/09/07 17:45:23.788][DEBUG] [com.nexalap.server.service.extension.ExtensionRegistry] ExtensionRegistry 정적 참조 등록
+[2026/09/07 17:45:23.861][INFO ] [com.nexalap.server.connector.platformdata.PlatformDataDataSourceProvider] PlatformDataDataSourceProvider initialized
+[2026/09/07 17:45:23.864][WARN ] [com.nexalap.server.connector.platformdata.util.PlatformDataCredentialEncryptor] platformdata.credential.encrypt.key 미설정 — PlatformData 자격증명 암호화 비활성화
+[2026/09/07 17:45:23.889][WARN ] [com.nexalap.server.connector.restapi.auth.redis.AesTokenEncryptor] oauth2.token.encrypt.key 미설정 — OAuth2 토큰 암호화 비활성화
+[2026/09/07 17:45:24.768][INFO ] [org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver] Exposing 1 endpoint beneath base path '/actuator'
+[2026/09/07 17:45:25.052][INFO ] [com.nexalap.server.SystemInitializer] [NexaLAP Server] License Path : D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\nexalap-server-26.0.200\WEB-INF\license\NexaLAP_server_license.xml
+[2026/09/07 17:45:25.053][ERROR] [com.nexalap.server.SystemInitializer] License file not found: D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\nexalap-server-26.0.200\WEB-INF\license\NexaLAP_server_license.xml
+java.io.FileNotFoundException: D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\nexalap-server-26.0.200\WEB-INF\license\NexaLAP_server_license.xml (지정된 파일을 찾을 수 없습니다)
+	at java.base/java.io.FileInputStream.open0(Native Method) ~[?:?]
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:213) ~[?:?]
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:152) ~[?:?]
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:106) ~[?:?]
+	at com.nexalap.server.SystemInitializer.l1(SourceFile:175) ~[nexalap-server-core-26.0.200.jar:26.0.200]
+	at com.nexalap.server.SystemInitializer.initialize(SourceFile:102) ~[nexalap-server-core-26.0.200.jar:26.0.200]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:172) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiateWithFactoryMethod(SimpleInstantiationStrategy.java:89) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:169) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:489) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1375) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1205) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373) [spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) [spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) [spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1221) [spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1187) [spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1123) [spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:987) [spring-context-6.2.11.jar:6.2.11]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) [spring-context-6.2.11.jar:6.2.11]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) [spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) [spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) [spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) [spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.web.servlet.support.SpringBootServletInitializer.run(SpringBootServletInitializer.java:194) [spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.web.servlet.support.SpringBootServletInitializer.createRootApplicationContext(SpringBootServletInitializer.java:174) [spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.web.servlet.support.SpringBootServletInitializer.onStartup(SpringBootServletInitializer.java:102) [spring-boot-3.5.6.jar:3.5.6]
+	at com.nexalap.server.NexaLAPServerApplication.onStartup(NexaLAPServerApplication.java:108) [classes/:26.0.200]
+	at org.springframework.web.SpringServletContainerInitializer.onStartup(SpringServletContainerInitializer.java:171) [spring-web-6.2.11.jar:6.2.11]
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4456) [catalina.jar:10.1.55]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164) [catalina.jar:10.1.55]
+	at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:597) [catalina.jar:10.1.55]
+	at org.apache.catalina.core.ContainerBase.addChild(ContainerBase.java:569) [catalina.jar:10.1.55]
+	at org.apache.catalina.core.StandardHost.addChild(StandardHost.java:665) [catalina.jar:10.1.55]
+	at org.apache.catalina.startup.HostConfig.deployWAR(HostConfig.java:962) [catalina.jar:10.1.55]
+	at org.apache.catalina.startup.HostConfig$DeployWar.run(HostConfig.java:1900) [catalina.jar:10.1.55]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) [?:?]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) [?:?]
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81) [tomcat-util.jar:10.1.55]
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:123) [?:?]
+	at org.apache.catalina.startup.HostConfig.deployWARs(HostConfig.java:766) [catalina.jar:10.1.55]
+	at org.apache.catalina.startup.HostConfig.deployApps(HostConfig.java:417) [catalina.jar:10.1.55]
+	at org.apache.catalina.startup.HostConfig.start(HostConfig.java:1618) [catalina.jar:10.1.55]
+	at org.apache.catalina.startup.HostConfig.lifecycleEvent(HostConfig.java:300) [catalina.jar:10.1.55]
+	at org.apache.catalina.util.LifecycleBase.fireLifecycleEvent(LifecycleBase.java:109) [catalina.jar:10.1.55]
+	at org.apache.catalina.util.LifecycleBase.setStateInternal(LifecycleBase.java:389) [catalina.jar:10.1.55]
+	at org.apache.catalina.util.LifecycleBase.setState(LifecycleBase.java:336) [catalina.jar:10.1.55]
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:774) [catalina.jar:10.1.55]
+	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:783) [catalina.jar:10.1.55]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164) [catalina.jar:10.1.55]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1201) [catalina.jar:10.1.55]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1191) [catalina.jar:10.1.55]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) [?:?]
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81) [tomcat-util.jar:10.1.55]
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145) [?:?]
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:747) [catalina.jar:10.1.55]
+	at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:201) [catalina.jar:10.1.55]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164) [catalina.jar:10.1.55]
+	at org.apache.catalina.core.StandardService.startInternal(StandardService.java:410) [catalina.jar:10.1.55]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164) [catalina.jar:10.1.55]
+	at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:868) [catalina.jar:10.1.55]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164) [catalina.jar:10.1.55]
+	at org.apache.catalina.startup.Catalina.start(Catalina.java:758) [catalina.jar:10.1.55]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:342) [bootstrap.jar:10.1.55]
+	at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:473) [bootstrap.jar:10.1.55]
+[2026/09/07 17:45:25.068][ERROR] [com.nexalap.server.SystemInitializer] Shutting down application: License file not found
+[2026/09/07 17:45:25.095][INFO ] [com.nexalap.server.connector.db.util.DataSourceCleanup] [DataSourceCleanup] Shutting down all DataSource pools...
+[2026/09/07 17:45:25.096][INFO ] [com.nexalap.server.connector.db.DataSourceRegistry] [DataSourceRegistry] All DataSourceHolder instances closed.

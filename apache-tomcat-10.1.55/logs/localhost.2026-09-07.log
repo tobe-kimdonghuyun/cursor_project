@@ -1,0 +1,4 @@
+07-Sep-2026 17:43:25.879 정보 [main] org.apache.catalina.core.ApplicationContext.log 2 Spring WebApplicationInitializers detected on classpath
+07-Sep-2026 17:43:30.006 정보 [main] org.apache.catalina.core.ApplicationContext.log Initializing Spring embedded WebApplicationContext
+07-Sep-2026 17:45:18.147 정보 [main] org.apache.catalina.core.ApplicationContext.log 2 Spring WebApplicationInitializers detected on classpath
+07-Sep-2026 17:45:21.910 정보 [main] org.apache.catalina.core.ApplicationContext.log Initializing Spring embedded WebApplicationContext

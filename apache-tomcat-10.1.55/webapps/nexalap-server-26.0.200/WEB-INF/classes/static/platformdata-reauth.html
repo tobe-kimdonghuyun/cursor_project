@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>계정 연결</title>
+  <style>
+    body { font-family: sans-serif; margin: 0; background: #f5f5f5; }
+    .container { max-width: 420px; margin: 60px auto; padding: 24px; border: 1px solid #ddd; border-radius: 8px; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    h2 { color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px; margin: 0 0 16px; font-size: 18px; }
+    .sub { font-size: 13px; color: #555; margin: -8px 0 14px; }
+    .note { font-size: 12px; color: #555; background: #f4f6f8; border: 1px solid #e2e6ea; border-radius: 4px; padding: 8px 10px; margin: 14px 0; }
+    .status { font-size: 13px; border-radius: 4px; padding: 10px 12px; margin: 14px 0; display: none; }
+    .status.success { display: block; background: #e6f7ec; color: #1e7e34; border: 1px solid #c3e6cb; }
+    .status.error { display: block; background: #fdecea; color: #b71c1c; border: 1px solid #f5c6cb; }
+    .field { margin-bottom: 12px; }
+    .field label { display: block; font-size: 12px; font-weight: bold; color: #333; margin-bottom: 4px; }
+    .field input {
+      width: 100%; box-sizing: border-box; padding: 9px 10px;
+      border: 1px solid #ccc; border-radius: 4px; font-size: 13px;
+    }
+    .field input:focus { outline: none; border-color: #007bff; box-shadow: 0 0 0 2px rgba(0,123,255,0.15); }
+    .field input:disabled { background: #f3f3f3; }
+    .btn-login { width: 100%; margin-top: 8px; background: #007bff; color: #fff; border: none; padding: 10px; border-radius: 4px; cursor: pointer; font-size: 13px; }
+    .btn-login:hover { background: #0056b3; }
+    .btn-login:disabled { background: #99c2ff; cursor: default; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>계정 연결</h2>
+    <p class="sub" id="reauth-sub">이 서비스와 연동된 외부 시스템에 로그인합니다.</p>
+
+    <div class="note">
+      입력하신 아이디/비밀번호는 이 화면에서 로그인을 확인하는 데만 사용되고, 서버에 저장되거나 기록되지 않습니다.
+    </div>
+
+    <div class="status" id="error-box"></div>
+
+    <!-- 전용 탭이므로 모달이 아니라 페이지 자체가 로그인 화면이다 (2026-07-10 —
+         모달은 배포 런타임에서 실행 화면 위에 겹쳐 띄우는 용도로만 남김) -->
+    <form id="login-form">
+      <div class="field">
+        <label for="fld-userId">아이디</label>
+        <input type="text" id="fld-userId" autocomplete="username">
+      </div>
+      <div class="field">
+        <label for="fld-userPwd">비밀번호</label>
+        <input type="password" id="fld-userPwd" autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn-login" id="login-btn">로그인</button>
+    </form>
+
+    <div class="status" id="status-box"></div>
+  </div>
+
+  <script src="platformdata-reauth.js"></script>
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      // URL 쿼리는 project/datasource(라우팅 정보)만 받는다.
+      // 사용자 식별자(userid)는 URL에 싣지 않는다 (2026-07-10 제거) — 서버/프록시 로그,
+      // 브라우저 히스토리, Referer로 새는 것을 방지. 세션 격리 신원은 세션 확립 요청
+      // 시점에 서버가 컨텍스트(헤더)로 직접 산출하므로 URL 전달이 애초에 불필요하다.
+      var project = params.get('project') || '';
+      var datasource = params.get('datasource') || '';
+      // 실행 요청(이미 인증됨) 안에서 서버가 발급한 단기 서명 신원 토큰(선택) — 이 페이지가
+      // 실행 요청과 쿠키를 공유하지 못하는 브라우저 컨텍스트에서 열리는 경우를 위한 대안 신원
+      // 경로다(2026-07-16). 원문 신원이 아니라 서명된 토큰이라 URL에 실려도 안전하다.
+      var identityToken = params.get('identitytoken') || '';
+      // project/datasource는 최종 사용자에게 노출하지 않는다(2026-07-14) — 내부 개발 식별자라
+      // "이게 뭐지?"라는 오해/불신만 유발하고, 아래 API 호출에만 필요하다. 개발 중 확인이
+      // 필요하면 이 페이지의 URL 쿼리(주소창)에서 그대로 볼 수 있다.
+      console.debug('[platformdata-reauth] project=%s, datasource=%s', project, datasource);
+
+      // 최종 사용자 안내 문구(선택, 2026-07-16) — datasource 설정의 reauthlabel이 설정돼 있으면
+      // authurl에 실려 온다. project/datasource와 달리 이건 애초에 화면에 보여줄 텍스트라
+      // 노출을 막을 이유가 없다 — 없으면 기존 일반 문구를 그대로 둔다.
+      var label = params.get('label');
+      if (label) {
+        document.getElementById('reauth-sub').textContent = label;
+      }
+
+      var form      = document.getElementById('login-form');
+      var fldUserId = document.getElementById('fld-userId');
+      var fldUserPwd = document.getElementById('fld-userPwd');
+      var loginBtn  = document.getElementById('login-btn');
+      var errorBox  = document.getElementById('error-box');
+      var statusBox = document.getElementById('status-box');
+
+      // showStatus()와 동일하게 className 전환으로 표시 여부를 제어한다 — 마크업은 기본 "status"
+      // 클래스만 갖고 시작해 .status(display:none)가 그대로 적용되므로, 로그인 시도 전엔 처음부터
+      // 렌더링되지 않는다(과거엔 "status error"로 시작해 빈 상태로 계속 보이던 버그가 있었다).
+      function showError(message) {
+        errorBox.className = 'status error';
+        errorBox.textContent = message;
+      }
+      function hideError() {
+        errorBox.className = 'status';
+        errorBox.textContent = '';
+      }
+      function setFormEnabled(enabled) {
+        fldUserId.disabled = !enabled;
+        fldUserPwd.disabled = !enabled;
+        loginBtn.disabled = !enabled;
+      }
+      function showStatus(kind, message) {
+        statusBox.className = 'status ' + kind;
+        statusBox.textContent = message;
+      }
+
+      /**
+       * 공통 레이어의 custom handler 확장점으로 "모달" 대신 이 페이지의 인라인 폼을 연결한다.
+       * 자격증명 제출·세션 확립 API 호출·-2715 재입력 루프·비밀번호 비보관 규칙은
+       * 전부 공통 레이어(establishLoop)가 그대로 소유한다 — 여기는 UI만 공급.
+       */
+      var pendingResolve = null;
+      window.NexalapPlatformDataReauth.registerHandler(function (required, ctx) {
+        return new Promise(function (resolve) {
+          if (ctx && ctx.errorMessage) showError(ctx.errorMessage);
+          setFormEnabled(true);
+          fldUserPwd.focus();
+          pendingResolve = resolve;
+        });
+      });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!pendingResolve) return;
+        hideError();
+        setFormEnabled(false);
+        var resolve = pendingResolve;
+        pendingResolve = null;
+        var credentials = { userId: fldUserId.value.trim(), userPwd: fldUserPwd.value };
+        fldUserPwd.value = ''; // DOM에서 즉시 비움 — 비밀번호는 세션 확립 요청 1회에만 사용
+        resolve(credentials);
+      });
+
+      /**
+       * 부모(이 창을 연 페이지/IDE)에게 완료를 알리고 창을 닫는다.
+       * OAuth2 콜백(sendCompletePage)과 동일한 UX — 인증 성공 시 탭이 스스로 닫힌다.
+       * window.close()는 스크립트로 열린 창에서만 동작하므로, 직접 URL로 연 경우를
+       * 대비해 안내 문구를 먼저 표시해 둔다.
+       */
+      function notifyAndClose() {
+        if (window.opener) {
+          window.opener.postMessage(
+            { type: 'nexalap-pd-reauth', status: 'success', datasource: datasource, project: project },
+            window.location.origin);
+        }
+        form.style.display = 'none';
+        showStatus('success', '계정 연결 완료 — 이 창은 자동으로 닫힙니다.');
+        setTimeout(function () { window.close(); }, 400);
+      }
+
+      if (!project || !datasource) {
+        setFormEnabled(false);
+        showError('project/datasource 파라미터가 없어 계정 연결을 진행할 수 없습니다.');
+        return;
+      }
+
+      setFormEnabled(false); // 공통 레이어가 handler를 호출하면(즉시) 활성화된다
+      window.NexalapPlatformDataReauth.promptAndEstablish({
+        project: project,
+        datasource: datasource,
+        identityToken: identityToken
+      }).then(function () {
+        notifyAndClose();
+      }).catch(function (err) {
+        setFormEnabled(true);
+        showError('계정 연결 중 오류가 발생했습니다: ' + (err && err.message ? err.message : err));
+      });
+    })();
+  </script>
+</body>
+</html>

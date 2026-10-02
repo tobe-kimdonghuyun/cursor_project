@@ -1,0 +1,182 @@
+﻿NEXALAP SERVER SOFTWARE LICENSE AGREEMENT (PERPETUAL – ON-PREMISE INSTALLATION)
+
+This Software License Agreement (the "Agreement") sets forth the terms and conditions for the licensee (the "Licensee") with regard to the program "NexaLAP Server", instructions, manual, storage medium or download files and others (collectively, the "Software") that TOBESOFT Co., Ltd. (the "Licensor") produced and to which the Licensor owns the copyrights and all other related rights. Prior to installing and using this Software, the Licensee has the obligation to fully understand and diligently perform this Agreement.
+
+The Licensor permits the use of this Software under the condition that the Licensee abides by all the terms and conditions of this Agreement. Installing this Software on a system such as a computer after opening the packaging of the Software or downloading the Software online, consenting to this Agreement when installing, or using Software that has been installed shall mean that the Licensee agrees with the terms and conditions of this Agreement. Therefore, the Licensee must carefully read the Agreement.
+If the Licensee does not agree to this Agreement, the Licensor will not permit the use of this Software to the Licensee.
+
+1.  Definitions
+
+    In this Agreement, the following terms shall have the meanings set forth below unless the context otherwise requires:
+
+    A. "Application" means any application, automation, workflow, configuration, or other work product developed or managed using the Software by or on behalf of the Licensee.
+    B. "Content" means any data, files, text, images, audio, video, source code, metadata, or other materials that the Licensee (or its users) processes using the Software in the Licensee's environment, excluding the Software itself.
+    C. "Personal Data" means any information relating to an identified or identifiable natural person, as defined under applicable data protection laws.
+    D. "License Certificate" means an electronic or written certificate issued to the Licensee that specifies the scope of installation and use, licensed capacity, and (if applicable) maintenance/support term.
+    E. "Support and Updates" means support and update services provided by the Licensor or its partnering companies (if any), as described in the License Certificate or a separate agreement.
+    F. "Usage Data" means technical and usage information related to the Software (for example, version information, installation status, feature usage, error logs, and license compliance data), which may be collected in aggregated or identifiable form depending on the nature of the data and applicable law.
+
+2.  Validity and Effect of this Agreement
+
+    The Licensee's act of installing this Software on a system such as a computer after opening the packaging of the Software or downloading the Software online, consenting to this Agreement when installing, or using Software that has been installed shall be deemed as the Licensee explicitly agreeing to fully understand and perform the terms and conditions of this Agreement, and this Agreement shall become valid and effective at such moment.
+
+3.  Rights to this Software
+
+    A. The copyright to this Software is protected under relevant copyright laws and regulations and international copyright treaties, and the Licensor retains all rights granted under such laws, regulations and treaties.
+    B. The Licensee acknowledges and agrees that the Licensee is not obtaining the copyright to this Software, but obtaining only a limited right to use within the terms and conditions and scope set forth in this Agreement.
+
+4.  Grant and Scope of Right to Use (Perpetual)
+
+    A. The Licensor grants the Licensee the non-exclusive right to install and use this Software according to this Agreement. The right to use the Software is limited and non-exclusive and shall not be transferred or provided as security.
+    B. Both parties shall negotiate and prepare the License Certificate in an electronic document or written format that is separate from this Agreement. The License Certificate shall be included in this Software product's package and issued to the Licensee, or shall be sent to the Licensee electronically.
+        The Licensee confirms that the scope provided on the License Certificate is the scope permitted for installation and use of this Software, and agrees to comply with and keep the License Certificate. The License Certificate shall specify:
+
+        (1) Device used: Manufacturer, model name, number of core, instances, and virtualization terms, etc.
+        (2) Scope of use: Application (name of project, domain name of project site), service (name of service site, service user, service URL)
+        (3) License type (perpetual) and, if applicable, maintenance/support term
+
+5.  Relationship with Other Agreements; Order of Precedence
+
+    A. If the Licensor and the Licensee have entered into a separate written agreement that expressly governs the Software ("Master Agreement"), the terms of the Master Agreement shall prevail over this Agreement to the extent of any inconsistency, but only with respect to the subject matter expressly covered by the Master Agreement.
+    B. The terms of any purchase order or other Licensee procurement document are excluded and shall not modify or supplement this Agreement unless executed by the Licensor.
+    C. If any term in the License Certificate conflicts with this Agreement, the License Certificate shall prevail only with respect to the commercial scope, capacity, and environment expressly stated in the License Certificate.
+
+6.  Consultation on Obtaining Additional or Modified License
+
+    The Licensee shall obtain an additional or modified license to this Software by consulting with the Licensor, in case of any of the following:
+
+        (1) Usage of this Software through dispersion or separation of the device, virtualization that was not previously agreed upon or other similar usage;
+        (2) If directly or indirectly using this Software through cloud computing, unless expressly permitted in the License Certificate;
+        (3) Installation or usage in a location not under the License Certificate;
+        (4) Installation or usage in a way that is not within the scope of use under the License Certificate.
+
+7.  Limitations
+
+    The Licensor retains all rights to this Software and the Licensor has the sole right to permit the use of the Software. Unless otherwise authorized by the Licensor in writing, the Licensee shall comply with the limitations set forth below:
+
+        A. Only one copy of this Software may be made in case of destruction, damage or other similar incident in relation to this Software, and any additional reproductions or copy shall be deemed as infringement on the Licensor's right of reproduction. The copy shall not be installed or used on a computer, and it shall be stored on encrypted storage or in a secure repository; provided, however, such copy shall not be provided or lent to a third party.
+        B. Unless permitted under relevant laws and regulations, Licensee shall not modify, enhance, reverse engineer, decompile, disassemble, supplement, create derivative work from, adapt, partially use, translate or otherwise reduce the Software to human readable form and/or merge the Software with other software or documentation, and any acts of deleting, changing, or concealing the intellectual property rights notification, or using the product that is not for the intended purpose shall also be prohibited. Without limiting the foregoing, the Licensee shall not input, upload, or otherwise submit the Software or any portion thereof (including its code, structure, or logic) into any artificial intelligence, machine learning, or large language model system for any purpose, including training, fine-tuning, analysis, or code generation.
+        C. The Licensee shall not have any other rights to this Software other than the rights granted under this Agreement.
+        D. Unless set forth in this Agreement, the Licensee shall not transfer, lease, permit re-use, or provide as security to a third party the rights granted to the Licensee under this Agreement. If transferring (transfer shall include business transfer, merger, spin-off, etc.) or leasing a system installed with this Software or providing a system installed with this Software as security, the Licensor shall be notified in advance in order for the Licensor and the transferee to enter into a new software license agreement.
+        E. The Licensee shall not use the Licensee's trade name, trademark, service mark, logo, etc. and shall not act or make representations as if the Licensee has a special relationship with the Licensor. NexaLAP, Nexacro, MiPlatform, XPLATFORM, X-POP, X-PUSH, etc. are the Licensor's marks or registered trademarks in the Republic of Korea and/or other countries.
+        F. Unless expressly permitted in the License Certificate, the Licensee shall not sell, rent, lease, license, sublicense, distribute, pledge, assign, or otherwise transfer the Software or any interest therein, or use the Software to provide third-party training, or disclose benchmark results without the Licensor's prior written consent.
+        G. The Licensee shall not reverse engineer, decompile, disassemble, or attempt to derive source code from the Software.
+
+8.  Acceptable Use; Prohibited Content
+
+    A. The Licensee shall not use or permit use of the Software to display, store, process, or transmit any Content that violates applicable law, infringes third-party rights, or is intended to harm others. The Licensee is solely responsible for the legality, quality, and appropriateness of all Content and Applications.
+    B. If the Licensor becomes aware of a material violation, the Licensor may notify the Customer and the Customer shall promptly take appropriate remedial action.
+
+9.  License for Support, Telemetry, and Voluntarily Submitted Materials
+
+    As necessary for the Licensor (i) to provide Support and Updates, (ii) to validate licenses and ensure compliance, and (iii) to improve the Software, the Licensee grants the Licensor a non-exclusive license to collect, use, and process Usage Data, and to access, copy, and process Content only to the extent (a) generated through automated telemetry described in this Agreement, or (b) voluntarily submitted by the Licensee to the Licensor for support or troubleshooting purposes.
+
+10. Confidentiality
+
+    The Software and all manuals, data, documentation, and other materials provided by the Licensor contain confidential and proprietary information. The Licensee agrees to use the Software only as expressly set forth herein, not to disclose the Software to any third party except as required by law, and to maintain adequate procedures to prohibit the unauthorized disclosure, duplication, misuse or removal of the Software.
+
+11. Compliance Verification; Usage Data
+
+    A. The Licensor may verify whether the Licensee is using this Software within the scope of this Agreement and the License Certificate, including by written request and/or Usage Data reasonably required for license compliance.
+    B. The Licensee agrees that the Licensor and its affiliates may collect and use Usage Data for statistics, product improvement, security, and licensing or compliance audits.
+
+12. Limited Warranty
+
+    The warranty provided by the Licensor of this Software is as follows.
+
+        A. Physical Warranty: The liabilities on physical damages or failure of installation of the medium (download files or storage medium) of this Software are limited to reinstallation or refund to the Licensee for the purchase price of this Software, and a partnering company where the Licensee purchased this Software shall bear such liabilities; provided, however, the partnering company shall not be liable if the cause of such physical damage or failure of installation is attributable to the Licensee or has occurred seven (7) days after the date of purchase.
+        B. Warranty on this Software: This Software is provided "as is" and may be defective. Therefore, it does not warrant the following: the product does not have a bug or is flawless without any errors; all bugs do not affect functioning of the application program built in the product or the product base, and are fixable; this Software will not freeze or crash during operation; or change of hardware, data or the operating environment is not necessary during maintenance or upgrades. The Licensor does not warrant and is not liable for the operability, bug, commercial usefulness, suitability or legality for a specific purpose as intended by the Licensee, compatibility and ability to integrate with other software, and safety of this Software.
+        The Licensor's liability is limited to the reinstallation or the refund of the Software to the Licensee equal to the purchase price of this Software, subject to Article 13.
+        The above shall apply even when implied warranties of the product are acknowledged under relevant laws and regulations.
+
+13. Limitation of Remedies and Damages
+
+    A. In relation to damages to the Licensee due to the purchase or use of this Software, the Licensor shall be liable within the purchase price of the Software paid by the Licensee.
+    B. The Licensor shall not be liable for any special, indirect, consequential, incidental or exemplary damages on the Licensee or a third party.
+    Even if the Licensor may be liable for the damages under the laws and regulations, the Licensee agrees that the scope of the damages shall be limited within the purchase price of the Software paid by the Licensee.
+    UNDER NO CIRCUMSTANCES SHALL LICENSOR, ITS SUBSIDIARIES OR ANY OF ITS LICENSORS BE LIABLE FOR ANY LOSS OR INACCURACY OF DATA, LOSS OF PROFITS OR INDIRECT, INCIDENTAL, CONSEQUENTIAL OR PUNITIVE DAMAGES, EVEN IF SUCH PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. THE TOTAL LIABILITY, IF ANY, OF LICENSOR AND/OR ANY OF ITS SUBSIDIARIES OR PARTNERING COMPANIES ARISING OUT OF THIS AGREEMENT OR LICENSEE'S USE OF THE SOFTWARE OR RELATED SERVICES SHALL NOT EXCEED THE FEES PAID BY LICENSEE FOR THE AFFECTED SOFTWARE OR RELATED SERVICES GIVING RISE TO THE CLAIM.
+    THE FOREGOING RESTRICTIONS, DISCLAIMERS AND LIMITATIONS SHALL REMAIN IN FORCE REGARDLESS OF ANY BREACH HEREUNDER.
+
+14. Relationship with a Third Party Product or Service
+
+    A. This Software permits the products or services provided by a third party (collectively, "Third Party Services") to be accessible from or compatible with the Software; provided, however, the contents and related information of the Third Party Services is in no way related to the Licensor and the third party determines the terms of such provision.
+    The entity providing the Third Party Services shall be liable for all issues arising from the access or compatibility to such Third Party Services, and shall indemnify the Licensor and hold the Licensor harmless.
+    B. Even if the Licensor includes the Third Party Services in the Software and provides such Software to the Licensee, the Licensor indemnification provision above shall apply, and the Licensor shall not be liable for any defects or maintenance of the Third Party Services.
+
+15. Notification of the Licensor
+
+    The Licensor enters into this Agreement based on the premise that the Licensee fully understands and agrees to the limitations of warranty and liabilities under Articles 12 to 14.
+    If the Licensee does not agree to the foregoing, the Licensor expressly notifies that the Licensor has no intention of entering into this Agreement with the Licensee.
+
+16. Expiration and Termination
+
+    The Licensee's right to use the Software is perpetual, subject to the scope of the License Certificate and this Agreement. If the Licensee breaches this Agreement, even without the Licensor's notification, the Licensee's right to use this Software terminates immediately, and the Licensee shall stop use and immediately delete, discard and/or destroy the Software and all copies of the Software. Maintenance, updates, or support entitlements (if any) are limited to the term stated in the License Certificate or a separate agreement.
+
+17. Dispute Resolution
+
+    A. The interpretation of this Agreement and any dispute arising from the Agreement is governed by the laws of the Republic of Korea, without regard to its conflict of laws provisions, and the international treaties and commercial practice regarding computer program and copyright protection shall be the supplementary standard for interpretation.
+    B. Any dispute arising out of or in connection with this Agreement shall be subject to the exclusive jurisdiction of the Seoul Central District Court as the court of first instance, unless otherwise required by applicable law.
+    C. If any provision of this Agreement is nullified, the remaining provisions of this Agreement shall remain in full force and effect; provided, however, if it is impossible to accomplish the purpose of this Agreement due to an exclusion of such provision, this Agreement shall be terminated immediately.
+
+18. Open Source Program Used in This Software
+
+    A. Details on various types of open source software programs that were used when the Licensor was developing this Software and the relevant license terms and conditions, copyright, terms and conditions of use, lack of warranty, release of source code, etc. are provided in the documents under the 'Resources/licenses/' folder distributed with this Software.
+    B. The Licensee shall be in compliance with the license terms and conditions of the open source software used in this Software.
+    C. In relation to work products of other parties included in the Software, the right to use the included work products shall only be within the scope of permitted use in connection with the Software.
+
+19. Customer Support
+
+    A. All customer support, such as installation of this Software, complaint response, etc., through partnering companies, and certain services may be provided at a cost.
+    B. The details of the customer support work shall be regulated under a separate agreement that the Licensor enters into with such partnering company.
+    The partnering company shall bear all liabilities in relation to customer support work and the Licensor shall not be liable.
+    C. The Licensor may use or provide the partnering company with the Licensee's personal information or information in relation to the purchase for the purpose of carrying out the customer support services.
+
+20. Maintenance and Connectivity
+
+    A. Maintenance of this Software may be performed through a partnering company that is in charge of the region where the Licensee has purchased this Software, and the Licensee shall pay for the maintenance.
+    B. When (1) this Software is automatically updated or (2) when there is notification to the Licensor of a successful installation of this Software from the device which has installed this Software, the Licensee acknowledges and agrees that there is automatic access to the system through the internet or others according to the terms and conditions of the Licensor or the Third Party Services. In such cases, the following data may be transmitted: software version information, installation success/failure status, device OS type and version, and license key validation data. No personally identifiable information beyond what is set forth in Article 23 shall be transmitted without the Licensee's separate consent.
+    C. Maintenance and update entitlement, if any, shall be provided under a separate agreement, quote, or certificate.
+
+21. Entire Agreement; Amendment; Interpretation
+
+    A. This Agreement (as updated from time to time) constitutes the entire agreement between the Licensor and the Licensee in relation to the Software described herein and supersedes prior discussions, except as provided in Article 5.
+    B. This Agreement may be modified, and the modified details of the Agreement shall be effective upon individual notification by the Licensor, notification on the website, consent confirmation when upgrading or any other similar method.
+    C. Section headings are for convenience only. Words such as "including" are illustrative and not limiting.
+
+22. Authorization
+
+    In order to exercise its rights or perform its obligations under this Agreement, the Licensor may operate through a subsidiary or one or more partnering companies that are responsible for product sales and/or maintenance in particular areas or countries.
+
+23. Personal Information and Privacy; Processing Role
+
+    A. In connection with the use of this Software, the Licensor may collect and process Personal Data as described in Article 11 and in the Licensor's privacy policy at https://www.npangea.com/?page=common::privacy.xfdl&menuNo=55.
+    B. The Licensee shall ensure it has lawful grounds to provide Personal Data to the Licensor and shall inform end users as required by law.
+
+24. Data Handling Upon Termination
+
+    Upon expiration or termination of this Agreement for any reason:
+    A. The Licensee shall immediately cease use of the Software and delete or destroy all copies as set forth in Article 16.
+    B. Upon written request by the Licensee submitted prior to the termination date, the Licensor shall provide a summary of the Personal Data held and confirm the deletion or return thereof.
+
+25. Compliance with Laws
+
+    The Licensee shall use the Software in compliance with all applicable laws, including applicable anti-corruption, anti-money laundering, antitrust, sanctions, export control, data protection, and human rights-related laws, where applicable. The Licensor may suspend or terminate the License for a material violation of this Article, subject to applicable law.
+
+26. Export Compliance
+
+    The Licensee shall comply with all applicable export control laws and regulations, including but not limited to those of the Republic of Korea and, where applicable, the United States Export Administration Regulations (EAR). Without limiting the foregoing, the Licensee represents that it is not located in, ordinarily resident in, or organized under the laws of any jurisdiction subject to comprehensive trade restrictions imposed by applicable authorities (as specified in the License Certificate or the Licensor's policies), and that it is not listed on applicable restricted party lists, unless lawfully authorized. The Licensee shall not export, re-export, transfer, or use the Software in violation of such laws. The Licensor may suspend or terminate the License for violations.
+
+27. Feedback
+
+    If the Licensee provides suggestions, ideas, or feedback regarding the Software, the Licensor may use them without restriction or obligation to the Licensee, except where prohibited by law.
+
+28. General Provisions
+
+    A. Force Majeure. Neither party is liable for delay or failure caused by events beyond its reasonable control.
+    B. Assignment. The Licensee may not assign this Agreement without the Licensor's prior written consent (not unreasonably withheld). The Licensor may assign this Agreement to an affiliate or in connection with a merger or sale of assets.
+    C. Severability. If any provision is held invalid, the remainder remains in effect to the maximum extent permitted.
+    D. No Waiver. Failure to enforce a provision is not a waiver.
+    E. Third Party Rights. This Agreement does not confer rights on any third party except where required by law.
+    F. Survival. Provisions that by their nature should survive (including Articles 7, 8, 9 (to the extent processing continues), 10, 13, 14, 17, 23 through 28) shall survive termination.
+
+The Licensee fully understands the above and agrees to diligently perform the above.

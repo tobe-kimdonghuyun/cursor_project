@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- monitorInterval: 이 파일을 저장하면 서버 재시작 없이 30초 이내에 설정이 반영됨 (로거 레벨만 바꿔서 실시간 조정 가능) -->
+<Configuration status="warn" monitorInterval="30">
+  <Appenders>
+    <Console name="console" target="SYSTEM_OUT">
+      <PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%-5level] [%c] %msg%n" />
+    </Console>
+
+    <RollingFile name="errorRollingFile"
+                 fileName="${sys:NEXALAPSERVER_LOG_DIR:-${sys:NEXALAPSERVER_HOME}/logs}/app-error.log"
+                 filePattern="${sys:NEXALAPSERVER_LOG_DIR:-${sys:NEXALAPSERVER_HOME}/logs}/app-error.%i.log">
+      <PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%-5level] [%c] %msg%n" />
+      <Policies>
+        <SizeBasedTriggeringPolicy size="5MB" />
+      </Policies>
+      <DefaultRolloverStrategy max="7" fileIndex="min" />
+    </RollingFile>
+
+    <RollingFile name="dailyRollingFile"
+                 fileName="${sys:NEXALAPSERVER_LOG_DIR:-${sys:NEXALAPSERVER_HOME}/logs}/app.log"
+                 filePattern="${sys:NEXALAPSERVER_LOG_DIR:-${sys:NEXALAPSERVER_HOME}/logs}/app.%d{yyyy-MM-dd}.log">
+      <PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%-5level] [%c] %msg%n" />
+      <Policies>
+        <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+      </Policies>
+      <DefaultRolloverStrategy max="7" fileIndex="min" />
+    </RollingFile>
+
+    <RollingFile name="sqlDailyRollingFile"
+                 fileName="${sys:NEXALAPSERVER_LOG_DIR:-${sys:NEXALAPSERVER_HOME}/logs}/app-sql.log"
+                 filePattern="${sys:NEXALAPSERVER_LOG_DIR:-${sys:NEXALAPSERVER_HOME}/logs}/app-sql.%d{yyyy-MM-dd}-%i.log">
+      <PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%-5level] [%c] %msg%n" />
+      <Policies>
+        <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+        <!-- SQL 로그는 파라미터 바인딩까지 찍혀서 용량이 커질 수 있어 일 단위 외에 크기 상한도 둠 -->
+        <SizeBasedTriggeringPolicy size="50MB"/>
+      </Policies>
+      <DefaultRolloverStrategy max="7" fileIndex="min"/>
+    </RollingFile>
+
+    <RollingFile name="sqlErrorDailyRollingFile"
+                 fileName="${sys:NEXALAPSERVER_LOG_DIR:-${sys:NEXALAPSERVER_HOME}/logs}/app-sql-error.log"
+                 filePattern="${sys:NEXALAPSERVER_LOG_DIR:-${sys:NEXALAPSERVER_HOME}/logs}/app-sql-error.%d{yyyy-MM-dd}-%i.log">
+      <PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%-5level] [%c] %msg%n" />
+      <Policies>
+        <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+        <SizeBasedTriggeringPolicy size="50MB"/>
+      </Policies>
+      <DefaultRolloverStrategy max="7" fileIndex="min"/>
+    </RollingFile>
+  </Appenders>
+
+  <Loggers>
+
+    <!-- 너무 많은 TRACE는 피하고, 필요한 수준만 DEBUG로 -->
+    <Logger name="WorkflowClassLogger" level="INFO" additivity="false">
+      <AppenderRef ref="console"/>
+      <AppenderRef ref="dailyRollingFile"/>
+    </Logger>
+
+    <Logger name="org.springframework" level="INFO" additivity="false">
+      <AppenderRef ref="console"/>
+      <AppenderRef ref="dailyRollingFile"/>
+    </Logger>
+
+    <!-- com.nexalap.server 서버 로그-->
+    <Logger name="com.nexalap.server" level="DEBUG" additivity="false">
+      <AppenderRef ref="console"/>
+      <AppenderRef ref="dailyRollingFile"/>
+    </Logger>
+
+    <!-- Nexacro XAPI 로그 -->
+    <Logger name="com.nexacro" level="DEBUG" additivity="false">
+      <AppenderRef ref="console"/>
+      <AppenderRef ref="dailyRollingFile"/>
+    </Logger>
+
+    <Logger name="com.nexacro.java.xapi" level="FATAL" additivity="false">
+      <AppenderRef ref="console"/>
+      <AppenderRef ref="dailyRollingFile"/>
+    </Logger>
+
+    <Logger name="com.nexacro.uiadapter" level="ERROR" additivity="false">
+      <AppenderRef ref="console"/>
+      <AppenderRef ref="dailyRollingFile"/>
+    </Logger>
+
+    <Logger name="com.nexacro.uiadapter.jakarta.core.resolve.NexacroMappingExceptionResolver" level="ERROR" additivity="false">
+      <AppenderRef ref="console"/>
+      <AppenderRef ref="dailyRollingFile"/>
+      <AppenderRef ref="errorRollingFile"/>
+    </Logger>
+
+    <!-- ====== SQL 출력 핵심: SqlPrettyLoggingInterceptor(개행 보존, 파라미터 바인딩 포함) ====== -->
+    <!-- MyBatis 내장 SQL 로그(Preparing/Parameters/Total)는 로그 한 줄로 강제 축약되어
+         워크플로우에서 여러 줄로 작성한 SQL도 항상 한 줄로만 보이는 문제가 있어 INFO로 낮추고,
+         SqlPrettyLoggingInterceptor의 개행 보존 로그로 대체한다. -->
+    <Logger name="org.apache.ibatis" level="INFO" additivity="false">
+      <AppenderRef ref="console"/>
+      <AppenderRef ref="sqlDailyRollingFile"/>
+    </Logger>
+
+    <!-- 동적 SQLId logger (예: workflow.SQL1.xxx) -->
+    <Logger name="workflow" level="INFO" additivity="false">
+      <AppenderRef ref="console"/>
+      <AppenderRef ref="sqlDailyRollingFile"/>
+    </Logger>
+
+    <!-- 워크플로우 SQL 개행 보존 + 파라미터 바인딩 로그 -->
+    <Logger name="com.nexalap.server.connector.db.mybatis.support.SqlPrettyLoggingInterceptor" level="DEBUG" additivity="false">
+      <AppenderRef ref="console"/>
+      <AppenderRef ref="sqlDailyRollingFile"/>
+    </Logger>
+
+    <!-- SQLHelper: 워크플로우 액션에 설정된 SQL 템플릿 원문(#{} 바인딩 미반영)을 찍는 로그.
+         SqlPrettyLoggingInterceptor가 파라미터까지 채운 SQL을 이미 보여주므로 기본은 꺼둠(INFO).
+         이 템플릿 원문이 필요한 개발자는 이 로거만 DEBUG로 올려서 확인 가능 (서버재시작 불필요). -->
+    <Logger name="com.nexalap.server.generate.workflow.util.SQLHelper" level="INFO" additivity="false">
+      <AppenderRef ref="console"/>
+      <AppenderRef ref="sqlDailyRollingFile"/>
+    </Logger>
+
+    <!-- ====== 과다 출력 주범 억제 ====== -->
+    <Logger name="com.zaxxer.hikari" level="INFO" additivity="false">
+      <AppenderRef ref="console"/>
+      <AppenderRef ref="dailyRollingFile"/>
+    </Logger>
+
+    <Logger name="org.mybatis.spring" level="INFO" additivity="false">
+      <AppenderRef ref="console"/>
+      <AppenderRef ref="dailyRollingFile"/>
+    </Logger>
+ 
+    <Logger name="jdbc.sqlonly" level="DEBUG" additivity="false">
+      <AppenderRef ref="sqlDailyRollingFile"/>
+    </Logger>
+
+    <Logger name="jdbc.sqltiming" level="ERROR" additivity="false">
+      <AppenderRef ref="sqlErrorDailyRollingFile"/>
+    </Logger>
+
+    <!-- java.sql은 드라이버/프레임워크에 따라 과다/중복이 될 수 있어 기본은 INFO 권장 -->
+    <Logger name="java.sql" level="INFO" additivity="false">
+      <AppenderRef ref="dailyRollingFile"/>
+    </Logger>
+
+    <Root level="INFO">
+      <AppenderRef ref="console"/>
+      <AppenderRef ref="dailyRollingFile"/>
+    </Root>
+  </Loggers>
+</Configuration>
