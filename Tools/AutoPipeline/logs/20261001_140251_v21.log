@@ -1,0 +1,52 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20261001140251
+Username: DESKTOP-FV2U6FS\tobesoft
+RunAs User: DESKTOP-FV2U6FS\tobesoft
+Configuration Name: 
+Machine: DESKTOP-FV2U6FS (Microsoft Windows NT 10.0.26200.0)
+Host Application: powershell -NoProfile -ExecutionPolicy Bypass -Command $s=[IO.File]::ReadAllText($env:AP_SELF); $m=':__PS_'+'BEGIN__'; $i=$s.IndexOf($m); if ($i -lt 0) { Write-Host '[ERROR] PowerShell section not found'; exit 2 }; & ([scriptblock]::Create($s.Substring($i + $m.Length)))
+Process ID: 5596
+PSVersion: 5.1.26100.9444
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9444
+BuildVersion: 10.0.26100.9444
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Config folder: D:\git\cursor_project\Tools\AutoPipeline
+[INFO] Runner      : D:\git\cursor_project\Tools\AutoPipeline\auto_pipeline_standalone.bat
+
+---- [v21] 0 Preflight ----
+  Source  : D:\git\RELEASE\REL_26.08.25.00_24.0.0.1100 (RELEASE/REL_26.08.25.00_24.0.0.1100, -Branch)
+  Repo    : https://tfs2.tobesoft.com:9443/tfs/XPLATFORM/_git/WORK800
+  Project : D:\nexacro UI\TC_NexaV21\TC_NexaV21.xprj (TC_NexaV21)
+  Output  : D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21
+  JAVA    : C:\Program Files\Microsoft\jdk-25.0.4.101-hotspot\bin\java.exe
+  Jar     : D:\git\cursor_project\Tools\AutoPipeline\work\jar\NexacroN_Deploy_JAVA_20260825(1.1.90)_1
+  Publish : C:\Users\tobesoft\cursor\apache-tomcat-11.0.25\webapps\nexacroN_v21\21.0.0.2100\TC_NexaV21
+  Host    : 172.10.12.46
+  Browser : off
+  [DONE] 0 Preflight (3.6s)
+
+---- [v21] 1 Source ----
+PS>TerminatingError(): "Branch 'RELEASE/REL_26.08.25.00_24.0.0.1100' is v24 but ExpectedVersion=21"
+>> TerminatingError(): "Branch 'RELEASE/REL_26.08.25.00_24.0.0.1100' is v24 but ExpectedVersion=21"
+>> TerminatingError(): "Branch 'RELEASE/REL_26.08.25.00_24.0.0.1100' is v24 but ExpectedVersion=21"
+[ERROR] [v21] Branch 'RELEASE/REL_26.08.25.00_24.0.0.1100' is v24 but ExpectedVersion=21
+
+==============================================
+ AutoPipeline summary
+==============================================
+ [v21] FAIL
+   Branch  : RELEASE/REL_26.08.25.00_24.0.0.1100
+   Steps   : 0 Preflight 3.6s
+   Error   : Branch 'RELEASE/REL_26.08.25.00_24.0.0.1100' is v24 but ExpectedVersion=21
+ Log: D:\git\cursor_project\Tools\AutoPipeline\logs\20261001_140251_v21.log
+==============================================
+**********************
+Windows PowerShell transcript end
+End time: 20261001140255
+**********************

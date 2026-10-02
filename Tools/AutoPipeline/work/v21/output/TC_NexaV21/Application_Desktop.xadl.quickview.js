@@ -1,0 +1,81 @@
+(function()
+{
+    return function()
+    {
+        this.on_loadAppVariables = function()
+        {		
+            var obj = null;
+            
+			// global dataobject
+		
+
+            // global dataset
+            obj = new Dataset("ads_menudata", this);
+            obj._setContents({"ColumnInfo" : {"Column" : [{"id" : "menuname","size" : "256","type" : "STRING"}]},"Rows" : [{"menuname" : "arcady1245::Form_Work.xfdl"},{"menuname" : "xmrans3::Form_Work.xfdl"},{"menuname" : "sjrnfl13::RP_105424.xfdl"},{"menuname" : "sjrnfl13::RP_105276.xfdl"},{"menuname" : "sjrnfl13::RP_104810.xfdl"},{"menuname" : "sjrnfl13::RP_104719.xfdl"},{"menuname" : "sjrnfl13::RP_104565.xfdl"},{"menuname" : "sjrnfl13::RP_104539.xfdl"},{"menuname" : "sjrnfl13::RP_104535.xfdl"},{"menuname" : "sjrnfl13::RP_104499.xfdl"},{"menuname" : "sjrnfl13::RP_104483.xfdl"},{"menuname" : "sjrnfl13::RP_104479.xfdl"},{"menuname" : "sjrnfl13::RP_104446.xfdl"},{"menuname" : "sjrnfl13::RP_104111.xfdl"}]});
+            this._addDataset(obj.name, obj);
+            
+            // global variable
+
+            
+            obj = null;
+        };
+        
+        // property, event, createMainFrame
+        this.on_initApplication = function()
+        {
+            // properties
+            this.set_id("Application_Desktop");
+            this.set_licenseurl("./license/NexacroN_client_license.xml");
+            this.set_screenid("Desktop_screen");
+
+            if (this._is_attach_childframe)
+            	return;
+            
+            // frame
+            var mainframe = this.createMainFrame("mainframe","0","0","1280","720",null,null,this);
+            mainframe.set_showstatusbar("true");
+            mainframe.set_showtitlebar("true");
+            mainframe.set_titletext("FullFrame");
+            mainframe.on_createBodyFrame = this.mainframe_createBodyFrame;
+
+            // tray
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        this.mainframe_createBodyFrame = function()
+        {
+            var obj = new ChildFrame("QuickViewFrame", null, null, null, null, null, null, "", this);
+            
+            obj.set_showtitlebar("false");
+            obj.set_showstatusbar("false");
+            obj.set_border("0px none");
+			
+            this.addChild(obj.name, obj);
+
+            obj.set_formurl(nexacro._quickview_formurl);
+
+            this.frame = obj;
+            
+            obj = null;
+        };
+        
+        this.on_initEvent = function()
+        {
+        };
+
+		// script Compiler
+
+
+		this.checkLicense("./license/NexacroN_client_license.xml");
+        
+        this.loadPreloadList();
+
+        this.loadIncludeScript("Application_Desktop.xadl");
+    };
+}
+)();

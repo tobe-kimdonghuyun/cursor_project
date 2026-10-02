@@ -1,0 +1,52 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20261001143210
+Username: DESKTOP-FV2U6FS\tobesoft
+RunAs User: DESKTOP-FV2U6FS\tobesoft
+Configuration Name: 
+Machine: DESKTOP-FV2U6FS (Microsoft Windows NT 10.0.26200.0)
+Host Application: powershell -NoProfile -ExecutionPolicy Bypass -Command $s=[IO.File]::ReadAllText($env:AP_SELF); $m=':__PS_'+'BEGIN__'; $i=$s.IndexOf($m); if ($i -lt 0) { Write-Host '[ERROR] PowerShell section not found'; exit 2 }; & ([scriptblock]::Create($s.Substring($i + $m.Length)))
+Process ID: 18436
+PSVersion: 5.1.26100.9444
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9444
+BuildVersion: 10.0.26100.9444
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Config folder: D:\git\cursor_project\Tools\AutoPipeline
+[INFO] Runner      : D:\git\cursor_project\Tools\AutoPipeline\auto_pipeline_standalone.bat
+
+---- [v21] 0 Preflight ----
+  Type    : package (-SourceType)
+  Package : \master_21\latest
+  Project : D:\nexacro UI\TC_NexaV21\TC_NexaV21.xprj (TC_NexaV21)
+  Output  : D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21
+  JAVA    : C:\Program Files\Microsoft\jdk-25.0.4.101-hotspot\bin\java.exe
+  Jar     : D:\git\cursor_project\Tools\AutoPipeline\work\jar\NexacroN_Deploy_JAVA_20260825(1.1.90)_1
+  Publish : C:\Users\tobesoft\cursor\apache-tomcat-11.0.25\webapps\nexacroN_v21\21.0.0.2100\TC_NexaV21
+  Host    : 172.10.12.46
+  Browser : off
+  [DONE] 0 Preflight (4.3s)
+
+---- [v21] 1 Package ----
+PS>TerminatingError(): "SourceType=package needs PackageRoot or PackagePath in the config"
+>> TerminatingError(): "SourceType=package needs PackageRoot or PackagePath in the config"
+>> TerminatingError(): "SourceType=package needs PackageRoot or PackagePath in the config"
+[ERROR] [v21] SourceType=package needs PackageRoot or PackagePath in the config
+
+==============================================
+ AutoPipeline summary
+==============================================
+ [v21] FAIL
+   Branch  : master_21 (package)
+   Steps   : 0 Preflight 4.3s
+   Error   : SourceType=package needs PackageRoot or PackagePath in the config
+ Log: D:\git\cursor_project\Tools\AutoPipeline\logs\20261001_143210_v21.log
+==============================================
+**********************
+Windows PowerShell transcript end
+End time: 20261001143214
+**********************

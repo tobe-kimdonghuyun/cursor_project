@@ -1,0 +1,353 @@
+﻿**********************
+Windows PowerShell 기록 시작
+시작 시간: 20261001131259
+사용자 이름: DESKTOP-FV2U6FS\tobesoft
+RunAs 사용자: DESKTOP-FV2U6FS\tobesoft
+구성 이름: 
+Machine: DESKTOP-FV2U6FS (Microsoft Windows NT 10.0.26200.0)
+호스트 응용 프로그램: powershell -NoProfile -ExecutionPolicy Bypass -File D:\git\cursor_project\Tools\AutoPipeline\auto_pipeline.ps1 -Target all
+프로세스 ID: 22692
+PSVersion: 5.1.26100.9444
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9444
+BuildVersion: 10.0.26100.9444
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+
+---- [v21] 0 Preflight ----
+  Source  : D:\git\master_21 (master_21)
+  Project : D:\nexacro UI\TC_NexaV21\TC_NexaV21.xprj (TC_NexaV21)
+  Output  : D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21
+  JAVA    : C:\Program Files\Microsoft\jdk-25.0.4.101-hotspot\bin\java.exe
+  Jar     : D:\git\cursor_project\Tools\AutoPipeline\work\jar\NexacroN_Deploy_JAVA_20260825(1.1.90)_1
+  Publish : C:\Users\tobesoft\cursor\apache-tomcat-11.0.25\webapps\nexacroN_v21\21.0.0.2100\TC_NexaV21
+  Host    : 172.10.12.46
+  Browser : open Chrome
+  [DONE] 0 Preflight (4.2s)
+
+---- [v21] 1 Git update ----
+  [CMD] git -C D:\git\master_21 fetch origin master_21
+    From https://tfs2.tobesoft.com:9443/tfs/XPLATFORM/_git/WORK800
+     * branch                  master_21  -> FETCH_HEAD
+  [CMD] git -C D:\git\master_21 checkout master_21
+    Already on 'master_21'
+    Your branch is up to date with 'origin/master_21'.
+  [CMD] git -C D:\git\master_21 pull --ff-only origin master_21
+    From https://tfs2.tobesoft.com:9443/tfs/XPLATFORM/_git/WORK800
+     * branch                  master_21  -> FETCH_HEAD
+    Already up to date.
+  Hash : 3b64f731a1ef4c3218508e7cd17735159eb15852
+  Msg  : RP 106324 Chrome(System WebView) 154 업데이트 이후 Android 16 이하에서 click()으로 system calendar 팝업이 열리지 않는 현상 수정 (showPicker 우선 사용, 미지원/예외 시 기존 click 유지)
+  [DONE] 1 Git update (2.7s)
+
+---- [v21] 2 Framework copy ----
+  Version : 21.0.0.9999
+  UTF-8 BOM converted: 217 file(s)
+  Generate rule ready: D:\git\cursor_project\Tools\AutoPipeline\work\v21\nexacrolib\generate
+  [DONE] 2 Framework copy (6.7s)
+
+---- [v21] 3 Deploy ----
+  [CMD] C:\Program Files\Microsoft\jdk-25.0.4.101-hotspot\bin\java.exe -Dlog4j.configurationFile=D:\git\cursor_project\Tools\AutoPipeline\work\jar\NexacroN_Deploy_JAVA_20260825(1.1.90)_1\log4j2.xml -classpath D:\git\cursor_project\Tools\AutoPipeline\work\jar\NexacroN_Deploy_JAVA_20260825(1.1.90)_1\libs\* com.nexacro.build.cli.Main -P D:\nexacro UI\TC_NexaV21\TC_NexaV21.xprj -B D:\git\cursor_project\Tools\AutoPipeline\work\v21\nexacrolib\nexacrolib -O D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21 -CSSRULE D:\git\cursor_project\Tools\AutoPipeline\work\v21\nexacrolib\generate -D D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy -MERGE -COMPRESS
+    [INFO]  Start Nexacro Deploying
+    [INFO]
+    [INFO]  --------------------------- Start generating ---------------------------
+    [INFO]  Project path       : D:\nexacro UI\TC_NexaV21\TC_NexaV21.xprj
+    [INFO]  Output path        : D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\
+    [INFO]  Library path       : D:\git\cursor_project\Tools\AutoPipeline\work\v21\nexacrolib\nexacrolib
+    [INFO]  CSS rule path      : D:\git\cursor_project\Tools\AutoPipeline\work\v21\nexacrolib\generate\
+    [INFO]  Deploy path        : D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\environment.xml.js"
+    [INFO]  Successfully copied theme images.
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\_resource_\_theme_\blue\theme_chrome.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\_resource_\_theme_\blue\theme_firefox.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\_resource_\_theme_\blue\theme_ie10.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\_resource_\_theme_\blue\theme_ie11.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\_resource_\_theme_\blue\theme_opera.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\_resource_\_theme_\blue\theme_runtime.css
+    [INFO]  Successfully generated css file : D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\_resource_\_theme_\blue\theme_safari.css
+    [INFO]  Successfully generated map.js file : D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\_resource_\_theme_\blue\theme.map.js
+    [INFO]  Successfully generated theme : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\_resource_\_theme_\blue"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\Application_Desktop.xadl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\Base\MainPage.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\Base\HelpPage.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\Application_Desktop.xadl.quickview.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\FrameBase\Form_Work.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\arcady1245\Form_Work.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\xmrans3\Form_Work.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\sjrnfl13\Form_Work.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\sjrnfl13\RP_104446.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\sjrnfl13\RP_104479.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\sjrnfl13\RP_104483.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\sjrnfl13\RP_104499.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\sjrnfl13\RP_104535.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\sjrnfl13\RP_104539.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\sjrnfl13\RP_104565.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\sjrnfl13\RP_104719.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\sjrnfl13\RP_104719_1.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\sjrnfl13\RP_104810.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\sjrnfl13\RP_105276.xfdl.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\sjrnfl13\RP_105424.xfdl.js"
+    [INFO]  Successfully copied file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\license\NexacroN_client_license.xml"
+    [INFO]  Successfully copied module : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\nexacrolib\framework\Framework.json"
+    [INFO]  Successfully copied module : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\nexacrolib\resources\Resource.json"
+    [INFO]  Successfully copied module : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\nexacrolib\component\ListView.json"
+    [INFO]  Successfully copied module : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\nexacrolib\component\Grid.json"
+    [INFO]  Successfully copied module : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\nexacrolib\component\ComComp.json"
+    [INFO]  Successfully copied module : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\nexacrolib\component\DeviceAPI.json"
+    [INFO]  Successfully copied module : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\nexacrolib\component\CompBase.json"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\environment.xml.js"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\start.json"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\start_macos.json"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\start_android.json"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\start_ios.json"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\index.html"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\launch.html"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\popup.html"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\Run.zip"
+    [INFO]  Successfully generated file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\output\TC_NexaV21\quickview.html"
+    [INFO]  ------------------------------------------------------------------------
+    [INFO]  Finish generating ( 2.99 sec ) : Success 39, Fail 0, Copy 204, Skip 0
+    [INFO]  ------------------------------------------------------------------------
+    [INFO]
+    [INFO]  --------------------------- Start deploying ----------------------------
+    [INFO]  ------ Start compress
+    [INFO]  Didn't set the files to ignore
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\xmrans3\Form_Work.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\arcady1245\Form_Work.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\_resource_\_theme_\blue\theme.map.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\sjrnfl13\Form_Work.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\sjrnfl13\RP_104483.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\sjrnfl13\RP_104565.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\sjrnfl13\RP_104535.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\Base\HelpPage.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\sjrnfl13\RP_105276.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\sjrnfl13\RP_104539.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\environment.xml.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\sjrnfl13\RP_104446.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\sjrnfl13\RP_104479.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\sjrnfl13\RP_105424.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\sjrnfl13\RP_104810.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\sjrnfl13\RP_104499.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\Application_Desktop.xadl.quickview.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\Application_Desktop.xadl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\FrameBase\Form_Work.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\Base\MainPage.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\sjrnfl13\RP_104719_1.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\sjrnfl13\RP_104719.xfdl.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Platform.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Action.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\VideoPlayer.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Tab.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\FormBase.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\SystemBase_Runtime.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\DeviceAPI\SQLite.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\DeviceAPI\SQLite_Runtime.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Radio.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\TextArea.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\ExportObject.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\FileDownload.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\Grid\GridInfo.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Spin.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\ImageViewer.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Calendar.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\FileDownTransfer.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\lang\ja\ime.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Platform_HTML5.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\VirtualFile.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\CheckBox.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\Element_HTML5.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\CheckBoxSet.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Tray.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\DeviceAPI\DeviceObjs_Runtime.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\Animation.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\FrameBase.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\ScrollBar.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\GoogleMap.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\Grid\Grid.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\CssObjs.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\Data.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBaseEx\SimpleComp.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\FileDialog.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\lang\ko\ime.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\PopupDiv.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\GroupBox.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Plugin.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\WebBrowser.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\Element_Runtime.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\DataObject.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\DeviceAPI\DeviceObjs.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\DeviceAPI\TCPClientSocket.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Platform_Runtime.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\DeviceAPI\Mobile.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\BasicObjs.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\SystemBase_HTML5.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\MultiCombo.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\WebView.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\EditBase.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Dataset.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\FileUpTransfer.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\CompBase.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\DatePicker.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\ErrorDefine.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBaseEx\ComplexComp.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\ListBox.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\PopupMenu.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\FileUpload.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\CompEventBase.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\Step.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Edit.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Combo.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\ProgressBar.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\TitleBar.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Button.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Static.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\ImportObject.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\SystemBase.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Menu.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Device_Android.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Cell.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\StatusBar.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\DeviceAPI\BluetoothLE.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\DomObject.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\lang\zh\ime.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Device_iOS.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Crypto.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Device_Windows.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Device.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Div.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\LocaleSupport.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\View.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Sketch.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ListView\ListView.js"
+    [INFO]  Successfully compress file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\MaskEdit.js"
+    [INFO]  ------ Finish compress : Success 108, Fail 0, Copy 128
+    [INFO]
+    [INFO]  ------ Start merge
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\Element_HTML5.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\Element_Runtime.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\CompBase.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\CompEventBase.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\Data.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\EditBase.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\FormBase.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\TitleBar.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\StatusBar.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\FrameBase.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\ScrollBar.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\Step.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBase\Animation.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Dataset.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\DataObject.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\DomObject.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Static.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Button.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Edit.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\MaskEdit.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\TextArea.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\lang\ko\ime.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\lang\zh\ime.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\lang\ja\ime.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\ImageViewer.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\CheckBox.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Radio.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\ListBox.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Combo.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Div.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\ProgressBar.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\PopupDiv.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Menu.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\PopupMenu.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Spin.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\DatePicker.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Calendar.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\GroupBox.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Tab.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\FileDialog.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\FileDownload.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\FileDownTransfer.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\FileUpload.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\FileUpTransfer.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\VideoPlayer.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\WebBrowser.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\GoogleMap.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Sketch.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\ExportObject.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\ImportObject.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Tray.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Plugin.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\VirtualFile.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\View.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Action.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\WebView.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\CheckBoxSet.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\MultiCombo.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ComComp\Cell.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\Grid.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\Grid\GridInfo.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\Grid.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\Grid\Grid.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ListView.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBaseEx\SimpleComp.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ListView.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\CompBaseEx\ComplexComp.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ListView.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\ListView\ListView.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\DeviceAPI.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\DeviceAPI\SQLite.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\DeviceAPI.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\DeviceAPI\SQLite_Runtime.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\DeviceAPI.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\DeviceAPI\DeviceObjs.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\DeviceAPI.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\DeviceAPI\DeviceObjs_Runtime.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\DeviceAPI.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\DeviceAPI\Mobile.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\DeviceAPI.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\DeviceAPI\BluetoothLE.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\DeviceAPI.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\component\DeviceAPI\TCPClientSocket.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\SystemBase.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\LocaleSupport.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\SystemBase_HTML5.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\SystemBase_Runtime.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\BasicObjs.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\ErrorDefine.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Platform_HTML5.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Platform_Runtime.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Platform.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\CssObjs.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Device.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Device_Android.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Device_Windows.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Device_iOS.js)
+    [INFO]  Successfully merge file : "D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Framework.js" (D:\git\cursor_project\Tools\AutoPipeline\work\v21\deploy\nexacrolib\framework\Crypto.js)
+    [INFO]  ------ Finish merge : Success 86, Fail 0
+    [INFO]
+    [INFO]  ------ Make bootstrap
+    [INFO]  ------------------------------------------------------------------------
+    [INFO]  Finish deploying ( 47.29 sec ) : Success 322, Fail 0 (Merge 86, Copy 128, Compress 108, Compile 0)
+    [INFO]  ------------------------------------------------------------------------
+    [INFO]
+    [INFO]  Finish Nexacro Deploying
+  Deployed files: 156
+  [DONE] 3 Deploy (52.1s)
+
+---- [v21] 4 Publish ----
+  Tomcat listening on 8080
+  Existing folder found, deleting (149 file(s)): C:\Users\tobesoft\cursor\apache-tomcat-11.0.25\webapps\nexacroN_v21\21.0.0.2100\TC_NexaV21
+  Copied -> C:\Users\tobesoft\cursor\apache-tomcat-11.0.25\webapps\nexacroN_v21\21.0.0.2100\TC_NexaV21
+  Ready: http://172.10.12.46:8080/nexacroN_v21/21.0.0.2100/TC_NexaV21/index.html
+  [DONE] 4 Publish (1.4s)
+
+---- [v21] 5 Chrome ----
+  Opened: http://172.10.12.46:8080/nexacroN_v21/21.0.0.2100/TC_NexaV21/index.html
+  [DONE] 5 Chrome (0.1s)
+
+---- [v24] [SKIP] Enabled=N in D:\git\cursor_project\Tools\AutoPipeline\pipeline_v24.txt ----
+
+==============================================
+ AutoPipeline summary
+==============================================
+ [v21] SUCCESS
+   Version : 21.0.0.9999
+   Commit  : 3b64f731a1ef4c3218508e7cd17735159eb15852 RP 106324 Chrome(System WebView) 154 업데이트 이후 Android 16 이하에서 click()으로 system calendar 팝업이 열리지 않는 현상 수정 (showPicker 우선 사용, 미지원/예외 시 기존 click 유지)
+   URL     : http://172.10.12.46:8080/nexacroN_v21/21.0.0.2100/TC_NexaV21/index.html
+   Steps   : 0 Preflight 4.2s | 1 Git update 2.7s | 2 Framework copy 6.7s | 3 Deploy 52.1s | 4 Publish 1.4s | 5 Chrome 0.1s
+ [v24] DISABLED
+ Log: D:\git\cursor_project\Tools\AutoPipeline\logs\20261001_131259_all.log
+==============================================
+**********************
+Windows PowerShell 기록 끝
+종료 시간: 20261001131407
+**********************
