@@ -44,6 +44,16 @@
             obj.set_value("정상");
             this.addChild(obj.name, obj);
 
+            obj = new Button("Button02","80","296","151","69",null,null,null,null,null,null,this);
+            obj.set_taborder("4");
+            obj.set_text("Button02");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("Button03","262","298","156","67",null,null,null,null,null,null,this);
+            obj.set_taborder("5");
+            obj.set_text("Button03");
+            this.addChild(obj.name, obj);
+
             // Layout Functions
             //-- Default Layout : this
             obj = new Layout("default","",1280,720,this,function(p){});
@@ -82,6 +92,16 @@
 
         };
 
+        this.Button02_onclick = function(obj,e)
+        {
+        	nexacro.open("modeless", "sjrnfl13::RP_104719_1.xfdl",  this.getOwnerFrame(), {a:'aaa', b:'bbb'}, "showontaskbar=false showtitlebar=true", 0, 0);
+        };
+
+        this.Button03_onclick = function(obj,e)
+        {
+        	nexacro.open("modeless", "sjrnfl13::RP_104810.xfdl",  this.getOwnerFrame(), {a:'aaa', b:'bbb'}, "showontaskbar=false showtitlebar=true", 0, 0);
+        };
+
         });
         
         // Regist UI Components Event
@@ -89,6 +109,8 @@
         {
             this.Button00.addEventHandler("onclick",this.Button00_onclick,this);
             this.Button01.addEventHandler("onclick",this.Button01_onclick,this);
+            this.Button02.addEventHandler("onclick",this.Button02_onclick,this);
+            this.Button03.addEventHandler("onclick",this.Button03_onclick,this);
         };
 
         this.loadIncludeScript("RP_104719.xfdl");

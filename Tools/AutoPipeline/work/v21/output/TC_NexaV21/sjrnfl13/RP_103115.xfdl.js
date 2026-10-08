@@ -1,0 +1,546 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("Form_Work");
+            this.set_titletext("Form_Work");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1280,1130);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("Dataset00", this);
+            obj._setContents({"ColumnInfo" : {"Column" : [{"id" : "Column0","size" : "256","type" : "STRING"},{"id" : "Column1","size" : "256","type" : "STRING"},{"id" : "Column2","size" : "256","type" : "STRING"},{"id" : "Column3","size" : "256","type" : "STRING"},{"id" : "Column4","size" : "256","type" : "STRING"},{"id" : "Column5","size" : "256","type" : "STRING"},{"id" : "Column6","size" : "256","type" : "STRING"},{"id" : "Column7","size" : "256","type" : "STRING"},{"id" : "Column8","size" : "256","type" : "STRING"},{"id" : "Column9","size" : "256","type" : "STRING"}]},"Rows" : [{"Column0" : "1"},{"Column0" : "2"},{"Column0" : "3"},{"Column0" : "4"},{"Column0" : "5"},{"Column0" : "6"},{"Column0" : "7"},{"Column0" : "8"}]});
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("Dataset00_00", this);
+            obj._setContents({"ColumnInfo" : {"Column" : [{"id" : "Label","size" : "256","type" : "STRING"},{"id" : "Level","size" : "256","type" : "STRING"}]},"Rows" : [{"Label" : "1dollar","Level" : "0"},{"Label" : "Sales","Level" : "1"},{"Level" : "2","Label" : "James"},{"Label" : "Donald","Level" : "2"},{"Label" : "Lisa","Level" : "2"},{"Label" : "Consulting","Level" : "1"},{"Label" : "Joe","Level" : "2"},{"Label" : "Michael","Level" : "2"},{"Label" : "Research Institute","Level" : "1"},{"Label" : "Lilli","Level" : "2"},{"Label" : "Colt","Level" : "2"},{"Label" : "hangul","Level" : "0"},{"Label" : "R&D","Level" : "1"},{"Label" : "Joe","Level" : "2"},{"Label" : "Michael","Level" : "2"},{"Label" : "Quality Assurance","Level" : "1"},{"Label" : "Colt","Level" : "2"},{"Label" : "James","Level" : "2"},{"Label" : "Lilli","Level" : "2"},{"Label" : "Sales","Level" : "1"},{"Label" : "Donald","Level" : "2"},{"Label" : "EBOT","Level" : "0"},{"Label" : "Personnel","Level" : "1"},{"Label" : "Donald","Level" : "2"},{"Label" : "James","Level" : "2"},{"Label" : "Sales","Level" : "1"},{"Label" : "Lilli","Level" : "2"},{"Label" : "Lisa","Level" : "2"}]});
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("Dataset01", this);
+            obj._setContents({"ColumnInfo" : {"Column" : [{"id" : "ID","size" : "256","type" : "STRING"},{"id" : "First","size" : "256","type" : "STRING"},{"id" : "Middle","size" : "256","type" : "STRING"},{"id" : "Last","size" : "256","type" : "STRING"},{"id" : "Mail_P","size" : "256","type" : "STRING"},{"id" : "Mail_S","size" : "256","type" : "STRING"},{"id" : "Tel_M","size" : "256","type" : "STRING"},{"id" : "Tel_O","size" : "256","type" : "STRING"}]},"Rows" : [{"ID" : "JOHNSON","First" : "John","Middle" : "","Last" : "Doe","Mail_P" : "john@email.com","Mail_S" : "john@email.org","Tel_M" : "1012345678","Tel_O" : ""},{"ID" : "JJ","First" : "Jane","Middle" : "","Last" : "Roe","Tel_M" : "1056781234","Tel_O" : "256781234","Mail_P" : "jane@email.com","Mail_S" : ""},{"First" : "Dick","Last" : "Public","Middle" : "Fitzgerald","Tel_M" : "1012345678","Tel_O" : "212345678","Mail_P" : "dick@email.com","Mail_S" : "dick@email.org","ID" : "jaspers"},{"First" : "Robert","Last" : "Smith","Middle" : "Walker","Tel_M" : "","Tel_O" : "256781234","Mail_P" : "robert@email.com","Mail_S" : "robert@email.org","ID" : "son"},{"First" : "Jack","Last" : "Robertson","Tel_M" : "1012345678","Tel_O" : "212345678","Mail_P" : "jack@email.com","Mail_S" : "","ID" : "Daniel"},{"First" : "Billy","Last" : "Cook","Tel_M" : "1056781234","Tel_O" : "","Mail_P" : "bill@email.com","Mail_S" : "bill@email.org","ID" : "BILLBILL"},{"First" : "Elizabeth","Last" : "Soap","Tel_M" : "1012345678","Tel_O" : "","Mail_P" : "elizabeth@email.com","Mail_S" : "elizabeth@email.org","ID" : "mixnut"},{"First" : "Harry","Last" : "Blow","Middle" : "Hussein","Tel_M" : "1056781234","Tel_O" : "256781234","Mail_P" : "harry@email.com","ID" : "sync"}]});
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Tab("Tab00","47","128","333","232",null,null,null,null,null,null,this);
+            obj.set_tabindex("0");
+            obj.set_taborder("0");
+            this.addChild(obj.name, obj);
+
+            obj = new Tabpage("Tabpage1",this.Tab00);
+            obj.set_background("beige");
+            obj.set_text("Tabpage1");
+            this.Tab00.addChild(obj.name, obj);
+
+            obj = new Edit("Edit00","43","43","140","20",null,null,null,null,null,null,this.Tab00.Tabpage1.form);
+            obj.set_taborder("0");
+            this.Tab00.Tabpage1.addChild(obj.name, obj);
+
+            obj = new Button("Button00","43","113","120","50",null,null,null,null,null,null,this.Tab00.Tabpage1.form);
+            obj.set_taborder("1");
+            obj.set_text("Button00");
+            this.Tab00.Tabpage1.addChild(obj.name, obj);
+
+            obj = new Tabpage("Tabpage2",this.Tab00);
+            obj.set_background("bisque");
+            obj.set_text("Click trackPopup PopupDiv");
+            this.Tab00.addChild(obj.name, obj);
+
+            obj = new Edit("Edit00","23","23","140","20",null,null,null,null,null,null,this.Tab00.Tabpage2.form);
+            obj.set_taborder("0");
+            this.Tab00.Tabpage2.addChild(obj.name, obj);
+
+            obj = new Combo("Combo00","23","73","150","20",null,null,null,null,null,null,this.Tab00.Tabpage2.form);
+            obj.set_taborder("1");
+            obj.set_text("Combo00");
+            this.Tab00.Tabpage2.addChild(obj.name, obj);
+
+            obj = new PopupDiv("PopupDiv00","0","1170","480","190",null,null,null,null,null,null,this);
+            obj.set_background("ivory");
+            obj.set_text("PopupDiv00");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("Button00","40","120","120","50",null,null,null,null,null,null,this.PopupDiv00.form);
+            obj.set_taborder("0");
+            obj.set_text("Yes");
+            this.PopupDiv00.addChild(obj.name, obj);
+
+            obj = new Button("Button01","320","120","120","50",null,null,null,null,null,null,this.PopupDiv00.form);
+            obj.set_taborder("1");
+            obj.set_text("No");
+            this.PopupDiv00.addChild(obj.name, obj);
+
+            obj = new Static("Static00","140","40","200","60",null,null,null,null,null,null,this.PopupDiv00.form);
+            obj.set_font("48px/normal \"Meiryo\",\"Verdana\",\"Roboto\",\"Droid Sans\",\"游ゴシック\",\"YuGothic\",\"ヒラギノ角ゴ ProN W3\",\"Hiragino Kaku Gothic ProN\",\"ＭＳ Ｐゴシック\",\"MS Gothic\",\"sans-serif\"");
+            obj.set_taborder("2");
+            obj.set_text("XXX");
+            obj.set_textAlign("center");
+            this.PopupDiv00.addChild(obj.name, obj);
+
+            obj = new Button("btnPopupDiv","10","10","223","50",null,null,null,null,null,null,this);
+            obj.set_taborder("1");
+            obj.set_text("trackPopup PopupDiv after 3sec");
+            this.addChild(obj.name, obj);
+
+            obj = new CheckBox("CheckBox00","405","140","150","20",null,null,null,null,null,null,this);
+            obj.set_taborder("2");
+            obj.set_text("CheckBox00");
+            this.addChild(obj.name, obj);
+
+            obj = new Combo("Combo00","555","140","150","20",null,null,null,null,null,null,this);
+            obj.set_codecolumn("Column0");
+            obj.set_datacolumn("Column0");
+            obj.set_innerdataset("Dataset00");
+            obj.set_taborder("3");
+            obj.set_text("Combo00");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnPopupMenu","247","10","223","50",null,null,null,null,null,null,this);
+            obj.set_taborder("4");
+            obj.set_text("trackPopup PopupMenu after 3sec");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("Button01","406","174","120","50",null,null,null,null,null,null,this);
+            obj.set_taborder("5");
+            obj.set_text("Button01");
+            this.addChild(obj.name, obj);
+
+            obj = new Edit("Edit00","553","180","122","45",null,null,null,null,null,null,this);
+            obj.set_cssclass("test1");
+            obj.set_taborder("6");
+            obj.set_value("Edit");
+            obj.set_text("Edit");
+            this.addChild(obj.name, obj);
+
+            obj = new MaskEdit("MaskEdit00","406","241","127","31",null,null,null,null,null,null,this);
+            obj.set_displaynulltext("MaskEdit");
+            obj.set_taborder("7");
+            this.addChild(obj.name, obj);
+
+            obj = new TextArea("TextArea00","401","285","133","89",null,null,null,null,null,null,this);
+            obj.set_displaynulltext("TextArea");
+            obj.set_taborder("8");
+            obj.set_value("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\nBBB\nCCC\nDDD\nEEE\nFFF\nGGG\nHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("Static00","556","246","138","42",null,null,null,null,null,null,this);
+            obj.set_taborder("9");
+            obj.set_text("Static00");
+            this.addChild(obj.name, obj);
+
+            obj = new Div("Div00","550","319","136","111",null,null,null,null,null,null,this);
+            obj.set_border("1px solid aqua");
+            obj.set_taborder("10");
+            obj.set_text("Div00");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("Button00","57","54","201","168",null,null,null,null,null,null,this.Div00.form);
+            obj.set_taborder("0");
+            obj.set_text("Button00");
+            this.Div00.addChild(obj.name, obj);
+
+            obj = new Radio("Radio00","395","402","120","61",null,null,null,null,null,null,this);
+            obj.set_codecolumn("codecolumn");
+            obj.set_datacolumn("datacolumn");
+            obj.set_taborder("11");
+            var Radio00_innerdataset = new nexacro.NormalDataset("Radio00_innerdataset", obj);
+            Radio00_innerdataset._setContents({"ColumnInfo" : {"Column" : [{"id" : "codecolumn","size" : "256"},{"id" : "datacolumn","size" : "256"}]},"Rows" : [{"codecolumn" : "1","datacolumn" : "AAA"},{"codecolumn" : "2","datacolumn" : "BBB"},{"codecolumn" : "3","datacolumn" : "CCC"}]});
+            obj.set_innerdataset(Radio00_innerdataset);
+            this.addChild(obj.name, obj);
+
+            obj = new ListBox("ListBox00","47","386","128","64",null,null,null,null,null,null,this);
+            obj.set_codecolumn("codecolumn");
+            obj.set_datacolumn("datacolumn");
+            obj.set_taborder("12");
+            var ListBox00_innerdataset = new nexacro.NormalDataset("ListBox00_innerdataset", obj);
+            ListBox00_innerdataset._setContents({"ColumnInfo" : {"Column" : [{"id" : "codecolumn","size" : "256"},{"id" : "datacolumn","size" : "256"}]},"Rows" : [{"codecolumn" : "1","datacolumn" : "ListBox1"},{"codecolumn" : "2","datacolumn" : "ListBox2"},{"codecolumn" : "3","datacolumn" : "ListBox3AAAAAAAAAAAAAAAAAA"}]});
+            obj.set_innerdataset(ListBox00_innerdataset);
+            this.addChild(obj.name, obj);
+
+            obj = new Grid("Grid00","45","501","1105","171",null,null,null,null,null,null,this);
+            obj.set_binddataset("Dataset00");
+            obj.set_showcellselection("true");
+            obj.set_taborder("13");
+            obj._setContents("<Formats><Format id=\"default\"><Columns><Column size=\"80\"/><Column size=\"80\"/><Column size=\"80\"/><Column size=\"80\"/><Column size=\"80\"/><Column size=\"80\"/><Column size=\"80\"/><Column size=\"80\"/><Column size=\"80\"/><Column size=\"80\"/><Column size=\"48\"/><Column size=\"79\"/><Column size=\"87\"/><Column size=\"48\"/><Column size=\"48\"/></Columns><Rows><Row band=\"head\" size=\"24\"/><Row size=\"24\"/><Row band=\"summ\" size=\"24\"/></Rows><Band id=\"head\"><Cell text=\"Column0\"/><Cell col=\"1\" text=\"Column1\"/><Cell col=\"2\" text=\"Column2\"/><Cell col=\"3\" text=\"Column3\"/><Cell col=\"4\" text=\"Column4\"/><Cell col=\"5\" text=\"Column5\"/><Cell col=\"6\" text=\"Column6\"/><Cell col=\"7\" text=\"Column7\"/><Cell col=\"8\" text=\"Column8\"/><Cell col=\"9\" text=\"Column9\"/><Cell col=\"10\"/><Cell col=\"11\"/><Cell col=\"12\" displaytype=\"normal\"/><Cell col=\"13\"/><Cell col=\"14\"/></Band><Band id=\"body\"><Cell displaytype=\"buttoncontrol\" text=\"bind:Column0\"/><Cell col=\"1\" displaytype=\"calendarcontrol\" text=\"bind:Column1\"/><Cell col=\"2\" displaytype=\"checkboxcontrol\" edittype=\"checkbox\" text=\"bind:Column2\"/><Cell col=\"3\" displaytype=\"combocontrol\" edittype=\"combo\" text=\"bind:Column3\"/><Cell col=\"4\" displaytype=\"currency\" text=\"bind:Column4\"/><Cell col=\"5\" displaytype=\"date\" edittype=\"date\" text=\"bind:Column5\"/><Cell col=\"6\" displaytype=\"editcontrol\" text=\"bind:Column6\"/><Cell col=\"7\" displaytype=\"maskeditcontrol\" text=\"bind:Column7\"/><Cell col=\"8\" text=\"bind:Column8\"/><Cell col=\"9\" displaytype=\"textareacontrol\" text=\"bind:Column9\"/><Cell col=\"10\" displaytype=\"imagecontrol\" expandshow=\"show\"/><Cell col=\"11\" displaytype=\"progressbarcontrol\"/><Cell col=\"12\" displaytype=\"treeitemcontrol\" edittype=\"tree\" treelevel=\"bind:Column0\" treestate=\"1\"/><Cell col=\"13\" displaytype=\"radioitemcontrol\" radioitemcodevalue=\"bind:Column0\"/><Cell col=\"14\" displaytype=\"multicombocontrol\"/></Band><Band id=\"summary\"><Cell/><Cell col=\"1\"/><Cell col=\"2\"/><Cell col=\"3\"/><Cell col=\"4\"/><Cell col=\"5\"/><Cell col=\"6\"/><Cell col=\"7\"/><Cell col=\"8\"/><Cell col=\"9\"/><Cell col=\"10\"/><Cell col=\"11\"/><Cell col=\"12\"/><Cell col=\"13\"/><Cell col=\"14\"/></Band></Format></Formats>");
+            this.addChild(obj.name, obj);
+
+            obj = new Spin("Spin00","198","386","139","35",null,null,null,null,null,null,this);
+            obj.set_taborder("14");
+            obj.set_value("5");
+            this.addChild(obj.name, obj);
+
+            obj = new Menu("Menu00","863","67","303","53",null,null,null,null,null,null,this);
+            obj.set_captioncolumn("captioncolumn");
+            obj.set_checkboxcolumn("checkboxcolumn");
+            obj.set_enablecolumn("enablecolumn");
+            obj.set_hotkeycolumn("hotkeycolumn");
+            obj.set_iconcolumn("iconcolumn");
+            obj.set_idcolumn("idcolumn");
+            obj.set_levelcolumn("levelcolumn");
+            obj.set_taborder("15");
+            obj.set_userdatacolumn("userdatacolumn");
+            var Menu00_innerdataset = new nexacro.NormalDataset("Menu00_innerdataset", obj);
+            Menu00_innerdataset._setContents({"ColumnInfo" : {"Column" : [{"id" : "captioncolumn","size" : "256"},{"id" : "checkboxcolumn","size" : "256"},{"id" : "enablecolumn","size" : "256"},{"id" : "hotkeycolumn","size" : "256"},{"id" : "iconcolumn","size" : "256"},{"id" : "idcolumn","size" : "256"},{"id" : "levelcolumn","size" : "256"},{"id" : "userdatacolumn","size" : "256"}]},"Rows" : [{"captioncolumn" : "AAA","levelcolumn" : "0"},{"captioncolumn" : "BBB","levelcolumn" : "1","checkboxcolumn" : "1","hotkeycolumn" : "Ctrl+A"},{"captioncolumn" : "CCC","levelcolumn" : "1","enablecolumn" : "1","iconcolumn" : "1"},{"captioncolumn" : "DDD","levelcolumn" : "0"},{"captioncolumn" : "EEE","levelcolumn" : "0","hotkeycolumn" : "Ctrl+B"},{"captioncolumn" : "FFF","levelcolumn" : "0"},{"captioncolumn" : "GGG","levelcolumn" : "0"}]});
+            obj.set_innerdataset(Menu00_innerdataset);
+            this.addChild(obj.name, obj);
+
+            obj = new Tab("Tab01","716","127","299","97",null,null,null,null,null,null,this);
+            obj.set_border("1px solid aqua");
+            obj.set_showextrabutton("true");
+            obj.set_showtabbuttonicon("true");
+            obj.set_tabbuttoniconsize("10 10");
+            obj.set_tabindex("3");
+            obj.set_taborder("16");
+            this.addChild(obj.name, obj);
+
+            obj = new Tabpage("Tabpage1",this.Tab01);
+            obj.set_text("Tabpage1");
+            this.Tab01.addChild(obj.name, obj);
+
+            obj = new Tabpage("Tabpage2",this.Tab01);
+            obj.set_text("Tabpage2");
+            this.Tab01.addChild(obj.name, obj);
+
+            obj = new Tabpage("Tabpage3",this.Tab01);
+            obj.set_text("Tabpage3");
+            this.Tab01.addChild(obj.name, obj);
+
+            obj = new Tabpage("Tabpage4",this.Tab01);
+            obj.set_text("Tabpage4");
+            this.Tab01.addChild(obj.name, obj);
+
+            obj = new Tabpage("Tabpage5",this.Tab01);
+            obj.set_text("Tabpage5");
+            this.Tab01.addChild(obj.name, obj);
+
+            obj = new Tabpage("Tabpage6",this.Tab01);
+            obj.set_text("Tabpage6");
+            this.Tab01.addChild(obj.name, obj);
+
+            obj = new Tabpage("Tabpage7",this.Tab01);
+            obj.set_text("Tabpage7");
+            this.Tab01.addChild(obj.name, obj);
+
+            obj = new Tabpage("Tabpage8",this.Tab01);
+            obj.set_text("Tabpage8");
+            this.Tab01.addChild(obj.name, obj);
+
+            obj = new Tabpage("Tabpage9",this.Tab01);
+            obj.set_text("Tabpage9");
+            this.Tab01.addChild(obj.name, obj);
+
+            obj = new Calendar("Calendar00","731","405","246","33",null,null,null,null,null,null,this);
+            obj.set_datepickerchangetype("button");
+            obj.set_taborder("17");
+            this.addChild(obj.name, obj);
+
+            obj = new Calendar("Calendar01","729","234","270","164",null,null,null,null,null,null,this);
+            obj.set_datepickerchangetype("button");
+            obj.set_taborder("18");
+            obj.set_type("monthonly");
+            this.addChild(obj.name, obj);
+
+            obj = new Calendar("Calendar02","735","450","242","33",null,null,null,null,null,null,this);
+            obj.set_datepickerchangetype("button");
+            obj.set_taborder("19");
+            obj.set_type("spin");
+            obj.set_value("20250715");
+            this.addChild(obj.name, obj);
+
+            obj = new PopupMenu("PopupMenu00","1020","145","146","143",null,null,null,null,null,null,this);
+            obj.set_captioncolumn("captioncolumn");
+            obj.set_checkboxcolumn("checkboxcolumn");
+            obj.set_enablecolumn("enablecolumn");
+            obj.set_hotkeycolumn("hotkeycolumn");
+            obj.set_iconcolumn("iconcolumn");
+            obj.set_idcolumn("idcolumn");
+            obj.set_levelcolumn("levelcolumn");
+            obj.set_userdatacolumn("userdatacolumn");
+            var PopupMenu00_innerdataset = new nexacro.NormalDataset("PopupMenu00_innerdataset", obj);
+            PopupMenu00_innerdataset._setContents({"ColumnInfo" : {"Column" : [{"id" : "captioncolumn","size" : "256"},{"id" : "checkboxcolumn","size" : "256"},{"id" : "enablecolumn","size" : "256"},{"id" : "hotkeycolumn","size" : "256"},{"id" : "iconcolumn","size" : "256"},{"id" : "idcolumn","size" : "256"},{"id" : "levelcolumn","size" : "256"},{"id" : "userdatacolumn","size" : "256"}]},"Rows" : [{"captioncolumn" : "AAA","levelcolumn" : "0"},{"captioncolumn" : "BBB","levelcolumn" : "0"},{"captioncolumn" : "CCC","levelcolumn" : "0"}]});
+            obj.set_innerdataset(PopupMenu00_innerdataset);
+            this.addChild(obj.name, obj);
+
+            obj = new Button("Button02","710","10","151","50",null,null,null,null,null,null,this);
+            obj.set_taborder("20");
+            obj.set_text("trackPopup PopupDiv");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("Button02_00","871","10","147","50",null,null,null,null,null,null,this);
+            obj.set_taborder("21");
+            obj.set_text("trackPopup PopupMenu");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("Static01","21","71","329","50",null,null,null,null,null,null,this);
+            obj.set_font("24px/normal \"Meiryo\",\"Verdana\",\"Roboto\",\"Droid Sans\",\"游ゴシック\",\"YuGothic\",\"ヒラギノ角ゴ ProN W3\",\"Hiragino Kaku Gothic ProN\",\"ＭＳ Ｐゴシック\",\"MS Gothic\",\"sans-serif\"");
+            obj.set_taborder("22");
+            obj.set_text("Current Focus Component : ");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("stCurrentFocus","357","70","483","50",null,null,null,null,null,null,this);
+            obj.set_font("24px/normal \"Meiryo\",\"Verdana\",\"Roboto\",\"Droid Sans\",\"游ゴシック\",\"YuGothic\",\"ヒラギノ角ゴ ProN W3\",\"Hiragino Kaku Gothic ProN\",\"ＭＳ Ｐゴシック\",\"MS Gothic\",\"sans-serif\"");
+            obj.set_taborder("23");
+            this.addChild(obj.name, obj);
+
+            obj = new Spin("spinWaitSec","555","20","100","30",null,null,null,null,null,null,this);
+            obj.set_taborder("24");
+            obj.set_min("0");
+            obj.set_max("30");
+            obj.set_value("3");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("Static02","485","25","70","25",null,null,null,null,null,null,this);
+            obj.set_taborder("25");
+            obj.set_text("Wait Sec :");
+            this.addChild(obj.name, obj);
+
+            obj = new ListView("ListView00","1024","310","152","94",null,null,null,null,null,null,this);
+            obj.set_binddataset("Dataset00");
+            obj.set_taborder("26");
+            obj._setContents("<Formats><Format id=\"default\"><Band height=\"295\" id=\"body\" width=\"100%\"><Cell height=\"24\" id=\"Cell00\" left=\"10\" text=\"Column0\" top=\"5\" width=\"120\"/><Cell height=\"24\" id=\"Cell01\" left=\"135\" text=\"bind:Column0\" top=\"5\" width=\"180\"/><Cell height=\"24\" id=\"Cell02\" left=\"10\" text=\"Column1\" top=\"34\" width=\"120\"/><Cell height=\"24\" id=\"Cell03\" left=\"135\" text=\"bind:Column1\" top=\"34\" width=\"180\"/><Cell height=\"24\" id=\"Cell04\" left=\"10\" text=\"Column2\" top=\"63\" width=\"120\"/><Cell height=\"24\" id=\"Cell05\" left=\"135\" text=\"bind:Column2\" top=\"63\" width=\"180\"/><Cell height=\"24\" id=\"Cell06\" left=\"10\" text=\"Column3\" top=\"92\" width=\"120\"/><Cell height=\"24\" id=\"Cell07\" left=\"135\" text=\"bind:Column3\" top=\"92\" width=\"180\"/><Cell height=\"24\" id=\"Cell08\" left=\"10\" text=\"Column4\" top=\"121\" width=\"120\"/><Cell height=\"24\" id=\"Cell09\" left=\"135\" text=\"bind:Column4\" top=\"121\" width=\"180\"/><Cell height=\"24\" id=\"Cell10\" left=\"10\" text=\"Column5\" top=\"150\" width=\"120\"/><Cell height=\"24\" id=\"Cell11\" left=\"135\" text=\"bind:Column5\" top=\"150\" width=\"180\"/><Cell height=\"24\" id=\"Cell12\" left=\"10\" text=\"Column6\" top=\"179\" width=\"120\"/><Cell height=\"24\" id=\"Cell13\" left=\"135\" text=\"bind:Column6\" top=\"179\" width=\"180\"/><Cell height=\"24\" id=\"Cell14\" left=\"10\" text=\"Column7\" top=\"208\" width=\"120\"/><Cell height=\"24\" id=\"Cell15\" left=\"135\" text=\"bind:Column7\" top=\"208\" width=\"180\"/><Cell height=\"24\" id=\"Cell16\" left=\"10\" text=\"Column8\" top=\"237\" width=\"120\"/><Cell height=\"24\" id=\"Cell17\" left=\"135\" text=\"bind:Column8\" top=\"237\" width=\"180\"/><Cell height=\"24\" id=\"Cell18\" left=\"10\" text=\"Column9\" top=\"266\" width=\"120\"/><Cell height=\"24\" id=\"Cell19\" left=\"135\" text=\"bind:Column9\" top=\"266\" width=\"180\"/></Band></Format></Formats>");
+            this.addChild(obj.name, obj);
+
+            obj = new Grid("Grid01","54","710","414","181",null,null,null,null,null,null,this);
+            obj.set_binddataset("Dataset00_00");
+            obj.set_taborder("27");
+            obj._setContents("<Formats><Format id=\"default\"><Columns><Column size=\"280\"/><Column size=\"80\"/></Columns><Rows><Row band=\"head\" size=\"24\"/><Row size=\"24\"/></Rows><Band id=\"head\"><Cell text=\"Label\"/><Cell col=\"1\" text=\"Level\"/></Band><Band id=\"body\"><Cell displaytype=\"treeitemcontrol\" edittype=\"tree\" expandimage=\"url(&apos;theme://images/btn_expand.png&apos;)\" expandshow=\"show\" imagestretch=\"none\" text=\"bind:Label\" textAlign=\"left\" treelevel=\"bind:Level\"/><Cell col=\"1\" color=\"#000000\" text=\"bind:Level\"/></Band></Format></Formats>");
+            this.addChild(obj.name, obj);
+
+            obj = new Grid("Grid02","495","710","595","370",null,null,null,null,null,null,this);
+            obj.set_binddataset("Dataset01");
+            obj.set_taborder("28");
+            obj._setContents("<Formats><Format id=\"default\"><Columns><Column size=\"80\"/><Column size=\"160\"/><Column size=\"80\"/><Column size=\"80\"/><Column size=\"160\"/></Columns><Rows><Row band=\"head\" size=\"24\"/><Row band=\"head\" size=\"24\"/><Row band=\"head\" size=\"24\"/><Row band=\"head\" size=\"24\"/><Row size=\"24\"/><Row size=\"24\"/><Row size=\"24\"/><Row size=\"24\"/></Rows><Band id=\"head\"><Cell border=\"\" colspan=\"2\" text=\"ID\"/><Cell border=\"\" col=\"2\" rowspan=\"4\" text=\"Contact\"/><Cell border=\"\" col=\"3\" rowspan=\"2\" text=\"Mail\"/><Cell col=\"4\" rowspan=\"2\"><Cell text=\"Primary\" textAlign=\"center\"/><Cell row=\"1\" text=\"Secondary\" textAlign=\"center\"/></Cell><Cell border=\"\" row=\"1\" rowspan=\"3\" text=\"Name\"/><Cell col=\"1\" row=\"1\" rowspan=\"3\"><Cell text=\"First\" textAlign=\"center\"/><Cell row=\"1\" text=\"Middle\" textAlign=\"center\"/><Cell row=\"2\" text=\"Last\" textAlign=\"center\"/></Cell><Cell border=\"\" col=\"3\" row=\"2\" rowspan=\"2\" text=\"Tel.\"/><Cell col=\"4\" row=\"2\" rowspan=\"2\"><Cell text=\"Mobile\" textAlign=\"center\"/><Cell row=\"1\" text=\"Office\" textAlign=\"center\"/></Cell></Band><Band id=\"body\"><Cell border=\"\" colspan=\"2\" text=\"bind:ID\"/><Cell border=\"\" col=\"2\" rowspan=\"4\" text=\"Contact\"/><Cell border=\"\" col=\"3\" rowspan=\"2\" text=\"Mail\"/><Cell border=\"\" col=\"4\" rowspan=\"2\"><Cell border=\"1px dotted black , 1px dotted black , 1px dotted black , 1px dotted black\" text=\"bind:Mail_P\"/><Cell border=\"1px dotted black , 1px dotted black , 1px dotted black , 1px dotted black\" row=\"1\" text=\"bind:Mail_S\"/></Cell><Cell border=\"\" row=\"1\" rowspan=\"3\" text=\"Name\" textAlign=\"\"/><Cell col=\"1\" row=\"1\" rowspan=\"3\"><Cell border=\"1px dotted black , 1px dotted black , 1px dotted black , 1px dotted black\" text=\"bind:First\"/><Cell border=\"1px dotted black , 1px dotted black , 1px dotted black , 1px dotted black\" row=\"1\" text=\"bind:Middle\"/><Cell border=\"1px dotted black , 1px dotted black , 1px dotted black , 1px dotted black\" row=\"2\" text=\"bind:Last\"/></Cell><Cell border=\"\" col=\"3\" row=\"2\" rowspan=\"2\" text=\"Tel.\"/><Cell border=\"\" col=\"4\" row=\"2\" rowspan=\"2\"><Cell border=\"1px dotted black , 1px dotted black , 1px dotted black , 1px dotted black\" text=\"bind:Tel_M\"/><Cell border=\"1px dotted black , 1px dotted black , 1px dotted black , 1px dotted black\" row=\"1\" text=\"bind:Tel_O\"/></Cell></Band></Format><Format id=\"format00\"><Columns><Column size=\"80\"/><Column size=\"80\"/></Columns><Rows><Row band=\"head\" size=\"24\"/><Row size=\"24\"/></Rows><Band id=\"head\"><Cell text=\"Name\"/><Cell col=\"1\" text=\"Salary\"/></Band><Band id=\"body\"><Cell text=\"bind:Name\" textAlign=\"left\"/><Cell col=\"1\" displaytype=\"currency\" text=\"bind:Salary\" textAlign=\"right\"/></Band></Format></Formats>");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("Static03","1039","4","209","53",null,null,null,null,null,null,this);
+            obj.set_taborder("29");
+            obj.set_text("Static03");
+            this.addChild(obj.name, obj);
+
+            // Layout Functions
+            //-- Default Layout : this.Tab00.Tabpage1.form
+            obj = new Layout("default","",0,0,this.Tab00.Tabpage1.form,function(p){});
+            this.Tab00.Tabpage1.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.Tab00.Tabpage2.form
+            obj = new Layout("default","",0,0,this.Tab00.Tabpage2.form,function(p){});
+            this.Tab00.Tabpage2.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.PopupDiv00.form
+            obj = new Layout("default","",0,0,this.PopupDiv00.form,function(p){});
+            this.PopupDiv00.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.Div00.form
+            obj = new Layout("default","",0,0,this.Div00.form,function(p){});
+            this.Div00.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.Tab01.Tabpage1
+            obj = new Layout("default","",0,0,this.Tab01.Tabpage1.form,function(p){});
+            this.Tab01.Tabpage1.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.Tab01.Tabpage2
+            obj = new Layout("default","",0,0,this.Tab01.Tabpage2.form,function(p){});
+            this.Tab01.Tabpage2.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.Tab01.Tabpage3.form
+            obj = new Layout("default","",0,0,this.Tab01.Tabpage3.form,function(p){});
+            this.Tab01.Tabpage3.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.Tab01.Tabpage4.form
+            obj = new Layout("default","",0,0,this.Tab01.Tabpage4.form,function(p){});
+            this.Tab01.Tabpage4.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.Tab01.Tabpage5.form
+            obj = new Layout("default","",0,0,this.Tab01.Tabpage5.form,function(p){});
+            this.Tab01.Tabpage5.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.Tab01.Tabpage6.form
+            obj = new Layout("default","",0,0,this.Tab01.Tabpage6.form,function(p){});
+            this.Tab01.Tabpage6.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.Tab01.Tabpage7.form
+            obj = new Layout("default","",0,0,this.Tab01.Tabpage7.form,function(p){});
+            this.Tab01.Tabpage7.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.Tab01.Tabpage8.form
+            obj = new Layout("default","",0,0,this.Tab01.Tabpage8.form,function(p){});
+            this.Tab01.Tabpage8.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.Tab01.Tabpage9.form
+            obj = new Layout("default","",0,0,this.Tab01.Tabpage9.form,function(p){});
+            this.Tab01.Tabpage9.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this
+            obj = new Layout("default","Desktop_screen",1280,1130,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+        this.registerScript("RP_103115.xfdl", function() {
+
+        this.Form_Work_onload = function(obj,e)
+        {
+        	this.Div00.form.scrollTo(50, 50);
+        	this.setTimer(999, 500);
+        };
+
+        this.Form_Work_ontimer = function(obj,e)
+        {
+        	if(e.timerid == 999) {
+        		this.stCurrentFocus.set_text(this.getFocus().id);
+        	} else 	if(e.timerid == 1) {	// PopupDiv
+        		this.PopupDiv00.trackPopupByComponent(this.Tab00,100,100,480,190);
+        		this.PopupDiv00.form.setFocus(false,false);
+        		this.killTimer(1);
+        	} else if(e.timerid == 2) {	// PopupMenu
+        		this.PopupMenu00.trackPopupByComponent(obj, 0, 0, "left");
+        		this.killTimer(2);
+        	}
+        };
+
+        this.Button02_onclick = function(obj,e)
+        {
+        	this.PopupDiv00.trackPopupByComponent(obj, 100, 100, 480, 190);
+        };
+
+        this.Button02_00_onclick = function(obj,e)
+        {
+        	this.PopupMenu00.trackPopupByComponent(obj, 0, 0, "left");
+        };
+
+        this.spinWaitSec_onchanged = function(obj,e)
+        {
+        	this.btnPopupDiv.set_text("trackPopup PopupDiv after " + this.spinWaitSec.value + "sec");
+        	this.btnPopupMenu.set_text("trackPopup PopupMenu after " + this.spinWaitSec.value + "sec");
+        };
+
+        this.btnPopupMenu_onclick = function(obj,e)
+        {
+        	this.setTimer(2, this.spinWaitSec.value * 1000);
+        };
+
+        this.btnPopupDiv_onclick = function(obj,e)
+        {
+        	this.setTimer(1, this.spinWaitSec.value * 1000);
+        };
+
+        // CSS 색상 이름 목록 (148개, 중복 색은 앞쪽 이름 우선: aqua > cyan, gray > grey 등)
+        this._colorNames = "black silver gray white maroon red purple fuchsia green lime olive yellow navy blue teal aqua orange aliceblue antiquewhite aquamarine azure beige bisque blanchedalmond blueviolet brown burlywood cadetblue chartreuse chocolate coral cornflowerblue cornsilk crimson cyan darkblue darkcyan darkgoldenrod darkgray darkgreen darkgrey darkkhaki darkmagenta darkolivegreen darkorange darkorchid darkred darksalmon darkseagreen darkslateblue darkslategray darkslategrey darkturquoise darkviolet deeppink deepskyblue dimgray dimgrey dodgerblue firebrick floralwhite forestgreen gainsboro ghostwhite gold goldenrod greenyellow grey honeydew hotpink indianred indigo ivory khaki lavender lavenderblush lawngreen lemonchiffon lightblue lightcoral lightcyan lightgoldenrodyellow lightgray lightgreen lightgrey lightpink lightsalmon lightseagreen lightskyblue lightslategray lightslategrey lightsteelblue lightyellow limegreen linen magenta mediumaquamarine mediumblue mediumorchid mediumpurple mediumseagreen mediumslateblue mediumspringgreen mediumturquoise mediumvioletred midnightblue mintcream mistyrose moccasin navajowhite oldlace olivedrab orangered orchid palegoldenrod palegreen paleturquoise palevioletred papayawhip peachpuff peru pink plum powderblue rebeccapurple rosybrown royalblue saddlebrown salmon sandybrown seagreen seashell sienna skyblue slateblue slategray slategrey snow springgreen steelblue tan thistle tomato turquoise violet wheat whitesmoke yellowgreen";
+        this._colorMap = null;
+
+        // rgb(...) → 색상 이름 (이름이 없으면 #hex, 투명이면 transparent)
+        this.fnRgbToName = function(sRgb)
+        {
+            if (!sRgb) return "";
+            var sKey = sRgb.replace(/\s/g, "");
+
+            if (sKey == "rgba(0,0,0,0)" || sKey == "transparent") return "transparent";
+
+            // 최초 1회: 브라우저가 계산한 rgb 값 기준으로 이름 맵 생성
+            if (!this._colorMap) {
+                this._colorMap = {};
+                var arr = this._colorNames.split(" ");
+                var div = document.createElement("div");
+                document.body.appendChild(div);
+                for (var i = 0; i < arr.length; i++) {
+                    div.style.color = "";
+                    div.style.color = arr[i];
+                    var v = window.getComputedStyle(div).color.replace(/\s/g, "");
+                    if (!this._colorMap[v]) this._colorMap[v] = arr[i];
+                }
+                document.body.removeChild(div);
+            }
+
+            if (this._colorMap[sKey]) return this._colorMap[sKey];
+
+            // 이름 없는 색은 #RRGGBB(또는 rgba 그대로)로 반환
+            var m = sKey.match(/^rgb\((\d+),(\d+),(\d+)\)$/);
+            if (m) {
+                return "#" + [m[1], m[2], m[3]].map(function(n){
+                    return ("0" + parseInt(n, 10).toString(16)).slice(-2);
+                }).join("").toUpperCase();
+            }
+            return sRgb;
+        };
+
+        // Edit의 실제 화면 background 값
+        this.fnGetRealBackground = function(objComp)
+        {
+            var elem = objComp._control_element && objComp._control_element.handle;
+            if (!elem) return null;
+
+            var cs = window.getComputedStyle(elem);
+            return {
+                rgb   : cs.backgroundColor,
+                color : this.fnRgbToName(cs.backgroundColor),   // "green"
+                image : cs.backgroundImage
+            };
+        };
+
+        // PopupDiv00 > Yes 버튼
+        this.PopupDiv00_Button00_onclick = function(obj, e)
+        {
+            var oBg = this.fnGetRealBackground(this.Edit00);
+            var sMsg = oBg ? ("Edit00 background : " + oBg.color) : "Edit00 element 없음";
+
+            trace(sMsg);
+            this.PopupDiv00.form.Static00.set_text(oBg ? oBg.color : "-");
+        	this.Static03.set_text(oBg ? oBg.color : "-");
+
+
+        };
+
+        this.PopupDiv00_Button01_onclick = function(obj,e)
+        {
+        	this.PopupDiv00.closePopup();
+        };
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.Form_Work_onload,this);
+            this.addEventHandler("ontimer",this.Form_Work_ontimer,this);
+            this.Tab00.addEventHandler("canchange",this.Tab00_canchange,this);
+            this.PopupDiv00.form.Button00.addEventHandler("onclick",this.PopupDiv00_Button00_onclick,this);
+            this.PopupDiv00.form.Button01.addEventHandler("onclick",this.PopupDiv00_Button01_onclick,this);
+            this.btnPopupDiv.addEventHandler("onclick",this.btnPopupDiv_onclick,this);
+            this.btnPopupMenu.addEventHandler("onclick",this.btnPopupMenu_onclick,this);
+            this.Menu00.addEventHandler("onmenuclick",this.Menu00_onmenuclick,this);
+            this.Tab01.addEventHandler("onchanged",this.Tab01_onchanged,this);
+            this.Button02.addEventHandler("onclick",this.Button02_onclick,this);
+            this.Button02_00.addEventHandler("onclick",this.Button02_00_onclick,this);
+            this.spinWaitSec.addEventHandler("onchanged",this.spinWaitSec_onchanged,this);
+        };
+
+        this.loadIncludeScript("RP_103115.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

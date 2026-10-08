@@ -25,6 +25,11 @@
             obj.set_text("sjrnfl13");
             this.addChild(obj.name, obj);
 
+            obj = new Edit("Edit00","99","148","346","63",null,null,null,null,null,null,this);
+            obj.set_cssclass("test1");
+            obj.set_taborder("1");
+            this.addChild(obj.name, obj);
+
             // Layout Functions
             //-- Default Layout : this
             obj = new Layout("default","Desktop_screen",1280,720,this,function(p){});
@@ -43,12 +48,23 @@
         };
         
         // User Script
+        this.registerScript("Form_Work.xfdl", function() {
 
+        this.Button00_onclick = function(obj,e)
+        {
+        	alert(nexacro.getProjectPath());
+
+        	var sPath = nexacro.getProjectPath();   // http://172.10.12.46:8080/...
+        	var sIp = sPath.split("//")[1].split("/")[0].split(":")[0];
+        	alert(sIp);
+        };
+
+        });
         
         // Regist UI Components Event
         this.on_initEvent = function()
         {
-
+            this.Button00.addEventHandler("onclick",this.Button00_onclick,this);
         };
 
         this.loadIncludeScript("Form_Work.xfdl");

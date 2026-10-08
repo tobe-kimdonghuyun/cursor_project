@@ -260,6 +260,8 @@
 
 .FileUpload .fileuploaditem .fileuploaditemedit[status=focused] { border:1px solid #5a86cd; }
 
+.Edit.test1[status=mouseover] { background:red; }
+
 .Edit[status=readonly] { background:#efefef; }
 
 .Edit[status=disabled] {
@@ -796,6 +798,8 @@
   background:#fafafa;
   border:1px solid #c7c7c7;
 }
+
+.Tab.test1  .tabbuttonitemTab.tabbuttonitemTabtest1[status=mouseover] { background:red; }
 
 .Tab  .tabbuttonitemTab[status=mouseover] {
   border:1px solid #b1b1b1;

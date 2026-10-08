@@ -34,11 +34,11 @@ OpenBrowser=N
 ChromePath=C:\Program Files\Google\Chrome\Application\chrome.exe
 # ─── [6] TestPro ─────────────────────────────────────────────────────────────
 # Enable TestPro stage: Y | N (default N)
-TestProEnabled=N
+TestProEnabled=Y
 # Full path to JEBI_Main.exe
-JebiExePath=
+JebiExePath=D:\JEBI_Main\JEBI_Main.exe
 # -s/--source dummy file (required by JEBI CLI). Auto-created as work\dummy.json when empty.
-TestSourceFile=
+TestSourceFile=D:\TestProNew\Tests\scenarios\NexacroN_v24\degradration\SC-Deg-v24.json
 # Execution mode: scenario | file | parallel
 TestMode=scenario
 # scenario mode: path to scenario JSON file

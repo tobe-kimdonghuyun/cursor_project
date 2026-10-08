@@ -236,7 +236,20 @@
 						"border" : nexacro.BorderObject("1px solid #d5d5d5"),
 						"padding" : nexacro.PaddingObject("1px 9px 0px 9px")
 					}
+				},
+				"class" : [
+				{
+					"test1" : 
+					{
+						"self" : 
+						{
+							"mouseover" : 
+							{
+							}
+						}
+					}
 				}
+				]
 			},
 			"cellcombo" : 
 			{
@@ -913,7 +926,20 @@
 								"border" : nexacro.BorderObject("1px solid #1055a1"),
 								"color" : nexacro.ColorObject("#dee4ef")
 							}
+						},
+						"class" : [
+						{
+							"test1" : 
+							{
+								"self" : 
+								{
+									"mouseover" : 
+									{
+									}
+								}
+							}
 						}
+						]
 					}
 				}
 			},

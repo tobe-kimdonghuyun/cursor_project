@@ -731,7 +731,7 @@ function Invoke-Target($Ctx) {
         # [6-0] Preflight
         if (-not $cfg.JebiExePath) { throw "JebiExePath is not set in pipeline_$($Ctx.Target).txt" }
         if (-not (Test-Path -LiteralPath $cfg.JebiExePath)) { throw "JEBI_Main.exe not found: $($cfg.JebiExePath)" }
-        $mode = "$($cfg.TestMode)".ToLower()
+        $mode = "$(if ($cfg.TestMode) { $cfg.TestMode } else { 'scenario' })".ToLower()
         if (@('scenario','file','parallel') -notcontains $mode) { throw "TestMode must be scenario|file|parallel (got '$mode')" }
         $tcFiles = @()
         if ($mode -eq 'scenario') {
@@ -739,7 +739,7 @@ function Invoke-Target($Ctx) {
             if (-not (Test-Path -LiteralPath $cfg.TestScenarioFile)) { throw "TestScenarioFile not found: $($cfg.TestScenarioFile)" }
         } elseif ($mode -eq 'file') {
             $cfgBase = Split-Path -Parent ([IO.Path]::GetFullPath($cfgPath))
-            $tcFiles = ($cfg.TestTCFiles.Split('|') | ForEach-Object {
+            $tcFiles = ("$($cfg.TestTCFiles)".Split('|') | ForEach-Object {
                 $tc = $_.Trim()
                 if (-not $tc) { return }
                 if (-not [IO.Path]::IsPathRooted($tc)) { $tc = [IO.Path]::GetFullPath((Join-Path $cfgBase $tc)) }
@@ -763,7 +763,7 @@ function Invoke-Target($Ctx) {
             $d
         }
         $testOutDir = if ($cfg.TestOutputDir) { $cfg.TestOutputDir } else { Join-Path $work 'test-result' }
-        if (Test-Path -LiteralPath $testOutDir) { Remove-Item -LiteralPath $testOutDir -Recurse -Force }
+        Remove-Tree $testOutDir
         New-Item -ItemType Directory -Force -Path $testOutDir | Out-Null
         $timeoutSec = if ($cfg.TestTimeoutSec) { [int]$cfg.TestTimeoutSec } else { 600 }
         Write-Host "  Exe     : $($cfg.JebiExePath)"
@@ -798,12 +798,13 @@ function Invoke-Target($Ctx) {
         $sw6 = [Diagnostics.Stopwatch]::StartNew()
         $proc = Start-Process -FilePath $cfg.JebiExePath -ArgumentList $argStr -PassThru -NoNewWindow `
             -RedirectStandardOutput $stdoutLog -RedirectStandardError $stderrLog
+        $null = $proc.Handle   # PS 5.1: without touching Handle, ExitCode can be $null after the process exits
         $finished = if ($timeoutSec -gt 0) { $proc.WaitForExit($timeoutSec * 1000) } else { $proc.WaitForExit(); $true }
         $sw6.Stop()
         $Ctx.TestSec = [math]::Round($sw6.Elapsed.TotalSeconds, 1)
-        if (Test-Path -LiteralPath $stdoutLog) { Get-Content -LiteralPath $stdoutLog | ForEach-Object { Write-Host "    $_" } }
+        if (Test-Path -LiteralPath $stdoutLog) { Get-Content -LiteralPath $stdoutLog -Encoding UTF8 | ForEach-Object { Write-Host "    $_" } }
         if (Test-Path -LiteralPath $stderrLog) {
-            $errText = (Get-Content -LiteralPath $stderrLog -Raw -ErrorAction SilentlyContinue).Trim()
+            $errText = "$(Get-Content -LiteralPath $stderrLog -Raw -Encoding UTF8 -ErrorAction SilentlyContinue)".Trim()
             if ($errText) { Write-Host "    [STDERR] $errText" }
         }
         if (-not $finished) {

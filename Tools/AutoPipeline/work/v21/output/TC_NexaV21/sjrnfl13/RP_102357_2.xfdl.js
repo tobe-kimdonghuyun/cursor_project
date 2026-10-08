@@ -1,0 +1,100 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("div_formscrollbarbarminsize_01_in_div");
+            this.set_titletext("New Form");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(240,120);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("Dataset00", this);
+            obj._setContents({"ColumnInfo" : {"Column" : [{"id" : "data","size" : "256","type" : "STRING"},{"id" : "code","size" : "256","type" : "STRING"}]},"Rows" : [{"data" : "りんご","code" : "aaa"},{"data" : "みかん","code" : "bbb"},{"data" : "バナナ","code" : "ccc"}]});
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Button("Button00","130","35","100","50",null,null,null,null,null,null,this);
+            obj.set_taborder("1");
+            obj.set_text("Button00");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("Button01","10","35","100","50",null,null,null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_text("Button01");
+            this.addChild(obj.name, obj);
+
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",240,120,this,
+            	//-- Layout function
+            	function(p)
+            	{
+                var rootobj = p;
+                p = rootobj;
+                p.set_titletext("New Form");
+
+                p.Button00.set_taborder("1");
+                p.Button00.set_text("Button00");
+                p.Button00.move("130","35","100","50",null,null);
+
+                p.Button01.set_taborder("0");
+                p.Button01.set_text("Button01");
+                p.Button01.move("10","35","100","50",null,null);
+            	}
+            );
+            obj.set_mobileorientation("landscape");
+            obj.set_stepcount("0");
+            this.addLayout(obj.name, obj);
+
+            //-- Normal Layout : this
+            obj = new Layout("Layout0","tab",240,120,this,
+            	//-- Layout function
+            	function(p)
+            	{
+                var rootobj = p;
+                p = rootobj;
+
+            	}
+            );
+            obj.set_mobileorientation("portrait");
+            obj.set_stepcount("0");
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.Button00.addEventHandler("onclick",this.Button00_onclick,this);
+        };
+
+        this.loadIncludeScript("RP_102357_2.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();
