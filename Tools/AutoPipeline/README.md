@@ -1,6 +1,6 @@
 # AutoPipeline
 
-(선택) 사내 서버에서 최신 Deploy JAVA 엔진을 받고, Git 서버에서 Nexacro N 엔진 소스를 받아 `nexacrolib`를 구성하고, Nexacro Deploy(JAVA CLI)로 프로젝트를 배포한 뒤, 결과물을 Tomcat에 게시하여 Chrome으로 실행하는 **무인 자동화 파이프라인**.
+(선택) 사내 서버에서 최신 Deploy JAVA 엔진을 받고, Git 서버에서 Nexacro N 엔진 소스를 받아 `nexacrolib`를 구성하고, Nexacro Deploy(JAVA CLI)로 프로젝트를 배포한 뒤, 결과물을 Tomcat에 게시하고 Chrome으로 열어 JEBI_Main.exe(TestPro)로 **자동화 테스트까지 이어서 실행하는 무인 배포·검증 파이프라인**.
 
 - 대상: **Nexacro N v21**, **Nexacro N v24**
 - 기존 `Tools\*.bat` / `Tools\*.ps1` 은 **사용·수정하지 않음**. 모든 로직은 이 폴더 안의 새 파일에 있음
@@ -223,9 +223,18 @@ flowchart TD
 
     %% Step 5
     S5{"🖥 [5] Chrome 실행?\n-NoBrowser → 안 함\n-OpenBrowser → 실행\n그 외 OpenBrowser=Y|N (기본 N)"}
-    S5 -- 안 함 --> OK
+    S5 -- 안 함 --> S6
     S5 -- 실행 --> S5a["chrome.exe\n--user-data-dir=work\대상\chrome_profile\n--disk-cache-size=1 --new-window URL"]
-    S5a --> OK
+    S5a --> S6
+
+    %% Step 6
+    S6{"🧪 [6] TestPro 실행?\nTestProEnabled=Y|N (기본 N)"}
+    S6 -- "N (건너뜀)" --> OK
+    S6 -- Y --> S6a["JEBI_Main.exe CLI\n-s dummy.json\n--run-scenario|file|parallel\n--output testOutDir [--headless ...]"]
+    S6a --> S6r{"exit code?"}
+    S6r -- "0  PASS" --> OK
+    S6r -- "15/27/33  FAIL" --> FAIL
+    S6r -- "기타 / TIMEOUT" --> FAIL
 
     OK["✅ SUCCESS\nlast_success_hash_브랜치.txt 갱신"] --> NEXT
     UNCH --> NEXT
@@ -234,6 +243,9 @@ flowchart TD
     NEXT{다음 대상?} -- 있음 --> LOOP
     NEXT -- 없음 --> SUM["📋 요약 출력\n대상별 상태 / 버전 / 커밋 / URL / 단계별 시간"]
     SUM --> END([종료 코드: FAIL 있으면 1, 없으면 0])
+
+    style S6 fill:#9C27B0,color:#fff
+    style S6a fill:#9C27B0,color:#fff
 
     style A fill:#4CAF50,color:#fff
     style END fill:#4CAF50,color:#fff
@@ -432,6 +444,79 @@ chrome.exe --user-data-dir="work\<대상>\chrome_profile"
 
 - 버전별 **전용 프로필** 사용 → 평소 Chrome 과 분리, 캐시로 인한 이전 빌드 노출 방지, v21/v24 동시 실행 가능
 
+### [6] TestPro — 자동화 테스트 (선택)
+
+`TestProEnabled=Y` 일 때만 실행. 기본값 `N` 이므로 활성화하지 않으면 이 단계는 무음 건너뜀.
+
+**실행 엔진**: `JEBI_Main.exe` (TESTProStudio 브라우저 자동화 CLI)
+
+#### [6-0] Preflight
+
+| 점검 항목 | 실패 시 |
+|---|---|
+| `JebiExePath` 설정 여부 | FAIL |
+| `JebiExePath` 파일 존재 | FAIL |
+| `TestMode` 가 `scenario` / `file` / `parallel` 중 하나 | FAIL |
+| 모드별 필수 값 존재 및 파일 존재 (아래 표) | FAIL |
+| `TestSourceFile` 비어 있으면 `work\<대상>\dummy.json` 자동 생성 (`{}`) | — |
+| `TestOutputDir` 비어 있으면 `work\<대상>\test-result` 자동 설정 후 폴더 초기화 | — |
+
+| TestMode | 필수 설정 |
+|---|---|
+| `scenario` | `TestScenarioFile` (시나리오 JSON) |
+| `file` | `TestTCFiles` (파이프 `\|` 구분 TC JSON 목록, 1개 이상) |
+| `parallel` | `TestParallelManifest` (parallel manifest JSON) |
+
+#### [6-1] 실행
+
+JEBI_Main.exe 를 `Start-Process` 로 실행. stdout / stderr 는 `test-result\_jebi_stdout.log` / `_jebi_stderr.log` 로 리다이렉트하여 파이프라인 로그에도 출력한다.
+
+```
+scenario:
+  JEBI_Main.exe -s <dummy.json> --run-scenario <TestScenarioFile>
+                --output <testOutDir> [--vars <TestVarsFile>] [--headless]
+                [--scenario-id <TestScenarioId>]
+                [--skip-duplicate-preconditions] [--fail-on-page-error]
+
+file:
+  JEBI_Main.exe -s <dummy.json> --run-file <TC1> <TC2> ...
+                --output <testOutDir> [--vars ...] [--headless] [...]
+
+parallel:
+  JEBI_Main.exe --run-parallel <TestParallelManifest>
+  (-s 불필요, 각 job은 자동 headless)
+```
+
+> `-s/--source` 는 `--run-*` 모드에서도 **형식상 필수**. 내용은 사용되지 않으므로 `{}` 내용의 dummy.json 자동 생성.
+
+`TestTimeoutSec`(기본 600초) 초과 시 프로세스를 강제 종료하고 TIMEOUT 처리한다.
+
+#### [6-2] 결과 분류
+
+| 종료 코드 | 의미 | TestStatus |
+|---|---|---|
+| 0 | 성공 | `PASS` |
+| 15 / 27 / 33 | run-file / run-scenario / run-parallel 정상 실행 후 결과 Fail | `FAIL` |
+| 1 ~ 5 | 인수 / 파일 로드 오류 | `ENGINE_ERROR` |
+| 그 외 | 실행 / 브라우저 오류 등 | `ENGINE_ERROR` |
+| 타임아웃 | `TestTimeoutSec` 초과 강제 종료 | `TIMEOUT` |
+
+`PASS` 외에는 예외를 던져 파이프라인 전체를 `FAIL` 로 처리한다.
+
+#### [6-3] 결과 집계
+
+`TestOutputDir` 안의 `*.json` 결과 파일(이름이 `_` 로 시작하는 로그 제외)을 파싱하여 `pass` / `fail` 수를 집계하고 요약에 표시한다.
+
+**요약 출력 예**
+
+```
+ [v21] SUCCESS
+   TestPro : PASS Pass 52, Fail 0  18.4s
+ [v24] FAIL
+   TestPro : FAIL Pass 48, Fail 4 (exit 27) 32.1s
+   Error   : TestPro FAIL (exit 27) Pass 48, Fail 4
+```
+
 ---
 
 ## 5. 설정 파일 (`pipeline_v21.txt` / `pipeline_v24.txt`)
@@ -464,6 +549,35 @@ StartPage=
 # Open Chrome after publish: Y | N (default N). -OpenBrowser / -NoBrowser override.
 OpenBrowser=N
 ChromePath=C:\Program Files\Google\Chrome\Application\chrome.exe
+# ─── [6] TestPro ─────────────────────────────────────────────────────────────
+# Enable TestPro stage: Y | N (default N)
+TestProEnabled=N
+# Full path to JEBI_Main.exe
+JebiExePath=
+# -s/--source dummy file (required by JEBI CLI). Auto-created as work\dummy.json when empty.
+TestSourceFile=
+# Execution mode: scenario | file | parallel
+TestMode=scenario
+# scenario mode: path to scenario JSON file
+TestScenarioFile=
+# file mode: pipe-separated TC JSON paths (TC-0001.json|TC-0002.json). Relative paths resolved from this folder.
+TestTCFiles=
+# parallel mode: path to parallel manifest JSON file
+TestParallelManifest=
+# Result output folder. Auto-set to work\<target>\test-result when empty.
+TestOutputDir=
+# Environment variable JSON (--vars). Leave empty to skip.
+TestVarsFile=
+# Scenario ID for result file naming (--scenario-id). Leave empty for engine default.
+TestScenarioId=
+# Run headless (no browser window): Y | N (default Y)
+TestHeadless=Y
+# Skip duplicate precondition TC re-runs: Y | N (default N)
+TestSkipDuplicatePreconditions=N
+# Fail on page error: Y | N (default N)
+TestFailOnPageError=N
+# Max wait time in seconds (0 = unlimited, default 600)
+TestTimeoutSec=600
 -MERGE
 -COMPRESS
 ```
@@ -494,6 +608,20 @@ ChromePath=C:\Program Files\Google\Chrome\Application\chrome.exe
 | `ChromePath` | ➖ | 비우면 `C:\Program Files\Google\Chrome\Application\chrome.exe` |
 | `JavaHome` | ➖ | 비우면 시스템 `%JAVA_HOME%` 사용 |
 | `-MERGE` / `-COMPRESS` / `-SHRINK` | ➖ | Deploy CLI 옵션 |
+| `TestProEnabled` | ➖ | `Y` 이면 [6] TestPro 실행. **기본 `N` (건너뜀)** |
+| `JebiExePath` | ✅(활성 시) | `JEBI_Main.exe` 전체 경로 |
+| `TestSourceFile` | ➖ | `-s` 인수용 JSON 경로. 비우면 `work\<대상>\dummy.json` 자동 생성 |
+| `TestMode` | ➖ | `scenario`(기본) / `file` / `parallel` |
+| `TestScenarioFile` | ✅(scenario) | 시나리오 JSON 경로 (`--run-scenario`) |
+| `TestTCFiles` | ✅(file) | TC JSON 경로 목록. 파이프 `\|` 구분. 상대 경로는 txt 폴더 기준 (`--run-file`) |
+| `TestParallelManifest` | ✅(parallel) | parallel manifest JSON 경로 (`--run-parallel`) |
+| `TestOutputDir` | ➖ | 결과 저장 폴더. 비우면 `work\<대상>\test-result` 자동. 실행마다 초기화 |
+| `TestVarsFile` | ➖ | 환경변수 JSON (`--vars`). 비우면 치환 없음 |
+| `TestScenarioId` | ➖ | 결과 파일명용 시나리오 ID (`--scenario-id`). 비우면 엔진 기본값 |
+| `TestHeadless` | ➖ | `Y` 이면 `--headless`. **기본 `Y`** (CI/CD 환경) |
+| `TestSkipDuplicatePreconditions` | ➖ | `Y` 이면 `--skip-duplicate-preconditions`. 기본 `N` |
+| `TestFailOnPageError` | ➖ | `Y` 이면 `--fail-on-page-error`. 기본 `N` |
+| `TestTimeoutSec` | ➖ | 최대 실행 대기 시간(초). `0` = 무제한. **기본 `600`** |
 
 ---
 
@@ -627,7 +755,7 @@ flowchart TD
     R2 -- No --> E3["❌ txt 를 찾지 못함\n(PIPELINE_HOME 수정 안내)\nexit 2"]
     ROOT --> P["로그: 설정폴더\logs\\n작업: txt 의 WorkDir / JarDir\n(상대 경로는 설정 폴더 기준)"]
     ROOT2 --> P
-    P --> PIPE["[jar] → [0] Preflight → [1] Git → [2] Framework\n→ [3] Deploy → [4] Publish → [5] Chrome\n(3장 흐름도와 동일)"]
+    P --> PIPE["[jar] → [0] Preflight → [1] Git → [2] Framework\n→ [3] Deploy → [4] Publish → [5] Chrome → [6] TestPro\n(3장 흐름도와 동일)"]
     PIPE --> END(["요약 출력 / 종료 코드 0 또는 1\n→ bat 의 exit /b 로 전달"])
 
     style A fill:#4CAF50,color:#fff
@@ -665,7 +793,8 @@ set "PIPELINE_HOME=D:\git\cursor_project\Tools\AutoPipeline"
 
 `auto_pipeline_standalone.bat` 은 txt 의 아래 키가 **상대 경로이면 txt 가 있는 폴더 기준**으로 변환한다.
 
-대상 키: `SourceDir`, `ProjectPath`, `WorkDir`, `JarDir`, `TomcatHome`, `JavaHome`, `ChromePath`
+대상 키: `SourceDir`, `ProjectPath`, `WorkDir`, `JarDir`, `TomcatHome`, `JavaHome`, `ChromePath`,
+`JebiExePath`, `TestScenarioFile`, `TestParallelManifest`, `TestOutputDir`, `TestVarsFile`, `TestSourceFile`
 
 ```ini
 WorkDir=work\v21        → <설정 폴더>\work\v21
@@ -921,3 +1050,57 @@ python\build_exe.bat
 | X5 | **exe 를 다른 폴더로 복사** 후 `v21` | 기본 경로로 설정 폴더 인식, SUCCESS (배포 Fail 0) |
 | X6 | exe 종료 코드 | `-Help` 0 / 모르는 인자 2 / `all -Branch` 2 / v21 package(PackageRoot 없음) 1 |
 | X7 | exe 실행 중 풀린 파일 검사 | 13-2 표 참고 (.py / .pyc 0개) |
+
+---
+
+## 14. 변경 이력
+
+| 날짜 | 내용 |
+|---|---|
+| 2026-10-01 | 초기 버전 — [jar] / [0]~[5] 단계, standalone bat, exe, package 방식 |
+| 2026-10-08 | **[6] TestPro 단계 추가** — JEBI_Main.exe CLI 연동, 설정 파일 확장, standalone 경로 자동 변환 |
+
+---
+
+## 15. 향후 작업 예정
+
+### [7] 결과 리포팅
+
+파이프라인 종료 후 **담당자에게 자동으로 결과를 보내는 단계**. TestPro 단계가 완성된 뒤 이어서 구현 예정.
+
+**목표 기능**
+
+| 항목 | 내용 |
+|---|---|
+| 전송 시점 | 파이프라인 종료 직후 (성공·실패 모두) |
+| 전송 대상 | 담당자 이메일 또는 Teams / Slack 채널 (설정으로 지정) |
+| 보고 내용 | 대상 / 결과 / 버전 / 커밋 / 배포 URL / TestPro 결과(Pass·Fail 수) / 소요 시간 |
+| 조건 지정 | 항상 / 실패 시에만 / TestPro 실패 시에만 등 |
+
+**설계 예정 설정 항목** (pipeline_*.txt)
+
+```ini
+# ─── [7] Report ───────────────────────────────────────────────
+ReportEnabled=N
+ReportOn=always          # always | fail | testfail
+# Email
+SmtpHost=
+SmtpPort=587
+SmtpFrom=
+SmtpTo=                  # 쉼표 구분 수신자
+SmtpUser=
+SmtpPass=
+# Teams Webhook
+TeamsWebhook=
+# Slack Webhook
+SlackWebhook=
+```
+
+**구현 대상 파일** (예정)
+
+| 파일 | 작업 |
+|---|---|
+| `auto_pipeline_standalone.bat` | [7] Report 단계 추가 |
+| `auto_pipeline.ps1` | 동일 로직 동기화 |
+| `pipeline_v21.txt` / `pipeline_v24.txt` | Report 설정 항목 추가 |
+| `README.md` | [7] 단계 상세 및 설정 키 문서화 |

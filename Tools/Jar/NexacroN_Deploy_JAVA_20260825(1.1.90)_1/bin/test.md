@@ -1,9 +1,11 @@
--P "D:\JEBI_TOPS_V24\JEBI_TOPS_V24.xprj" -B "F:\setup\nexacroN v24\NexacroN_2026.3.6.1(24.0.0.1001)\NexacroN_frameworklibrary_20260306_1\nexacrolib\nexacrolib" -O "C:\Users\sjrnfl13\Documents\project\apache-tomcat-9.0.89\webapps\nexacroN_v24\24.0.0.1001\JEBI_TOPS_V24" -GENERATERULE "F:\setup\nexacroN v24\NexacroN_2026.3.6.1(24.0.0.1001)\NexacroN_frameworklibrary_20260306_1\nexacrolib\generate"
+-P "D:\JEBI_TOPS_V24\JEBI_TOPS_V24.xprj" -B "F:\setup\nexacroN v24\NexacroN_2026.5.15.1(24.0.0.1040)\NexacroN_frameworklibrary_20260515_1\nexacrolib\nexacrolib" -O "C:\Users\sjrnfl13\Documents\project\apache-tomcat-9.0.89\webapps\nexacroN_v24\24.0.0.1040\JEBI_TOPS_V24" -GENERATERULE "F:\setup\nexacroN v24\NexacroN_2026.5.15.1(24.0.0.1040)\NexacroN_frameworklibrary_20260515_1\nexacrolib\generate"
 
 
 -P "F:\Tops_Sample\RP_101874_test_301 (2)\test_301.xprj" -B "F:\setup\nexacroN v24\NexacroN_2026.3.6.1(24.0.0.1001)\NexacroN_frameworklibrary_20260306_1\nexacrolib\nexacrolib" -O "C:\Users\sjrnfl13\Documents\project\apache-tomcat-9.0.89\webapps\nexacroN_v24\24.0.0.1001\test_301" -GENERATERULE "F:\setup\nexacroN v24\NexacroN_2026.3.6.1(24.0.0.1001)\NexacroN_frameworklibrary_20260306_1\nexacrolib\generate"
 
 -P "F:\Tops_Sample\RP_104523_test2\test2.xprj" -B "F:\setup\nexacroN v24\NexacroN_2025.12.5.1(24.0.0.901)\NexacroN_frameworklibrary_20251205_1\nexacrolib\nexacrolib" -O "C:\Users\sjrnfl13\Documents\project\apache-tomcat-9.0.89\webapps\nexacroN_v24\24.0.0.901\test2" -GENERATERULE "F:\setup\nexacroN v24\NexacroN_2025.12.5.1(24.0.0.901)\NexacroN_frameworklibrary_20251205_1\nexacrolib\generate"
-
+D:\TC_NexaV24
 
 -P "F:\Tops_Sample\RP_105615_RP_105615_test\RP_105615.xprj" -B "F:\setup\nexacroN v24\NexacroN_2026.3.6.1(24.0.0.1001)\NexacroN_frameworklibrary_20260306_1\nexacrolib\nexacrolib" -O "C:\Users\sjrnfl13\Documents\project\apache-tomcat-9.0.89\webapps\nexacroN_v24\24.0.0.1001\RP_105615" -GENERATERULE "F:\setup\nexacroN v24\NexacroN_2026.3.6.1(24.0.0.1001)\NexacroN_frameworklibrary_20260306_1\nexacrolib\generate"
+
+-P "D:\TC_NexaV24\TC_NexaV24.xprj" -B "F:\setup\nexacroN v24\NexacroN_2024.6.11.1(24.0.0.301)\NexacroN_frameworklibrary_20240611_1\nexacrolib\nexacrolib" -O "C:\Users\sjrnfl13\Documents\project\apache-tomcat-9.0.89\webapps\nexacroN_v24\24.0.0.301\TC_NexaV24" -GENERATERULE "F:\setup\nexacroN v24\NexacroN_2024.6.11.1(24.0.0.301)\NexacroN_frameworklibrary_20240611_1\nexacrolib\generate"

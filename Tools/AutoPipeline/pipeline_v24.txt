@@ -32,5 +32,34 @@ StartPage=
 # Open Chrome after publish: Y | N (default N). -OpenBrowser / -NoBrowser override.
 OpenBrowser=N
 ChromePath=C:\Program Files\Google\Chrome\Application\chrome.exe
+# ─── [6] TestPro ─────────────────────────────────────────────────────────────
+# Enable TestPro stage: Y | N (default N)
+TestProEnabled=N
+# Full path to JEBI_Main.exe
+JebiExePath=
+# -s/--source dummy file (required by JEBI CLI). Auto-created as work\dummy.json when empty.
+TestSourceFile=
+# Execution mode: scenario | file | parallel
+TestMode=scenario
+# scenario mode: path to scenario JSON file
+TestScenarioFile=
+# file mode: pipe-separated TC JSON paths (TC-0001.json|TC-0002.json). Relative paths resolved from this folder.
+TestTCFiles=
+# parallel mode: path to parallel manifest JSON file
+TestParallelManifest=
+# Result output folder. Auto-set to work\v24\test-result when empty.
+TestOutputDir=
+# Environment variable JSON (--vars). Leave empty to skip.
+TestVarsFile=
+# Scenario ID for result file naming (--scenario-id). Leave empty for engine default.
+TestScenarioId=
+# Run headless (no browser window): Y | N (default Y)
+TestHeadless=Y
+# Skip duplicate precondition TC re-runs: Y | N (default N)
+TestSkipDuplicatePreconditions=N
+# Fail on page error: Y | N (default N)
+TestFailOnPageError=N
+# Max wait time in seconds (0 = unlimited, default 600)
+TestTimeoutSec=600
 -MERGE
 -COMPRESS

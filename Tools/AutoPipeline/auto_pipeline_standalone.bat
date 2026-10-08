@@ -28,7 +28,7 @@ rem ---- Everything below is PowerShell. cmd never reaches here (exit /b above).
 # ============================================================
 #  PowerShell section of auto_pipeline_standalone.bat
 #  Same pipeline as auto_pipeline.ps1:
-#  [jar] engine update -> Git pull -> nexacrolib build-up -> Nexacro deploy -> Tomcat publish -> Chrome
+#  [jar] engine update -> Git pull -> nexacrolib build-up -> Nexacro deploy -> Tomcat publish -> Chrome -> TestPro
 # ============================================================
 
 # ---- Arguments (parsed from %*, since a scriptblock run this way has no param() binding) ----
@@ -136,7 +136,8 @@ function Read-PipelineConfig([string]$Path) {
     }
     # Relative paths are resolved against the folder that holds the config file
     $base = Split-Path -Parent ([IO.Path]::GetFullPath($Path))
-    foreach ($key in 'SourceDir', 'ProjectPath', 'WorkDir', 'JarDir', 'TomcatHome', 'JavaHome', 'ChromePath', 'PackageRoot', 'PackagePath') {
+    foreach ($key in 'SourceDir', 'ProjectPath', 'WorkDir', 'JarDir', 'TomcatHome', 'JavaHome', 'ChromePath', 'PackageRoot', 'PackagePath',
+                     'JebiExePath', 'TestScenarioFile', 'TestParallelManifest', 'TestOutputDir', 'TestVarsFile', 'TestSourceFile') {
         $v = $cfg[$key]
         if ($v -and -not [IO.Path]::IsPathRooted($v)) { $cfg[$key] = [IO.Path]::GetFullPath((Join-Path $base $v)) }
     }
@@ -725,6 +726,114 @@ function Invoke-Target($Ctx) {
         Write-Host "  Opened: $($Ctx.Url)"
     }
 
+    # ---- [6] TestPro ----
+    Invoke-Step $Ctx '6 TestPro' -When (@('Y','YES','TRUE','1') -contains "$($cfg.TestProEnabled)".ToUpper()) {
+        # [6-0] Preflight
+        if (-not $cfg.JebiExePath) { throw "JebiExePath is not set in pipeline_$($Ctx.Target).txt" }
+        if (-not (Test-Path -LiteralPath $cfg.JebiExePath)) { throw "JEBI_Main.exe not found: $($cfg.JebiExePath)" }
+        $mode = "$($cfg.TestMode)".ToLower()
+        if (@('scenario','file','parallel') -notcontains $mode) { throw "TestMode must be scenario|file|parallel (got '$mode')" }
+        $tcFiles = @()
+        if ($mode -eq 'scenario') {
+            if (-not $cfg.TestScenarioFile) { throw 'TestScenarioFile is required when TestMode=scenario' }
+            if (-not (Test-Path -LiteralPath $cfg.TestScenarioFile)) { throw "TestScenarioFile not found: $($cfg.TestScenarioFile)" }
+        } elseif ($mode -eq 'file') {
+            $cfgBase = Split-Path -Parent ([IO.Path]::GetFullPath($cfgPath))
+            $tcFiles = ($cfg.TestTCFiles.Split('|') | ForEach-Object {
+                $tc = $_.Trim()
+                if (-not $tc) { return }
+                if (-not [IO.Path]::IsPathRooted($tc)) { $tc = [IO.Path]::GetFullPath((Join-Path $cfgBase $tc)) }
+                $tc
+            }) | Where-Object { $_ }
+            if (-not $tcFiles) { throw 'TestTCFiles must list at least one TC file when TestMode=file' }
+            foreach ($tc in $tcFiles) {
+                if (-not (Test-Path -LiteralPath $tc)) { throw "TC file not found: $tc" }
+            }
+        } else {
+            if (-not $cfg.TestParallelManifest) { throw 'TestParallelManifest is required when TestMode=parallel' }
+            if (-not (Test-Path -LiteralPath $cfg.TestParallelManifest)) { throw "TestParallelManifest not found: $($cfg.TestParallelManifest)" }
+        }
+        # dummy.json: -s/--source is required by JEBI CLI in all run modes
+        $srcFile = if ($cfg.TestSourceFile -and (Test-Path -LiteralPath $cfg.TestSourceFile)) {
+            $cfg.TestSourceFile
+        } else {
+            $d = Join-Path $work 'dummy.json'
+            Set-Content -LiteralPath $d -Value '{}'
+            Write-Host "  Source  : dummy.json auto-created at $d"
+            $d
+        }
+        $testOutDir = if ($cfg.TestOutputDir) { $cfg.TestOutputDir } else { Join-Path $work 'test-result' }
+        if (Test-Path -LiteralPath $testOutDir) { Remove-Item -LiteralPath $testOutDir -Recurse -Force }
+        New-Item -ItemType Directory -Force -Path $testOutDir | Out-Null
+        $timeoutSec = if ($cfg.TestTimeoutSec) { [int]$cfg.TestTimeoutSec } else { 600 }
+        Write-Host "  Exe     : $($cfg.JebiExePath)"
+        Write-Host "  Mode    : $mode"
+        Write-Host "  Output  : $testOutDir"
+        Write-Host "  Timeout : $(if ($timeoutSec -gt 0) { "${timeoutSec}s" } else { 'unlimited' })"
+        # [6-1] Build CLI args
+        $jebiArgs = New-Object System.Collections.ArrayList
+        if ($mode -eq 'parallel') {
+            [void]$jebiArgs.AddRange(@('--run-parallel', $cfg.TestParallelManifest))
+        } else {
+            [void]$jebiArgs.AddRange(@('-s', $srcFile))
+            if ($mode -eq 'scenario') {
+                [void]$jebiArgs.AddRange(@('--run-scenario', $cfg.TestScenarioFile))
+            } else {
+                [void]$jebiArgs.Add('--run-file')
+                foreach ($tc in $tcFiles) { [void]$jebiArgs.Add($tc) }
+            }
+            [void]$jebiArgs.AddRange(@('--output', $testOutDir))
+            if ($cfg.TestVarsFile)   { [void]$jebiArgs.AddRange(@('--vars', $cfg.TestVarsFile)) }
+            if ($cfg.TestScenarioId) { [void]$jebiArgs.AddRange(@('--scenario-id', $cfg.TestScenarioId)) }
+            if (@('Y','YES','TRUE','1') -contains "$($cfg.TestHeadless)".ToUpper())                   { [void]$jebiArgs.Add('--headless') }
+            if (@('Y','YES','TRUE','1') -contains "$($cfg.TestSkipDuplicatePreconditions)".ToUpper()) { [void]$jebiArgs.Add('--skip-duplicate-preconditions') }
+            if (@('Y','YES','TRUE','1') -contains "$($cfg.TestFailOnPageError)".ToUpper())            { [void]$jebiArgs.Add('--fail-on-page-error') }
+        }
+        # quote args that contain spaces
+        $argStr = ($jebiArgs | ForEach-Object { $a = "$_"; if ($a -match '\s') { "`"$a`"" } else { $a } }) -join ' '
+        Write-Host "  [CMD] $($cfg.JebiExePath) $argStr"
+        # [6-1] Execute
+        $stdoutLog = Join-Path $testOutDir '_jebi_stdout.log'
+        $stderrLog = Join-Path $testOutDir '_jebi_stderr.log'
+        $sw6 = [Diagnostics.Stopwatch]::StartNew()
+        $proc = Start-Process -FilePath $cfg.JebiExePath -ArgumentList $argStr -PassThru -NoNewWindow `
+            -RedirectStandardOutput $stdoutLog -RedirectStandardError $stderrLog
+        $finished = if ($timeoutSec -gt 0) { $proc.WaitForExit($timeoutSec * 1000) } else { $proc.WaitForExit(); $true }
+        $sw6.Stop()
+        $Ctx.TestSec = [math]::Round($sw6.Elapsed.TotalSeconds, 1)
+        if (Test-Path -LiteralPath $stdoutLog) { Get-Content -LiteralPath $stdoutLog | ForEach-Object { Write-Host "    $_" } }
+        if (Test-Path -LiteralPath $stderrLog) {
+            $errText = (Get-Content -LiteralPath $stderrLog -Raw -ErrorAction SilentlyContinue).Trim()
+            if ($errText) { Write-Host "    [STDERR] $errText" }
+        }
+        if (-not $finished) {
+            try { $proc.Kill() } catch { }
+            $Ctx.TestStatus = 'TIMEOUT'; $Ctx.TestCode = -1
+            throw "TestPro timed out after ${timeoutSec}s"
+        }
+        $Ctx.TestCode = $proc.ExitCode
+        # [6-2] Classify exit code
+        if     ($Ctx.TestCode -eq 0)                     { $Ctx.TestStatus = 'PASS' }
+        elseif (@(15, 27, 33) -contains $Ctx.TestCode)   { $Ctx.TestStatus = 'FAIL' }
+        else                                              { $Ctx.TestStatus = 'ENGINE_ERROR' }
+        # [6-3] Parse result JSONs for pass/fail counts
+        $resultFiles = @(Get-ChildItem -LiteralPath $testOutDir -Filter '*.json' -Recurse -File -ErrorAction SilentlyContinue |
+                         Where-Object { $_.Name -notmatch '^_' })
+        $totalPass = 0; $totalFail = 0
+        foreach ($rf in $resultFiles) {
+            try {
+                $rj = Get-Content -LiteralPath $rf.FullName -Raw -Encoding UTF8 | ConvertFrom-Json
+                if ($null -ne $rj.pass)   { $totalPass += [int]$rj.pass }   elseif ($null -ne $rj.passed)  { $totalPass += [int]$rj.passed }
+                if ($null -ne $rj.fail)   { $totalFail += [int]$rj.fail }   elseif ($null -ne $rj.failed)  { $totalFail += [int]$rj.failed }
+            } catch { }
+        }
+        $Ctx.TestPass = $totalPass; $Ctx.TestFail = $totalFail
+        Write-Host "  Result  : $($Ctx.TestStatus) Pass $totalPass, Fail $totalFail ($($Ctx.TestSec)s)"
+        if ($Ctx.TestStatus -ne 'PASS') {
+            throw "TestPro $($Ctx.TestStatus) (exit $($Ctx.TestCode)) Pass $totalPass, Fail $totalFail"
+        }
+    }
+
     Set-Content -LiteralPath $hashFile -Value $(if ($srcType -eq 'package') { $Ctx.PackageId } else { $Ctx.Hash })
     $Ctx.Status = 'SUCCESS'
 }
@@ -766,6 +875,7 @@ foreach ($jd in ($jarDirs | Select-Object -Unique)) {
 
 foreach ($t in $targets) {
     $ctx = @{ Target = $t; Status = 'FAIL'; Branch = ''; Version = ''; Hash = ''; Msg = ''; Url = ''; Error = '';
+              TestStatus = ''; TestPass = 0; TestFail = 0; TestSec = 0.0; TestCode = 0;
               Steps = New-Object System.Collections.ArrayList }
     try {
         Invoke-Target $ctx
@@ -790,6 +900,13 @@ foreach ($r in $results) {
     if ($r.Url)     { Write-Host "   URL     : $($r.Url)" }
     if ($r.Steps.Count) { Write-Host "   Steps   : $($r.Steps -join ' | ')" }
     if ($r.Error)   { Write-Host "   Error   : $($r.Error)" }
+    if ($r.TestStatus) {
+        $tLine = "   TestPro : $($r.TestStatus)"
+        if ($r.TestPass -gt 0 -or $r.TestFail -gt 0) { $tLine += " Pass $($r.TestPass), Fail $($r.TestFail)" }
+        if ($r.TestCode -ne 0) { $tLine += " (exit $($r.TestCode))" }
+        if ($r.TestSec  -gt 0) { $tLine += " $($r.TestSec)s" }
+        Write-Host $tLine
+    }
 }
 Write-Host " Log: $LOG_FILE"
 Write-Host '=============================================='

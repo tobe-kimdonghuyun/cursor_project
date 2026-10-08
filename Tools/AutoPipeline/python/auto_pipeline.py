@@ -3,7 +3,7 @@
 AutoPipeline - Python port of auto_pipeline_standalone.bat (same configs, same options, same steps)
 
   [jar] Deploy JAVA engine -> [1] Source (git) | [1] Package (prebuilt zip) -> [2] Framework copy
-  -> [3] Nexacro deploy (Java CLI) -> [4] Tomcat publish -> [5] Chrome
+  -> [3] Nexacro deploy (Java CLI) -> [4] Tomcat publish -> [5] Chrome -> [6] TestPro
 
 Usage:
   auto_pipeline.exe [v21|v24|all] [-Branch <name>] [-SourceType git|package] [-Build <folder>]
@@ -17,6 +17,7 @@ Config folder (holds pipeline_v21.txt / pipeline_v24.txt; logs\\ and work\\ are 
 Standard library only, so it compiles with Nuitka without extra packages.
 """
 import datetime
+import json
 import os
 import re
 import shutil
@@ -42,7 +43,9 @@ REQUIRED_KEYS = ('ExpectedVersion', 'SourceDir', 'Branch', 'ProjectPath', 'WorkD
                  'JarDir', 'TomcatHome', 'TomcatPort', 'WebContext')
 # Relative values of these keys are resolved against the folder that holds the config file
 PATH_KEYS = ('SourceDir', 'ProjectPath', 'WorkDir', 'JarDir', 'TomcatHome', 'JavaHome',
-             'ChromePath', 'PackageRoot', 'PackagePath')
+             'ChromePath', 'PackageRoot', 'PackagePath',
+             'JebiExePath', 'TestScenarioFile', 'TestParallelManifest',
+             'TestOutputDir', 'TestVarsFile', 'TestSourceFile')
 DEFAULT_CHROME = r'C:\Program Files\Google\Chrome\Application\chrome.exe'
 CREATE_NO_WINDOW = 0x08000000
 
@@ -769,6 +772,153 @@ def invoke_target(ctx, opt, root):
         subprocess.Popen(args, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         log(f"  Opened: {ctx['Url']}")
 
+    # ---- [6] TestPro: JEBI_Main.exe CLI ----
+    def testpro():
+        # [6-0] Preflight
+        jebi = cfg.get('JebiExePath') or ''
+        if not jebi:
+            raise PipelineError('JebiExePath is not set in pipeline config')
+        if not os.path.isfile(jebi):
+            raise PipelineError(f'JEBI_Main.exe not found: {jebi}')
+        mode = (cfg.get('TestMode') or 'scenario').lower()
+        if mode not in ('scenario', 'file', 'parallel'):
+            raise PipelineError(f"TestMode must be scenario|file|parallel (got '{mode}')")
+        tc_files = []
+        if mode == 'scenario':
+            scm = cfg.get('TestScenarioFile') or ''
+            if not scm:
+                raise PipelineError('TestScenarioFile is required when TestMode=scenario')
+            if not os.path.isfile(scm):
+                raise PipelineError(f'TestScenarioFile not found: {scm}')
+        elif mode == 'file':
+            cfg_base = os.path.dirname(os.path.abspath(cfg_path))
+            for raw in (cfg.get('TestTCFiles') or '').split('|'):
+                tc = raw.strip()
+                if not tc:
+                    continue
+                if not os.path.isabs(tc):
+                    tc = os.path.abspath(os.path.join(cfg_base, tc))
+                tc_files.append(tc)
+            if not tc_files:
+                raise PipelineError('TestTCFiles must list at least one TC file when TestMode=file')
+            for tc in tc_files:
+                if not os.path.isfile(tc):
+                    raise PipelineError(f'TC file not found: {tc}')
+        else:
+            pm = cfg.get('TestParallelManifest') or ''
+            if not pm:
+                raise PipelineError('TestParallelManifest is required when TestMode=parallel')
+            if not os.path.isfile(pm):
+                raise PipelineError(f'TestParallelManifest not found: {pm}')
+        # dummy.json: -s/--source is required by JEBI CLI in scenario/file modes
+        src_file = cfg.get('TestSourceFile') or ''
+        if not (src_file and os.path.isfile(src_file)):
+            dummy = os.path.join(work, 'dummy.json')
+            with open(dummy, 'w', encoding='utf-8') as fp:
+                fp.write('{}')
+            log(f'  Source  : dummy.json auto-created at {dummy}')
+            src_file = dummy
+        test_out = cfg.get('TestOutputDir') or ''
+        if not test_out:
+            test_out = os.path.join(work, 'test-result')
+        if os.path.exists(test_out):
+            remove_tree(test_out)
+        os.makedirs(test_out, exist_ok=True)
+        timeout_sec = int(cfg.get('TestTimeoutSec') or 600)
+        log(f'  Exe     : {jebi}')
+        log(f'  Mode    : {mode}')
+        log(f'  Output  : {test_out}')
+        log(f"  Timeout : {str(timeout_sec) + 's' if timeout_sec > 0 else 'unlimited'}")
+        # [6-1] Build CLI args
+        jebi_args = []
+        if mode == 'parallel':
+            jebi_args += ['--run-parallel', cfg['TestParallelManifest']]
+        else:
+            jebi_args += ['-s', src_file]
+            if mode == 'scenario':
+                jebi_args += ['--run-scenario', cfg.get('TestScenarioFile')]
+            else:
+                jebi_args.append('--run-file')
+                jebi_args.extend(tc_files)
+            jebi_args += ['--output', test_out]
+            if cfg.get('TestVarsFile'):
+                jebi_args += ['--vars', cfg['TestVarsFile']]
+            if cfg.get('TestScenarioId'):
+                jebi_args += ['--scenario-id', cfg['TestScenarioId']]
+            if is_yes(cfg.get('TestHeadless')):
+                jebi_args.append('--headless')
+            if is_yes(cfg.get('TestSkipDuplicatePreconditions')):
+                jebi_args.append('--skip-duplicate-preconditions')
+            if is_yes(cfg.get('TestFailOnPageError')):
+                jebi_args.append('--fail-on-page-error')
+        log('  [CMD] ' + jebi + ' ' + ' '.join(
+            f'"{a}"' if ' ' in str(a) else str(a) for a in jebi_args))
+        # [6-1] Execute
+        stdout_log = os.path.join(test_out, '_jebi_stdout.log')
+        stderr_log = os.path.join(test_out, '_jebi_stderr.log')
+        t0_6 = time.time()
+        timed_out = False
+        try:
+            with open(stdout_log, 'w', encoding='utf-8') as fout, \
+                 open(stderr_log, 'w', encoding='utf-8') as ferr:
+                proc = subprocess.Popen(
+                    [jebi] + jebi_args,
+                    stdout=fout, stderr=ferr,
+                    stdin=subprocess.DEVNULL
+                )
+                try:
+                    proc.wait(timeout=timeout_sec if timeout_sec > 0 else None)
+                except subprocess.TimeoutExpired:
+                    proc.kill()
+                    proc.wait()
+                    timed_out = True
+        finally:
+            ctx['TestSec'] = round(time.time() - t0_6, 1)
+        if os.path.isfile(stdout_log):
+            with open(stdout_log, encoding='utf-8', errors='replace') as f:
+                for line in f:
+                    log('    ' + line.rstrip('\r\n'))
+        if os.path.isfile(stderr_log):
+            with open(stderr_log, encoding='utf-8', errors='replace') as f:
+                err_text = f.read().strip()
+            if err_text:
+                log(f'    [STDERR] {err_text}')
+        if timed_out:
+            ctx['TestStatus'] = 'TIMEOUT'
+            ctx['TestCode'] = -1
+            raise PipelineError(f'TestPro timed out after {timeout_sec}s')
+        ctx['TestCode'] = proc.returncode
+        # [6-2] Classify exit code
+        if ctx['TestCode'] == 0:
+            ctx['TestStatus'] = 'PASS'
+        elif ctx['TestCode'] in (15, 27, 33):
+            ctx['TestStatus'] = 'FAIL'
+        else:
+            ctx['TestStatus'] = 'ENGINE_ERROR'
+        # [6-3] Parse result JSONs for pass/fail counts
+        total_pass = 0
+        total_fail = 0
+        for dirpath, _, filenames in os.walk(test_out):
+            for fname in filenames:
+                if not fname.endswith('.json') or fname.startswith('_'):
+                    continue
+                fpath = os.path.join(dirpath, fname)
+                try:
+                    with open(fpath, encoding='utf-8', errors='replace') as fp:
+                        rj = json.load(fp)
+                    p = rj.get('pass') if rj.get('pass') is not None else rj.get('passed', 0)
+                    fi = rj.get('fail') if rj.get('fail') is not None else rj.get('failed', 0)
+                    total_pass += int(p or 0)
+                    total_fail += int(fi or 0)
+                except Exception:
+                    pass
+        ctx['TestPass'] = total_pass
+        ctx['TestFail'] = total_fail
+        log(f"  Result  : {ctx['TestStatus']} Pass {total_pass}, Fail {total_fail} ({ctx['TestSec']}s)")
+        if ctx['TestStatus'] != 'PASS':
+            raise PipelineError(
+                f"TestPro {ctx['TestStatus']} (exit {ctx['TestCode']}) Pass {total_pass}, Fail {total_fail}")
+
     step(ctx, '0 Preflight', preflight)
     try:
         step(ctx, '1 Package', package, when=src_type == 'package')
@@ -780,6 +930,7 @@ def invoke_target(ctx, opt, root):
     step(ctx, '3 Deploy', deploy)
     step(ctx, '4 Publish', publish)
     step(ctx, '5 Chrome', chrome)
+    step(ctx, '6 TestPro', testpro, when=is_yes(cfg.get('TestProEnabled')))
 
     with open(hash_file, 'w', encoding='utf-8') as f:
         f.write((ctx['PackageId'] if src_type == 'package' else ctx['Hash']) + '\n')
@@ -924,7 +1075,9 @@ def main(argv):
     results = []
     for t in targets:
         ctx = {'Target': t, 'Status': 'FAIL', 'Branch': '', 'SourceType': '', 'Version': '', 'Hash': '',
-               'Msg': '', 'Url': '', 'Package': '', 'PackageId': '', 'Error': '', 'Steps': []}
+               'Msg': '', 'Url': '', 'Package': '', 'PackageId': '', 'Error': '',
+               'TestStatus': '', 'TestPass': 0, 'TestFail': 0, 'TestSec': 0.0, 'TestCode': 0,
+               'Steps': []}
         try:
             invoke_target(ctx, opt, root)
         except Exception as e:
@@ -952,6 +1105,15 @@ def main(argv):
             log(f"   URL     : {r['Url']}")
         if r['Steps']:
             log(f"   Steps   : {' | '.join(r['Steps'])}")
+        if r['TestStatus']:
+            t_line = f"   TestPro : {r['TestStatus']}"
+            if r['TestPass'] > 0 or r['TestFail'] > 0:
+                t_line += f" Pass {r['TestPass']}, Fail {r['TestFail']}"
+            if r['TestCode'] != 0:
+                t_line += f" (exit {r['TestCode']})"
+            if r['TestSec'] > 0:
+                t_line += f" {r['TestSec']}s"
+            log(t_line)
         if r['Error']:
             log(f"   Error   : {r['Error']}")
     log(f' Log: {log_file}')
