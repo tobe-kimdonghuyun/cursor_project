@@ -1006,7 +1006,11 @@ def exe_path():
 
 
 def find_home(opt):
-    cands = [opt['Home'], os.environ.get('PIPELINE_HOME', ''), os.path.dirname(exe_path()), DEFAULT_HOME]
+    exe_dir = os.path.dirname(exe_path())
+    # Check parent first so that running auto_pipeline.py from the python\ sub-folder
+    # finds the config files in the parent (Tools\AutoPipeline\), same as the compiled exe.
+    cands = [opt['Home'], os.environ.get('PIPELINE_HOME', ''),
+             os.path.dirname(exe_dir), exe_dir, DEFAULT_HOME]
     for c in cands:
         if not c:
             continue
