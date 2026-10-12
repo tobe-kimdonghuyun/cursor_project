@@ -677,6 +677,7 @@ TestTimeoutSec=600
 - `git pull --ff-only` 이므로 로컬 브랜치가 원격과 갈라져 있으면 FAIL 처리된다 (자동 merge 하지 않음).
 - 작업 스케줄러로 실행할 때는 TFS 자격 증명이 Windows 자격 증명 관리자에 저장되어 있어야 한다.
 - `all` 실행 시 v21 이 실패해도 v24 는 계속 진행되며, 최종 종료 코드는 1 이 된다.
+- `work\`, `logs\` 는 git 에 포함되지 않는다 (2026-10-12 `.gitignore`). 새로 clone 한 PC 의 첫 실행은 jar 를 서버에서 받고 전체 배포를 하므로 오래 걸리며, jar 서버 접속이 필요하다.
 
 ---
 
@@ -1076,11 +1077,11 @@ python\build_exe.bat                     :: Nuitka 만
 ### 13-6. 보안 점검 결과 (2026-10-12)
 
 소스에 비밀번호·토큰 하드코딩은 없음 (git 인증은 `GIT_TERMINAL_PROMPT=0` + Windows 자격 증명 관리자).
-아래는 **제안 사항이며 아직 적용하지 않았다.**
+1순위만 적용했고 나머지는 **제안 사항이며 아직 적용하지 않았다.**
 
 | 우선 | 항목 | 현재 | 제안 |
 |---|---|---|---|
-| 1 | 저장소에 실행 산출물 커밋 | `work\v21`, `work\v24` 의 `chrome_profile` (Cookies, Login Data, History 등 1438개), `logs\`, `python\__pycache__\`, `nuitka-crash-report.xml` | `.gitignore` 추가 + `git rm --cached`. 저장소가 public 이면 이력에서도 삭제 (`git filter-repo`) |
+| 1 | 저장소에 실행 산출물 커밋 | **적용 (2026-10-12, main)** — 루트 `.gitignore` 에 `__pycache__/`, `*.pyc`, `Tools/AutoPipeline/work/`, `Tools/AutoPipeline/logs/` 추가, 6893개 파일 추적 해제. 남은 것: `nuitka-crash-report.xml`, 과거 커밋 이력 | 저장소가 public 이면 이력에서도 삭제 (`git filter-repo`) |
 | 2 | 빌드 도구 버전 | 최신 자동 설치 | `requirements-build.txt` 로 `nuitka`, `ziglang` 버전 고정 |
 | 2 | 배포 무결성 | exe 만 복사 | 빌드 후 `*.exe.sha256` 생성 |
 | 3 | jar 다운로드 | `http://59.10.169.82:9900` HTTP, 검증 없음 | 서버에 SHA256 파일을 두고 다운로드 후 비교 (py / ps1 / standalone 세 곳) |
@@ -1098,6 +1099,7 @@ python\build_exe.bat                     :: Nuitka 만
 | 2026-10-08 | **[6] TestPro 단계 추가** — JEBI_Main.exe CLI 연동, 설정 파일 확장, standalone 경로 자동 변환 |
 | 2026-10-12 | 변경 감지 자동화, `-Block <단계>` 추가, Nuitka `--zig` 전환, `build_all_exe.bat` (py / ps1 / standalone 3종 빌드) 추가 |
 | 2026-10-12 | **main / dev 소스 분리** — 원격 dev 를 `dev-backup-20260726` 으로 백업 후 로컬 dev(`f4899f5`)로 교체, fetch 설정을 전체 브랜치로 변경, 로컬 main 을 origin/main 으로 재설정. `build_standalone_exe.bat` 주석 오인 오류 수정, Nuitka 캐시 확인, 보안 점검 (13-6). 상세: `History\20261012_1058.md` |
+| 2026-10-12 | **`.gitignore` 추가** — `__pycache__/`, `*.pyc`, `work/`, `logs/` 추적 해제 (로컬 파일 유지). 다른 PC 에서 pull 하면 그 PC 의 `work\`·`logs\` 파일이 삭제되므로 필요한 로그는 미리 백업 |
 
 ---
 
