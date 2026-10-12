@@ -37,6 +37,8 @@ catch { Write-Host "[ERROR] ps2exe 로드 실패: $_"; exit 1 }
 
 if (-not (Test-Path $in)) { Write-Host "[ERROR] 입력 파일 없음: $in"; exit 1 }
 
+if (Test-Path $out) { Remove-Item $out -Force; Write-Host "[INFO] 기존 exe 삭제: $out" }
+
 Write-Host "[INFO] 컴파일 중: $in"
 Write-Host "[INFO] 출력 경로: $out"
 

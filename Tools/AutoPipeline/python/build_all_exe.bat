@@ -3,8 +3,8 @@ rem ============================================================
 rem  build_all_exe.bat - AutoPipeline 전체 exe 빌드
 rem
 rem  출력:
-rem    auto_pipeline_py.exe       <- auto_pipeline.py   (Nuitka)
-rem    auto_pipeline.exe          <- auto_pipeline.ps1  (ps2exe)
+rem    auto_pipeline_py.exe         <- auto_pipeline.py   (Nuitka)
+rem    auto_pipeline.exe            <- auto_pipeline.ps1  (ps2exe)
 rem    auto_pipeline_standalone.exe <- auto_pipeline_standalone.bat (ps2exe)
 rem
 rem  사용법: build_all_exe.bat [py] [ps1] [standalone]
@@ -16,17 +16,17 @@ set "_BUILD_PY=1"
 set "_BUILD_PS1=1"
 set "_BUILD_SA=1"
 
-if not "%~1"=="" (
-    set "_BUILD_PY=0"
-    set "_BUILD_PS1=0"
-    set "_BUILD_SA=0"
-    :parse
-    if "%~1"=="" goto run
-    if /i "%~1"=="py"         set "_BUILD_PY=1"
-    if /i "%~1"=="ps1"        set "_BUILD_PS1=1"
-    if /i "%~1"=="standalone" set "_BUILD_SA=1"
-    shift & goto parse
-)
+if "%~1"=="" goto run
+set "_BUILD_PY=0"
+set "_BUILD_PS1=0"
+set "_BUILD_SA=0"
+
+:parse
+if "%~1"=="" goto run
+if /i "%~1"=="py"         set "_BUILD_PY=1"
+if /i "%~1"=="ps1"        set "_BUILD_PS1=1"
+if /i "%~1"=="standalone" set "_BUILD_SA=1"
+shift & goto parse
 
 :run
 echo ============================================================
@@ -58,7 +58,7 @@ echo.
 echo ============================================================
 echo  빌드 완료
 echo ============================================================
-if exist "%_HERE%..\auto_pipeline_py.exe"       echo   auto_pipeline_py.exe
-if exist "%_HERE%..\auto_pipeline.exe"          echo   auto_pipeline.exe
+if exist "%_HERE%..\auto_pipeline_py.exe"         echo   auto_pipeline_py.exe
+if exist "%_HERE%..\auto_pipeline.exe"            echo   auto_pipeline.exe
 if exist "%_HERE%..\auto_pipeline_standalone.exe" echo   auto_pipeline_standalone.exe
 endlocal

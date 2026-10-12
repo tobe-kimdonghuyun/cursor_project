@@ -87,6 +87,8 @@ catch {
     exit 1
 }
 
+if (Test-Path $out) { Remove-Item $out -Force; Write-Host "[INFO] 기존 exe 삭제: $out" }
+
 Write-Host "[INFO] 컴파일 중 -> $out"
 try {
     Invoke-ps2exe -inputFile $tmp -outputFile $out -ErrorAction Stop

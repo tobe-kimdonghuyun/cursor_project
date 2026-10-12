@@ -19,6 +19,9 @@ if errorlevel 1 (
     exit /b 1
 )
 
+if exist "%_HERE%..\auto_pipeline_py.exe" del /q "%_HERE%..\auto_pipeline_py.exe"
+if exist "%_HERE%build\auto_pipeline_py.exe" del /q "%_HERE%build\auto_pipeline_py.exe"
+
 pushd "%_HERE%"
 "%_PY%" -m nuitka ^
     --onefile ^
