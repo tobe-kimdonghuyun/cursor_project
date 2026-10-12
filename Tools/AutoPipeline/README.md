@@ -710,6 +710,9 @@ TestTimeoutSec=600
 | `URL not ready within 60s` | Tomcat 로그 (`TomcatHome\logs`), 시작 페이지 이름 (`StartPage` 지정) |
 | `pipeline_v21.txt / pipeline_v24.txt not found` (standalone) | `auto_pipeline_standalone.bat` 맨 위 `set "PIPELINE_HOME=..."` 경로 확인 |
 | `Unknown argument` (standalone) | 옵션 철자 확인 (`-Help` 로 목록 출력) |
+| `build_*_exe.bat` 에서 `"Create"을(를) 호출하는 동안 예외 ... 위치 줄:N` | bat 의 `rem` 주석에 `:__PS_BEGIN__` 문자열이 있으면 라벨로 오인됨. 주석에서는 콜론 없이 `__PS_BEGIN__` 으로 쓸 것 (2026-10-12 `build_standalone_exe.bat` 수정) |
+| 빌드할 때마다 Nuitka 가 다운로드하는 것처럼 보임 | 13-3 의 캐시 표 참고. 캐시가 있으면 다시 받지 않음 |
+| `git pull` 시 다른 브랜치가 병합되어 충돌 | `git config --get-all remote.origin.fetch` 가 main 만 받는지, 현재 브랜치 upstream (`git branch -vv`) 확인. 14 변경 이력 2026-10-12 참고 |
 
 로그 위치: `Tools\AutoPipeline\logs\yyyyMMdd_HHmmss_<대상>.log`
 
@@ -996,7 +999,7 @@ auto_pipeline.exe [v21|v24|all] [-Branch <name>] [-SourceType git|package] [-Bui
 | PyInstaller (사용 안 함) | Python 바이트코드(.pyc) | pyinstxtractor + 디컴파일러로 **소스가 거의 그대로 복원**됨 |
 | **Nuitka (사용)** | Python 코드를 **C 로 변환 후 기계어로 컴파일** | `.pyd` / `.dll` 만 나옴. **.py / .pyc 없음** |
 
-빌드 옵션: `--onefile` (단일 exe), `--python-flag=no_docstrings,no_asserts` (docstring / assert 제거), `--mingw64` (C 컴파일러)
+빌드 옵션: `--onefile` (단일 exe), `--python-flag=no_docstrings,no_asserts` (docstring / assert 제거), `--zig` (C 컴파일러, 2026-10-12 `--mingw64` 에서 변경)
 
 **확인 결과 (2026-10-01)** — exe 실행 중 임시 폴더(`%TEMP%\onefile_*`)에 풀리는 파일을 직접 검사
 
@@ -1014,16 +1017,35 @@ auto_pipeline.exe [v21|v24|all] [-Branch <name>] [-SourceType git|package] [-Bui
 ### 13-3. 빌드 방법
 
 ```bat
-python\build_exe.bat
+python\build_all_exe.bat                 :: 전체 (py → ps1 → standalone)
+python\build_all_exe.bat standalone      :: 일부만 (py / ps1 / standalone 조합)
+python\build_exe.bat                     :: Nuitka 만
 ```
+
+| 스크립트 | 입력 | 출력 | 도구 |
+|---|---|---|---|
+| `build_exe.bat` | `python\auto_pipeline.py` | `auto_pipeline_py.exe` | Nuitka (`--zig`) |
+| `build_ps1_exe.bat` | `auto_pipeline.ps1` | `auto_pipeline.exe` | ps2exe |
+| `build_standalone_exe.bat` | `auto_pipeline_standalone.bat` 의 PS 섹션 | `auto_pipeline_standalone.exe` | ps2exe |
 
 | 필요 항목 | 설치 상태 (이 PC) |
 |---|---|
 | Python 3.12 | `%LOCALAPPDATA%\Programs\Python\Python312` (winget 사용자 설치) |
 | Nuitka 4.2.2 + ordered-set + zstandard | pip 설치 |
-| MinGW64 (gcc 15.2) | 첫 빌드 때 Nuitka 가 자동 다운로드 → `%LOCALAPPDATA%\Nuitka\Nuitka\Cache` |
+| Zig 0.16.0 | 첫 빌드 때 Nuitka 가 자동 다운로드 (`--assume-yes-for-downloads`) |
+| ps2exe 모듈 | 없으면 `build_*_exe.bat` 이 `Install-Module` 로 자동 설치 |
 
-- 첫 빌드는 MinGW 다운로드 포함 수 분, 이후 빌드는 1~2분
+**Nuitka 다운로드 캐시** — `%LOCALAPPDATA%\Nuitka\Nuitka\Cache` 에 저장되며 **한 번만 받는다** (2026-10-12 확인: 재빌드 21초, 다운로드 없음)
+
+| 캐시 | 크기 | 비고 |
+|---|---|---|
+| `downloads\pip\private-*\...\ziglang` | 약 170MB | 현재 사용하는 Zig 컴파일러 |
+| `zig\global` | 약 86MB | Zig 가 첫 빌드 때 직접 컴파일한 C 런타임 (첫 빌드가 오래 걸리는 이유) |
+| `downloads\gcc\...mingw64` | 약 1.5GB | 예전 `--mingw64` 용. 지금은 안 씀 (지워도 됨) |
+
+- 다시 받는 경우: Python / Nuitka 버전 변경, 컴파일러 옵션 변경, 캐시 폴더 삭제
+- 매 빌드마다 나오는 `Nuitka '4.2.2' is older than the latest stable release '4.3'` 은 버전 확인 메시지이며 다운로드가 아님
+- 첫 빌드는 Zig 다운로드·런타임 컴파일 포함 수 분, 이후 빌드는 20초~2분
 - 결과: `python\build\auto_pipeline.exe` → `AutoPipeline\auto_pipeline.exe` 로 복사 (약 6.4MB)
 - 빌드 경고 `Cannot find Windows Runtime DLLs` : UCRT 는 포함하지 않음. Windows 10 / 11 에는 기본 포함이라 문제 없음
 - 로직을 고칠 때는 `python\auto_pipeline.py` 수정 → `build_exe.bat` 재실행. **ps1 / standalone 과 동작을 맞추려면 세 곳 모두 수정**
@@ -1051,6 +1073,21 @@ python\build_exe.bat
 | X6 | exe 종료 코드 | `-Help` 0 / 모르는 인자 2 / `all -Branch` 2 / v21 package(PackageRoot 없음) 1 |
 | X7 | exe 실행 중 풀린 파일 검사 | 13-2 표 참고 (.py / .pyc 0개) |
 
+### 13-6. 보안 점검 결과 (2026-10-12)
+
+소스에 비밀번호·토큰 하드코딩은 없음 (git 인증은 `GIT_TERMINAL_PROMPT=0` + Windows 자격 증명 관리자).
+아래는 **제안 사항이며 아직 적용하지 않았다.**
+
+| 우선 | 항목 | 현재 | 제안 |
+|---|---|---|---|
+| 1 | 저장소에 실행 산출물 커밋 | `work\v21`, `work\v24` 의 `chrome_profile` (Cookies, Login Data, History 등 1438개), `logs\`, `python\__pycache__\`, `nuitka-crash-report.xml` | `.gitignore` 추가 + `git rm --cached`. 저장소가 public 이면 이력에서도 삭제 (`git filter-repo`) |
+| 2 | 빌드 도구 버전 | 최신 자동 설치 | `requirements-build.txt` 로 `nuitka`, `ziglang` 버전 고정 |
+| 2 | 배포 무결성 | exe 만 복사 | 빌드 후 `*.exe.sha256` 생성 |
+| 3 | jar 다운로드 | `http://59.10.169.82:9900` HTTP, 검증 없음 | 서버에 SHA256 파일을 두고 다운로드 후 비교 (py / ps1 / standalone 세 곳) |
+| 4 | 코드 서명 | 없음 | 회사 인증서로 `signtool sign` → 백신 오탐·SmartScreen 차단 감소 |
+| - | ps2exe exe | 스크립트를 감싸기만 함 (원본 추출 쉬움) | 소스 보호가 필요하면 Nuitka exe 사용. 비밀 정보 넣지 않기 |
+| - | 하드코딩 값 | `JAR_SERVER` 가 py / ps1 / standalone 에 고정 | `pipeline_*.txt` 설정으로 이동 검토 |
+
 ---
 
 ## 14. 변경 이력
@@ -1059,6 +1096,8 @@ python\build_exe.bat
 |---|---|
 | 2026-10-01 | 초기 버전 — [jar] / [0]~[5] 단계, standalone bat, exe, package 방식 |
 | 2026-10-08 | **[6] TestPro 단계 추가** — JEBI_Main.exe CLI 연동, 설정 파일 확장, standalone 경로 자동 변환 |
+| 2026-10-12 | 변경 감지 자동화, `-Block <단계>` 추가, Nuitka `--zig` 전환, `build_all_exe.bat` (py / ps1 / standalone 3종 빌드) 추가 |
+| 2026-10-12 | **main / dev 소스 분리** — 원격 dev 를 `dev-backup-20260726` 으로 백업 후 로컬 dev(`f4899f5`)로 교체, fetch 설정을 전체 브랜치로 변경, 로컬 main 을 origin/main 으로 재설정. `build_standalone_exe.bat` 주석 오인 오류 수정, Nuitka 캐시 확인, 보안 점검 (13-6). 상세: `History\20261012_1058.md` |
 
 ---
 

@@ -2,7 +2,8 @@
 rem ============================================================
 rem  build_standalone_exe.bat - compile auto_pipeline_standalone.bat -> auto_pipeline_standalone.exe
 rem
-rem  1) auto_pipeline_standalone.bat 에서 :__PS_BEGIN__ 이후 PS 섹션을 추출
+rem  1) auto_pipeline_standalone.bat 에서 __PS_BEGIN__ 라벨 이후 PS 섹션을 추출
+rem     (주의: 이 파일의 rem 주석에 콜론+라벨명을 붙여 쓰면 아래 추출이 주석을 라벨로 오인함)
 rem  2) exe 실행 시 동작하도록 세 군데 패치:
 rem       $env:AP_ARGS   -> $args
 rem       $env:AP_BATDIR -> $_dir  (exe 위치 폴더)
