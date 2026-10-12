@@ -5,3 +5,7 @@ __pycache__/
 # AutoPipeline 실행 산출물 (실행 시 자동 생성: Chrome 프로필, 배포 결과, jar, 실행 로그)
 Tools/AutoPipeline/work/
 Tools/AutoPipeline/logs/
+
+# Tomcat — conf 는 로컬 환경 설정, logs 는 실행 로그
+apache-tomcat-10.1.55/conf/
+apache-tomcat-10.1.55/logs/
