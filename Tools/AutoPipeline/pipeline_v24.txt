@@ -1,6 +1,6 @@
 # AutoPipeline config - Nexacro N v24
 # Run this target: Y | N (default Y). N = skipped even when run as 'v24' or 'all'.
-Enabled=N
+Enabled=Y
 ExpectedVersion=24
 # Source: cloned from RepoUrl (full, single-branch) when SourceDir does not exist.
 # {Branch} -> branch name, '/' becomes a sub folder (RELEASE/x -> D:\git\RELEASE\x).
@@ -26,7 +26,7 @@ TomcatPort=8080
 ServerHost=auto
 # Publish -> TomcatHome\webapps\<WebContext>\<PublishSubDir>  ({Project} = xprj file name)
 # URL     -> http://<ServerHost>:<TomcatPort>/<WebContext>/<PublishSubDir>/<StartPage>
-WebContext=auto_v24
+WebContext=auto_v24\JEBI_TOPS_V24
 PublishSubDir=
 StartPage=
 # Open Chrome after publish: Y | N (default N). -OpenBrowser / -NoBrowser override.
@@ -38,28 +38,28 @@ TestProEnabled=Y
 # Full path to JEBI_Main.exe
 JebiExePath=D:\JEBI_Main\JEBI_Main.exe
 # -s/--source dummy file (required by JEBI CLI). Auto-created as work\dummy.json when empty.
-TestSourceFile=D:\TestProNew\Tests\scenarios\NexacroN_v24\degradration\SC-Deg-v24.json
+TestSourceFile=D:\JEBI_Main\jsondata.json
 # Execution mode: scenario | file | parallel
 TestMode=scenario
 # scenario mode: path to scenario JSON file
-TestScenarioFile=
+TestScenarioFile=D:\TestProNew\Tests\scenarios\NexacroN_v24\degradration\SC-Deg-v24.json
 # file mode: pipe-separated TC JSON paths (TC-0001.json|TC-0002.json). Relative paths resolved from this folder.
 TestTCFiles=
 # parallel mode: path to parallel manifest JSON file
 TestParallelManifest=
 # Result output folder. Auto-set to work\v24\test-result when empty.
-TestOutputDir=
+TestOutputDir=D:\TestProNew\Tests\result\NexacroN_V24\Degradation\
 # Environment variable JSON (--vars). Leave empty to skip.
-TestVarsFile=
-# Scenario ID for result file naming (--scenario-id). Leave empty for engine default.
+TestVarsFile=D:\TestProNew\Tests\env\envQA\46_server.json
+# Scenario ID for result file naming (--scenario-id). Leave empty (or --) = not passed.
 TestScenarioId=
-# Run headless (no browser window): Y | N (default Y)
-TestHeadless=Y
+# Run headless (no browser window): Y = add --headless. Empty / N = not passed (default)
+TestHeadless=
 # Skip duplicate precondition TC re-runs: Y | N (default N)
 TestSkipDuplicatePreconditions=N
 # Fail on page error: Y | N (default N)
 TestFailOnPageError=N
 # Max wait time in seconds (0 = unlimited, default 600)
 TestTimeoutSec=600
--MERGE
--COMPRESS
+#-MERGE
+#-COMPRESS

@@ -1,0 +1,11 @@
+{
+  "Target": "v21",
+  "SourceType": "git",
+  "Branch": "master_21",
+  "Version": "21.0.0.9999",
+  "Hash": "af3688479b53215bd3ce7c67c0ef5c1469527c51",
+  "Msg": "[RP 106350] [DB손해보험] 넥사크로24 다중 실행 시 업데이트 체크 로직 개선 (연관건_rp 106304)",
+  "Package": "",
+  "PackageId": "",
+  "Time": "2026-10-08 13:46:33"
+}

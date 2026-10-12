@@ -33,7 +33,7 @@ rem ---- Everything below is PowerShell. cmd never reaches here (exit /b above).
 
 # ---- Arguments (parsed from %*, since a scriptblock run this way has no param() binding) ----
 $Target = 'all'
-$Branch = ''; $SourceType = ''; $Build = ''
+$Block = ''; $Branch = ''; $SourceType = ''; $Build = ''
 $UpdateJar = $false; $SkipGit = $false; $OnlyIfChanged = $false
 $OpenBrowser = $false; $NoBrowser = $false; $DevTools = $false
 $argList = @("$env:AP_ARGS".Trim() -split '\s+' | Where-Object { $_ })
@@ -42,6 +42,13 @@ for ($k = 0; $k -lt $argList.Count; $k++) {
     switch -Regex ($a.ToLower()) {
         '^(v21|v24|all)$'   { $Target = $Matches[1]; break }
         '^-target$'         { $k++; $Target = "$($argList[$k])".Trim('"').ToLower(); break }
+        '^-block$'          {
+            $k++; $Block = "$($argList[$k])".Trim('"')
+            if (-not $Block -or $Block.StartsWith('-')) { Write-Host '[ERROR] -Block needs a value (1, 2, 3 or a combination such as 2,3)'; exit 2 }
+            # '-Block 2 3' = '-Block 2,3'
+            while ($k + 1 -lt $argList.Count -and $argList[$k + 1].Trim('"') -match '^[123,]+$') { $k++; $Block += ',' + $argList[$k].Trim('"') }
+            break
+        }
         '^-branch$'         {
             $k++; $Branch = "$($argList[$k])".Trim('"')
             if (-not $Branch -or $Branch.StartsWith('-')) { Write-Host '[ERROR] -Branch needs a branch name'; exit 2 }
@@ -64,9 +71,11 @@ for ($k = 0; $k -lt $argList.Count; $k++) {
         '^-nobrowser$'      { $NoBrowser = $true; break }
         '^-devtools$'       { $DevTools = $true; break }
         '^(-help|-h|/\?)$'  {
-            Write-Host 'Usage: auto_pipeline_standalone.bat [v21|v24|all] [-Branch <name>] [-UpdateJar] [-SkipGit] [-OnlyIfChanged]'
+            Write-Host 'Usage: auto_pipeline_standalone.bat [v21|v24|all] [-Block 1|2|3|2,3...] [-Branch <name>] [-UpdateJar] [-SkipGit] [-OnlyIfChanged]'
             Write-Host '                                    [-OpenBrowser|-NoBrowser] [-DevTools]'
             Write-Host '                                    [-SourceType git|package] [-Build <folder>]'
+            Write-Host '  -Block      : run only these blocks (default 1,2,3)'
+            Write-Host '                1 Download (jar + source/package + lib) / 2 Deploy (deploy + Tomcat + Chrome) / 3 TestPro'
             Write-Host '  -Branch     : this run only, overrides Branch= in pipeline_<target>.txt (v21 or v24 only)'
             Write-Host '  -SourceType : this run only, overrides SourceType= (default git; package = prebuilt nexacrolib.zip)'
             Write-Host '  -Build      : this run only, package build folder (default PackageBuild=latest)'
@@ -79,6 +88,32 @@ for ($k = 0; $k -lt $argList.Count; $k++) {
 if (@('v21', 'v24', 'all') -notcontains $Target) { Write-Host "[ERROR] Invalid target: $Target"; exit 2 }
 if ($Branch -and $Target -eq 'all') { Write-Host '[ERROR] -Branch needs a single target (v21 or v24)'; exit 2 }
 if ($Build -and $Target -eq 'all')  { Write-Host '[ERROR] -Build needs a single target (v21 or v24)'; exit 2 }
+
+# ---- Blocks: 1 Download / 2 Deploy / 3 TestPro (default all) ----
+$BlockExplicit = [bool]$Block
+$Blocks = @(1, 2, 3)
+if ($BlockExplicit) {
+    $digits = $Block -replace '[\s,]', ''
+    if ($digits -notmatch '^[123]+$') { Write-Host "[ERROR] -Block must be 1, 2, 3 or a combination such as 2,3 (got '$Block')"; exit 2 }
+    $Blocks = @($digits.ToCharArray() | ForEach-Object { [int]"$_" } | Sort-Object -Unique)
+}
+$B1 = $Blocks -contains 1; $B2 = $Blocks -contains 2; $B3 = $Blocks -contains 3
+$blockOpts = @(
+    @{ Name = '-Branch';        Set = [bool]$Branch;     Need = 1 },
+    @{ Name = '-SourceType';    Set = [bool]$SourceType; Need = 1 },
+    @{ Name = '-Build';         Set = [bool]$Build;      Need = 1 },
+    @{ Name = '-UpdateJar';     Set = [bool]$UpdateJar;  Need = 1 },
+    @{ Name = '-SkipGit';       Set = [bool]$SkipGit;    Need = 1 },
+    @{ Name = '-OnlyIfChanged'; Set = [bool]$OnlyIfChanged; Need = 1 },
+    @{ Name = '-OpenBrowser';   Set = [bool]$OpenBrowser; Need = 2 },
+    @{ Name = '-NoBrowser';     Set = [bool]$NoBrowser;  Need = 2 },
+    @{ Name = '-DevTools';      Set = [bool]$DevTools;   Need = 2 }
+)
+foreach ($o in $blockOpts) {
+    if ($o.Set -and $Blocks -notcontains $o.Need) {
+        Write-Host "[ERROR] $($o.Name) needs block $($o.Need) (got -Block $($Blocks -join ','))"; exit 2
+    }
+}
 
 # ---- Config folder: PIPELINE_HOME, else this bat's folder (first one that has pipeline_*.txt) ----
 $ROOT = $null
@@ -132,7 +167,9 @@ function Read-PipelineConfig([string]$Path) {
         if ($t.StartsWith('-')) { $cfg.Flags += $t.ToUpper(); continue }
         $i = $t.IndexOf('=')
         if ($i -lt 1) { continue }
-        $cfg[$t.Substring(0, $i).Trim()] = $t.Substring($i + 1).Trim().TrimEnd('\')
+        $v = $t.Substring($i + 1).Trim().TrimEnd('\')
+        if ($v -match '^-+$') { $v = '' }   # placeholder such as '--' = not set (never passed on as an option value)
+        $cfg[$t.Substring(0, $i).Trim()] = $v
     }
     # Relative paths are resolved against the folder that holds the config file
     $base = Split-Path -Parent ([IO.Path]::GetFullPath($Path))
@@ -408,57 +445,96 @@ function Invoke-Target($Ctx) {
     $urlPath    = (@($(if ($webContext -ne 'ROOT') { $webContext }), $subDir) | Where-Object { $_ }) -join '/'
     $urlPath    = $urlPath.Replace('\', '/')
     New-Item -ItemType Directory -Force -Path $work | Out-Null
+    # Written by block 1, read by block 2 when it runs without block 1 (what the prepared lib was built from)
+    $stateFile = Join-Path $work 'block1_state.json'
 
-    # ---- [0] Preflight ----
+    # ---- [0] Preflight: only what the selected blocks need ----
     Invoke-Step $Ctx '0 Preflight' {
-        # SourceDir is checked in [1]: it may not exist yet (cloned from RepoUrl)
-        foreach ($p in $cfg.ProjectPath, $cfg.TomcatHome) {
-            if (-not (Test-Path -LiteralPath $p)) { throw "Path not found: $p" }
+        Write-Host "  Blocks  : $($Blocks -join ',')$(if (-not $BlockExplicit) { ' (all)' })"
+        if ($B1) {
+            # SourceDir is checked in [1]: it may not exist yet (cloned from RepoUrl)
+            Write-Host "  Type    : $srcType$(if ($SourceType) { ' (-SourceType)' })"
+            if ($srcType -eq 'git') {
+                Write-Host "  Source  : $($cfg.SourceDir) ($($cfg.Branch)$(if ($Branch) { ', -Branch' }))"
+                Write-Host "  Repo    : $(if ($cfg.RepoUrl) { $cfg.RepoUrl } else { '(RepoUrl not set: existing SourceDir only)' })"
+            } elseif ($cfg.PackagePath) {
+                Write-Host "  Package : $($cfg.PackagePath) (PackagePath)"
+            } else {
+                Write-Host "  Package : $($cfg.PackageRoot)\$($cfg.Branch.Split('/')[-1])\$(if ($Build) { "$Build (-Build)" } elseif ($cfg.PackageBuild) { $cfg.PackageBuild } else { 'latest' })"
+            }
         }
-        # The publish folder is deleted before copying, so it must be inside webapps
-        # and must not be a whole Tomcat built-in app (a sub folder inside one is fine).
-        Assert-Under $pubDir $webapps
-        $protected = 'ROOT', 'manager', 'host-manager', 'docs', 'examples'
-        if (-not $subDir -and $protected -contains $webContext) {
-            throw "Refusing to replace Tomcat built-in app '$webContext'. Set PublishSubDir or another WebContext."
+
+        if ($B2) {
+            foreach ($p in $cfg.ProjectPath, $cfg.TomcatHome) {
+                if (-not (Test-Path -LiteralPath $p)) { throw "Path not found: $p" }
+            }
+            # The publish folder is deleted before copying, so it must be inside webapps
+            # and must not be a whole Tomcat built-in app (a sub folder inside one is fine).
+            Assert-Under $pubDir $webapps
+            $protected = 'ROOT', 'manager', 'host-manager', 'docs', 'examples'
+            if (-not $subDir -and $protected -contains $webContext) {
+                throw "Refusing to replace Tomcat built-in app '$webContext'. Set PublishSubDir or another WebContext."
+            }
+
+            $javaHome = if ($cfg.JavaHome) { $cfg.JavaHome } else { $env:JAVA_HOME }
+            $Ctx.Java = Join-Path $javaHome 'bin\java.exe'
+            if (-not (Test-Path -LiteralPath $Ctx.Java)) { throw "java.exe not found: $($Ctx.Java)" }
+            $Ctx.JavaHome = $javaHome
+
+            $startBat = Find-StartBat $cfg.JarDir
+            if (-not $startBat) { throw "start.bat not found under $($cfg.JarDir). Run block 1 (-Block 1) or -UpdateJar first." }
+            $Ctx.JarRoot = Split-Path -Parent $startBat.DirectoryName
+
+            $Ctx.Chrome = if ($cfg.ChromePath) { $cfg.ChromePath } else { 'C:\Program Files\Google\Chrome\Application\chrome.exe' }
+            if ($Ctx.OpenBrowser -and -not (Test-Path -LiteralPath $Ctx.Chrome)) { throw "Chrome not found: $($Ctx.Chrome)" }
+
+            if (-not $B1) {
+                # Block 2 without block 1: deploy the lib that a previous block 1 prepared
+                foreach ($need in 'nexacrolib\nexacrolib.json', 'generate') {
+                    if (-not (Test-Path -LiteralPath (Join-Path $libRoot $need))) {
+                        throw "Prepared lib not found: $(Join-Path $libRoot $need). Run block 1 (-Block 1) first."
+                    }
+                }
+                $ver = Get-NexacroVersion (Join-Path $libDir 'nexacrolib.json')
+                if (-not $ver -or $ver.Substring(0, 2) -ne $cfg.ExpectedVersion) {
+                    throw "Prepared lib version '$ver' does not match ExpectedVersion=$($cfg.ExpectedVersion). Run block 1 (-Block 1) again."
+                }
+                $Ctx.Version = $ver
+                if (Test-Path -LiteralPath $stateFile) {
+                    $st = Get-Content -LiteralPath $stateFile -Raw -Encoding UTF8 | ConvertFrom-Json
+                    $Ctx.SourceType = $st.SourceType; $Ctx.Branch = $st.Branch
+                    $Ctx.Hash = $st.Hash; $Ctx.Msg = $st.Msg; $Ctx.Package = $st.Package; $Ctx.PackageId = $st.PackageId
+                    $Ctx.LibFrom = $st.Time
+                    if ($st.Branch -ne $cfg.Branch) { Write-Host "  [WARN] Prepared lib is from branch '$($st.Branch)', config Branch is '$($cfg.Branch)'" }
+                    if ($st.Version -ne $ver) { Write-Host "  [WARN] Prepared lib version $ver differs from block 1 record $($st.Version)" }
+                } else {
+                    Write-Host "  [WARN] $stateFile not found: source of the prepared lib is unknown"
+                    $Ctx.SourceType = ''; $Ctx.Branch = ''
+                }
+                Write-Host "  Lib     : $libRoot ($ver$(if ($Ctx.LibFrom) { ", block 1 at $($Ctx.LibFrom)" }))"
+            }
+
+            Write-Host "  Project : $($cfg.ProjectPath) ($project)"
+            Write-Host "  Output  : $outDir"
+            Write-Host "  JAVA    : $($Ctx.Java)"
+            Write-Host "  Jar     : $($Ctx.JarRoot)"
+            # URL host: ServerHost in config, or auto-detected local IPv4 when empty / 'auto'
+            $Ctx.Host = if ($cfg.ServerHost -and $cfg.ServerHost -ne 'auto') { $cfg.ServerHost } else { Get-LocalIPv4 }
+
+            Write-Host "  Publish : $pubDir"
+            Write-Host "  Host    : $($Ctx.Host)"
+            Write-Host "  Browser : $(if ($Ctx.OpenBrowser) { 'open Chrome' } else { 'off' })"
         }
 
-        $javaHome = if ($cfg.JavaHome) { $cfg.JavaHome } else { $env:JAVA_HOME }
-        $Ctx.Java = Join-Path $javaHome 'bin\java.exe'
-        if (-not (Test-Path -LiteralPath $Ctx.Java)) { throw "java.exe not found: $($Ctx.Java)" }
-        $Ctx.JavaHome = $javaHome
-
-        $startBat = Find-StartBat $cfg.JarDir
-        if (-not $startBat) { throw "start.bat not found under $($cfg.JarDir). Run with -UpdateJar." }
-        $Ctx.JarRoot = Split-Path -Parent $startBat.DirectoryName
-
-        $Ctx.Chrome = if ($cfg.ChromePath) { $cfg.ChromePath } else { 'C:\Program Files\Google\Chrome\Application\chrome.exe' }
-        if ($Ctx.OpenBrowser -and -not (Test-Path -LiteralPath $Ctx.Chrome)) { throw "Chrome not found: $($Ctx.Chrome)" }
-
-        # URL host: ServerHost in config, or auto-detected local IPv4 when empty / 'auto'
-        $Ctx.Host = if ($cfg.ServerHost -and $cfg.ServerHost -ne 'auto') { $cfg.ServerHost } else { Get-LocalIPv4 }
-
-        Write-Host "  Type    : $srcType$(if ($SourceType) { ' (-SourceType)' })"
-        if ($srcType -eq 'git') {
-            Write-Host "  Source  : $($cfg.SourceDir) ($($cfg.Branch)$(if ($Branch) { ', -Branch' }))"
-            Write-Host "  Repo    : $(if ($cfg.RepoUrl) { $cfg.RepoUrl } else { '(RepoUrl not set: existing SourceDir only)' })"
-        } elseif ($cfg.PackagePath) {
-            Write-Host "  Package : $($cfg.PackagePath) (PackagePath)"
-        } else {
-            Write-Host "  Package : $($cfg.PackageRoot)\$($cfg.Branch.Split('/')[-1])\$(if ($Build) { "$Build (-Build)" } elseif ($cfg.PackageBuild) { $cfg.PackageBuild } else { 'latest' })"
+        if ($B3 -and -not $B2) {
+            # TestPro reaches the server through its --vars file; only warn when the local Tomcat is down
+            if (-not (Test-Port ([int]$cfg.TomcatPort))) { Write-Host "  [WARN] Tomcat is not listening on $($cfg.TomcatPort) (TestPro may fail)" }
         }
-        Write-Host "  Project : $($cfg.ProjectPath) ($project)"
-        Write-Host "  Output  : $outDir"
-        Write-Host "  JAVA    : $($Ctx.Java)"
-        Write-Host "  Jar     : $($Ctx.JarRoot)"
-        Write-Host "  Publish : $pubDir"
-        Write-Host "  Host    : $($Ctx.Host)"
-        Write-Host "  Browser : $(if ($Ctx.OpenBrowser) { 'open Chrome' } else { 'off' })"
     }
 
     # ---- [1] Package (SourceType=package): prebuilt nexacrolib.zip = nexacrolib\ + generate\ ----
     #      Replaces [1] Source and [2] Framework copy. No UTF-8 BOM conversion (already built).
-    Invoke-Step $Ctx '1 Package' -When ($srcType -eq 'package') {
+    Invoke-Step $Ctx '1 Package' -When ($B1 -and $srcType -eq 'package') {
         $zipName = if ($cfg.PackageZip) { $cfg.PackageZip } else { 'nexacrolib.zip' }
 
         # 1-a Locate the zip: PackagePath (zip or build folder) > PackageRoot\<branch folder>\<build>\<zip>
@@ -522,7 +598,7 @@ function Invoke-Target($Ctx) {
     }
 
     # ---- [1] Source: clone when SourceDir is missing, otherwise update ----
-    Invoke-Step $Ctx '1 Source' -When ($srcType -eq 'git') {
+    Invoke-Step $Ctx '1 Source' -When ($B1 -and $srcType -eq 'git') {
         $src    = $cfg.SourceDir
         $br     = $cfg.Branch
         $isRepo = Test-Path -LiteralPath (Join-Path $src '.git')
@@ -600,8 +676,15 @@ function Invoke-Target($Ctx) {
                 $dirty = & git -C $src status --porcelain
                 if ($dirty) { throw "Source repo has local changes, aborting: $src" }
 
-                if ((Invoke-Native git @('-C', $src, 'fetch', 'origin', $br)) -ne 0) { throw 'git fetch failed' }
-                if ((Invoke-Native git @('-C', $src, 'pull', '--ff-only', 'origin', $br)) -ne 0) { throw 'git pull failed' }
+                # Local HEAD already at the remote head: nothing to fetch / pull
+                $localHash = (& git -C $src rev-parse HEAD).Trim()
+                if ($localHash -eq $remoteHash) {
+                    Write-Host "  [SKIP] fetch/pull: local is up to date ($localHash)"
+                } else {
+                    Write-Host "  Local  : $localHash -> updating"
+                    if ((Invoke-Native git @('-C', $src, 'fetch', 'origin', $br)) -ne 0) { throw 'git fetch failed' }
+                    if ((Invoke-Native git @('-C', $src, 'pull', '--ff-only', 'origin', $br)) -ne 0) { throw 'git pull failed' }
+                }
             }
         }
 
@@ -617,7 +700,7 @@ function Invoke-Target($Ctx) {
     if ($Ctx.Status -eq 'UNCHANGED') { return }
 
     # ---- [2] Build nexacrolib + generate rule ----
-    Invoke-Step $Ctx '2 Framework copy' -When ($srcType -eq 'git') {
+    Invoke-Step $Ctx '2 Framework copy' -When ($B1 -and $srcType -eq 'git') {
         $fwSrc = Join-Path $cfg.SourceDir 'Lib\FrameworkJS'
         Reset-Dir $libRoot $work
         New-Item -ItemType Directory -Force -Path $libDir | Out-Null
@@ -648,8 +731,17 @@ function Invoke-Target($Ctx) {
         Write-Host "  Generate rule ready: $genDir"
     }
 
+    # Block 1 done: record what the prepared lib was built from (read by a later -Block 2 run)
+    if ($B1) {
+        [ordered]@{
+            Target = $Ctx.Target; SourceType = $srcType; Branch = $cfg.Branch; Version = $Ctx.Version
+            Hash = $Ctx.Hash; Msg = $Ctx.Msg; Package = $Ctx.Package; PackageId = $Ctx.PackageId
+            Time = (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
+        } | ConvertTo-Json | Set-Content -LiteralPath $stateFile -Encoding UTF8
+    }
+
     # ---- [3] Nexacro deploy (Java CLI) ----
-    Invoke-Step $Ctx '3 Deploy' {
+    Invoke-Step $Ctx '3 Deploy' -When $B2 {
         Reset-Dir $outDir $work
         Reset-Dir $deployDir $work
         $rule = if ($cfg.ExpectedVersion -eq '21') { '-CSSRULE' } else { '-GENERATERULE' }
@@ -675,7 +767,7 @@ function Invoke-Target($Ctx) {
     }
 
     # ---- [4] Publish to Tomcat ----
-    Invoke-Step $Ctx '4 Publish' {
+    Invoke-Step $Ctx '4 Publish' -When $B2 {
         $port = [int]$cfg.TomcatPort
         if (-not (Test-Port $port)) {
             Write-Host "  Tomcat not listening on $port. Starting..."
@@ -715,7 +807,7 @@ function Invoke-Target($Ctx) {
     }
 
     # ---- [5] Open Chrome ----
-    Invoke-Step $Ctx '5 Chrome' {
+    Invoke-Step $Ctx '5 Chrome' -When $B2 {
         if (-not $Ctx.OpenBrowser) { Write-Host '  [SKIP] Browser off (OpenBrowser=N or -NoBrowser)'; return }
         $profileDir = Join-Path $work 'chrome_profile'
         $chromeArgs = @("--user-data-dir=`"$profileDir`"", '--no-first-run', '--no-default-browser-check',
@@ -727,7 +819,8 @@ function Invoke-Target($Ctx) {
     }
 
     # ---- [6] TestPro ----
-    Invoke-Step $Ctx '6 TestPro' -When (@('Y','YES','TRUE','1') -contains "$($cfg.TestProEnabled)".ToUpper()) {
+    # -Block listing 3 runs TestPro regardless of TestProEnabled; the default run follows TestProEnabled
+    Invoke-Step $Ctx '6 TestPro' -When ($B3 -and ($BlockExplicit -or @('Y','YES','TRUE','1') -contains "$($cfg.TestProEnabled)".ToUpper())) {
         # [6-0] Preflight
         if (-not $cfg.JebiExePath) { throw "JebiExePath is not set in pipeline_$($Ctx.Target).txt" }
         if (-not (Test-Path -LiteralPath $cfg.JebiExePath)) { throw "JEBI_Main.exe not found: $($cfg.JebiExePath)" }
@@ -762,8 +855,14 @@ function Invoke-Target($Ctx) {
             Write-Host "  Source  : dummy.json auto-created at $d"
             $d
         }
-        $testOutDir = if ($cfg.TestOutputDir) { $cfg.TestOutputDir } else { Join-Path $work 'test-result' }
-        Remove-Tree $testOutDir
+        if ($cfg.TestOutputDir) {
+            # User folder (may hold other results, e.g. a git repo): never cleared
+            $testOutDir = $cfg.TestOutputDir
+        } else {
+            # Auto folder under WorkDir: cleared every run
+            $testOutDir = Join-Path $work 'test-result'
+            Remove-Tree $testOutDir
+        }
         New-Item -ItemType Directory -Force -Path $testOutDir | Out-Null
         $timeoutSec = if ($cfg.TestTimeoutSec) { [int]$cfg.TestTimeoutSec } else { 600 }
         Write-Host "  Exe     : $($cfg.JebiExePath)"
@@ -795,6 +894,7 @@ function Invoke-Target($Ctx) {
         # [6-1] Execute
         $stdoutLog = Join-Path $testOutDir '_jebi_stdout.log'
         $stderrLog = Join-Path $testOutDir '_jebi_stderr.log'
+        $testStart = (Get-Date).AddSeconds(-1)   # results written by this run only (TestOutputDir may hold older ones)
         $sw6 = [Diagnostics.Stopwatch]::StartNew()
         $proc = Start-Process -FilePath $cfg.JebiExePath -ArgumentList $argStr -PassThru -NoNewWindow `
             -RedirectStandardOutput $stdoutLog -RedirectStandardError $stderrLog
@@ -819,7 +919,7 @@ function Invoke-Target($Ctx) {
         else                                              { $Ctx.TestStatus = 'ENGINE_ERROR' }
         # [6-3] Parse result JSONs for pass/fail counts
         $resultFiles = @(Get-ChildItem -LiteralPath $testOutDir -Filter '*.json' -Recurse -File -ErrorAction SilentlyContinue |
-                         Where-Object { $_.Name -notmatch '^_' })
+                         Where-Object { $_.Name -notmatch '^_' -and $_.LastWriteTime -ge $testStart })
         $totalPass = 0; $totalFail = 0
         foreach ($rf in $resultFiles) {
             try {
@@ -835,7 +935,12 @@ function Invoke-Target($Ctx) {
         }
     }
 
-    Set-Content -LiteralPath $hashFile -Value $(if ($srcType -eq 'package') { $Ctx.PackageId } else { $Ctx.Hash })
+    # -OnlyIfChanged marker: what was last deployed successfully (block 2)
+    # (a block-2-only run updates it only when the prepared lib matches this config's source type + branch)
+    if ($B2 -and $Ctx.SourceType -eq $srcType -and $Ctx.Branch -eq $cfg.Branch) {
+        $deployedId = if ($srcType -eq 'package') { $Ctx.PackageId } else { $Ctx.Hash }
+        if ($deployedId) { Set-Content -LiteralPath $hashFile -Value $deployedId }
+    }
     $Ctx.Status = 'SUCCESS'
 }
 
@@ -847,15 +952,15 @@ $targets = if ($Target -eq 'all') { @('v21', 'v24') } else { @($Target) }
 $results = @()
 
 # ---- [jar] Deploy JAVA engine: once per run, before any target ----
-# Runs with -UpdateJar, or automatically when the configured JarDir has no engine yet.
+# Runs with -UpdateJar, or automatically when the configured JarDir has no engine yet. Block 1 only.
 $jarResults = @()
 $jarFailed  = $false
-$jarDirs = foreach ($t in $targets) {
+$jarDirs = if ($B1) { foreach ($t in $targets) {
     try {
         $c = Read-PipelineConfig (Join-Path $ROOT "pipeline_$t.txt")
         if (Test-Enabled $c) { $c.JarDir }
     } catch { }
-}
+} }
 foreach ($jd in ($jarDirs | Select-Object -Unique)) {
     if (-not $UpdateJar -and (Find-StartBat $jd)) { continue }
     Write-Host ''
@@ -891,9 +996,11 @@ Write-Host ''
 Write-Host '=============================================='
 Write-Host ' AutoPipeline summary'
 Write-Host '=============================================='
+Write-Host " Blocks: $($Blocks -join ',')$(if (-not $BlockExplicit) { ' (all)' })  (1 Download / 2 Deploy / 3 TestPro)"
 foreach ($j in $jarResults) { Write-Host " [jar] $j" }
 foreach ($r in $results) {
     Write-Host " [$($r.Target)] $($r.Status)"
+    if ($r.LibFrom) { Write-Host "   Lib     : prepared by block 1 at $($r.LibFrom)" }
     if ($r.Branch)  { Write-Host "   Branch  : $($r.Branch)$(if ($r.SourceType) { " ($($r.SourceType))" })" }
     if ($r.Package) { Write-Host "   Package : $($r.Package)" }
     if ($r.Version) { Write-Host "   Version : $($r.Version)" }

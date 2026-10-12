@@ -1,0 +1,31 @@
+﻿**********************
+Windows PowerShell 기록 시작
+시작 시간: 20261008125637
+사용자 이름: DESKTOP-FV2U6FS\tobesoft
+RunAs 사용자: DESKTOP-FV2U6FS\tobesoft
+구성 이름: 
+Machine: DESKTOP-FV2U6FS (Microsoft Windows NT 10.0.26200.0)
+호스트 응용 프로그램: powershell -NoProfile -ExecutionPolicy Bypass -File D:\git\cursor_project\Tools\AutoPipeline\auto_pipeline.ps1 -Target v24 master -NoBrowser
+프로세스 ID: 28992
+PSVersion: 5.1.26100.9444
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9444
+BuildVersion: 10.0.26100.9444
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+
+---- [v24] [SKIP] Enabled=N in D:\git\cursor_project\Tools\AutoPipeline\pipeline_v24.txt ----
+
+==============================================
+ AutoPipeline summary
+==============================================
+ [v24] DISABLED
+ Log: D:\git\cursor_project\Tools\AutoPipeline\logs\20261008_125637_v24.log
+==============================================
+**********************
+Windows PowerShell 기록 끝
+종료 시간: 20261008125637
+**********************

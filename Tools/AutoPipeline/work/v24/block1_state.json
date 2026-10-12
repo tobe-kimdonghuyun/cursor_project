@@ -1,0 +1,11 @@
+{
+  "Target": "v24",
+  "SourceType": "git",
+  "Branch": "master",
+  "Version": "24.0.0.9999",
+  "Hash": "9e3ba4d71c0b7b7f4a33bfe9cab32c4c67be8c83",
+  "Msg": "[iOS] RP_106361 window.open 시 In-App Browser가 열리지 않는 현상 수정",
+  "Package": "",
+  "PackageId": "",
+  "Time": "2026-10-08 14:07:04"
+}

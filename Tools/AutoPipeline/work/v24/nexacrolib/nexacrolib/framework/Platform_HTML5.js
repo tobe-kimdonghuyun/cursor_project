@@ -5008,6 +5008,11 @@ if (nexacro._Browser != "Runtime" && !nexacro._init_platform_HTML5)
 					__set_attribute("minimum-scale", 1);
 				}
 			}
+			else if (is_hybrid)
+			{
+				// width가 initial-scale 기준 너비보다 크면 화면이 넘치므로, ratio > 1 이면 최소값(1)을 설정해 initial-scale 기준 너비가 적용되게 함
+				__set_attribute("width", ratio > 1 ? "1" : "device-width");
+			}
 			else
 			{
 				__set_attribute("width", "");

@@ -1,0 +1,43 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20261008134213
+Username: DESKTOP-FV2U6FS\tobesoft
+RunAs User: DESKTOP-FV2U6FS\tobesoft
+Configuration Name: 
+Machine: DESKTOP-FV2U6FS (Microsoft Windows NT 10.0.26200.0)
+Host Application: powershell -NoProfile -ExecutionPolicy Bypass -File D:\git\cursor_project\Tools\AutoPipeline\auto_pipeline.ps1 -Target v21 -Block 3
+Process ID: 34884
+PSVersion: 5.1.26100.9444
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9444
+BuildVersion: 10.0.26100.9444
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+
+---- [v21] 0 Preflight ----
+  Blocks  : 3
+  [DONE] 0 Preflight (1s)
+
+---- [v21] 6 TestPro ----
+PS>TerminatingError(): "JebiExePath is not set in pipeline_v21.txt"
+>> TerminatingError(): "JebiExePath is not set in pipeline_v21.txt"
+>> TerminatingError(): "JebiExePath is not set in pipeline_v21.txt"
+[ERROR] [v21] JebiExePath is not set in pipeline_v21.txt
+
+==============================================
+ AutoPipeline summary
+==============================================
+ Blocks: 3  (1 Download / 2 Deploy / 3 TestPro)
+ [v21] FAIL
+   Branch  : master_21 (git)
+   Steps   : 0 Preflight 1s
+   Error   : JebiExePath is not set in pipeline_v21.txt
+ Log: D:\git\cursor_project\Tools\AutoPipeline\logs\20261008_134213_v21.log
+==============================================
+**********************
+Windows PowerShell transcript end
+End time: 20261008134214
+**********************

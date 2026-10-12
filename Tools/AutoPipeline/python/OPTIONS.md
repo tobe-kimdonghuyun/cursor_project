@@ -6,9 +6,11 @@ bat 옵션 자체의 설명은 상위 폴더의 [OPTIONS.md](../OPTIONS.md) 참�
 | 파일 | 수정 시각 | 비고 |
 |---|---|---|
 | `python\auto_pipeline.py` | 10/08 11:21 | 소스 (TestPro [6] 포함) |
-| `python\build\auto_pipeline.exe` | 10/08 12:17 | Nuitka 빌드 결과 (TestPro 포함, 재빌드) |
-| `..\auto_pipeline.exe` | 10/08 12:17 | 위 exe 복사본 (SHA256 동일) |
-| `python\build\auto_pipeline_20261001.exe` | 10/01 14:49 | 재빌드 전 exe 백업 (TestPro 없음) |
+| `python\build\auto_pipeline.exe` | 10/08 13:46 | Nuitka 빌드 결과 (TestPro + pull 생략 + `-Block`) |
+| `..\auto_pipeline.exe` | 10/08 13:46 | 위 exe 복사본 |
+| `python\build\auto_pipeline_20261008_1330.exe` | 10/08 | 백업: `-Block` 추가 전 (pull 생략까지) |
+| `python\build\auto_pipeline_20261008_1217.exe` | 10/08 12:17 | 백업: TestPro 포함, pull 생략 전 |
+| `python\build\auto_pipeline_20261001.exe` | 10/01 14:49 | 백업: 최초 빌드 (TestPro 없음) |
 
 ---
 
@@ -36,6 +38,7 @@ py 로 실행할 때는 `python.exe auto_pipeline.py ...` 로 같은 옵션을 �
 |---|---|---|---|
 | `v21` / `v24` / `all` | ✅ (첫 번째 인자만) | ✅ (아무 위치) | ✅ (아무 위치) |
 | `-Target <v>` | ✅ | ✅ | ✅ |
+| `-Block <번호>` (10/8 추가) | ✅ | ✅ | ✅ |
 | `-Branch <이름>` | ✅ | ✅ | ✅ |
 | `-SourceType git\|package` | ✅ | ✅ | ✅ |
 | `-Build <폴더>` | ✅ | ✅ | ✅ |

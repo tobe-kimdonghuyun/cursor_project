@@ -106,7 +106,7 @@ flowchart TD
 1. 브랜치 버전 검증: `_NN.0.0.N` 패턴이 `ExpectedVersion`과 불일치하면 즉시 실패
 2. `git ls-remote`로 원격 해시 취득 → `-OnlyIfChanged`이면 last_success와 비교
 3. `SourceDir` 없음 → 디스크 여유 확인 후 `git clone --single-branch`
-4. 이미 존재 → origin URL 비교 → lock 파일 확인 → `git pull --ff-only`
+4. 이미 존재 → origin URL 비교 → lock 파일 확인 → 로컬 HEAD == 원격 해시면 fetch/pull 생략, 다르면 `git fetch` → `git pull --ff-only`
 
 ### [1] Package — 패키지 모드
 
@@ -175,7 +175,7 @@ java -classpath libs/* com.nexacro.build.cli.Main
 | `file` | `JEBI_Main.exe -s <dummy> --run-file <TC1> <TC2> ... --output <dir> [옵션...]` |
 | `parallel` | `JEBI_Main.exe --run-parallel <manifest.json>` |
 
-공통 선택 옵션:
+공통 선택 옵션 — txt 에 값이 있을 때만 붙는다 (빈 값 / `-` / `--` = 미설정):
 
 | 설정 키 | CLI 플래그 |
 |--------|----------|
@@ -250,8 +250,8 @@ TestProEnabled=N
 JebiExePath=
 TestMode=scenario       # scenario | file | parallel
 TestScenarioFile=
-TestOutputDir=          # 비우면 work\v21\test-result 자동
-TestHeadless=Y
+TestOutputDir=          # 비우면 work\v21\test-result 자동 (자동 폴더만 실행마다 초기화, 지정 폴더는 삭제 안 함)
+TestHeadless=           # Y 일 때만 --headless
 TestTimeoutSec=600
 ```
 

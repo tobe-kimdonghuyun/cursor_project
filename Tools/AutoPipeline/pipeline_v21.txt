@@ -27,7 +27,7 @@ TomcatPort=8080
 ServerHost=auto
 # Publish -> TomcatHome\webapps\<WebContext>\<PublishSubDir>  ({Project} = xprj file name)
 # URL     -> http://<ServerHost>:<TomcatPort>/<WebContext>/<PublishSubDir>/<StartPage>
-WebContext= nexacroN_v21\21.0.0.2100\TC_NexaV21
+WebContext= auto_v21\TC_NexaV21
 PublishSubDir=
 StartPage=
 # Open Chrome after publish: Y | N (default N). -OpenBrowser / -NoBrowser override.
@@ -52,10 +52,10 @@ TestParallelManifest=
 TestOutputDir=
 # Environment variable JSON (--vars). Leave empty to skip.
 TestVarsFile=
-# Scenario ID for result file naming (--scenario-id). Leave empty for engine default.
+# Scenario ID for result file naming (--scenario-id). Leave empty (or --) = not passed.
 TestScenarioId=
-# Run headless (no browser window): Y | N (default Y)
-TestHeadless=Y
+# Run headless (no browser window): Y = add --headless. Empty / N = not passed (default)
+TestHeadless=
 # Skip duplicate precondition TC re-runs: Y | N (default N)
 TestSkipDuplicatePreconditions=N
 # Fail on page error: Y | N (default N)

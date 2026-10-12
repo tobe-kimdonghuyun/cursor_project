@@ -1,2 +1,3 @@
-2026/10/01-12:39:08.540 9094 Creating DB D:\git\cursor_project\Tools\AutoPipeline\work\v24\chrome_profile\Default\Local Extension Settings\ghbmnnjooekpmoecnnnilnnbdlolhkhi since it was missing.
-2026/10/01-12:39:08.631 9094 Reusing MANIFEST D:\git\cursor_project\Tools\AutoPipeline\work\v24\chrome_profile\Default\Local Extension Settings\ghbmnnjooekpmoecnnnilnnbdlolhkhi/MANIFEST-000001
+2026/10/08-13:09:00.659 b070 Reusing MANIFEST D:\git\cursor_project\Tools\AutoPipeline\work\v24\chrome_profile\Default\Local Extension Settings\ghbmnnjooekpmoecnnnilnnbdlolhkhi/MANIFEST-000001
+2026/10/08-13:09:00.659 b070 Recovering log #3
+2026/10/08-13:09:00.660 b070 Reusing old log D:\git\cursor_project\Tools\AutoPipeline\work\v24\chrome_profile\Default\Local Extension Settings\ghbmnnjooekpmoecnnnilnnbdlolhkhi/000003.log 

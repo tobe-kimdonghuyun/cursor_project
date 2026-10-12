@@ -1,0 +1,81 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("testPopup");
+            this.set_titletext("New Form");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1280,720);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+
+            
+            // UI Components Initialize
+            obj = new Button("Button001","148","107","142","53",null,null,null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_text("close");
+            this.addChild(obj.name, obj);
+
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",1280,720,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+        this.registerScript("RP_103320_testPopup.xfdl", function() {
+
+        this.testPopup_onload = function(obj,e)
+        {
+        	var obj = this.lookup("form");
+
+        	trace("obj.name="+obj.name);
+        	trace("obj.id="+obj.id);
+
+        	trace("this.name="+this.name);
+        	trace("this.id="+this.id);
+
+        };
+
+        this.Button00_onclick = function(obj,e)
+        {
+        	this.close();
+        };
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.testPopup_onload,this);
+            this.Button001.addEventHandler("onclick",this.Button00_onclick,this);
+        };
+
+        this.loadIncludeScript("RP_103320_testPopup.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

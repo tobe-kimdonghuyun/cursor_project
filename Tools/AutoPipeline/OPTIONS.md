@@ -11,16 +11,17 @@
 ## 1. 전체 요약
 
 ```bat
-auto_pipeline.bat            [v21|v24|all] [-Branch <name>] [-SourceType git|package] [-Build <folder>]
+auto_pipeline.bat            [v21|v24|all] [-Block 1|2|3|2,3] [-Branch <name>] [-SourceType git|package] [-Build <folder>]
                              [-UpdateJar] [-SkipGit] [-OnlyIfChanged] [-OpenBrowser|-NoBrowser] [-DevTools]
 
-auto_pipeline_standalone.bat [v21|v24|all] [-Branch <name>] [-SourceType git|package] [-Build <folder>]
+auto_pipeline_standalone.bat [v21|v24|all] [-Block 1|2|3|2,3] [-Branch <name>] [-SourceType git|package] [-Build <folder>]
                              [-UpdateJar] [-SkipGit] [-OnlyIfChanged] [-OpenBrowser|-NoBrowser] [-DevTools] [-Help]
 ```
 
 | 옵션 | 값 | 기본값 | 덮어쓰는 txt 키 | 하는 일 |
 |---|---|---|---|---|
 | `v21` / `v24` / `all` | — | `all` | — | 실행 대상. `all` 은 v21 → v24 순서로 하나씩 실행 |
+| `-Block <번호>` | `1` / `2` / `3` 조합 | `1,2,3` (전체) | (`3` 포함 시 `TestProEnabled` 무시) | 지정한 블럭만 실행. 1 다운로드 / 2 배포 / 3 TestPro (2-0) |
 | `-Branch <이름>` | 브랜치명 | txt 의 `Branch` | `Branch` | 받을 소스 브랜치 지정 |
 | `-SourceType git\|package` | `git` / `package` | txt 의 `SourceType` (없으면 `git`) | `SourceType` | lib 을 git 소스로 만들지, 빌드된 `nexacrolib.zip` 을 쓸지 |
 | `-Build <빌드 폴더>` | 빌드 폴더명 | txt 의 `PackageBuild` (없으면 `latest`) | `PackageBuild` | package 방식에서 사용할 빌드 지정 |
@@ -35,6 +36,27 @@ auto_pipeline_standalone.bat [v21|v24|all] [-Branch <name>] [-SourceType git|pac
 ---
 
 ## 2. 옵션 상세
+
+### 2-0. `-Block <번호>` (블럭 실행)
+
+| 블럭 | 하는 일 |
+|---|---|
+| `1` 다운로드 | Jar 엔진 확인/설치 + 소스 받기(git) 또는 zip(package) + lib 구성 → `work\<v>\nexacrolib`, `block1_state.json` |
+| `2` 배포 | Deploy + Tomcat 기동/게시 + Chrome. 블럭 1 이 만들어 둔 lib 사용 (없으면 FAIL) |
+| `3` TestPro | JEBI_Main.exe 실행. `-Block` 에 `3` 이 있으면 `TestProEnabled=N` 이어도 실행 |
+
+```bat
+auto_pipeline.bat v21 -Block 1      :: 다운로드만
+auto_pipeline.bat v21 -Block 2      :: 배포만
+auto_pipeline.bat v21 -Block 3      :: TestPro 만
+auto_pipeline.bat v21 -Block 2,3    :: 배포 + TestPro  (= -Block 23 = -Block 2 3)
+```
+
+- 생략하면 1 → 2 → 3 전체 (TestPro 는 `TestProEnabled=Y` 일 때만, 기존과 같음)
+- 블럭 전용 옵션을 해당 블럭 없이 쓰면 **오류** (종료 코드 2)
+  - 블럭 1 전용: `-Branch`, `-SourceType`, `-Build`, `-UpdateJar`, `-SkipGit`, `-OnlyIfChanged`
+  - 블럭 2 전용: `-OpenBrowser`, `-NoBrowser`, `-DevTools`
+- 상세: [README.md](README.md) 1장 "블럭 실행"
 
 ### 2-1. 실행 대상: `v21` / `v24` / `all`
 
@@ -218,4 +240,6 @@ auto_pipeline_standalone.bat -Help
 | `-Build needs a single target (v21 or v24)` | `all` 과 `-Build` 를 함께 사용 |
 | `-SourceType must be git or package` | `-SourceType` 값 오류 |
 | `-Branch needs a branch name` / `-Build needs a build folder name` | 값 없이 옵션만 사용 (standalone) |
-| `Unknown argument: ...` | 없는 옵션 (standalone) |
+| `Unknown argument: ...` | 없는 옵션 |
+| `-Block must be 1, 2, 3 or a combination such as 2,3` | `-Block` 값 오류 (예: `-Block 4`) |
+| `<옵션> needs block N (got -Block ...)` | 블럭 전용 옵션을 해당 블럭 없이 사용 (예: `-Block 2 -SkipGit`) |

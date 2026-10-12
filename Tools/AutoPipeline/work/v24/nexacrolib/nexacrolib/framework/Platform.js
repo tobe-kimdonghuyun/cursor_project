@@ -5763,6 +5763,10 @@ if (!nexacro._bInitPlatform)
         var contents_w = this._contents_width;
         var contents_h = this._contents_height;
 
+        // fittocontents 축은 여백 0 (직전 컨테이너 크기에 고착 방지)
+        var is_fit_main = (this._fittocontents == 1 || this._fittocontents == 3);
+        var is_fit_cross = (this._fittocontents == 2 || this._fittocontents == 3);
+
         contents.forEach(function (content, idx, orgArr)
         {
             var is_last = idx == (orgArr.length - 1);
@@ -5873,15 +5877,16 @@ if (!nexacro._bInitPlatform)
                     // 현재 정보까지를 저장하고 다음라인 변경.
 
                     c_m_sum -= gap[0];
-                    c_m_space = contents_w - c_m_sum;
-                    c_c_space = contents_h - c_c_max - gap[1];
+                    c_m_space = is_fit_main ? 0 : contents_w - c_m_sum;
+                    c_c_space = is_fit_cross ? 0 : contents_h - c_c_max - gap[1];
 
                     ret.push([c_m_sum, c_m_space, c_c_space, c_cnt, c_c_max]);
 
                     c_cnt = 1;
                     c_m_sum = c_w;
-                    c_m_space = contents_w - c_m_sum;
-                    c_c_space -= c_h;
+                    c_c_max = c_h;
+                    c_m_space = is_fit_main ? 0 : contents_w - c_m_sum;
+                    c_c_space = is_fit_cross ? 0 : c_c_space - c_h;
 
                     ret.push([c_m_sum, c_m_space, c_c_space, c_cnt, c_c_max]);
                 }
@@ -5894,8 +5899,8 @@ if (!nexacro._bInitPlatform)
                     c_m_sum += c_w;
                     c_c_max = c_h > c_c_max ? c_h : c_c_max;
 
-                    c_m_space = contents_w - c_m_sum;
-                    c_c_space = contents_h - c_c_max;
+                    c_m_space = is_fit_main ? 0 : contents_w - c_m_sum;
+                    c_c_space = is_fit_cross ? 0 : contents_h - c_c_max;
 
                     ret.push([c_m_sum, c_m_space, c_c_space, c_cnt, c_c_max]);
                 }
@@ -5910,8 +5915,8 @@ if (!nexacro._bInitPlatform)
                     // 현재 정보까지를 저장하고 라인 변경을 위한 초기화.
 
                     c_m_sum -= gap[0];
-                    c_m_space = contents_w - c_m_sum;
-                    c_c_space = contents_h - c_c_max - gap[1];
+                    c_m_space = is_fit_main ? 0 : contents_w - c_m_sum;
+                    c_c_space = is_fit_cross ? 0 : contents_h - c_c_max - gap[1];
                     contents_h = c_c_space;
 
                     ret.push([c_m_sum, c_m_space, c_c_space, c_cnt, c_c_max]);
@@ -6678,6 +6683,10 @@ if (!nexacro._bInitPlatform)
         var contents_w = this._contents_width;
         var contents_h = this._contents_height;
 
+        // fittocontents 축은 여백 0 (직전 컨테이너 크기에 고착 방지)
+        var is_fit_main = (this._fittocontents == 2 || this._fittocontents == 3);
+        var is_fit_cross = (this._fittocontents == 1 || this._fittocontents == 3);
+
         contents.forEach(function (content, idx, orgArr)
         {
             var is_last = idx == (orgArr.length - 1);
@@ -6786,15 +6795,16 @@ if (!nexacro._bInitPlatform)
                     // 현재 정보까지를 저장하고 다음라인 변경.
 
                     c_m_sum -= gap[1];
-                    c_m_space = contents_h - c_m_sum;
-                    c_c_space = contents_w - c_c_max - gap[0];
+                    c_m_space = is_fit_main ? 0 : contents_h - c_m_sum;
+                    c_c_space = is_fit_cross ? 0 : contents_w - c_c_max - gap[0];
 
                     ret.push([c_m_sum, c_m_space, c_c_space, c_cnt, c_c_max]);
 
                     c_cnt = 1;
                     c_m_sum = c_h;
-                    c_m_space = contents_h - c_m_sum;
-                    c_c_space -= c_w;
+                    c_c_max = c_w;
+                    c_m_space = is_fit_main ? 0 : contents_h - c_m_sum;
+                    c_c_space = is_fit_cross ? 0 : c_c_space - c_w;
 
                     ret.push([c_m_sum, c_m_space, c_c_space, c_cnt, c_c_max]);
                 }
@@ -6807,8 +6817,8 @@ if (!nexacro._bInitPlatform)
                     c_m_sum += c_h;
                     c_c_max = c_w > c_c_max ? c_w : c_c_max;
 
-                    c_m_space = contents_h - c_m_sum;
-                    c_c_space = contents_w - c_c_max;
+                    c_m_space = is_fit_main ? 0 : contents_h - c_m_sum;
+                    c_c_space = is_fit_cross ? 0 : contents_w - c_c_max;
 
                     ret.push([c_m_sum, c_m_space, c_c_space, c_cnt, c_c_max]);
                 }
@@ -6823,8 +6833,8 @@ if (!nexacro._bInitPlatform)
                     // 현재 정보까지를 저장하고 라인 변경을 위한 초기화.
 
                     c_m_sum -= gap[1];
-                    c_m_space = contents_h - c_m_sum;
-                    c_c_space = contents_w - c_c_max - gap[0];
+                    c_m_space = is_fit_main ? 0 : contents_h - c_m_sum;
+                    c_c_space = is_fit_cross ? 0 : contents_w - c_c_max - gap[0];
                     contents_w = c_c_space;
 
                     ret.push([c_m_sum, c_m_space, c_c_space, c_cnt, c_c_max]);

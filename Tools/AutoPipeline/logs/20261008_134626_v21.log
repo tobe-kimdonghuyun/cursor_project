@@ -1,0 +1,20 @@
+[INFO] Config folder: D:\git\cursor_project\Tools\AutoPipeline
+[INFO] Runner      : D:\git\cursor_project\Tools\AutoPipeline\auto_pipeline.exe
+
+---- [v21] 0 Preflight ----
+  Blocks  : 3
+  [DONE] 0 Preflight (0.0s)
+
+---- [v21] 6 TestPro ----
+[ERROR] [v21] JebiExePath is not set in pipeline config
+
+==============================================
+ AutoPipeline summary
+==============================================
+ Blocks: 3  (1 Download / 2 Deploy / 3 TestPro)
+ [v21] FAIL
+   Branch  : master_21 (git)
+   Steps   : 0 Preflight 0.0s
+   Error   : JebiExePath is not set in pipeline config
+ Log: D:\git\cursor_project\Tools\AutoPipeline\logs\20261008_134626_v21.log
+==============================================

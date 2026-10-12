@@ -1,1 +1,77 @@
-(function(){return function(){if(!this._is_form){return;}var obj=null;this.on_create=function(){this.set_name("RP_101434_transaction");this.set_titletext("New Form");if(Form==this.constructor){this._setFormPosition(1280,720);}obj=new Button("Button00","50","50","120","50",null,null,null,null,null,null,this);obj.set_taborder("0");obj.set_text("Button00");this.addChild(obj.name,obj);obj=new Edit("Edit00","200","50","150","50",null,null,null,null,null,null,this);obj.set_taborder("1");this.addChild(obj.name,obj);obj=new Layout("default","",1280,720,this,function(p){});this.addLayout(obj.name,obj);};this.loadPreloadList=function(){};this.registerScript("RP_101434_transaction.xfdl",function(){this.Button00_onclick=function(obj,e){this.transaction("test",nexacro.getProjectPath()+"etc_file/RP_101434.jsp","","","","fn_callback",true,0,true);};this.fn_callback=function(strSvcID,nErrorCode,strErrorMag){this.Edit00.value=nErrorCode;};});this.on_initEvent=function(){this.Button00.addEventHandler("onclick",this.Button00_onclick,this);};this.loadIncludeScript("RP_101434_transaction.xfdl");this.loadPreloadList();obj=null;};})();
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("RP_101434_transaction");
+            this.set_titletext("New Form");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1280,720);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+
+            
+            // UI Components Initialize
+            obj = new Button("Button00","50","50","120","50",null,null,null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_text("Button00");
+            this.addChild(obj.name, obj);
+
+            obj = new Edit("Edit00","200","50","150","50",null,null,null,null,null,null,this);
+            obj.set_taborder("1");
+            this.addChild(obj.name, obj);
+
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",1280,720,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+        this.registerScript("RP_101434_transaction.xfdl", function() {
+
+        this.Button00_onclick = function(obj,e)
+        {
+        	this.transaction("test", nexacro.getProjectPath() + "etc_file/RP_101434.jsp", "","", "", "fn_callback", true , 0 ,true);
+        };
+
+        this.fn_callback = function(strSvcID, nErrorCode, strErrorMag)
+        {
+        	this.Edit00.value = nErrorCode;
+        }
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.Button00.addEventHandler("onclick",this.Button00_onclick,this);
+        };
+
+        this.loadIncludeScript("RP_101434_transaction.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

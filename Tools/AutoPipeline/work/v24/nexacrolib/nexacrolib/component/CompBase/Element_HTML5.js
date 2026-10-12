@@ -10458,6 +10458,22 @@ if (nexacro._Browser != "Runtime" && !nexacro.Element)
         }
     };
 
+    _pControlElement.setElementVisible = function (visible)
+    {
+        if (this.visible != visible)
+        {
+            this.visible = visible;
+            var handle = this.handle;
+            if (handle)
+            {
+                nexacro.__setDOMStyle_Visible(handle.style, visible);
+                // RP 106328 MobileSafari는 visible 시 display를 비우므로 fluid layout display(flex/grid) 복원
+                if (visible && this._layouttype && this._layouttype != "default")
+                    nexacro.__setDOMStyle_LayoutType(handle.style, this._layouttype);
+            }
+        }
+    };
+
     _pControlElement.setElementSimpleControl = function (simplecontrol)
     {
         if (this._is_simple_control != simplecontrol)

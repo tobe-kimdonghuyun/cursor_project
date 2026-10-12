@@ -1,0 +1,54 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20261008134110
+Username: DESKTOP-FV2U6FS\tobesoft
+RunAs User: DESKTOP-FV2U6FS\tobesoft
+Configuration Name: 
+Machine: DESKTOP-FV2U6FS (Microsoft Windows NT 10.0.26200.0)
+Host Application: powershell -NoProfile -ExecutionPolicy Bypass -File D:\git\cursor_project\Tools\AutoPipeline\auto_pipeline.ps1 -Target v21 -Block 1
+Process ID: 44184
+PSVersion: 5.1.26100.9444
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9444
+BuildVersion: 10.0.26100.9444
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+
+---- [v21] 0 Preflight ----
+  Blocks  : 1
+  Type    : git
+  Source  : D:\git\master_21 (master_21)
+  Repo    : https://tfs2.tobesoft.com:9443/tfs/XPLATFORM/_git/WORK800
+  [DONE] 0 Preflight (0s)
+
+---- [v21] 1 Source ----
+  Remote : master_21 @ af3688479b53215bd3ce7c67c0ef5c1469527c51
+  [SKIP] fetch/pull: local is up to date (af3688479b53215bd3ce7c67c0ef5c1469527c51)
+  Hash : af3688479b53215bd3ce7c67c0ef5c1469527c51
+  Msg  : [RP 106350] [DB손해보험] 넥사크로24 다중 실행 시 업데이트 체크 로직 개선 (연관건_rp 106304)
+  [DONE] 1 Source (1.4s)
+
+---- [v21] 2 Framework copy ----
+  Version : 21.0.0.9999
+  UTF-8 BOM converted: 217 file(s)
+  Generate rule ready: D:\git\cursor_project\Tools\AutoPipeline\work\v21\nexacrolib\generate
+  [DONE] 2 Framework copy (5.4s)
+
+==============================================
+ AutoPipeline summary
+==============================================
+ Blocks: 1  (1 Download / 2 Deploy / 3 TestPro)
+ [v21] SUCCESS
+   Branch  : master_21 (git)
+   Version : 21.0.0.9999
+   Commit  : af3688479b53215bd3ce7c67c0ef5c1469527c51 [RP 106350] [DB손해보험] 넥사크로24 다중 실행 시 업데이트 체크 로직 개선 (연관건_rp 106304)
+   Steps   : 0 Preflight 0s | 1 Source 1.4s | 2 Framework copy 5.4s
+ Log: D:\git\cursor_project\Tools\AutoPipeline\logs\20261008_134110_v21.log
+==============================================
+**********************
+Windows PowerShell transcript end
+End time: 20261008134117
+**********************

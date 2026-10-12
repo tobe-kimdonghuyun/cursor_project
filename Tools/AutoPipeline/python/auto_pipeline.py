@@ -116,7 +116,10 @@ def read_config(path):
             i = t.find('=')
             if i < 1:
                 continue
-            cfg[t[:i].strip()] = t[i + 1:].strip().rstrip('\\')
+            v = t[i + 1:].strip().rstrip('\\')
+            if re.fullmatch(r'-+', v):   # placeholder such as '--' = not set (never passed on as an option value)
+                v = ''
+            cfg[t[:i].strip()] = v
     base = os.path.dirname(os.path.abspath(path))
     for key in PATH_KEYS:
         v = cfg.get(key)
@@ -459,53 +462,93 @@ def invoke_target(ctx, opt, root):
                 return f.read().strip()
         return ''
 
-    # ---- [0] Preflight ----
+    # Written by block 1, read by block 2 when it runs without block 1 (what the prepared lib was built from)
+    state_file = os.path.join(work, 'block1_state.json')
+    b1, b2, b3 = (b in opt['Blocks'] for b in (1, 2, 3))
+
+    # ---- [0] Preflight: only what the selected blocks need ----
     def preflight():
-        # SourceDir is checked in [1]: it may not exist yet (cloned from RepoUrl)
-        for p in (cfg['ProjectPath'], cfg['TomcatHome']):
-            if not os.path.exists(p):
-                raise PipelineError(f'Path not found: {p}')
-        # The publish folder is deleted before copying, so it must be inside webapps
-        # and must not be a whole Tomcat built-in app (a sub folder inside one is fine).
-        assert_under(pub_dir, webapps)
-        if not sub_dir and web_context.lower() in PROTECTED_APPS:
-            raise PipelineError(f"Refusing to replace Tomcat built-in app '{web_context}'. Set PublishSubDir or another WebContext.")
+        log(f"  Blocks  : {','.join(map(str, opt['Blocks']))}{'' if opt['BlockExplicit'] else ' (all)'}")
+        if b1:
+            # SourceDir is checked in [1]: it may not exist yet (cloned from RepoUrl)
+            log(f"  Type    : {src_type}{' (-SourceType)' if opt['SourceType'] else ''}")
+            if src_type == 'git':
+                log(f"  Source  : {cfg['SourceDir']} ({cfg['Branch']}{', -Branch' if opt['Branch'] else ''})")
+                log(f"  Repo    : {cfg.get('RepoUrl') or '(RepoUrl not set: existing SourceDir only)'}")
+            elif cfg.get('PackagePath'):
+                log(f"  Package : {cfg['PackagePath']} (PackagePath)")
+            else:
+                build = f"{opt['Build']} (-Build)" if opt['Build'] else (cfg.get('PackageBuild') or 'latest')
+                log(f"  Package : {cfg.get('PackageRoot')}\\{cfg['Branch'].split('/')[-1]}\\{build}")
 
-        java_home = cfg.get('JavaHome') or os.environ.get('JAVA_HOME', '')
-        env['java_home'] = java_home
-        env['java'] = os.path.join(java_home, 'bin', 'java.exe')
-        if not os.path.isfile(env['java']):
-            raise PipelineError(f"java.exe not found: {env['java']}")
+        if b2:
+            for p in (cfg['ProjectPath'], cfg['TomcatHome']):
+                if not os.path.exists(p):
+                    raise PipelineError(f'Path not found: {p}')
+            # The publish folder is deleted before copying, so it must be inside webapps
+            # and must not be a whole Tomcat built-in app (a sub folder inside one is fine).
+            assert_under(pub_dir, webapps)
+            if not sub_dir and web_context.lower() in PROTECTED_APPS:
+                raise PipelineError(f"Refusing to replace Tomcat built-in app '{web_context}'. Set PublishSubDir or another WebContext.")
 
-        start_bat = find_start_bat(cfg['JarDir'])
-        if not start_bat:
-            raise PipelineError(f"start.bat not found under {cfg['JarDir']}. Run with -UpdateJar.")
-        env['jar_root'] = os.path.dirname(os.path.dirname(start_bat))
+            java_home = cfg.get('JavaHome') or os.environ.get('JAVA_HOME', '')
+            env['java_home'] = java_home
+            env['java'] = os.path.join(java_home, 'bin', 'java.exe')
+            if not os.path.isfile(env['java']):
+                raise PipelineError(f"java.exe not found: {env['java']}")
 
-        env['chrome'] = cfg.get('ChromePath') or DEFAULT_CHROME
-        if open_browser and not os.path.isfile(env['chrome']):
-            raise PipelineError(f"Chrome not found: {env['chrome']}")
+            start_bat = find_start_bat(cfg['JarDir'])
+            if not start_bat:
+                raise PipelineError(f"start.bat not found under {cfg['JarDir']}. Run block 1 (-Block 1) or -UpdateJar first.")
+            env['jar_root'] = os.path.dirname(os.path.dirname(start_bat))
 
-        # URL host: ServerHost in config, or auto-detected local IPv4 when empty / 'auto'
-        host = cfg.get('ServerHost') or ''
-        env['host'] = host if host and host.lower() != 'auto' else get_local_ipv4()
+            env['chrome'] = cfg.get('ChromePath') or DEFAULT_CHROME
+            if open_browser and not os.path.isfile(env['chrome']):
+                raise PipelineError(f"Chrome not found: {env['chrome']}")
 
-        log(f"  Type    : {src_type}{' (-SourceType)' if opt['SourceType'] else ''}")
-        if src_type == 'git':
-            log(f"  Source  : {cfg['SourceDir']} ({cfg['Branch']}{', -Branch' if opt['Branch'] else ''})")
-            log(f"  Repo    : {cfg.get('RepoUrl') or '(RepoUrl not set: existing SourceDir only)'}")
-        elif cfg.get('PackagePath'):
-            log(f"  Package : {cfg['PackagePath']} (PackagePath)")
-        else:
-            build = f"{opt['Build']} (-Build)" if opt['Build'] else (cfg.get('PackageBuild') or 'latest')
-            log(f"  Package : {cfg.get('PackageRoot')}\\{cfg['Branch'].split('/')[-1]}\\{build}")
-        log(f"  Project : {cfg['ProjectPath']} ({project})")
-        log(f'  Output  : {out_dir}')
-        log(f"  JAVA    : {env['java']}")
-        log(f"  Jar     : {env['jar_root']}")
-        log(f'  Publish : {pub_dir}')
-        log(f"  Host    : {env['host']}")
-        log(f"  Browser : {'open Chrome' if open_browser else 'off'}")
+            if not b1:
+                # Block 2 without block 1: deploy the lib that a previous block 1 prepared
+                for need in (r'nexacrolib\nexacrolib.json', 'generate'):
+                    if not os.path.exists(os.path.join(lib_root, need)):
+                        raise PipelineError(f'Prepared lib not found: {os.path.join(lib_root, need)}. Run block 1 (-Block 1) first.')
+                ver = get_nexacro_version(os.path.join(lib_dir, 'nexacrolib.json'))
+                if not ver or ver[:2] != cfg['ExpectedVersion']:
+                    raise PipelineError(f"Prepared lib version '{ver}' does not match ExpectedVersion={cfg['ExpectedVersion']}. "
+                                        'Run block 1 (-Block 1) again.')
+                ctx['Version'] = ver
+                if os.path.isfile(state_file):
+                    with open(state_file, encoding='utf-8-sig') as f:
+                        st = json.load(f)
+                    for k in ('SourceType', 'Branch', 'Hash', 'Msg', 'Package', 'PackageId'):
+                        ctx[k] = st.get(k) or ''
+                    ctx['LibFrom'] = st.get('Time') or ''
+                    if st.get('Branch') != cfg['Branch']:
+                        log(f"  [WARN] Prepared lib is from branch '{st.get('Branch')}', config Branch is '{cfg['Branch']}'")
+                    if st.get('Version') != ver:
+                        log(f"  [WARN] Prepared lib version {ver} differs from block 1 record {st.get('Version')}")
+                else:
+                    log(f'  [WARN] {state_file} not found: source of the prepared lib is unknown')
+                    ctx['SourceType'] = ''
+                    ctx['Branch'] = ''
+                lib_from = f", block 1 at {ctx['LibFrom']}" if ctx.get('LibFrom') else ''
+                log(f'  Lib     : {lib_root} ({ver}{lib_from})')
+
+            # URL host: ServerHost in config, or auto-detected local IPv4 when empty / 'auto'
+            host = cfg.get('ServerHost') or ''
+            env['host'] = host if host and host.lower() != 'auto' else get_local_ipv4()
+
+            log(f"  Project : {cfg['ProjectPath']} ({project})")
+            log(f'  Output  : {out_dir}')
+            log(f"  JAVA    : {env['java']}")
+            log(f"  Jar     : {env['jar_root']}")
+            log(f'  Publish : {pub_dir}')
+            log(f"  Host    : {env['host']}")
+            log(f"  Browser : {'open Chrome' if open_browser else 'off'}")
+
+        if b3 and not b2:
+            # TestPro reaches the server through its --vars file; only warn when the local Tomcat is down
+            if not test_port(int(cfg['TomcatPort'])):
+                log(f"  [WARN] Tomcat is not listening on {cfg['TomcatPort']} (TestPro may fail)")
 
     # ---- [1] Package (SourceType=package): prebuilt nexacrolib.zip = nexacrolib\ + generate\ ----
     #      Replaces [1] Source and [2] Framework copy. No UTF-8 BOM conversion (already built).
@@ -648,10 +691,16 @@ def invoke_target(ctx, opt, root):
                 if git_out(src, 'status', '--porcelain'):
                     raise PipelineError(f'Source repo has local changes, aborting: {src}')
 
-                if run(['git', '-C', src, 'fetch', 'origin', br]) != 0:
-                    raise PipelineError('git fetch failed')
-                if run(['git', '-C', src, 'pull', '--ff-only', 'origin', br]) != 0:
-                    raise PipelineError('git pull failed')
+                # Local HEAD already at the remote head: nothing to fetch / pull
+                local_hash = git_out(src, 'rev-parse', 'HEAD')
+                if local_hash == remote_hash:
+                    log(f'  [SKIP] fetch/pull: local is up to date ({local_hash})')
+                else:
+                    log(f'  Local  : {local_hash} -> updating')
+                    if run(['git', '-C', src, 'fetch', 'origin', br]) != 0:
+                        raise PipelineError('git fetch failed')
+                    if run(['git', '-C', src, 'pull', '--ff-only', 'origin', br]) != 0:
+                        raise PipelineError('git pull failed')
 
         # 1-d Folders the pipeline reads
         for need in (r'Lib\FrameworkJS\nexacrolib.json', r'Tools\Lib\TiMetainfoLib\res'):
@@ -820,9 +869,11 @@ def invoke_target(ctx, opt, root):
             src_file = dummy
         test_out = cfg.get('TestOutputDir') or ''
         if not test_out:
+            # Auto folder under WorkDir: cleared every run.
+            # A user TestOutputDir (may hold other results, e.g. a git repo) is never cleared.
             test_out = os.path.join(work, 'test-result')
-        if os.path.exists(test_out):
-            remove_tree(test_out)
+            if os.path.exists(test_out):
+                remove_tree(test_out)
         os.makedirs(test_out, exist_ok=True)
         timeout_sec = int(cfg.get('TestTimeoutSec') or 600)
         log(f'  Exe     : {jebi}')
@@ -857,6 +908,7 @@ def invoke_target(ctx, opt, root):
         stdout_log = os.path.join(test_out, '_jebi_stdout.log')
         stderr_log = os.path.join(test_out, '_jebi_stderr.log')
         t0_6 = time.time()
+        test_start = t0_6 - 1   # results written by this run only (TestOutputDir may hold older ones)
         timed_out = False
         try:
             with open(stdout_log, 'w', encoding='utf-8') as fout, \
@@ -903,6 +955,8 @@ def invoke_target(ctx, opt, root):
                 if not fname.endswith('.json') or fname.startswith('_'):
                     continue
                 fpath = os.path.join(dirpath, fname)
+                if os.path.getmtime(fpath) < test_start:
+                    continue
                 try:
                     with open(fpath, encoding='utf-8', errors='replace') as fp:
                         rj = json.load(fp)
@@ -921,19 +975,34 @@ def invoke_target(ctx, opt, root):
 
     step(ctx, '0 Preflight', preflight)
     try:
-        step(ctx, '1 Package', package, when=src_type == 'package')
-        step(ctx, '1 Source', source, when=src_type == 'git')
+        step(ctx, '1 Package', package, when=b1 and src_type == 'package')
+        step(ctx, '1 Source', source, when=b1 and src_type == 'git')
     except Unchanged:
         ctx['Status'] = 'UNCHANGED'
         return
-    step(ctx, '2 Framework copy', framework_copy, when=src_type == 'git')
-    step(ctx, '3 Deploy', deploy)
-    step(ctx, '4 Publish', publish)
-    step(ctx, '5 Chrome', chrome)
-    step(ctx, '6 TestPro', testpro, when=is_yes(cfg.get('TestProEnabled')))
+    step(ctx, '2 Framework copy', framework_copy, when=b1 and src_type == 'git')
 
-    with open(hash_file, 'w', encoding='utf-8') as f:
-        f.write((ctx['PackageId'] if src_type == 'package' else ctx['Hash']) + '\n')
+    # Block 1 done: record what the prepared lib was built from (read by a later -Block 2 run)
+    if b1:
+        state = {'Target': ctx['Target'], 'SourceType': src_type, 'Branch': cfg['Branch'], 'Version': ctx['Version'],
+                 'Hash': ctx['Hash'], 'Msg': ctx['Msg'], 'Package': ctx['Package'], 'PackageId': ctx['PackageId'],
+                 'Time': f'{datetime.datetime.now():%Y-%m-%d %H:%M:%S}'}
+        with open(state_file, 'w', encoding='utf-8') as f:
+            json.dump(state, f, ensure_ascii=False, indent=2)
+
+    step(ctx, '3 Deploy', deploy, when=b2)
+    step(ctx, '4 Publish', publish, when=b2)
+    step(ctx, '5 Chrome', chrome, when=b2)
+    # -Block listing 3 runs TestPro regardless of TestProEnabled; the default run follows TestProEnabled
+    step(ctx, '6 TestPro', testpro, when=b3 and (opt['BlockExplicit'] or is_yes(cfg.get('TestProEnabled'))))
+
+    # -OnlyIfChanged marker: what was last deployed successfully (block 2)
+    # (a block-2-only run updates it only when the prepared lib matches this config's source type + branch)
+    if b2 and ctx['SourceType'] == src_type and ctx['Branch'] == cfg['Branch']:
+        deployed_id = ctx['PackageId'] if src_type == 'package' else ctx['Hash']
+        if deployed_id:
+            with open(hash_file, 'w', encoding='utf-8') as f:
+                f.write(deployed_id + '\n')
     ctx['Status'] = 'SUCCESS'
 
 
@@ -941,9 +1010,11 @@ def invoke_target(ctx, opt, root):
 # Main
 # ============================================================
 
-USAGE = """Usage: auto_pipeline.exe [v21|v24|all] [-Branch <name>] [-SourceType git|package] [-Build <folder>]
+USAGE = """Usage: auto_pipeline.exe [v21|v24|all] [-Block 1|2|3|2,3...] [-Branch <name>] [-SourceType git|package] [-Build <folder>]
                          [-UpdateJar] [-SkipGit] [-OnlyIfChanged] [-OpenBrowser|-NoBrowser] [-DevTools]
                          [-Home <config folder>] [-Help]
+  -Block      : run only these blocks (default 1,2,3)
+                1 Download (jar + source/package + lib) / 2 Deploy (deploy + Tomcat + Chrome) / 3 TestPro
   -Branch     : this run only, overrides Branch= in pipeline_<target>.txt (v21 or v24 only)
   -SourceType : this run only, overrides SourceType= (default git; package = prebuilt nexacrolib.zip)
   -Build      : this run only, package build folder (default PackageBuild=latest)
@@ -952,12 +1023,13 @@ USAGE = """Usage: auto_pipeline.exe [v21|v24|all] [-Branch <name>] [-SourceType 
 
 
 def parse_args(argv):
-    opt = {'Target': 'all', 'Branch': '', 'SourceType': '', 'Build': '', 'Home': '',
+    opt = {'Target': 'all', 'Block': '', 'Branch': '', 'SourceType': '', 'Build': '', 'Home': '',
            'UpdateJar': False, 'SkipGit': False, 'OnlyIfChanged': False,
            'OpenBrowser': False, 'NoBrowser': False, 'DevTools': False}
     switches = {'-updatejar': 'UpdateJar', '-skipgit': 'SkipGit', '-onlyifchanged': 'OnlyIfChanged',
                 '-openbrowser': 'OpenBrowser', '-nobrowser': 'NoBrowser', '-devtools': 'DevTools'}
-    values = {'-target': 'Target', '-branch': 'Branch', '-sourcetype': 'SourceType', '-build': 'Build', '-home': 'Home'}
+    values = {'-target': 'Target', '-block': 'Block', '-branch': 'Branch', '-sourcetype': 'SourceType', '-build': 'Build',
+              '-home': 'Home'}
     k = 0
     while k < len(argv):
         a = argv[k]
@@ -973,6 +1045,11 @@ def parse_args(argv):
                 print(f'[ERROR] {a} needs a value')
                 sys.exit(2)
             opt[values[low]] = v
+            if low == '-block':
+                # '-Block 2 3' = '-Block 2,3'
+                while k + 1 < len(argv) and re.fullmatch(r'[123,]+', argv[k + 1]):
+                    k += 1
+                    opt['Block'] += ',' + argv[k]
         elif low in ('-help', '-h', '/?', '--help'):
             print(USAGE)
             sys.exit(0)
@@ -995,6 +1072,24 @@ def parse_args(argv):
     if opt['Build'] and opt['Target'] == 'all':
         print('[ERROR] -Build needs a single target (v21 or v24)')
         sys.exit(2)
+
+    # Blocks: 1 Download / 2 Deploy / 3 TestPro (default all)
+    opt['BlockExplicit'] = bool(opt['Block'])
+    opt['Blocks'] = [1, 2, 3]
+    if opt['BlockExplicit']:
+        digits = re.sub(r'[\s,]', '', opt['Block'])
+        if not re.fullmatch(r'[123]+', digits):
+            print(f"[ERROR] -Block must be 1, 2, 3 or a combination such as 2,3 (got '{opt['Block']}')")
+            sys.exit(2)
+        opt['Blocks'] = sorted({int(c) for c in digits})
+    block_opts = (('-Branch', opt['Branch'], 1), ('-SourceType', opt['SourceType'], 1), ('-Build', opt['Build'], 1),
+                  ('-UpdateJar', opt['UpdateJar'], 1), ('-SkipGit', opt['SkipGit'], 1),
+                  ('-OnlyIfChanged', opt['OnlyIfChanged'], 1), ('-OpenBrowser', opt['OpenBrowser'], 2),
+                  ('-NoBrowser', opt['NoBrowser'], 2), ('-DevTools', opt['DevTools'], 2))
+    for name, is_set, need in block_opts:
+        if is_set and need not in opt['Blocks']:
+            print(f"[ERROR] {name} needs block {need} (got -Block {','.join(map(str, opt['Blocks']))})")
+            sys.exit(2)
     return opt
 
 
@@ -1045,11 +1140,11 @@ def main(argv):
     targets = list(TARGETS) if opt['Target'] == 'all' else [opt['Target']]
 
     # ---- [jar] Deploy JAVA engine: once per run, before any target ----
-    # Runs with -UpdateJar, or automatically when the configured JarDir has no engine yet.
+    # Runs with -UpdateJar, or automatically when the configured JarDir has no engine yet. Block 1 only.
     jar_results = []
     jar_failed = False
     jar_dirs = []
-    for t in targets:
+    for t in (targets if 1 in opt['Blocks'] else []):
         try:
             c = read_config(os.path.join(root, f'pipeline_{t}.txt'))
             if is_enabled(c) and c['JarDir'] not in jar_dirs:
@@ -1079,7 +1174,7 @@ def main(argv):
     results = []
     for t in targets:
         ctx = {'Target': t, 'Status': 'FAIL', 'Branch': '', 'SourceType': '', 'Version': '', 'Hash': '',
-               'Msg': '', 'Url': '', 'Package': '', 'PackageId': '', 'Error': '',
+               'Msg': '', 'Url': '', 'Package': '', 'PackageId': '', 'LibFrom': '', 'Error': '',
                'TestStatus': '', 'TestPass': 0, 'TestFail': 0, 'TestSec': 0.0, 'TestCode': 0,
                'Steps': []}
         try:
@@ -1093,10 +1188,14 @@ def main(argv):
     log('==============================================')
     log(' AutoPipeline summary')
     log('==============================================')
+    log(f" Blocks: {','.join(map(str, opt['Blocks']))}{'' if opt['BlockExplicit'] else ' (all)'}"
+        '  (1 Download / 2 Deploy / 3 TestPro)')
     for j in jar_results:
         log(f' [jar] {j}')
     for r in results:
         log(f" [{r['Target']}] {r['Status']}")
+        if r['LibFrom']:
+            log(f"   Lib     : prepared by block 1 at {r['LibFrom']}")
         if r['Branch']:
             log(f"   Branch  : {r['Branch']}{' (' + r['SourceType'] + ')' if r['SourceType'] else ''}")
         if r['Package']:

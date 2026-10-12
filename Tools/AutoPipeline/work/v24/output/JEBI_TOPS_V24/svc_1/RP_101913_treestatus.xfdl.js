@@ -1,0 +1,133 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("test3");
+            this.set_titletext("New Form");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1280,720);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("Dataset00", this);
+            obj._setContents({"ColumnInfo" : {"Column" : [{"id" : "Level","size" : "256","type" : "STRING"},{"id" : "MenuName","size" : "256","type" : "STRING"},{"id" : "MenuID","size" : "256","type" : "STRING"},{"id" : "Status","size" : "256","type" : "STRING"}]},"Rows" : [{"Level" : "0","MenuName" : "Menu 1","MenuID" : "1","Status" : "0"},{"Level" : "1","MenuName" : "Menu 1-1","MenuID" : "2","Status" : "0"},{"Level" : "2","MenuName" : "Menu 1-1-1","MenuID" : "3","Status" : "0"}]});
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Grid("Grid00","59","36","191","144",null,null,null,null,null,null,this);
+            obj.set_autofittype("col");
+            obj.set_binddataset("Dataset00");
+            obj.set_taborder("0");
+            obj.set_treeinitstatus("collapse,null");
+            obj._setContents("<Formats><Format id=\"default\"><Columns><Column size=\"200\"/></Columns><Rows><Row band=\"head\" size=\"24\"/><Row size=\"24\"/></Rows><Band id=\"head\"><Cell text=\"Column1\"/></Band><Band id=\"body\"><Cell displaytype=\"treeitemcontrol\" edittype=\"tree\" text=\"bind:MenuName\" treelevel=\"bind:Level\" treestate=\"bind:Status\"/></Band></Format></Formats>");
+            this.addChild(obj.name, obj);
+
+            obj = new Grid("Grid01","260","36","380","144",null,null,null,null,null,null,this);
+            obj.set_autofittype("col");
+            obj.set_binddataset("Dataset00");
+            obj.set_taborder("1");
+            obj._setContents("<Formats><Format id=\"default\"><Columns><Column size=\"80\"/><Column size=\"80\"/><Column size=\"80\"/><Column size=\"80\"/></Columns><Rows><Row band=\"head\" size=\"24\"/><Row size=\"24\"/></Rows><Band id=\"head\"><Cell text=\"Level\"/><Cell col=\"1\" text=\"MenuName\"/><Cell col=\"2\" text=\"MenuID\"/><Cell col=\"3\" text=\"Status\"/></Band><Band id=\"body\"><Cell text=\"bind:Level\"/><Cell col=\"1\" text=\"bind:MenuName\"/><Cell col=\"2\" text=\"bind:MenuID\"/><Cell col=\"3\" displaytype=\"text\" edittype=\"text\" text=\"bind:Status\"/></Band></Format></Formats>");
+            this.addChild(obj.name, obj);
+
+            obj = new Grid("Grid02","266","214","378","111",null,null,null,null,null,null,this);
+            obj.set_binddataset("Dataset00");
+            obj.set_taborder("2");
+            obj._setContents("<Formats><Format id=\"default\"><Columns><Column size=\"80\"/><Column size=\"80\"/><Column size=\"80\"/><Column size=\"80\"/></Columns><Rows><Row band=\"head\" size=\"24\"/><Row size=\"24\"/></Rows><Band id=\"head\"><Cell text=\"Level\"/><Cell col=\"1\" text=\"MenuName\"/><Cell col=\"2\" text=\"MenuID\"/><Cell col=\"3\" text=\"Status\"/></Band><Band id=\"body\"><Cell text=\"bind:Level\"/><Cell col=\"1\" text=\"bind:MenuName\"/><Cell col=\"2\" text=\"bind:MenuID\"/><Cell col=\"3\" text=\"bind:Status\"/></Band></Format></Formats>");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("Button00","59","200","191","60",null,null,null,null,null,null,this);
+            obj.set_taborder("3");
+            obj.set_text("Only setColumn");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("Button01","59","265","191","50",null,null,null,null,null,null,this);
+            obj.set_taborder("4");
+            obj.set_text("set_enableevent");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("Button02","57","347","201","62",null,null,null,null,null,null,this);
+            obj.set_taborder("5");
+            obj.set_text("동작 확인");
+            this.addChild(obj.name, obj);
+
+            obj = new Edit("Edit00","268","347","528","62",null,null,null,null,null,null,this);
+            obj.set_taborder("6");
+            this.addChild(obj.name, obj);
+
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",1280,720,this,function(p){});
+            obj.set_mobileorientation("landscape");
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+        this.registerScript("RP_101913_treestatus.xfdl", function() {
+
+        this.Button00_onclick = function(obj,e)
+        {
+        	this.Dataset00.setColumn(0,"Status",1);
+        };
+
+        this.Button01_onclick = function(obj,e)
+        {
+        	this.Dataset00.set_enableevent(false);
+        	this.Dataset00.setColumn(0,"Status",1);
+        	this.Dataset00.set_enableevent(true);
+        };
+
+        this.Button02_onclick = function(obj, e)
+        {
+            var g    = this.Grid00;
+            var ds   = this.Dataset00;
+            var nRow = 1;                          // Dataset 기준 두 번째 row (Menu 1-1)
+
+            var nTreeRow = g.getTreeRow(nRow);     // Dataset row → Tree row
+            if (nTreeRow < 0) {                    // 부모가 접혀 있어 화면에 없는 경우
+                this.Edit00.set_value("두 번째 row가 화면에 표시되지 않은 상태입니다.");
+                return;
+            }
+
+            var nStatus = g.getTreeStatus(nTreeRow);   // 1: 펼침, 0: 접힘 (조회만, 변경 없음)
+            this.Edit00.set_value("두 번째 row(" + ds.getColumn(nRow, "MenuName") + ") : "
+                                  + (nStatus == 1 ? "펼침" : "접힘")
+                                  + " (treeStatus : " + nStatus + ")");
+        };
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.Grid00.addEventHandler("oncellclick",this.Grid00_oncellclick,this);
+            this.Button00.addEventHandler("onclick",this.Button00_onclick,this);
+            this.Button01.addEventHandler("onclick",this.Button01_onclick,this);
+            this.Button02.addEventHandler("onclick",this.Button02_onclick,this);
+        };
+
+        this.loadIncludeScript("RP_101913_treestatus.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

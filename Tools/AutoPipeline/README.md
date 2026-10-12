@@ -19,13 +19,14 @@
 | `auto_pipeline.exe` | Python 이식 → Nuitka 로 네이티브 컴파일 (소스 미포함) | **어디로 옮겨도 됨** (`-Home` / `PIPELINE_HOME` / exe 폴더 / 기본 경로) |
 
 ```bat
-auto_pipeline.bat            [v21|v24|all] [-Branch <name>] [-SourceType git|package] [-Build <folder>] [-UpdateJar] [-SkipGit] [-OnlyIfChanged] [-OpenBrowser|-NoBrowser] [-DevTools]
-auto_pipeline_standalone.bat [v21|v24|all] [-Branch <name>] [-SourceType git|package] [-Build <folder>] [-UpdateJar] [-SkipGit] [-OnlyIfChanged] [-OpenBrowser|-NoBrowser] [-DevTools] [-Help]
+auto_pipeline.bat            [v21|v24|all] [-Block 1|2|3|2,3] [-Branch <name>] [-SourceType git|package] [-Build <folder>] [-UpdateJar] [-SkipGit] [-OnlyIfChanged] [-OpenBrowser|-NoBrowser] [-DevTools]
+auto_pipeline_standalone.bat [v21|v24|all] [-Block 1|2|3|2,3] [-Branch <name>] [-SourceType git|package] [-Build <folder>] [-UpdateJar] [-SkipGit] [-OnlyIfChanged] [-OpenBrowser|-NoBrowser] [-DevTools] [-Help]
 ```
 
 | 인자 / 옵션 | 설명 |
 |---|---|
 | `v21` / `v24` / `all` | 실행 대상. 생략 시 `all` (v21 → v24 순차 실행) |
+| `-Block <번호>` | 지정한 블럭만 실행. `1` 다운로드 / `2` 배포 / `3` TestPro. 조합 가능 (`2,3`, `23`, `2 3`). 생략 시 전체 (아래 "블럭 실행") |
 | `-Branch <이름>` | **이번 실행만** txt 의 `Branch` 대신 이 브랜치 사용 (txt 는 바뀌지 않음). `v21` / `v24` 처럼 대상 하나일 때만 가능 |
 | `-SourceType git` / `package` | **이번 실행만** 소스 방식 변경. `git` = git 소스로 nexacrolib 구성(기본), `package` = 빌드된 `nexacrolib.zip` 사용 (12장) |
 | `-Build <빌드 폴더>` | **이번 실행만** package 의 빌드 폴더 지정 (예: `-Build 2026.7.30.9(24.0.0.9991)`). 대상 하나일 때만 가능 |
@@ -45,6 +46,55 @@ auto_pipeline_standalone.bat [v21|v24|all] [-Branch <name>] [-SourceType git|pac
 | 3 | 설정 `OpenBrowser=Y` (`YES`/`TRUE`/`1` 도 가능) | 실행 |
 | 4 | 설정 `OpenBrowser=N` 또는 키 없음 | 실행 안 함 (기본) |
 
+### 블럭 실행 (`-Block`, 2026-10-08 추가)
+
+파이프라인을 3개 블럭으로 나눠 **원하는 블럭만** 실행할 수 있다. `-Block` 을 생략하면 1 → 2 → 3 전체 (기존과 같음).
+
+```mermaid
+flowchart LR
+    subgraph B1["Block 1 — 다운로드"]
+        J["[jar] Jar 엔진 확인/설치"] --> S["[1] Source (git)<br/>또는 Package (zip)"] --> L["[2] lib 구성<br/>nexacrolib + generate"]
+    end
+    subgraph B2["Block 2 — 서버 + 배포"]
+        D["[3] Deploy CLI"] --> P["[4] Tomcat 기동 + 게시"] --> C["[5] Chrome"]
+    end
+    subgraph B3["Block 3 — TestPro"]
+        T["[6] JEBI_Main.exe"]
+    end
+    L -- "work\&lt;v&gt;\nexacrolib<br/>block1_state.json" --> D
+    C --> T
+```
+
+| 블럭 | 포함 단계 | 결과물 (다음 블럭이 사용) | 단독 실행 시 필요 조건 |
+|---|---|---|---|
+| **1** 다운로드 | [jar] Jar 확인/설치, [1] Source 또는 Package, [2] lib 구성 | `work\jar\...`, `work\<v>\nexacrolib\`, `work\<v>\block1_state.json` | 없음 |
+| **2** 배포 | [3] Deploy, [4] Tomcat 기동 + 게시, [5] Chrome | `webapps\<WebContext>` 게시, URL 응답 확인 | `work\jar` 엔진 + `work\<v>\nexacrolib` 이 있어야 함 (없으면 "Run block 1 first" 로 FAIL) |
+| **3** TestPro | [6] JEBI_Main.exe 실행 → 결과 수집 | `test-result` | `JebiExePath` 등 Test* 설정. Tomcat 이 꺼져 있으면 경고만 출력 |
+
+- [0] Preflight 는 항상 실행되며, **선택한 블럭에 필요한 항목만** 점검한다 (예: 블럭 3 만이면 java / Tomcat 경로를 보지 않음)
+- 블럭 1 이 끝나면 `block1_state.json` 에 브랜치 / 커밋 / 버전 / 시각을 기록한다. 블럭 2 를 단독 실행하면 이 파일을 읽어 요약에 `Lib : prepared by block 1 at <시각>` 과 커밋을 표시한다
+  - 기록된 브랜치가 현재 txt 의 `Branch` 와 다르거나 버전이 다르면 `[WARN]` 출력
+  - lib 의 버전이 `ExpectedVersion` 과 다르면 FAIL
+- `-OnlyIfChanged` 의 "마지막 성공" 기록은 **블럭 2(배포) 성공 시** 저장된다
+- 여러 블럭을 지정해도 실행 순서는 항상 1 → 2 → 3
+
+**TestPro 실행 여부**
+
+| 실행 방법 | TestPro |
+|---|---|
+| `-Block` 생략 | txt `TestProEnabled=Y` 일 때만 실행 (기존과 같음) |
+| `-Block` 에 `3` 포함 | `TestProEnabled` 와 관계없이 **실행** |
+| `-Block` 에 `3` 없음 | 실행 안 함 |
+
+**블럭 전용 옵션** — 해당 블럭이 없으면 **오류로 중단** (종료 코드 2)
+
+| 옵션 | 필요한 블럭 | 오류 예 |
+|---|---|---|
+| `-Branch`, `-SourceType`, `-Build`, `-UpdateJar`, `-SkipGit`, `-OnlyIfChanged` | 1 | `-Block 2 -SkipGit` → `[ERROR] -SkipGit needs block 1 (got -Block 2)` |
+| `-OpenBrowser`, `-NoBrowser`, `-DevTools` | 2 | `-Block 3 -NoBrowser` → `[ERROR] -NoBrowser needs block 2 (got -Block 3)` |
+
+> `auto_pipeline.bat` 은 cmd 가 쉼표를 구분자로 처리해 `-Block 2,3` 이 `2` `3` 으로 나뉘어 전달된다. 그래서 세 실행 파일 모두 `-Block` 뒤의 숫자 인자를 이어 붙여 처리한다 (`-Block 2,3` = `-Block 23` = `-Block 2 3`).
+
 ### 예시
 
 ```bat
@@ -62,6 +112,18 @@ auto_pipeline.bat v24 -SkipGit -OpenBrowser -DevTools
 
 rem 스케줄러용: 엔진 최신화 + 새 커밋이 있을 때만 (설정이 Y 여도 브라우저 생략)
 auto_pipeline.bat all -UpdateJar -OnlyIfChanged -NoBrowser
+
+rem 블럭 1 만: Jar + 소스 받기 + lib 구성 (배포 안 함)
+auto_pipeline.bat v21 -Block 1
+
+rem 블럭 2 만: 받아 둔 lib 으로 배포 + 게시
+auto_pipeline.bat v21 -Block 2
+
+rem 블럭 3 만: TestPro (TestProEnabled=N 이어도 실행)
+auto_pipeline.bat v24 -Block 3
+
+rem 배포 + TestPro
+auto_pipeline.bat v24 -Block 2,3
 ```
 
 **대상별 실행 여부 (`Enabled`)** — 기본은 **실행**
@@ -184,7 +246,9 @@ flowchart TD
     S1s -- "git 아님 (내용 있음)" --> FAIL
     S1s -- "git 저장소" --> S1u{"origin == RepoUrl\n& index.lock 없음\n& 현재 브랜치 == 브랜치\n& 로컬 수정 없음?"}
     S1u -- No --> FAIL
-    S1u -- Yes --> S1p["git fetch origin 브랜치\ngit pull --ff-only origin 브랜치"]
+    S1u -- Yes --> S1h{"로컬 HEAD ==\n원격 해시?"}
+    S1h -- Yes --> S1k["⏭ fetch/pull 생략\n(배포는 계속)"] --> S1e
+    S1h -- No --> S1p["git fetch origin 브랜치\ngit pull --ff-only origin 브랜치"]
     S1p --> S1e["1-d Lib\FrameworkJS\nexacrolib.json\nTools\Lib\TiMetainfoLib\res 확인\n커밋 해시 / 메시지 기록"]
     S1e --> S2
 
@@ -344,7 +408,7 @@ flowchart TD
 | SourceDir 상태 | 처리 |
 |---|---|
 | 없음 / 빈 폴더 | 디스크 여유 확인(`CloneMinFreeGB`, 기본 40GB) → **full clone**<br>`git clone -c core.longpaths=true -b <Branch> --single-branch <RepoUrl> <SourceDir>`<br>실패 시 이번 실행에서 만든 폴더만 삭제 |
-| git 저장소 | `origin` == `RepoUrl` / `.git\index.lock` 없음 / 현재 브랜치 == Branch / 로컬 수정 없음 확인 후<br>`git fetch origin <Branch>` → `git pull --ff-only origin <Branch>` |
+| git 저장소 | `origin` == `RepoUrl` / `.git\index.lock` 없음 / 현재 브랜치 == Branch / 로컬 수정 없음 확인 후<br>로컬 HEAD == 원격 해시(1-b `ls-remote`) 이면 **fetch/pull 생략** (`[SKIP] fetch/pull: local is up to date`)<br>다르면 `git fetch origin <Branch>` → `git pull --ff-only origin <Branch>` |
 | git 저장소인데 origin 이 다름 | FAIL (다른 저장소 보호) |
 | git 저장소인데 브랜치가 다름 | FAIL (브랜치별 폴더 규칙 위반, `SourceDir=...\{Branch}` 안내) |
 | 내용이 있는데 git 아님 | FAIL (**삭제하지 않음**) |
@@ -355,7 +419,7 @@ flowchart TD
 ```
 
 - clone 명령은 `git_sourcecode.md` 의 명령과 같고, Windows 긴 경로(260자) 대응 `core.longpaths=true` 만 추가했다
-- **처음 clone 은 약 7~9GB 다운로드 + 약 20GB 체크아웃**이라 수십 분 걸릴 수 있다 (시간 제한 없음). 이후 실행은 fetch/pull 만 한다
+- **처음 clone 은 약 7~9GB 다운로드 + 약 20GB 체크아웃**이라 수십 분 걸릴 수 있다 (시간 제한 없음). 이후 실행은 fetch/pull 만 하고, 원격에 새 커밋이 없으면 그것도 생략한다 (10/8 추가). `-OnlyIfChanged` 와 달리 배포·게시는 그대로 진행한다
 - `GIT_TERMINAL_PROMPT=0` 으로 인증 프롬프트 대기를 막음 (인증 실패 시 즉시 FAIL)
 - `RepoUrl` 이 없으면 clone 하지 않고, 기존 SourceDir 의 `origin` 으로 원격 확인/업데이트만 한다
 - TFS 서버는 partial clone(`--filter`)을 지원하지 않는다 (프로토콜 v0, `filter` capability 없음). `--depth`(shallow)는 지원
@@ -487,6 +551,11 @@ parallel:
   (-s 불필요, 각 job은 자동 headless)
 ```
 
+- `[ ]` 옵션은 **txt 에 값을 설정한 경우에만** 붙는다 (10/8 변경). 값이 비었거나 `-` / `--` 같은 자리표시면 설정 안 한 것으로 본다 (모든 txt 키 공통)
+  - 예: `TestScenarioId=--` → `--scenario-id` 없음, `TestHeadless=` → `--headless` 없음
+- 결과 폴더: `TestOutputDir` 를 지정하면 **삭제하지 않는다** (git 저장소의 결과 폴더 등 보호). 비워서 자동 폴더(`work\<대상>\test-result`)를 쓸 때만 실행마다 비운다
+- Pass / Fail 집계는 **이번 실행 중 생성·수정된** 결과 JSON 만 대상으로 한다 (지정 폴더에 남아 있는 이전 결과 제외)
+
 > `-s/--source` 는 `--run-*` 모드에서도 **형식상 필수**. 내용은 사용되지 않으므로 `{}` 내용의 dummy.json 자동 생성.
 
 `TestTimeoutSec`(기본 600초) 초과 시 프로세스를 강제 종료하고 TIMEOUT 처리한다.
@@ -570,8 +639,8 @@ TestOutputDir=
 TestVarsFile=
 # Scenario ID for result file naming (--scenario-id). Leave empty for engine default.
 TestScenarioId=
-# Run headless (no browser window): Y | N (default Y)
-TestHeadless=Y
+# Run headless (no browser window): Y = add --headless. Empty / N = not passed (default)
+TestHeadless=
 # Skip duplicate precondition TC re-runs: Y | N (default N)
 TestSkipDuplicatePreconditions=N
 # Fail on page error: Y | N (default N)
@@ -615,10 +684,10 @@ TestTimeoutSec=600
 | `TestScenarioFile` | ✅(scenario) | 시나리오 JSON 경로 (`--run-scenario`) |
 | `TestTCFiles` | ✅(file) | TC JSON 경로 목록. 파이프 `\|` 구분. 상대 경로는 txt 폴더 기준 (`--run-file`) |
 | `TestParallelManifest` | ✅(parallel) | parallel manifest JSON 경로 (`--run-parallel`) |
-| `TestOutputDir` | ➖ | 결과 저장 폴더. 비우면 `work\<대상>\test-result` 자동. 실행마다 초기화 |
+| `TestOutputDir` | ➖ | 결과 저장 폴더 (지정 폴더는 **삭제하지 않음**). 비우면 `work\<대상>\test-result` 자동 — 이 자동 폴더만 실행마다 초기화 |
 | `TestVarsFile` | ➖ | 환경변수 JSON (`--vars`). 비우면 치환 없음 |
 | `TestScenarioId` | ➖ | 결과 파일명용 시나리오 ID (`--scenario-id`). 비우면 엔진 기본값 |
-| `TestHeadless` | ➖ | `Y` 이면 `--headless`. **기본 `Y`** (CI/CD 환경) |
+| `TestHeadless` | ➖ | `Y` 이면 `--headless`. 비우거나 `N` 이면 붙이지 않음 (기본) |
 | `TestSkipDuplicatePreconditions` | ➖ | `Y` 이면 `--skip-duplicate-preconditions`. 기본 `N` |
 | `TestFailOnPageError` | ➖ | `Y` 이면 `--fail-on-page-error`. 기본 `N` |
 | `TestTimeoutSec` | ➖ | 최대 실행 대기 시간(초). `0` = 무제한. **기본 `600`** |
@@ -1059,6 +1128,9 @@ python\build_exe.bat
 |---|---|
 | 2026-10-01 | 초기 버전 — [jar] / [0]~[5] 단계, standalone bat, exe, package 방식 |
 | 2026-10-08 | **[6] TestPro 단계 추가** — JEBI_Main.exe CLI 연동, 설정 파일 확장, standalone 경로 자동 변환 |
+| 2026-10-08 | [1] Source — 로컬 HEAD 가 원격 최신 커밋과 같으면 fetch/pull 생략 |
+| 2026-10-08 | TestPro — 설정 안 한 옵션은 전달 안 함 (`-`/`--` 값 = 미설정, `TestHeadless` 기본 빈 값). 지정한 `TestOutputDir` 는 삭제하지 않음, 이번 실행 결과만 집계 |
+| 2026-10-08 | **블럭 실행 (`-Block`)** — 1 다운로드 / 2 배포 / 3 TestPro 를 따로 실행. `block1_state.json`, 블럭 전용 옵션 검사. exe 재빌드 |
 
 ---
 

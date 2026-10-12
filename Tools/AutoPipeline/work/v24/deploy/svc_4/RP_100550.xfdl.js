@@ -1,1 +1,70 @@
-(function(){return function(){if(!this._is_form){return;}var obj=null;this.on_create=function(){this.set_name("Form_Work");this.set_titletext("Form_Work");if(Form==this.constructor){this._setFormPosition(1280,720);}obj=new Dataset("Dataset00",this);obj._setContents({"ColumnInfo":{"Column":[{"id":"code","size":"256","type":"STRING"},{"id":"data","size":"256","type":"STRING"}]},"Rows":[{"code":"00","data":"AA"},{"code":"01","data":"BB"},{"code":"02","data":"CC"},{"code":"03","data":"DD"},{"code":"04","data":"EE"}]});this.addChild(obj.name,obj);obj=new MultiCombo("MultiCombo00","90","60","364","51",null,null,null,null,null,null,this);obj.set_codecolumn("codecolumn");obj.set_datacolumn("datacolumn");obj.set_readonlycolumn("readonlycolumn");obj.set_taborder("0");obj.set_type("filterlike");var MultiCombo00_innerdataset=new nexacro.NormalDataset("MultiCombo00_innerdataset",obj);MultiCombo00_innerdataset._setContents({"ColumnInfo":{"Column":[{"id":"codecolumn","size":"256"},{"id":"datacolumn","size":"256"},{"id":"readonlycolumn","size":"256"}]},"Rows":[{"codecolumn":"1","datacolumn":"조회","readonlycolumn":""},{"codecolumn":"2","datacolumn":"수정","readonlycolumn":""},{"codecolumn":"3","datacolumn":"삭제","readonlycolumn":""}]});obj.set_innerdataset(MultiCombo00_innerdataset);obj.set_text("MultiCombo00");this.addChild(obj.name,obj);obj=new Layout("default","Desktop_screen",1280,720,this,function(p){});this.addLayout(obj.name,obj);};this.loadPreloadList=function(){};this.on_initEvent=function(){};this.loadIncludeScript("RP_100550.xfdl");this.loadPreloadList();obj=null;};})();
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("Form_Work");
+            this.set_titletext("Form_Work");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1280,720);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("Dataset00", this);
+            obj._setContents({"ColumnInfo" : {"Column" : [{"id" : "code","size" : "256","type" : "STRING"},{"id" : "data","size" : "256","type" : "STRING"}]},"Rows" : [{"code" : "00","data" : "AA"},{"code" : "01","data" : "BB"},{"code" : "02","data" : "CC"},{"code" : "03","data" : "DD"},{"code" : "04","data" : "EE"}]});
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new MultiCombo("MultiCombo00","90","60","364","51",null,null,null,null,null,null,this);
+            obj.set_codecolumn("codecolumn");
+            obj.set_datacolumn("datacolumn");
+            obj.set_readonlycolumn("readonlycolumn");
+            obj.set_taborder("0");
+            obj.set_type("filterlike");
+            var MultiCombo00_innerdataset = new nexacro.NormalDataset("MultiCombo00_innerdataset", obj);
+            MultiCombo00_innerdataset._setContents({"ColumnInfo" : {"Column" : [{"id" : "codecolumn","size" : "256"},{"id" : "datacolumn","size" : "256"},{"id" : "readonlycolumn","size" : "256"}]},"Rows" : [{"codecolumn" : "1","datacolumn" : "조회","readonlycolumn" : ""},{"codecolumn" : "2","datacolumn" : "수정","readonlycolumn" : ""},{"codecolumn" : "3","datacolumn" : "삭제","readonlycolumn" : ""}]});
+            obj.set_innerdataset(MultiCombo00_innerdataset);
+            obj.set_text("MultiCombo00");
+            this.addChild(obj.name, obj);
+
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","Desktop_screen",1280,720,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+
+        };
+
+        this.loadIncludeScript("RP_100550.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();
