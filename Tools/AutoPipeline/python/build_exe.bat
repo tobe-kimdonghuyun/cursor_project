@@ -19,7 +19,7 @@ if errorlevel 1 (
     exit /b 1
 )
 
-if exist "%_HERE%..\auto_pipeline_py.exe" del /q "%_HERE%..\auto_pipeline_py.exe"
+if exist "%_HERE%auto_pipeline_py.exe" del /q "%_HERE%auto_pipeline_py.exe"
 if exist "%_HERE%build\auto_pipeline_py.exe" del /q "%_HERE%build\auto_pipeline_py.exe"
 
 pushd "%_HERE%"
@@ -31,7 +31,6 @@ pushd "%_HERE%"
     --windows-console-mode=force ^
     --output-dir=build ^
     --output-filename=auto_pipeline_py.exe ^
-    --remove-output ^
     --company-name=TOBESOFT ^
     --product-name=AutoPipeline ^
     --file-description="Nexacro AutoPipeline" ^
@@ -45,6 +44,6 @@ if not "%_RC%"=="0" (
     exit /b %_RC%
 )
 
-copy /Y "%_HERE%build\auto_pipeline_py.exe" "%_HERE%..\auto_pipeline_py.exe" >nul
-echo [DONE] %_HERE%..\auto_pipeline_py.exe
+copy /Y "%_HERE%build\auto_pipeline_py.exe" "%_HERE%auto_pipeline_py.exe" >nul
+echo [DONE] %_HERE%auto_pipeline_py.exe
 endlocal

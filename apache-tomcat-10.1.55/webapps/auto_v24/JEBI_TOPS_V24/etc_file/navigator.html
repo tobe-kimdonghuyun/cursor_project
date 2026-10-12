@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL 이동</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .nav-box {
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+      padding: 32px 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 680px;
+    }
+
+    .nav-box h2 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 4px;
+    }
+
+    .nav-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    #urlInput {
+      flex: 1;
+      height: 42px;
+      padding: 0 14px;
+      font-size: 14px;
+      border: 1.5px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+      transition: border-color 0.2s;
+      color: #222;
+    }
+
+    #urlInput:focus {
+      border-color: #4a90e2;
+      box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
+    }
+
+    #urlInput::placeholder {
+      color: #aaa;
+    }
+
+    #goBtn {
+      height: 42px;
+      padding: 0 24px;
+      font-size: 14px;
+      font-weight: 600;
+      background: #4a90e2;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    #goBtn:hover { background: #3578c7; }
+    #goBtn:active { background: #2a65b0; }
+
+    .hint {
+      font-size: 12px;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+
+<div class="nav-box">
+  <h2>URL 이동</h2>
+  <div class="nav-row">
+    <input id="urlInput" type="text" placeholder="http://example.com 또는 https://..." autocomplete="off" spellcheck="false">
+    <button id="goBtn" onclick="navigate()">이동</button>
+  </div>
+  <span class="hint">Enter 키를 눌러도 이동합니다.</span>
+</div>
+
+<script>
+  function navigate() {
+    var url = document.getElementById('urlInput').value.trim();
+    if (!url) return;
+
+    // 프로토콜이 없으면 http:// 자동 추가
+    if (!/^https?:\/\//i.test(url)) {
+      url = 'http://' + url;
+    }
+
+    window.location.href = url;
+  }
+
+  document.getElementById('urlInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') navigate();
+  });
+
+  // 페이지 로드 시 input 포커스
+  window.onload = function() {
+    document.getElementById('urlInput').focus();
+  };
+</script>
+
+</body>
+</html>

@@ -1,5 +1,44 @@
 <?xml version='1.0' encoding='utf8'?>
-<nuitka-compilation-report nuitka_version="4.3" nuitka_commercial_version="not installed" mode="onefile" completion="error exit message (1)" exit_message="Failed unexpectedly in Scons C backend compilation.">
+<nuitka-compilation-report nuitka_version="4.3" nuitka_commercial_version="not installed" mode="onefile" completion="exception">
+  <exception exception_type="FileNotFoundError" exception_value="[Errno 2] getWindowsShortPathName for D:\git_prj\cursor_project\Tools\AutoPipeline\python\build\auto_pipeline.dist (지정된 파일을 찾을 수 없습니다.)">
+Traceback (most recent call last):
+  File "C:\Users\sjrnfl13\AppData\Roaming\Python\Python314\site-packages\nuitka\MainControl.py", line 1454, in main
+    _main()
+    ~~~~~^^
+  File "C:\Users\sjrnfl13\AppData\Roaming\Python\Python314\site-packages\nuitka\MainControl.py", line 1288, in _main
+    result, scons_options = compileTree()
+                            ~~~~~~~~~~~^^
+  File "C:\Users\sjrnfl13\AppData\Roaming\Python\Python314\site-packages\nuitka\MainControl.py", line 1139, in compileTree
+    result, scons_options = runSconsBackend()
+                            ~~~~~~~~~~~~~~~^^
+  File "C:\Users\sjrnfl13\AppData\Roaming\Python\Python314\site-packages\nuitka\MainControl.py", line 954, in runSconsBackend
+    runScons(
+    ~~~~~~~~^
+        scons_options=scons_options,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...&lt;3 lines&gt;...
+        source_dir_external=source_dir_external,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ),
+    ^
+  File "C:\Users\sjrnfl13\AppData\Roaming\Python\Python314\site-packages\nuitka\build\SconsInterface.py", line 573, in runScons
+    scons_options["result_exe"] = getExternalUsePath(
+                                  ~~~~~~~~~~~~~~~~~~^
+        scons_options["result_exe"], only_dirname=True
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\sjrnfl13\AppData\Roaming\Python\Python314\site-packages\nuitka\utils\FileOperations.py", line 1711, in getExternalUsePath
+    dirname = getWindowsShortPathName(os.path.dirname(filename))
+  File "C:\Users\sjrnfl13\AppData\Roaming\Python\Python314\site-packages\nuitka\utils\FileOperations.py", line 1637, in getWindowsShortPathName
+    raiseWindowsError("getWindowsShortPathName for %s" % filename)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sjrnfl13\AppData\Roaming\Python\Python314\site-packages\nuitka\utils\Utils.py", line 585, in raiseWindowsError
+    raise WindowsError(
+    ...&lt;2 lines&gt;...
+    )
+FileNotFoundError: [Errno 2] getWindowsShortPathName for D:\git_prj\cursor_project\Tools\AutoPipeline\python\build\auto_pipeline.dist (지정된 파일을 찾을 수 없습니다.)
+</exception>
   <module name="__future__" kind="UncompiledPythonModule" usage="stdlib" reason="Including as part of the non-excluded parts of standard library." source_path="${sys.prefix}\Lib\__future__.py">
     <optimization-time pass="1" time="0.0000" micro_passes="7" max_branch_merge="8" merged_total="81" />
     <optimization-time pass="2" time="0.0000" />
@@ -12,88 +51,91 @@
   </module>
   <module name="__main__" kind="PythonMainModule" usage="root_module" reason="Root module" source_path="${cwd}\auto_pipeline.py">
     <plugin-influence name="implicit-imports" influence="condition-used" condition="module_mode and plugin(&quot;pyside6&quot;)" tags_used="module_mode" result="false" />
-    <optimization-time pass="1" time="0.8906" micro_passes="5" max_branch_merge="61" merged_total="7022" />
-    <optimization-time pass="2" time="0.0625" micro_passes="1" max_branch_merge="55" merged_total="1358" />
-    <code-generation-time time="0.1719" />
+    <optimization-time pass="1" time="0.6406" micro_passes="6" max_branch_merge="66" merged_total="9541" />
+    <optimization-time pass="2" time="0.0781" micro_passes="1" max_branch_merge="60" merged_total="1550" />
+    <code-generation-time time="0.2344" />
     <module_usages>
-      <module_usage name="datetime" finding="absolute" line="19" reason="import" />
-      <module_usage name="json" finding="absolute" line="20" reason="import" />
-      <module_usage name="os" finding="absolute" line="21" reason="import" />
-      <module_usage name="re" finding="absolute" line="22" reason="import" />
-      <module_usage name="shutil" finding="absolute" line="23" reason="import" />
-      <module_usage name="socket" finding="absolute" line="24" reason="import" />
-      <module_usage name="stat" finding="absolute" line="25" reason="import" />
-      <module_usage name="subprocess" finding="absolute" line="26" reason="import" />
-      <module_usage name="sys" finding="absolute" line="27" reason="import" />
-      <module_usage name="tempfile" finding="absolute" line="28" reason="import" />
-      <module_usage name="time" finding="absolute" line="29" reason="import" />
-      <module_usage name="urllib.parse" finding="absolute" line="30" reason="import" />
-      <module_usage name="urllib.request" finding="absolute" line="31" reason="import" />
+      <module_usage name="datetime" finding="absolute" line="18" reason="import" />
+      <module_usage name="json" finding="absolute" line="19" reason="import" />
+      <module_usage name="os" finding="absolute" line="20" reason="import" />
+      <module_usage name="re" finding="absolute" line="21" reason="import" />
+      <module_usage name="shutil" finding="absolute" line="22" reason="import" />
+      <module_usage name="socket" finding="absolute" line="23" reason="import" />
+      <module_usage name="stat" finding="absolute" line="24" reason="import" />
+      <module_usage name="subprocess" finding="absolute" line="25" reason="import" />
+      <module_usage name="sys" finding="absolute" line="26" reason="import" />
+      <module_usage name="tempfile" finding="absolute" line="27" reason="import" />
+      <module_usage name="time" finding="absolute" line="28" reason="import" />
+      <module_usage name="urllib.parse" finding="absolute" line="29" reason="import" />
+      <module_usage name="urllib.request" finding="absolute" line="30" reason="import" />
+      <module_usage name="xml.etree.ElementTree" finding="absolute" line="31" reason="import" />
       <module_usage name="zipfile" finding="absolute" line="32" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="123" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="124" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="150" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="151" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="162" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="168" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="277" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="290" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="292" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="293" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="294" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="305" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="311" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="318" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="406" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="429" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="435" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="436" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="437" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="438" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="439" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="443" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="447" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="450" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="476" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="520" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="525" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="530" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="544" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="545" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="130" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="131" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="160" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="161" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="172" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="178" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="287" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="300" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="302" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="303" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="304" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="315" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="321" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="328" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="380" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="434" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="457" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="460" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="461" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="462" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="463" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="464" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="468" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="472" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="475" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="501" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="541" reason="import" />
       <module_usage name="ntpath" finding="absolute" line="546" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="547" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="560" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="561" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="563" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="578" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="616" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="641" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="658" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="659" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="667" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="551" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="565" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="566" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="567" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="568" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="581" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="582" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="584" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="599" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="638" reason="import" />
       <module_usage name="ntpath" finding="absolute" line="672" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="674" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="677" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="679" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="691" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="693" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="704" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="705" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="727" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="728" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="747" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="767" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="799" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="800" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="816" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="823" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="857" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="858" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="1018" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="1037" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="1038" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="1040" reason="import" />
-      <module_usage name="ntpath" finding="absolute" line="1054" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="702" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="703" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="711" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="716" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="718" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="721" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="723" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="735" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="737" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="748" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="749" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="772" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="773" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="793" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="839" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="840" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="856" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="863" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="865" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="866" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="906" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="907" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="1143" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="1181" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="1190" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="1192" reason="import" />
+      <module_usage name="ntpath" finding="absolute" line="1209" reason="import" />
       <module_usage name="_collections_abc" finding="absolute" reason="stdlib" />
       <module_usage name="_opcode_metadata" finding="absolute" reason="stdlib" />
       <module_usage name="_weakrefset" finding="absolute" reason="stdlib" />
@@ -513,6 +555,14 @@
     <optimization-time pass="1" time="0.0000" />
     <optimization-time pass="2" time="0.0000" />
     <module_usages />
+  </module>
+  <module name="_elementtree" kind="PythonExtensionModule" usage="import" reason="Extension module needed for standalone mode." source_path="${sys.prefix}\DLLs\_elementtree.pyd">
+    <optimization-time pass="1" time="0.0000" />
+    <optimization-time pass="2" time="0.0000" />
+    <module_usages>
+      <module_usage name="xml.etree.ElementPath" finding="absolute" reason="implicit import: According to 'implicit-imports' configuration." />
+      <module_usage name="pyexpat" finding="absolute" reason="implicit import: According to 'implicit-imports' configuration." />
+    </module_usages>
   </module>
   <module name="_hashlib" kind="PythonExtensionModule" usage="import" reason="Extension module needed for standalone mode." source_path="${sys.prefix}\DLLs\_hashlib.pyd">
     <optimization-time pass="1" time="0.0000" />
@@ -1585,7 +1635,7 @@
   </module>
   <module name="email.parser" kind="UncompiledPythonModule" usage="import" reason="Instructed by user to follow to all modules." source_path="${sys.prefix}\Lib\email\parser.py">
     <optimization-time pass="1" time="0.0312" micro_passes="7" max_branch_merge="10" merged_total="776" />
-    <optimization-time pass="2" time="0.0156" />
+    <optimization-time pass="2" time="0.0000" />
     <module_usages>
       <module_usage name="io" finding="absolute" line="10" reason="import" />
       <module_usage name="email.feedparser" finding="absolute" line="12" reason="import" />
@@ -3708,6 +3758,11 @@
       <module_usage name="importlib.util" finding="absolute" line="46" reason="import" />
     </module_usages>
   </module>
+  <module name="pyexpat" kind="PythonExtensionModule" usage="import" reason="Extension module needed for standalone mode." source_path="${sys.prefix}\DLLs\pyexpat.pyd">
+    <optimization-time pass="1" time="0.0000" />
+    <optimization-time pass="2" time="0.0000" />
+    <module_usages />
+  </module>
   <module name="quopri" kind="UncompiledPythonModule" usage="stdlib" reason="Technically required for CPython library startup." source_path="${sys.prefix}\Lib\quopri.py">
     <optimization-time pass="1" time="0.0312" micro_passes="6" max_branch_merge="34" merged_total="1235" />
     <optimization-time pass="2" time="0.0000" />
@@ -4579,6 +4634,67 @@
       <module_usage name="argparse" finding="absolute" line="721" reason="import" />
     </module_usages>
   </module>
+  <module name="xml" kind="UncompiledPythonPackage" usage="import path parent" reason="Instructed by user to follow to all modules." source_path="${sys.prefix}\Lib\xml\__init__.py">
+    <optimization-time pass="1" time="0.0000" micro_passes="2" />
+    <optimization-time pass="2" time="0.0000" />
+    <module_usages>
+      <module_usage name="os" finding="absolute" line="1" reason="import" />
+    </module_usages>
+  </module>
+  <module name="xml.etree" kind="UncompiledPythonPackage" usage="import path parent" reason="Instructed by user to follow to all modules." source_path="${sys.prefix}\Lib\xml\etree\__init__.py">
+    <optimization-time pass="1" time="0.0000" micro_passes="2" />
+    <optimization-time pass="2" time="0.0000" />
+    <module_usages>
+      <module_usage name="os" finding="absolute" line="1" reason="import" />
+    </module_usages>
+  </module>
+  <module name="xml.etree.ElementPath" kind="UncompiledPythonModule" usage="import fromlist" reason="Instructed by user to follow to all modules." source_path="${sys.prefix}\Lib\xml\etree\ElementPath.py">
+    <optimization-time pass="1" time="0.1094" micro_passes="7" max_branch_merge="23" merged_total="3234" />
+    <optimization-time pass="2" time="0.0000" />
+    <module_usages>
+      <module_usage name="re" finding="absolute" line="59" reason="import" />
+    </module_usages>
+  </module>
+  <module name="xml.etree.ElementTree" kind="UncompiledPythonModule" usage="import" reason="Instructed by user to follow to all modules." source_path="${sys.prefix}\Lib\xml\etree\ElementTree.py">
+    <optimization-time pass="1" time="0.3281" micro_passes="7" max_branch_merge="33" merged_total="11864" />
+    <optimization-time pass="2" time="0.0000" />
+    <module_usages>
+      <module_usage name="sys" finding="absolute" line="95" reason="import" />
+      <module_usage name="re" finding="absolute" line="96" reason="import" />
+      <module_usage name="warnings" finding="absolute" line="97" reason="import" />
+      <module_usage name="io" finding="absolute" line="98" reason="import" />
+      <module_usage name="collections" finding="absolute" line="99" reason="import" />
+      <module_usage name="collections.abc" finding="not-found" line="100" reason="import" />
+      <module_usage name="contextlib" finding="absolute" line="101" reason="import" />
+      <module_usage name="weakref" finding="absolute" line="102" reason="import" />
+      <module_usage name="xml.etree" finding="absolute" line="104" reason="import" />
+      <module_usage name="xml.etree.ElementPath" finding="relative" line="104" reason="import fromlist" />
+      <module_usage name="io" finding="absolute" line="1093" reason="import" />
+      <module_usage name="xml.parsers" finding="absolute" line="1532" reason="import" />
+      <module_usage name="xml.parsers.expat" finding="relative" line="1532" reason="import fromlist" />
+      <module_usage name="pyexpat" finding="absolute" line="1535" reason="import" />
+      <module_usage name="xml.parsers" finding="absolute" line="1677" reason="import" />
+      <module_usage name="xml.parsers.expat" finding="relative" line="1677" reason="import fromlist" />
+      <module_usage name="io" finding="absolute" line="1774" reason="import" />
+      <module_usage name="_elementtree" finding="absolute" line="2097" reason="import" />
+      <module_usage name="_elementtree" finding="absolute" line="2098" reason="import" />
+    </module_usages>
+  </module>
+  <module name="xml.parsers" kind="UncompiledPythonPackage" usage="import" reason="Instructed by user to follow to all modules." source_path="${sys.prefix}\Lib\xml\parsers\__init__.py">
+    <optimization-time pass="1" time="0.0000" micro_passes="2" />
+    <optimization-time pass="2" time="0.0000" />
+    <module_usages>
+      <module_usage name="os" finding="absolute" line="1" reason="import" />
+    </module_usages>
+  </module>
+  <module name="xml.parsers.expat" kind="UncompiledPythonModule" usage="import fromlist" reason="Instructed by user to follow to all modules." source_path="${sys.prefix}\Lib\xml\parsers\expat.py">
+    <optimization-time pass="1" time="0.0000" micro_passes="2" />
+    <optimization-time pass="2" time="0.0000" />
+    <module_usages>
+      <module_usage name="sys" finding="absolute" line="2" reason="import" />
+      <module_usage name="pyexpat" finding="absolute" line="4" reason="import" />
+    </module_usages>
+  </module>
   <module name="zipfile" kind="UncompiledPythonPackage" usage="import" reason="Including as part of the non-excluded parts of standard library." source_path="${sys.prefix}\Lib\zipfile\__init__.py">
     <optimization-time pass="1" time="0.5469" micro_passes="7" max_branch_merge="41" merged_total="13376" />
     <optimization-time pass="2" time="0.0000" />
@@ -4656,12 +4772,13 @@
     </module_usages>
   </module>
   <performance>
-    <memory_usage name="after_launch" value="50778112" />
-    <memory_usage name="before_c_code_generation" value="353878016" />
-    <memory_usage name="before_running_scons" value="357421056" />
+    <memory_usage name="after_launch" value="49242112" />
+    <memory_usage name="before_c_code_generation" value="82518016" />
+    <memory_usage name="before_running_scons" value="84496384" />
   </performance>
   <included_extension name="_bz2.pyd" dest_path="_bz2.pyd" source_path="${sys.prefix}\DLLs\_bz2.pyd" package="" ignored="no" reason="used extension module" tags="copy" />
   <included_extension name="_decimal.pyd" dest_path="_decimal.pyd" source_path="${sys.prefix}\DLLs\_decimal.pyd" package="" ignored="no" reason="used extension module" tags="copy" />
+  <included_extension name="_elementtree.pyd" dest_path="_elementtree.pyd" source_path="${sys.prefix}\DLLs\_elementtree.pyd" package="" ignored="no" reason="used extension module" tags="copy" />
   <included_extension name="_hashlib.pyd" dest_path="_hashlib.pyd" source_path="${sys.prefix}\DLLs\_hashlib.pyd" package="" ignored="no" reason="used extension module" tags="copy" />
   <included_extension name="_lzma.pyd" dest_path="_lzma.pyd" source_path="${sys.prefix}\DLLs\_lzma.pyd" package="" ignored="no" reason="used extension module" tags="copy" />
   <included_extension name="_socket.pyd" dest_path="_socket.pyd" source_path="${sys.prefix}\DLLs\_socket.pyd" package="" ignored="no" reason="used extension module" tags="copy" />
@@ -4670,39 +4787,40 @@
   <included_extension name="_zstd.pyd" dest_path="_zstd.pyd" source_path="${sys.prefix}\DLLs\_zstd.pyd" package="" ignored="no" reason="used extension module" tags="copy" />
   <included_dll name="libcrypto-3.dll" dest_path="libcrypto-3.dll" source_path="${sys.prefix}\DLLs\libcrypto-3.dll" package="" ignored="no" reason="Used by '_hashlib.pyd'" tags="copy" />
   <included_dll name="libssl-3.dll" dest_path="libssl-3.dll" source_path="${sys.prefix}\DLLs\libssl-3.dll" package="" ignored="no" reason="Used by '_ssl.pyd'" tags="copy" />
+  <included_extension name="pyexpat.pyd" dest_path="pyexpat.pyd" source_path="${sys.prefix}\DLLs\pyexpat.pyd" package="" ignored="no" reason="used extension module" tags="copy" />
   <included_dll name="python314.dll" dest_path="python314.dll" source_path="${sys.prefix}\python314.dll" package="" ignored="no" reason="Used by '_bz2.pyd'" tags="copy" />
   <included_extension name="select.pyd" dest_path="select.pyd" source_path="${sys.prefix}\DLLs\select.pyd" package="" ignored="no" reason="used extension module" tags="copy" />
   <included_extension name="unicodedata.pyd" dest_path="unicodedata.pyd" source_path="${sys.prefix}\DLLs\unicodedata.pyd" package="" ignored="no" reason="used extension module" tags="copy" />
   <included_dll name="vcruntime140.dll" dest_path="vcruntime140.dll" source_path="${sys.prefix}\vcruntime140.dll" package="" ignored="no" reason="Used by '_bz2.pyd'" tags="copy" />
   <included_dll name="vcruntime140_1.dll" dest_path="vcruntime140_1.dll" source_path="${sys.prefix}\vcruntime140_1.dll" package="" ignored="no" reason="Used by '_wmi.pyd'" tags="copy" />
-  <data_composer blob_size="5739021" total="1220">
-    <module_data filename="__bytecode.const" blob_name=".bytecode" blob_size="5721750" input_size="5746914" />
+  <data_composer blob_size="5825300" total="1273">
+    <module_data filename="__bytecode.const" blob_name=".bytecode" blob_size="5806101" input_size="5831684" />
     <module_data filename="__constants.const" blob_name="" blob_size="1075" input_size="2663" />
-    <module_data filename="module.__main__.const" blob_name="__main__" blob_size="16164" input_size="30036" />
+    <module_data filename="module.__main__.const" blob_name="__main__" blob_size="18092" input_size="32840" />
   </data_composer>
   <performance-totals>
-    <optimization-time pass="1" time="32.1094" module_count="370" />
-    <optimization-time pass="2" time="0.0781" module_count="370" />
-    <optimization-time pass="all" time="32.1875" module_count="370" />
-    <code-generation-time time="0.1719" module_count="1" />
+    <optimization-time pass="1" time="32.2969" module_count="378" />
+    <optimization-time pass="2" time="0.0781" module_count="378" />
+    <optimization-time pass="all" time="32.3750" module_count="378" />
+    <code-generation-time time="0.2344" module_count="1" />
   </performance-totals>
   <python_binary filename="auto_pipeline.dll" />
-  <onefile_binary filename="auto_pipeline.exe" />
+  <onefile_binary filename="auto_pipeline_py.exe" size="7163392" />
   <command_line>
     <option value="--onefile" />
-    <option value="--msvc=latest" />
+    <option value="--zig" />
     <option value="--assume-yes-for-downloads" />
     <option value="--python-flag=no_docstrings,no_asserts" />
     <option value="--windows-console-mode=force" />
     <option value="--output-dir=build" />
-    <option value="--output-filename=auto_pipeline.exe" />
+    <option value="--output-filename=auto_pipeline_py.exe" />
     <option value="--remove-output" />
     <option value="--company-name=TOBESOFT" />
     <option value="--product-name=AutoPipeline" />
     <option value="--file-description=Nexacro AutoPipeline" />
     <option value="--file-version=1.0.0.0" />
     <option value="--product-version=1.0.0.0" />
-    <option value="D:\git_prj\cursor_project\Tools\AutoPipeline\python\auto_pipeline.py" />
+    <option value="auto_pipeline.py" />
   </command_line>
   <plugins>
     <plugin name="anti-bloat" user_enabled="no" />
@@ -4741,5 +4859,5 @@
       <path value="~\AppData\Roaming\Python\Python314\site-packages\setuptools\_vendor" />
     </search_path>
   </python>
-  <output run_filename="${cwd}\build\auto_pipeline.exe" />
+  <output run_filename="${cwd}\build\auto_pipeline_py.exe" />
 </nuitka-compilation-report>

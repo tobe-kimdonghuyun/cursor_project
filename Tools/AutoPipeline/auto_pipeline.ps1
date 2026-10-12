@@ -25,13 +25,35 @@
   Existing Tools scripts are NOT used or modified; all logic lives here.
 #>
 param(
-    [ValidateSet('v21', 'v24', 'all')][string]$Target = 'all',
+    [string]$Target = 'all',
     [string]$Branch,
     [string]$SourceType,
     [string]$Build,
     [string]$Block,
+    [string]$Config,
     [switch]$SkipGit
 )
+
+# -Config: txt 파일 경로 직접 지정(절대/상대 모두 허용) → Target 자동 추론
+$ConfigPath = $null
+if ($Config) {
+    $ConfigPath = [IO.Path]::GetFullPath($Config)
+    if (-not (Test-Path -LiteralPath $ConfigPath)) { Write-Host "[ERROR] Config file not found: $ConfigPath"; exit 2 }
+    if ($Target -eq 'all') {
+        # 파일명에서 v21/v24 추론, 실패하면 ExpectedVersion= 읽기
+        $m = [regex]::Match([IO.Path]::GetFileName($ConfigPath), 'v(21|24)', 'IgnoreCase')
+        if ($m.Success) {
+            $Target = "v$($m.Groups[1].Value)"
+        } else {
+            $expVer = (Get-Content -LiteralPath $ConfigPath -Encoding UTF8 | Where-Object { $_ -match '^ExpectedVersion\s*=' } | Select-Object -First 1) -replace '^.*=\s*', ''
+            if ($expVer -match '21') { $Target = 'v21' }
+            elseif ($expVer -match '24') { $Target = 'v24' }
+            else { Write-Host "[ERROR] -Config: cannot infer target from '$([IO.Path]::GetFileName($ConfigPath))'."; Write-Host "        Add ExpectedVersion=21 or 24 to the file, or specify the target explicitly (e.g. -Target v24 -Config ...)."; exit 2 }
+        }
+    }
+} elseif (@('v21', 'v24', 'all') -notcontains $Target) {
+    Write-Host "[ERROR] Invalid -Target: $Target  (must be v21, v24, or all)"; exit 2
+}
 
 if ($Branch -and $Target -eq 'all') { Write-Host '[ERROR] -Branch needs a single target (v21 or v24)'; exit 2 }
 if ($Build -and $Target -eq 'all')  { Write-Host '[ERROR] -Build needs a single target (v21 or v24)'; exit 2 }
@@ -42,7 +64,7 @@ $ProgressPreference    = 'SilentlyContinue'   # PS 5.1 progress bar makes downlo
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $env:GIT_TERMINAL_PROMPT = '0'   # never block on a credential prompt
 
-$ROOT      = $PSScriptRoot
+$ROOT      = if ($ConfigPath) { Split-Path -Parent $ConfigPath } else { $PSScriptRoot }
 $WORK_ROOT = Join-Path $ROOT 'work'
 $LOG_DIR   = Join-Path $ROOT 'logs'
 New-Item -ItemType Directory -Force -Path $LOG_DIR | Out-Null
@@ -73,6 +95,13 @@ function Read-PipelineConfig([string]$Path) {
         $i = $t.IndexOf('=')
         if ($i -lt 1) { continue }
         $cfg[$t.Substring(0, $i).Trim()] = $t.Substring($i + 1).Trim().TrimEnd('\')
+    }
+    # Relative paths are resolved against the folder that holds the config file
+    $base = Split-Path -Parent ([IO.Path]::GetFullPath($Path))
+    foreach ($key in 'SourceDir', 'ProjectPath', 'WorkDir', 'JarDir', 'TomcatHome', 'JavaHome', 'PackageRoot', 'PackagePath',
+                     'JebiExePath', 'TestScenarioFile', 'TestParallelManifest', 'TestOutputDir', 'TestVarsFile', 'TestSourceFile') {
+        $v = $cfg[$key]
+        if ($v -and -not [IO.Path]::IsPathRooted($v)) { $cfg[$key] = [IO.Path]::GetFullPath((Join-Path $base $v)) }
     }
     $required = 'ExpectedVersion', 'SourceDir', 'Branch', 'ProjectPath', 'WorkDir',
                 'JarDir', 'TomcatHome', 'TomcatPort', 'WebContext'
@@ -290,8 +319,8 @@ function Invoke-Step($Ctx, [string]$Name, [scriptblock]$Body, [bool]$When = $tru
 # Pipeline for one target
 # ============================================================
 
-function Invoke-Target($Ctx, [bool]$JarUpdated = $false) {
-    $cfgPath = Join-Path $ROOT "pipeline_$($Ctx.Target).txt"
+function Invoke-Target($Ctx, [bool]$JarUpdated = $false, [string]$CfgPath = $null) {
+    $cfgPath = if ($CfgPath) { $CfgPath } else { Join-Path $ROOT "pipeline_$($Ctx.Target).txt" }
     $cfg = Read-PipelineConfig $cfgPath
     $Ctx.Cfg = $cfg
     $Ctx.SrcChanged = $true  # set to $false in [1] when no change detected
@@ -498,7 +527,7 @@ function Invoke-Target($Ctx, [bool]$JarUpdated = $false) {
 
                 Write-Host "  SourceDir not found -> full clone ($freeGB GB free on $drive). The first clone can take tens of minutes."
                 New-Item -ItemType Directory -Force -Path (Split-Path -Parent $src) | Out-Null
-                $code = Invoke-Native git @('clone', '-c', 'core.longpaths=true', '-b', $br, '--single-branch', $url, $src)
+                $code = Invoke-Native git @('clone', '-c', 'core.longpaths=true', '-b', $br, '--single-branch', '--depth=1', '--no-tags', $url, $src)
                 if ($code -ne 0) {
                     # Remove only what this run created (keep a folder that existed empty)
                     Remove-Tree $src
@@ -525,7 +554,18 @@ function Invoke-Target($Ctx, [bool]$JarUpdated = $false) {
                 $dirty = & git -C $src status --porcelain
                 if ($dirty) { throw "Source repo has local changes, aborting: $src" }
 
-                if ((Invoke-Native git @('-C', $src, 'fetch', 'origin', $br)) -ne 0) { throw 'git fetch failed' }
+                # 로컬 HEAD가 이미 remote와 동일하면 fetch/pull 생략
+                $localHead = (& git -C $src rev-parse HEAD).Trim()
+                if ($localHead -eq $remoteHash) {
+                    Write-Host "  [SKIP] Local already at remote HEAD ($($localHead.Substring(0,12)))"
+                    Write-Host "         Skipping fetch, pull and framework copy."
+                    $Ctx.Hash = $localHead
+                    $Ctx.Msg  = (& git -C $src log -1 '--format=%s') -join ' '
+                    $Ctx.SrcChanged = $false
+                    return
+                }
+
+                if ((Invoke-Native git @('-C', $src, 'fetch', '--depth=1', '--no-tags', 'origin', $br)) -ne 0) { throw 'git fetch failed' }
                 if ((Invoke-Native git @('-C', $src, 'pull', '--ff-only', 'origin', $br)) -ne 0) { throw 'git pull failed' }
             }
         }
@@ -555,11 +595,16 @@ function Invoke-Target($Ctx, [bool]$JarUpdated = $false) {
             if ($blockStepNums.ContainsKey($s)) { $doFrom = [Math]::Min($doFrom, $blockStepNums[$s]) }
         }
     }
+    $runTestPro = @('Y','YES','TRUE','1') -contains "$($cfg.TestProEnabled)".ToUpper()
+
     if ($doFrom -eq 99) {
         Write-Host ''
-        Write-Host "---- [$($Ctx.Target)] [UNCHANGED] No source or jar changes detected, skipping [2]-[5] ----"
-        $Ctx.Status = 'UNCHANGED'
-        return
+        if (-not $runTestPro) {
+            Write-Host "---- [$($Ctx.Target)] [UNCHANGED] No source or jar changes detected, nothing to do ----"
+            $Ctx.Status = 'UNCHANGED'
+            return
+        }
+        Write-Host "---- [$($Ctx.Target)] [UNCHANGED] No source or jar changes detected, running TestPro only ----"
     }
 
     # ---- [2] Build nexacrolib + generate rule ----
@@ -621,9 +666,10 @@ function Invoke-Target($Ctx, [bool]$JarUpdated = $false) {
     }
 
     # ---- [4] Publish to Tomcat ----
-    Invoke-Step $Ctx '4 Publish' -When ($doFrom -le 4) {
-        $port = [int]$cfg.TomcatPort
-        if (-not (Test-Port $port)) {
+    Invoke-Step $Ctx '4 Publish' -When ($doFrom -le 4 -or ($doFrom -eq 99 -and $runTestPro)) {
+        $port       = [int]$cfg.TomcatPort
+        $wasRunning = Test-Port $port
+        if (-not $wasRunning) {
             Write-Host "  Tomcat not listening on $port. Starting..."
             $env:CATALINA_HOME = $cfg.TomcatHome
             $env:JAVA_HOME     = $Ctx.JavaHome
@@ -632,8 +678,9 @@ function Invoke-Target($Ctx, [bool]$JarUpdated = $false) {
             $deadline = (Get-Date).AddSeconds(60)
             while (-not (Test-Port $port) -and (Get-Date) -lt $deadline) { Start-Sleep -Seconds 2 }
             if (-not (Test-Port $port)) { throw "Tomcat did not start on port $port" }
+        } else {
+            Write-Host "  Tomcat already running on port $port"
         }
-        Write-Host "  Tomcat listening on $port"
 
         # Same-name folder already on the server: delete it, then copy fresh
         if (Test-Path -LiteralPath $pubDir) {
@@ -656,11 +703,126 @@ function Invoke-Target($Ctx, [bool]$JarUpdated = $false) {
 
         $Ctx.Url = "http://$($Ctx.Host):$port/" + ((@($urlPath, $page) | Where-Object { $_ }) -join '/')
         if (-not $page -and $urlPath) { $Ctx.Url += '/' }
-        if (-not (Wait-Url $Ctx.Url 60)) { throw "URL not ready within 60s: $($Ctx.Url)" }
-        Write-Host "  Ready: $($Ctx.Url)"
+        if (-not (Wait-Url $Ctx.Url 60)) {
+            if ($wasRunning) {
+                Write-Host "  [WARN] URL not ready within 60s, continuing (Tomcat was already running): $($Ctx.Url)"
+            } else {
+                throw "URL not ready within 60s: $($Ctx.Url)"
+            }
+        } else {
+            Write-Host "  Ready: $($Ctx.Url)"
+        }
     }
 
-    Set-Content -LiteralPath $hashFile -Value $(if ($srcType -eq 'package') { $Ctx.PackageId } else { $Ctx.Hash })
+    # ---- [5] TestPro ----
+    Invoke-Step $Ctx '5 TestPro' -When $runTestPro {
+        if (-not $cfg.JebiExePath) { throw "JebiExePath is not set in pipeline config" }
+        if (-not (Test-Path -LiteralPath $cfg.JebiExePath)) { throw "JEBI_Main.exe not found: $($cfg.JebiExePath)" }
+        $mode = "$($cfg.TestMode)".ToLower()
+        if (@('scenario','file','parallel') -notcontains $mode) { throw "TestMode must be scenario|file|parallel (got '$mode')" }
+        $tcFiles = @()
+        if ($mode -eq 'scenario') {
+            if (-not $cfg.TestScenarioFile) { throw 'TestScenarioFile is required when TestMode=scenario' }
+            if (-not (Test-Path -LiteralPath $cfg.TestScenarioFile)) { throw "TestScenarioFile not found: $($cfg.TestScenarioFile)" }
+        } elseif ($mode -eq 'file') {
+            $cfgBase = Split-Path -Parent ([IO.Path]::GetFullPath($cfgPath))
+            $tcFiles = ($cfg.TestTCFiles.Split('|') | ForEach-Object {
+                $tc = $_.Trim()
+                if (-not $tc) { return }
+                if (-not [IO.Path]::IsPathRooted($tc)) { $tc = [IO.Path]::GetFullPath((Join-Path $cfgBase $tc)) }
+                $tc
+            }) | Where-Object { $_ }
+            if (-not $tcFiles) { throw 'TestTCFiles must list at least one TC file when TestMode=file' }
+            foreach ($tc in $tcFiles) {
+                if (-not (Test-Path -LiteralPath $tc)) { throw "TC file not found: $tc" }
+            }
+        } else {
+            if (-not $cfg.TestParallelManifest) { throw 'TestParallelManifest is required when TestMode=parallel' }
+            if (-not (Test-Path -LiteralPath $cfg.TestParallelManifest)) { throw "TestParallelManifest not found: $($cfg.TestParallelManifest)" }
+        }
+        $srcFile = if ($cfg.TestSourceFile -and (Test-Path -LiteralPath $cfg.TestSourceFile)) {
+            $cfg.TestSourceFile
+        } else {
+            $d = Join-Path $work 'dummy.json'
+            Set-Content -LiteralPath $d -Value '{}'
+            Write-Host "  Source  : dummy.json auto-created at $d"
+            $d
+        }
+        $testOutDir = if ($cfg.TestOutputDir) { $cfg.TestOutputDir } else { Join-Path $work 'test-result' }
+        $logDirNorm  = [IO.Path]::GetFullPath($LOG_DIR).TrimEnd('\').ToLower()
+        $testOutNorm = [IO.Path]::GetFullPath($testOutDir).TrimEnd('\').ToLower()
+        if ($testOutNorm -eq $logDirNorm -or $testOutNorm.StartsWith($logDirNorm + '\')) {
+            throw "TestOutputDir must not overlap the log folder.`n  TestOutputDir : $testOutDir`n  Log folder    : $LOG_DIR`n  Fix: set TestOutputDir to a separate folder (e.g. work\v24\test-result)"
+        }
+        if (Test-Path -LiteralPath $testOutDir) { Remove-Item -LiteralPath $testOutDir -Recurse -Force }
+        New-Item -ItemType Directory -Force -Path $testOutDir | Out-Null
+        $timeoutSec = if ($cfg.TestTimeoutSec) { [int]$cfg.TestTimeoutSec } else { 600 }
+        Write-Host "  Exe     : $($cfg.JebiExePath)"
+        Write-Host "  Mode    : $mode"
+        Write-Host "  Output  : $testOutDir"
+        Write-Host "  Timeout : $(if ($timeoutSec -gt 0) { "${timeoutSec}s" } else { 'unlimited' })"
+        $jebiArgs = New-Object System.Collections.ArrayList
+        if ($mode -eq 'parallel') {
+            [void]$jebiArgs.AddRange(@('--run-parallel', $cfg.TestParallelManifest))
+        } else {
+            [void]$jebiArgs.AddRange(@('-s', $srcFile))
+            if ($mode -eq 'scenario') {
+                [void]$jebiArgs.AddRange(@('--run-scenario', $cfg.TestScenarioFile))
+            } else {
+                [void]$jebiArgs.Add('--run-file')
+                foreach ($tc in $tcFiles) { [void]$jebiArgs.Add($tc) }
+            }
+            [void]$jebiArgs.AddRange(@('--output', $testOutDir))
+            if ($cfg.TestVarsFile)   { [void]$jebiArgs.AddRange(@('--vars', $cfg.TestVarsFile)) }
+            if ($cfg.TestScenarioId) { [void]$jebiArgs.AddRange(@('--scenario-id', $cfg.TestScenarioId)) }
+            if (@('Y','YES','TRUE','1') -contains "$($cfg.TestHeadless)".ToUpper())                   { [void]$jebiArgs.Add('--headless') }
+            if (@('Y','YES','TRUE','1') -contains "$($cfg.TestSkipDuplicatePreconditions)".ToUpper()) { [void]$jebiArgs.Add('--skip-duplicate-preconditions') }
+            if (@('Y','YES','TRUE','1') -contains "$($cfg.TestFailOnPageError)".ToUpper())            { [void]$jebiArgs.Add('--fail-on-page-error') }
+        }
+        $argStr = ($jebiArgs | ForEach-Object { $a = "$_"; if ($a -match '\s') { "`"$a`"" } else { $a } }) -join ' '
+        Write-Host "  [CMD] $($cfg.JebiExePath) $argStr"
+        $stdoutLog = Join-Path $testOutDir '_jebi_stdout.log'
+        $stderrLog = Join-Path $testOutDir '_jebi_stderr.log'
+        $sw6 = [Diagnostics.Stopwatch]::StartNew()
+        $proc = Start-Process -FilePath $cfg.JebiExePath -ArgumentList $argStr -PassThru -NoNewWindow `
+            -RedirectStandardOutput $stdoutLog -RedirectStandardError $stderrLog
+        $finished = if ($timeoutSec -gt 0) { $proc.WaitForExit($timeoutSec * 1000) } else { $proc.WaitForExit(); $true }
+        $sw6.Stop()
+        $Ctx.TestSec = [math]::Round($sw6.Elapsed.TotalSeconds, 1)
+        if (Test-Path -LiteralPath $stdoutLog) { Get-Content -LiteralPath $stdoutLog | ForEach-Object { Write-Host "    $_" } }
+        if (Test-Path -LiteralPath $stderrLog) {
+            $errText = (Get-Content -LiteralPath $stderrLog -Raw -ErrorAction SilentlyContinue).Trim()
+            if ($errText) { Write-Host "    [STDERR] $errText" }
+        }
+        if (-not $finished) {
+            try { $proc.Kill() } catch { }
+            $Ctx.TestStatus = 'TIMEOUT'; $Ctx.TestCode = -1
+            throw "TestPro timed out after ${timeoutSec}s"
+        }
+        $Ctx.TestCode = $proc.ExitCode
+        if     ($Ctx.TestCode -eq 0)                     { $Ctx.TestStatus = 'PASS' }
+        elseif (@(15, 27, 33) -contains $Ctx.TestCode)   { $Ctx.TestStatus = 'FAIL' }
+        else                                              { $Ctx.TestStatus = 'ENGINE_ERROR' }
+        $resultFiles = @(Get-ChildItem -LiteralPath $testOutDir -Filter '*.json' -Recurse -File -ErrorAction SilentlyContinue |
+                         Where-Object { $_.Name -notmatch '^_' })
+        $totalPass = 0; $totalFail = 0
+        foreach ($rf in $resultFiles) {
+            try {
+                $rj = Get-Content -LiteralPath $rf.FullName -Raw -Encoding UTF8 | ConvertFrom-Json
+                if ($null -ne $rj.pass)   { $totalPass += [int]$rj.pass }   elseif ($null -ne $rj.passed)  { $totalPass += [int]$rj.passed }
+                if ($null -ne $rj.fail)   { $totalFail += [int]$rj.fail }   elseif ($null -ne $rj.failed)  { $totalFail += [int]$rj.failed }
+            } catch { }
+        }
+        $Ctx.TestPass = $totalPass; $Ctx.TestFail = $totalFail
+        Write-Host "  Result  : $($Ctx.TestStatus) Pass $totalPass, Fail $totalFail ($($Ctx.TestSec)s)"
+        if ($Ctx.TestStatus -ne 'PASS') {
+            throw "TestPro $($Ctx.TestStatus) (exit $($Ctx.TestCode)) Pass $totalPass, Fail $totalFail"
+        }
+    }
+
+    if ($doFrom -lt 99) {
+        Set-Content -LiteralPath $hashFile -Value $(if ($srcType -eq 'package') { $Ctx.PackageId } else { $Ctx.Hash })
+    }
     $Ctx.Status = 'SUCCESS'
 }
 
@@ -671,12 +833,15 @@ function Invoke-Target($Ctx, [bool]$JarUpdated = $false) {
 $targets = if ($Target -eq 'all') { @('v21', 'v24') } else { @($Target) }
 $results = @()
 
+if ($ConfigPath) { Write-Host "[INFO] Config file  : $ConfigPath" }
+
 # ---- [jar] Deploy JAVA engine: once per run, before any target ----
 $jarResults = @()
 $jarFailed  = $false
 $jarDirs = foreach ($t in $targets) {
     try {
-        $c = Read-PipelineConfig (Join-Path $ROOT "pipeline_$t.txt")
+        $cfgPathT = if ($ConfigPath -and $t -eq $Target) { $ConfigPath } else { Join-Path $ROOT "pipeline_$t.txt" }
+        $c = Read-PipelineConfig $cfgPathT
         if (Test-Enabled $c) { $c.JarDir }
     } catch { }
 }
@@ -703,13 +868,15 @@ foreach ($jd in ($jarDirs | Select-Object -Unique)) {
 
 foreach ($t in $targets) {
     $ctx = @{ Target = $t; Status = 'FAIL'; Branch = ''; Version = ''; Hash = ''; Msg = ''; Url = ''; Error = '';
+              TestStatus = ''; TestPass = 0; TestFail = 0; TestSec = 0.0; TestCode = 0;
               Steps = New-Object System.Collections.ArrayList }
     try {
+        $cfgPathT = if ($ConfigPath -and $t -eq $Target) { $ConfigPath } else { Join-Path $ROOT "pipeline_$t.txt" }
         $jarUpd = try {
-            $preCfg = Read-PipelineConfig (Join-Path $ROOT "pipeline_$t.txt")
+            $preCfg = Read-PipelineConfig $cfgPathT
             if ($jarUpdatedMap.ContainsKey($preCfg.JarDir)) { $jarUpdatedMap[$preCfg.JarDir] } else { $false }
         } catch { $false }
-        Invoke-Target $ctx $jarUpd
+        Invoke-Target $ctx $jarUpd $cfgPathT
     } catch {
         $ctx.Error = $_.Exception.Message
         Write-Host "[ERROR] [$t] $($ctx.Error)"
@@ -731,6 +898,13 @@ foreach ($r in $results) {
     if ($r.Url)     { Write-Host "   URL     : $($r.Url)" }
     if ($r.Steps.Count) { Write-Host "   Steps   : $($r.Steps -join ' | ')" }
     if ($r.Error)   { Write-Host "   Error   : $($r.Error)" }
+    if ($r.TestStatus) {
+        $tLine = "   TestPro : $($r.TestStatus)"
+        if ($r.TestPass -gt 0 -or $r.TestFail -gt 0) { $tLine += " Pass $($r.TestPass), Fail $($r.TestFail)" }
+        if ($r.TestCode -ne 0) { $tLine += " (exit $($r.TestCode))" }
+        if ($r.TestSec  -gt 0) { $tLine += " $($r.TestSec)s" }
+        Write-Host $tLine
+    }
 }
 Write-Host " Log: $LOG_FILE"
 Write-Host '=============================================='

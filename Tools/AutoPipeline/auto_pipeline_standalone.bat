@@ -32,7 +32,7 @@ rem ---- Everything below is PowerShell. cmd never reaches here (exit /b above).
 
 # ---- Arguments (parsed from %*, since a scriptblock run this way has no param() binding) ----
 $Target = 'all'
-$Branch = ''; $SourceType = ''; $Build = ''; $Block = ''
+$Branch = ''; $SourceType = ''; $Build = ''; $Block = ''; $Config = ''
 $SkipGit = $false
 $argList = @("$env:AP_ARGS".Trim() -split '\s+' | Where-Object { $_ })
 for ($k = 0; $k -lt $argList.Count; $k++) {
@@ -60,14 +60,22 @@ for ($k = 0; $k -lt $argList.Count; $k++) {
             if (-not $Block -or $Block.StartsWith('-')) { Write-Host '[ERROR] -Block needs a step list (e.g. deploy or deploy,publish)'; exit 2 }
             break
         }
+        '^-config$'         {
+            $k++; $Config = "$($argList[$k])".Trim('"')
+            if (-not $Config -or $Config.StartsWith('-')) { Write-Host '[ERROR] -Config needs a file path'; exit 2 }
+            break
+        }
         '^-skipgit$'        { $SkipGit = $true; break }
         '^(-help|-h|/\?)$'  {
             Write-Host 'Usage: auto_pipeline_standalone.bat [v21|v24|all] [-Branch <name>] [-SkipGit]'
             Write-Host '                                    [-Block <steps>] [-SourceType git|package] [-Build <folder>]'
+            Write-Host '                                    [-Config <path>]'
             Write-Host '  -Branch     : this run only, overrides Branch= in pipeline_<target>.txt (v21 or v24 only)'
             Write-Host '  -SourceType : this run only, overrides SourceType= (default git; package = prebuilt nexacrolib.zip)'
             Write-Host '  -Build      : this run only, package build folder (default PackageBuild=latest)'
             Write-Host '  -Block      : force-run from the specified step (comma-separated: framework,deploy,publish,testpro)'
+            Write-Host '  -Config     : path to a pipeline config file; absolute or relative to the current directory'
+            Write-Host '                (overrides PIPELINE_HOME folder search)'
             Write-Host "Config folder (PIPELINE_HOME): $env:PIPELINE_HOME"
             exit 0
         }
@@ -78,19 +86,41 @@ if (@('v21', 'v24', 'all') -notcontains $Target) { Write-Host "[ERROR] Invalid t
 if ($Branch -and $Target -eq 'all') { Write-Host '[ERROR] -Branch needs a single target (v21 or v24)'; exit 2 }
 if ($Build -and $Target -eq 'all')  { Write-Host '[ERROR] -Build needs a single target (v21 or v24)'; exit 2 }
 
-# ---- Config folder: PIPELINE_HOME, else this bat's folder (first one that has pipeline_*.txt) ----
+# -Config: txt 파일 경로 직접 지정(절대/상대 모두 허용) → Target 자동 추론
+$ConfigPath = $null
+if ($Config) {
+    $ConfigPath = [IO.Path]::GetFullPath($Config)
+    if (-not (Test-Path -LiteralPath $ConfigPath)) { Write-Host "[ERROR] Config file not found: $ConfigPath"; exit 2 }
+    if ($Target -eq 'all') {
+        $m = [regex]::Match([IO.Path]::GetFileName($ConfigPath), 'v(21|24)', 'IgnoreCase')
+        if ($m.Success) {
+            $Target = "v$($m.Groups[1].Value)"
+        } else {
+            $expVer = (Get-Content -LiteralPath $ConfigPath -Encoding UTF8 | Where-Object { $_ -match '^ExpectedVersion\s*=' } | Select-Object -First 1) -replace '^.*=\s*', ''
+            if ($expVer -match '21') { $Target = 'v21' }
+            elseif ($expVer -match '24') { $Target = 'v24' }
+            else { Write-Host "[ERROR] -Config: cannot infer target from '$([IO.Path]::GetFileName($ConfigPath))'."; Write-Host "        Add ExpectedVersion=21 or 24 to the file, or specify the target explicitly."; exit 2 }
+        }
+    }
+}
+
+# ---- Config folder: -Config 파일 폴더 > PIPELINE_HOME > 이 bat 폴더 ----
 $ROOT = $null
-foreach ($cand in @($env:PIPELINE_HOME, $env:AP_BATDIR)) {
-    if (-not $cand) { continue }
-    $c = $cand.Trim().TrimEnd('\')
-    if ((Test-Path -LiteralPath (Join-Path $c 'pipeline_v21.txt')) -or (Test-Path -LiteralPath (Join-Path $c 'pipeline_v24.txt'))) {
-        $ROOT = [IO.Path]::GetFullPath($c); break
+if ($ConfigPath) {
+    $ROOT = Split-Path -Parent $ConfigPath
+} else {
+    foreach ($cand in @($env:PIPELINE_HOME, $env:AP_BATDIR)) {
+        if (-not $cand) { continue }
+        $c = $cand.Trim().TrimEnd('\')
+        if ((Test-Path -LiteralPath (Join-Path $c 'pipeline_v21.txt')) -or (Test-Path -LiteralPath (Join-Path $c 'pipeline_v24.txt'))) {
+            $ROOT = [IO.Path]::GetFullPath($c); break
+        }
     }
 }
 if (-not $ROOT) {
     Write-Host "[ERROR] pipeline_v21.txt / pipeline_v24.txt not found."
     Write-Host "        Checked PIPELINE_HOME='$env:PIPELINE_HOME' and bat folder='$env:AP_BATDIR'."
-    Write-Host "        Edit the 'set PIPELINE_HOME=' line at the top of this bat."
+    Write-Host "        Use -Config <path> or edit the 'set PIPELINE_HOME=' line at the top of this bat."
     exit 2
 }
 
@@ -355,8 +385,8 @@ function Invoke-Step($Ctx, [string]$Name, [scriptblock]$Body, [bool]$When = $tru
 # Pipeline for one target
 # ============================================================
 
-function Invoke-Target($Ctx, [bool]$JarUpdated = $false) {
-    $cfgPath = Join-Path $ROOT "pipeline_$($Ctx.Target).txt"
+function Invoke-Target($Ctx, [bool]$JarUpdated = $false, [string]$CfgPath = $null) {
+    $cfgPath = if ($CfgPath) { $CfgPath } else { Join-Path $ROOT "pipeline_$($Ctx.Target).txt" }
     $cfg = Read-PipelineConfig $cfgPath
     $Ctx.Cfg = $cfg
     $Ctx.SrcChanged = $true  # set to $false in [1] when no change detected
@@ -563,7 +593,7 @@ function Invoke-Target($Ctx, [bool]$JarUpdated = $false) {
 
                 Write-Host "  SourceDir not found -> full clone ($freeGB GB free on $drive). The first clone can take tens of minutes."
                 New-Item -ItemType Directory -Force -Path (Split-Path -Parent $src) | Out-Null
-                $code = Invoke-Native git @('clone', '-c', 'core.longpaths=true', '-b', $br, '--single-branch', $url, $src)
+                $code = Invoke-Native git @('clone', '-c', 'core.longpaths=true', '-b', $br, '--single-branch', '--depth=1', '--no-tags', $url, $src)
                 if ($code -ne 0) {
                     # Remove only what this run created (keep a folder that existed empty)
                     Remove-Tree $src
@@ -590,7 +620,18 @@ function Invoke-Target($Ctx, [bool]$JarUpdated = $false) {
                 $dirty = & git -C $src status --porcelain
                 if ($dirty) { throw "Source repo has local changes, aborting: $src" }
 
-                if ((Invoke-Native git @('-C', $src, 'fetch', 'origin', $br)) -ne 0) { throw 'git fetch failed' }
+                # 로컬 HEAD가 이미 remote와 동일하면 fetch/pull 생략
+                $localHead = (& git -C $src rev-parse HEAD).Trim()
+                if ($localHead -eq $remoteHash) {
+                    Write-Host "  [SKIP] Local already at remote HEAD ($($localHead.Substring(0,12)))"
+                    Write-Host "         Skipping fetch, pull and framework copy."
+                    $Ctx.Hash = $localHead
+                    $Ctx.Msg  = (& git -C $src log -1 '--format=%s') -join ' '
+                    $Ctx.SrcChanged = $false
+                    return
+                }
+
+                if ((Invoke-Native git @('-C', $src, 'fetch', '--depth=1', '--no-tags', 'origin', $br)) -ne 0) { throw 'git fetch failed' }
                 if ((Invoke-Native git @('-C', $src, 'pull', '--ff-only', 'origin', $br)) -ne 0) { throw 'git pull failed' }
             }
         }
@@ -618,11 +659,16 @@ function Invoke-Target($Ctx, [bool]$JarUpdated = $false) {
             if ($blockStepNums.ContainsKey($s)) { $doFrom = [Math]::Min($doFrom, $blockStepNums[$s]) }
         }
     }
+    $runTestPro = @('Y','YES','TRUE','1') -contains "$($cfg.TestProEnabled)".ToUpper()
+
     if ($doFrom -eq 99) {
         Write-Host ''
-        Write-Host "---- [$($Ctx.Target)] [UNCHANGED] No source or jar changes detected, skipping [2]-[5] ----"
-        $Ctx.Status = 'UNCHANGED'
-        return
+        if (-not $runTestPro) {
+            Write-Host "---- [$($Ctx.Target)] [UNCHANGED] No source or jar changes detected, nothing to do ----"
+            $Ctx.Status = 'UNCHANGED'
+            return
+        }
+        Write-Host "---- [$($Ctx.Target)] [UNCHANGED] No source or jar changes detected, running TestPro only ----"
     }
 
     # ---- [2] Build nexacrolib + generate rule ----
@@ -684,9 +730,10 @@ function Invoke-Target($Ctx, [bool]$JarUpdated = $false) {
     }
 
     # ---- [4] Publish to Tomcat ----
-    Invoke-Step $Ctx '4 Publish' -When ($doFrom -le 4) {
-        $port = [int]$cfg.TomcatPort
-        if (-not (Test-Port $port)) {
+    Invoke-Step $Ctx '4 Publish' -When ($doFrom -le 4 -or ($doFrom -eq 99 -and $runTestPro)) {
+        $port       = [int]$cfg.TomcatPort
+        $wasRunning = Test-Port $port
+        if (-not $wasRunning) {
             Write-Host "  Tomcat not listening on $port. Starting..."
             $env:CATALINA_HOME = $cfg.TomcatHome
             $env:JAVA_HOME     = $Ctx.JavaHome
@@ -695,8 +742,9 @@ function Invoke-Target($Ctx, [bool]$JarUpdated = $false) {
             $deadline = (Get-Date).AddSeconds(60)
             while (-not (Test-Port $port) -and (Get-Date) -lt $deadline) { Start-Sleep -Seconds 2 }
             if (-not (Test-Port $port)) { throw "Tomcat did not start on port $port" }
+        } else {
+            Write-Host "  Tomcat already running on port $port"
         }
-        Write-Host "  Tomcat listening on $port"
 
         # Same-name folder already on the server: delete it, then copy fresh
         if (Test-Path -LiteralPath $pubDir) {
@@ -719,12 +767,19 @@ function Invoke-Target($Ctx, [bool]$JarUpdated = $false) {
 
         $Ctx.Url = "http://$($Ctx.Host):$port/" + ((@($urlPath, $page) | Where-Object { $_ }) -join '/')
         if (-not $page -and $urlPath) { $Ctx.Url += '/' }
-        if (-not (Wait-Url $Ctx.Url 60)) { throw "URL not ready within 60s: $($Ctx.Url)" }
-        Write-Host "  Ready: $($Ctx.Url)"
+        if (-not (Wait-Url $Ctx.Url 60)) {
+            if ($wasRunning) {
+                Write-Host "  [WARN] URL not ready within 60s, continuing (Tomcat was already running): $($Ctx.Url)"
+            } else {
+                throw "URL not ready within 60s: $($Ctx.Url)"
+            }
+        } else {
+            Write-Host "  Ready: $($Ctx.Url)"
+        }
     }
 
     # ---- [5] TestPro ----
-    Invoke-Step $Ctx '5 TestPro' -When (@('Y','YES','TRUE','1') -contains "$($cfg.TestProEnabled)".ToUpper()) {
+    Invoke-Step $Ctx '5 TestPro' -When $runTestPro {
         # [6-0] Preflight
         if (-not $cfg.JebiExePath) { throw "JebiExePath is not set in pipeline_$($Ctx.Target).txt" }
         if (-not (Test-Path -LiteralPath $cfg.JebiExePath)) { throw "JEBI_Main.exe not found: $($cfg.JebiExePath)" }
@@ -760,6 +815,11 @@ function Invoke-Target($Ctx, [bool]$JarUpdated = $false) {
             $d
         }
         $testOutDir = if ($cfg.TestOutputDir) { $cfg.TestOutputDir } else { Join-Path $work 'test-result' }
+        $logDirNorm  = [IO.Path]::GetFullPath($LOG_DIR).TrimEnd('\').ToLower()
+        $testOutNorm = [IO.Path]::GetFullPath($testOutDir).TrimEnd('\').ToLower()
+        if ($testOutNorm -eq $logDirNorm -or $testOutNorm.StartsWith($logDirNorm + '\')) {
+            throw "TestOutputDir must not overlap the log folder.`n  TestOutputDir : $testOutDir`n  Log folder    : $LOG_DIR`n  Fix: set TestOutputDir to a separate folder (e.g. work\v24\test-result)"
+        }
         if (Test-Path -LiteralPath $testOutDir) { Remove-Item -LiteralPath $testOutDir -Recurse -Force }
         New-Item -ItemType Directory -Force -Path $testOutDir | Out-Null
         $timeoutSec = if ($cfg.TestTimeoutSec) { [int]$cfg.TestTimeoutSec } else { 600 }
@@ -831,7 +891,9 @@ function Invoke-Target($Ctx, [bool]$JarUpdated = $false) {
         }
     }
 
-    Set-Content -LiteralPath $hashFile -Value $(if ($srcType -eq 'package') { $Ctx.PackageId } else { $Ctx.Hash })
+    if ($doFrom -lt 99) {
+        Set-Content -LiteralPath $hashFile -Value $(if ($srcType -eq 'package') { $Ctx.PackageId } else { $Ctx.Hash })
+    }
     $Ctx.Status = 'SUCCESS'
 }
 
@@ -842,12 +904,15 @@ function Invoke-Target($Ctx, [bool]$JarUpdated = $false) {
 $targets = if ($Target -eq 'all') { @('v21', 'v24') } else { @($Target) }
 $results = @()
 
+if ($ConfigPath) { Write-Host "[INFO] Config file  : $ConfigPath" }
+
 # ---- [jar] Deploy JAVA engine: once per run, before any target ----
 $jarResults = @()
 $jarFailed  = $false
 $jarDirs = foreach ($t in $targets) {
     try {
-        $c = Read-PipelineConfig (Join-Path $ROOT "pipeline_$t.txt")
+        $cfgPathT = if ($ConfigPath -and $t -eq $Target) { $ConfigPath } else { Join-Path $ROOT "pipeline_$t.txt" }
+        $c = Read-PipelineConfig $cfgPathT
         if (Test-Enabled $c) { $c.JarDir }
     } catch { }
 }
@@ -877,11 +942,12 @@ foreach ($t in $targets) {
               TestStatus = ''; TestPass = 0; TestFail = 0; TestSec = 0.0; TestCode = 0;
               Steps = New-Object System.Collections.ArrayList }
     try {
+        $cfgPathT = if ($ConfigPath -and $t -eq $Target) { $ConfigPath } else { Join-Path $ROOT "pipeline_$t.txt" }
         $jarUpd = try {
-            $preCfg = Read-PipelineConfig (Join-Path $ROOT "pipeline_$t.txt")
+            $preCfg = Read-PipelineConfig $cfgPathT
             if ($jarUpdatedMap.ContainsKey($preCfg.JarDir)) { $jarUpdatedMap[$preCfg.JarDir] } else { $false }
         } catch { $false }
-        Invoke-Target $ctx $jarUpd
+        Invoke-Target $ctx $jarUpd $cfgPathT
     } catch {
         $ctx.Error = $_.Exception.Message
         Write-Host "[ERROR] [$t] $($ctx.Error)"

@@ -1,0 +1,129 @@
+{
+    "version" : "24.0.0.1",
+    "runtime" :
+    {
+        "target" :
+        {
+            "os" : "windows"
+        },
+        "framework" :
+        [    
+        "./nexacrolib/framework/Framework.js"
+        ],
+        "component" :
+        [    
+        "./nexacrolib/component/CompBase.js",
+        "./nexacrolib/component/ComComp.js",
+        "./nexacrolib/component/Grid.js",
+        "./nexacrolib/component/ListView.js",
+        "./nexacrolib/component/DeviceAPI.js",
+        "./nexacrolib/component/MobileComp.js",
+        "./nexacrolib/component/Accessibility.js"
+        ],
+        "environment" :
+        [    
+        {
+        "file":"./environment.xml.js"
+        }
+        ],
+        "screen" :
+        [    
+        {"id":"Desktop_screen","type":"desktop","themeid":"theme::blue"},
+        {"id":"Tablet_screen","type":"mobile_large","themeid":"theme::blue"},
+        {"id":"Phone_screen","type":"mobile_small","themeid":"theme::blue"}
+        ],
+        "xadl" :
+        [
+        {
+        	"screenid":"Desktop_screen",
+        	"launch":"./Application_Desktop.xadl.js",
+        	"quickview":"./Application_Desktop.xadl.quickview.js",
+        	"form":[
+        				"./Base/MainPage.xfdl.js"
+        	]
+        },
+        {
+        	"screenid":"Tablet_screen",
+        	"launch":"./Application_Tablet.xadl.js",
+        	"quickview":"./Application_Tablet.xadl.quickview.js",
+        	"form":[
+        				"./Base/MainPage.xfdl.js"
+        	]
+        },
+        {
+        	"screenid":"Phone_screen",
+        	"launch":"./Application_Phone.xadl.js",
+        	"quickview":"./Application_Phone.xadl.quickview.js",
+        	"form":[
+        				"./Base/MainPage.xfdl.js"
+        	]
+        },
+        {
+        	"screenid":"Desktop_screen",
+        	"launch":"./Application_Desktop.xadl.js",
+        	"quickview":"./Application_Desktop.xadl.quickview.js",
+        	"form":[
+        				"./Base/MainPage.xfdl.js"
+        	]
+        },
+        {
+        	"screenid":"Tablet_screen",
+        	"launch":"./Application_Tablet.xadl.js",
+        	"quickview":"./Application_Tablet.xadl.quickview.js",
+        	"form":[
+        				"./Base/MainPage.xfdl.js"
+        	]
+        },
+        {
+        	"screenid":"Phone_screen",
+        	"launch":"./Application_Phone.xadl.js",
+        	"quickview":"./Application_Phone.xadl.quickview.js",
+        	"form":[
+        				"./Base/MainPage.xfdl.js"
+        	]
+        }
+        ],  
+        "protocol" :
+        {
+            "adaptors" :
+            []
+        },
+        "resource" :
+        {
+            "windows" : {
+                "updateurl" : "./",
+                "timeout" : "30",
+                "retry" : "3",
+                "autoupdate" : "auto",
+                "updatetype" : "server"
+            }
+        },
+		"deploy" :
+        {
+            "windows" : {
+                "updateurl" : "./"
+            }
+        },
+        "userfont" :
+        [
+        {
+            "font-family" : "Spoqa Han Sans Neo Regular",
+            "font-style" : "normal",
+            "font-weight" : "400",
+            "local-font-family" : "SpoqaHanSansNeo-Regular"
+        },
+        {
+            "font-family" : "Spoqa Han Sans Neo Medium",
+            "font-style" : "normal",
+            "font-weight" : "500",
+            "local-font-family" : "SpoqaHanSansNeo-Medium"
+        },
+        {
+            "font-family" : "Spoqa Han Sans Neo Bold",
+            "font-style" : "normal",
+            "font-weight" : "700",
+            "local-font-family" : "SpoqaHanSansNeo-Bold"
+        }
+        ]
+    }
+}

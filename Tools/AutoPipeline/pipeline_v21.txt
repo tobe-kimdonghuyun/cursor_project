@@ -54,8 +54,8 @@ TestOutputDir=
 TestVarsFile=
 # Scenario ID for result file naming (--scenario-id). Leave empty for engine default.
 TestScenarioId=
-# Run headless (no browser window): Y | N (default Y)
-TestHeadless=Y
+# Run headless (no browser window): Y | N (default N)
+TestHeadless=N
 # Skip duplicate precondition TC re-runs: Y | N (default N)
 TestSkipDuplicatePreconditions=N
 # Fail on page error: Y | N (default N)
