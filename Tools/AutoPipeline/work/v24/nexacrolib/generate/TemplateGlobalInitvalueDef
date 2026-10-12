@@ -1,4 +1,0 @@
-if (nexacro_init)
-{
-#{INITVALUE_DEFINITIONS}
-}

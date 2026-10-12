@@ -1,7 +1,0 @@
-(function()
-{
-if(nexacro)
-{
-	#{STRINGRESOURCE_DEFINITIONS}
-}
-})();

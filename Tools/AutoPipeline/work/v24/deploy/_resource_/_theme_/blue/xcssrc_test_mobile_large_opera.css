@@ -1,9 +1,0 @@
-#nexacontainer .Edit.RP101378[data-status=disabled] {
-  background:#DCDCDC;
-  color:red;
-}
-
-#nexacontainer .Edit.RP101378[data-userstatus=nulltext][data-status=disabled] {
-  background:#DCDCDC;
-  color:blue;
-}
