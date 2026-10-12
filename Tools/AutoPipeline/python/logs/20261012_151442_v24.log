@@ -1,0 +1,43 @@
+[INFO] Config folder: D:\git_prj\cursor_project\Tools\AutoPipeline\python
+[INFO] Config file  : D:\git_prj\cursor_project\Tools\AutoPipeline\python\pipeline_v24.txt
+[INFO] Runner      : D:\git_prj\cursor_project\Tools\AutoPipeline\python\build\auto_pipeline_py.exe
+
+---- [jar] Deploy JAVA engine: D:\git_prj\cursor_project\Tools\AutoPipeline\work\jar ----
+  Server latest : NexacroN_Deploy_JAVA_20260825(1.1.90)_1.zip
+  Installed     : NexacroN_Deploy_JAVA_20260825(1.1.90)_1.zip
+  [SKIP] Already up to date
+  [DONE] jar (0.1s)
+
+---- [v24] 0 Preflight ----
+  Type    : git
+  Source  : D:\git\master (master)
+  Repo    : https://tfs2.tobesoft.com:9443/tfs/XPLATFORM/_git/WORK800
+  Project : D:\JEBI_TOPS_V24\JEBI_TOPS_V24.xprj (JEBI_TOPS_V24)
+  Output  : D:\git_prj\cursor_project\Tools\AutoPipeline\work\v24\output\JEBI_TOPS_V24
+  JAVA    : C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10\bin\java.exe
+  Jar     : D:\git_prj\cursor_project\Tools\AutoPipeline\work\jar\NexacroN_Deploy_JAVA_20260825(1.1.90)_1
+  Publish : D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\auto_v24/JEBI_TOPS_V24
+  Host    : 172.10.12.45
+  Port    : 7070
+  [DONE] 0 Preflight (0.0s)
+
+---- [v24] 1 Source ----
+  Remote : master @ 9e3ba4d71c0b7b7f4a33bfe9cab32c4c67be8c83
+  [SKIP] Local already at remote HEAD (9e3ba4d71c0b)
+         Skipping fetch, pull and framework copy.
+
+---- [v24] UNCHANGED — source and jar are up to date, running TestPro only ----
+
+---- [v24] 4 Publish ----
+  Tomcat not listening on 7070. Starting...
+  Existing folder found, deleting (486 file(s)): D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\auto_v24/JEBI_TOPS_V24
+  Copied -> D:\git_prj\cursor_project\apache-tomcat-10.1.55\webapps\auto_v24/JEBI_TOPS_V24
+  Ready: http://172.10.12.45:7070/auto_v24/JEBI_TOPS_V24/index.html
+  [DONE] 4 Publish (6.3s)
+
+---- [v24] 5 TestPro ----
+  Exe     : E:\TestProNew\JEBI_Main\JEBI_Main.exe
+  Mode    : scenario
+  Output  : D:\git_prj\cursor_project\Tools\AutoPipeline\python\work\v24\test-result
+  Timeout : 600s
+  [CMD] E:\TestProNew\JEBI_Main\JEBI_Main.exe -s E:\TestProNew\JEBI_Main\jsondata.json --run-scenario E:\TestProNew\Tests\scenarios\NexacroN_v24\degradration\SC-Deg-v24.json --output D:\git_prj\cursor_project\Tools\AutoPipeline\python\work\v24\test-result --vars E:\TestProNew\Tests\env\envQA\variable.json --headless

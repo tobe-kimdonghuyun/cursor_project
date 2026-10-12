@@ -28,6 +28,7 @@ import tempfile
 import time
 import urllib.parse
 import urllib.request
+import xml.etree.ElementTree as ET
 import zipfile
 
 DEFAULT_HOME = r'D:\git\cursor_project\Tools\AutoPipeline'
@@ -39,13 +40,21 @@ JAR_BASE = JAR_SERVER + '/NexacroN/serverN/Deploy_JAVA/%EB%B6%84%EB%A6%AC_Jar/'
 TARGETS = ('v21', 'v24')
 PROTECTED_APPS = ('root', 'manager', 'host-manager', 'docs', 'examples')
 REQUIRED_KEYS = ('ExpectedVersion', 'SourceDir', 'Branch', 'ProjectPath', 'WorkDir',
-                 'JarDir', 'TomcatHome', 'TomcatPort', 'WebContext')
+                 'JarDir', 'TomcatHome', 'WebContext')
 # Relative values of these keys are resolved against the folder that holds the config file
 PATH_KEYS = ('SourceDir', 'ProjectPath', 'WorkDir', 'JarDir', 'TomcatHome', 'JavaHome',
              'PackageRoot', 'PackagePath',
              'JebiExePath', 'TestScenarioFile', 'TestParallelManifest',
              'TestOutputDir', 'TestVarsFile', 'TestSourceFile')
 CREATE_NO_WINDOW = 0x08000000
+
+# Folders inside WORK800 that the pipeline actually reads.
+# Sparse-checkout limits the clone to these paths only.
+def _sparse_dirs(expected_ver):
+    paths = ['Lib/FrameworkJS', 'Tools/Lib/TiMetainfoLib']
+    if expected_ver != '21':          # v24 needs the generate template
+        paths.append('Tools/Lib/TiGenerateLib')
+    return paths
 
 
 class PipelineError(Exception):
@@ -120,6 +129,9 @@ def read_config(path):
         v = cfg.get(key)
         if v and not os.path.isabs(v):
             cfg[key] = os.path.abspath(os.path.join(base, v))
+    # TomcatPort: 비어 있으면 TomcatHome/conf/server.xml 에서 HTTP Connector 포트를 자동 감지
+    if not cfg.get('TomcatPort') and cfg.get('TomcatHome'):
+        cfg['TomcatPort'] = _detect_tomcat_port(cfg['TomcatHome'])
     missing = [k for k in REQUIRED_KEYS if not cfg.get(k)]
     if missing:
         raise PipelineError(f'Missing keys in {path}: {", ".join(missing)}')
@@ -363,6 +375,24 @@ def test_port(port):
         return False
 
 
+def _detect_tomcat_port(tomcat_home):
+    """conf/server.xml 에서 첫 번째 HTTP Connector 포트를 읽어 반환."""
+    server_xml = os.path.join(tomcat_home, 'conf', 'server.xml')
+    if not os.path.isfile(server_xml):
+        raise PipelineError(f'server.xml not found: {server_xml}')
+    try:
+        tree = ET.parse(server_xml)
+        for connector in tree.iter('Connector'):
+            protocol = connector.get('protocol', 'HTTP/1.1')
+            if 'AJP' not in protocol.upper():
+                port = connector.get('port')
+                if port:
+                    return port
+    except ET.ParseError as e:
+        raise PipelineError(f'Failed to parse server.xml: {e}')
+    raise PipelineError(f'HTTP Connector port not found in {server_xml}')
+
+
 _no_proxy = urllib.request.build_opener(urllib.request.ProxyHandler({}))
 
 
@@ -400,8 +430,8 @@ def step(ctx, name, body, when=True):
 # Pipeline for one target
 # ============================================================
 
-def invoke_target(ctx, opt, root, jar_updated=False):
-    cfg_path = os.path.join(root, f"pipeline_{ctx['Target']}.txt")
+def invoke_target(ctx, opt, root, jar_updated=False, config_path=None):
+    cfg_path = config_path or os.path.join(root, f"pipeline_{ctx['Target']}.txt")
     cfg = read_config(cfg_path)
 
     if not is_enabled(cfg):
@@ -496,6 +526,7 @@ def invoke_target(ctx, opt, root, jar_updated=False):
         log(f"  Jar     : {env['jar_root']}")
         log(f'  Publish : {pub_dir}')
         log(f"  Host    : {env['host']}")
+        log(f"  Port    : {cfg['TomcatPort']}")
 
     # ---- [1] Package (SourceType=package): prebuilt nexacrolib.zip = nexacrolib\ + generate\ ----
     #      Replaces [1] Source and [2] Framework copy. No UTF-8 BOM conversion (already built).
@@ -603,22 +634,31 @@ def invoke_target(ctx, opt, root, jar_updated=False):
             is_empty = exists and os.path.isdir(src) and not os.listdir(src)
 
             if not exists or is_empty:
-                # Full single-branch clone (same as git_sourcecode.md) + Windows long path support
+                # Sparse single-branch clone — fetches only the folders the pipeline needs
                 drive = os.path.splitdrive(os.path.abspath(src))[0] + '\\'
                 free_gb = shutil.disk_usage(drive).free // (1024 ** 3)
-                need_gb = int(cfg.get('CloneMinFreeGB') or 40)
+                need_gb = int(cfg.get('CloneMinFreeGB') or 5)
                 if free_gb < need_gb:
                     raise PipelineError(f'Not enough disk space to clone: {free_gb}GB free on {drive} (need {need_gb}GB)')
 
-                log(f'  SourceDir not found -> full clone ({free_gb} GB free on {drive}). The first clone can take tens of minutes.')
+                sparse = _sparse_dirs(cfg['ExpectedVersion'])
+                log(f'  SourceDir not found -> sparse+shallow clone ({free_gb} GB free on {drive})')
+                log(f'  Sparse paths: {", ".join(sparse)}')
                 os.makedirs(os.path.dirname(os.path.abspath(src)), exist_ok=True)
-                code = run(['git', 'clone', '-c', 'core.longpaths=true', '-b', br, '--single-branch', url, src])
+                # --depth=1        : shallow clone (최신 커밋 1개만) — TFS 포함 대부분의 서버 지원
+                # --no-tags        : tag 오브젝트 다운로드 생략 → 전송량 절감
+                # --sparse         : working tree를 sparse-checkout으로 초기화
+                # --filter 제거     : Partial Clone — TFS 구버전 미지원
+                code = run(['git', 'clone', '-c', 'core.longpaths=true', '-b', br, '--single-branch',
+                            '--depth=1', '--no-tags', '--sparse', url, src])
+                if code == 0:
+                    code = run(['git', '-C', src, 'sparse-checkout', 'set', '--cone'] + sparse)
                 if code != 0:
                     # Remove only what this run created (keep a folder that existed empty)
                     remove_tree(src)
                     if is_empty:
                         os.makedirs(src, exist_ok=True)
-                    raise PipelineError(f'git clone failed (exit {code}): {br} -> {src}')
+                    raise PipelineError(f'git clone/sparse-checkout failed (exit {code}): {br} -> {src}')
             elif not is_repo:
                 raise PipelineError(f'SourceDir exists but is not a git repository (not touched): {src}')
             else:
@@ -639,7 +679,20 @@ def invoke_target(ctx, opt, root, jar_updated=False):
                 if git_out(src, 'status', '--porcelain'):
                     raise PipelineError(f'Source repo has local changes, aborting: {src}')
 
-                if run(['git', '-C', src, 'fetch', 'origin', br]) != 0:
+                # 로컬 HEAD가 이미 서버 브랜치와 동일한 hash → fetch/pull 및 framework copy 생략
+                # (jar 변경 시 deploy는 jar_updated 플래그로 별도 제어됨)
+                if remote_hash:
+                    local_head = git_out(src, 'rev-parse', 'HEAD')
+                    if local_head == remote_hash:
+                        log(f'  [SKIP] Local already at remote HEAD ({local_head[:12]})')
+                        log(f'         Skipping fetch, pull and framework copy.')
+                        ctx['Hash'] = local_head
+                        ctx['Msg'] = git_out(src, 'log', '-1', '--format=%s')
+                        raise Unchanged()
+
+                # --depth=1  : 최신 커밋 1개만 fetch (기존 shallow 클론 유지 + 신규 커밋만 추가)
+                # --no-tags  : tag 오브젝트 생략 → 전송량 절감
+                if run(['git', '-C', src, 'fetch', '--depth=1', '--no-tags', 'origin', br]) != 0:
                     raise PipelineError('git fetch failed')
                 if run(['git', '-C', src, 'pull', '--ff-only', 'origin', br]) != 0:
                     raise PipelineError('git pull failed')
@@ -712,7 +765,8 @@ def invoke_target(ctx, opt, root, jar_updated=False):
     # ---- [4] Publish to Tomcat ----
     def publish():
         port = int(cfg['TomcatPort'])
-        if not test_port(port):
+        was_running = test_port(port)   # 파이프라인 시작 전 서버 상태 기록
+        if not was_running:
             log(f'  Tomcat not listening on {port}. Starting...')
             tenv = dict(os.environ, CATALINA_HOME=cfg['TomcatHome'], JAVA_HOME=env['java_home'])
             bin_dir = os.path.join(cfg['TomcatHome'], 'bin')
@@ -724,7 +778,8 @@ def invoke_target(ctx, opt, root, jar_updated=False):
                 time.sleep(2)
             if not test_port(port):
                 raise PipelineError(f'Tomcat did not start on port {port}')
-        log(f'  Tomcat listening on {port}')
+        else:
+            log(f'  Tomcat already running on port {port}')
 
         # Same-name folder already on the server: delete it, then copy fresh
         if os.path.exists(pub_dir):
@@ -746,9 +801,16 @@ def invoke_target(ctx, opt, root, jar_updated=False):
         ctx['Url'] = f"http://{env['host']}:{port}/" + '/'.join(p for p in (url_path, page) if p)
         if not page and url_path:
             ctx['Url'] += '/'
+        # 서버가 이미 실행 중이었으면: wait_url 실패 시 에러 대신 경고만 출력하고 다음 단계로 진행
+        # (파일 복사 후 Tomcat autoDeploy 리로드가 60초를 초과해도 서버 자체는 살아있음)
+        # 서버를 새로 기동한 경우: 60초 내에 응답 없으면 에러 처리
         if not wait_url(ctx['Url'], 60):
-            raise PipelineError(f"URL not ready within 60s: {ctx['Url']}")
-        log(f"  Ready: {ctx['Url']}")
+            if was_running:
+                log(f'  [WARN] URL not ready within 60s, continuing (Tomcat was already running): {ctx["Url"]}')
+            else:
+                raise PipelineError(f"URL not ready within 60s: {ctx['Url']}")
+        else:
+            log(f"  Ready: {ctx['Url']}")
 
     # ---- [5] TestPro: JEBI_Main.exe CLI ----
     def testpro():
@@ -799,6 +861,15 @@ def invoke_target(ctx, opt, root, jar_updated=False):
         test_out = cfg.get('TestOutputDir') or ''
         if not test_out:
             test_out = os.path.join(work, 'test-result')
+        # 로그 파일이 있는 폴더와 TestOutputDir가 겹치면 remove_tree가 로그를 삭제함 → 사전 차단
+        _cur_log_dir = os.path.normcase(os.path.abspath(os.path.dirname(_log_fp.name))) if _log_fp else ''
+        _tout_norm = os.path.normcase(os.path.abspath(test_out))
+        if _cur_log_dir and (_tout_norm == _cur_log_dir or _tout_norm.startswith(_cur_log_dir + os.sep)):
+            raise PipelineError(
+                f'TestOutputDir must not overlap the log folder.\n'
+                f'  TestOutputDir : {test_out}\n'
+                f'  Log folder    : {os.path.dirname(_log_fp.name)}\n'
+                f'  Fix: set TestOutputDir to a separate folder (e.g. work\\v24\\test-result)')
         if os.path.exists(test_out):
             remove_tree(test_out)
         os.makedirs(test_out, exist_ok=True)
@@ -922,19 +993,24 @@ def invoke_target(ctx, opt, root, jar_updated=False):
         if s in _BLOCK_STEP_NUM:
             do_from = min(do_from, _BLOCK_STEP_NUM[s])
 
+    run_testpro = is_yes(cfg.get('TestProEnabled'))
+
     if do_from == 99:
         log('')
-        log(f"---- [{ctx['Target']}] UNCHANGED — source and jar are up to date, nothing to do ----")
-        ctx['Status'] = 'UNCHANGED'
-        return
+        if not run_testpro:
+            log(f"---- [{ctx['Target']}] UNCHANGED — source and jar are up to date, nothing to do ----")
+            ctx['Status'] = 'UNCHANGED'
+            return
+        log(f"---- [{ctx['Target']}] UNCHANGED — source and jar are up to date, running TestPro only ----")
 
     step(ctx, '2 Framework copy', framework_copy, when=do_from <= 2 and src_type == 'git')
     step(ctx, '3 Deploy', deploy, when=do_from <= 3)
-    step(ctx, '4 Publish', publish, when=do_from <= 4)
-    step(ctx, '5 TestPro', testpro, when=is_yes(cfg.get('TestProEnabled')))
+    step(ctx, '4 Publish', publish, when=do_from <= 4 or (do_from == 99 and run_testpro))
+    step(ctx, '5 TestPro', testpro, when=run_testpro)
 
-    with open(hash_file, 'w', encoding='utf-8') as f:
-        f.write((ctx['PackageId'] if src_type == 'package' else ctx['Hash']) + '\n')
+    if do_from < 99:
+        with open(hash_file, 'w', encoding='utf-8') as f:
+            f.write((ctx['PackageId'] if src_type == 'package' else ctx['Hash']) + '\n')
     ctx['Status'] = 'SUCCESS'
 
 
@@ -943,13 +1019,17 @@ def invoke_target(ctx, opt, root, jar_updated=False):
 # ============================================================
 
 USAGE = """Usage: auto_pipeline.exe [v21|v24|all] [-Branch <name>] [-SourceType git|package] [-Build <folder>]
-                         [-Block <steps>] [-SkipGit] [-Home <config folder>] [-Help]
+                         [-Block <steps>] [-SkipGit] [-Config <path>] [-Home <config folder>] [-Help]
   -Branch     : this run only, overrides Branch= in pipeline_<target>.txt (v21 or v24 only)
   -SourceType : this run only, overrides SourceType= (default git; package = prebuilt nexacrolib.zip)
   -Build      : this run only, package build folder (default PackageBuild=latest)
   -Block      : comma-separated steps to force even when no change is detected
                 (framework, deploy, publish, testpro); applies to all targets
   -SkipGit    : skip remote check / clone / pull (use existing local source as-is)
+  -Config     : path to a pipeline config file — absolute or relative to the current directory
+                (e.g. pipeline_v24.txt  or  D:\\path\\pipeline_v24.txt)
+                Target is inferred from the filename (v21/v24) or ExpectedVersion= in the file.
+                Overrides -Home. Cannot be used with 'all'.
   -Home       : folder with pipeline_v21.txt / pipeline_v24.txt
                 (default: env PIPELINE_HOME > exe folder > """ + DEFAULT_HOME + """)
 
@@ -959,10 +1039,11 @@ Note: Source changes and Deploy JAVA engine updates are detected automatically o
 
 
 def parse_args(argv):
-    opt = {'Target': 'all', 'Branch': '', 'SourceType': '', 'Build': '', 'Home': '',
+    opt = {'Target': 'all', 'Branch': '', 'SourceType': '', 'Build': '', 'Home': '', 'Config': '',
            'SkipGit': False, 'Block': set()}
     switches = {'-skipgit': 'SkipGit'}
-    values = {'-target': 'Target', '-branch': 'Branch', '-sourcetype': 'SourceType', '-build': 'Build', '-home': 'Home'}
+    values = {'-target': 'Target', '-branch': 'Branch', '-sourcetype': 'SourceType',
+              '-build': 'Build', '-home': 'Home', '-config': 'Config'}
     _BLOCK_ALIASES = {'fw': 'framework', 'git': 'source', 'test': 'testpro'}
     _VALID_BLOCK = {'framework', 'deploy', 'publish', 'testpro'}
     k = 0
@@ -1015,6 +1096,8 @@ def parse_args(argv):
     if opt['Build'] and opt['Target'] == 'all':
         print('[ERROR] -Build needs a single target (v21 or v24)')
         sys.exit(2)
+    if opt['Config'] and opt['Home']:
+        print('[WARN] -Config and -Home are both set; -Config takes priority.')
     return opt
 
 
@@ -1025,7 +1108,34 @@ def exe_path():
     return os.path.abspath(__file__)
 
 
+def _infer_target(config_path):
+    """Config 파일 경로에서 Target(v21/v24) 추론: 파일명 → ExpectedVersion= 순서로 시도."""
+    fname = os.path.basename(config_path).lower()
+    m = re.search(r'v(21|24)', fname)
+    if m:
+        return 'v' + m.group(1)
+    try:
+        with open(config_path, encoding='utf-8-sig', errors='replace') as f:
+            for line in f:
+                t = line.strip()
+                if t.lower().startswith('expectedversion='):
+                    v = t.split('=', 1)[1].strip()
+                    if '21' in v:
+                        return 'v21'
+                    if '24' in v:
+                        return 'v24'
+    except Exception:
+        pass
+    return None
+
+
 def find_home(opt):
+    if opt.get('Config'):
+        p = os.path.abspath(opt['Config'])
+        if not os.path.isfile(p):
+            print(f'[ERROR] Config file not found: {p}')
+            sys.exit(2)
+        return os.path.dirname(p)
     exe_dir = os.path.dirname(exe_path())
     # Check parent first so that running auto_pipeline.py from the python\ sub-folder
     # finds the config files in the parent (Tools\AutoPipeline\), same as the compiled exe.
@@ -1039,7 +1149,7 @@ def find_home(opt):
             return os.path.abspath(c)
     print('[ERROR] pipeline_v21.txt / pipeline_v24.txt not found.')
     print('        Checked: ' + ', '.join(f"'{c}'" for c in cands if c))
-    print('        Use -Home <folder> or set the PIPELINE_HOME environment variable.')
+    print('        Use -Config <path> or -Home <folder> or set the PIPELINE_HOME environment variable.')
     sys.exit(2)
 
 
@@ -1051,15 +1161,44 @@ def main(argv):
         pass
 
     opt = parse_args(argv)
+
+    # -Config: 단일 파일 직접 지정 → Target 자동 추론
+    config_path = None
+    if opt.get('Config'):
+        config_path = os.path.abspath(opt['Config'])
+        if not os.path.isfile(config_path):
+            print(f'[ERROR] Config file not found: {config_path}')
+            sys.exit(2)
+        if opt['Target'] == 'all':
+            inferred = _infer_target(config_path)
+            if not inferred:
+                print(f"[ERROR] -Config: cannot infer target from '{os.path.basename(config_path)}'.")
+                print("        Add ExpectedVersion=21 or ExpectedVersion=24 to the file,")
+                print("        or specify the target explicitly (e.g. auto_pipeline.exe v24 -Config ...).")
+                sys.exit(2)
+            opt['Target'] = inferred
+
     root = find_home(opt)
     os.environ['GIT_TERMINAL_PROMPT'] = '0'   # never block on a credential prompt
 
+    # work_root: -Config 모드에서는 Config 파일의 JarDir 상위를 기준으로 사용.
+    # (Config 파일이 python/ 하위에 있어도 JarDir가 AutoPipeline/work/jar이면 work_root도 그에 맞춰야 함)
     work_root = os.path.join(root, 'work')
+    if config_path:
+        try:
+            _pre = read_config(config_path)
+            _jar = _pre.get('JarDir', '')
+            if _jar:
+                work_root = os.path.dirname(os.path.abspath(_jar))
+        except Exception:
+            pass
     log_dir = os.path.join(root, 'logs')
     os.makedirs(log_dir, exist_ok=True)
     log_file = os.path.join(log_dir, f"{datetime.datetime.now():%Y%m%d_%H%M%S}_{opt['Target']}.log")
     _log_fp = open(log_file, 'w', encoding='utf-8')
     log(f'[INFO] Config folder: {root}')
+    if config_path:
+        log(f'[INFO] Config file  : {config_path}')
     log(f'[INFO] Runner      : {exe_path()}')
 
     targets = list(TARGETS) if opt['Target'] == 'all' else [opt['Target']]
@@ -1072,7 +1211,8 @@ def main(argv):
     jar_updated_map = {}   # {jar_dir: bool} — 실제로 업데이트됐으면 True
     for t in targets:
         try:
-            c = read_config(os.path.join(root, f'pipeline_{t}.txt'))
+            cfg_path_t = config_path if (config_path and t == opt['Target']) else os.path.join(root, f'pipeline_{t}.txt')
+            c = read_config(cfg_path_t)
             if is_enabled(c) and c['JarDir'] not in jar_dirs:
                 jar_dirs.append(c['JarDir'])
         except PipelineError:
@@ -1107,11 +1247,13 @@ def main(argv):
         try:
             # 해당 target의 JarDir에서 jar 업데이트 여부 전달
             try:
-                pre_cfg = read_config(os.path.join(root, f'pipeline_{t}.txt'))
+                cfg_path_t = config_path if (config_path and t == opt['Target']) else os.path.join(root, f'pipeline_{t}.txt')
+                pre_cfg = read_config(cfg_path_t)
                 jar_upd = jar_updated_map.get(pre_cfg.get('JarDir', ''), False)
             except Exception:
                 jar_upd = False
-            invoke_target(ctx, opt, root, jar_updated=jar_upd)
+            invoke_target(ctx, opt, root, jar_updated=jar_upd,
+                          config_path=config_path if (config_path and t == opt['Target']) else None)
         except Exception as e:
             ctx['Error'] = str(e)
             log(f'[ERROR] [{t}] {e}')

@@ -343,8 +343,9 @@ flowchart TD
 
 | SourceDir 상태 | 처리 |
 |---|---|
-| 없음 / 빈 폴더 | 디스크 여유 확인(`CloneMinFreeGB`, 기본 40GB) → **full clone**<br>`git clone -c core.longpaths=true -b <Branch> --single-branch <RepoUrl> <SourceDir>`<br>실패 시 이번 실행에서 만든 폴더만 삭제 |
-| git 저장소 | `origin` == `RepoUrl` / `.git\index.lock` 없음 / 현재 브랜치 == Branch / 로컬 수정 없음 확인 후<br>`git fetch origin <Branch>` → `git pull --ff-only origin <Branch>` |
+| 없음 / 빈 폴더 | 디스크 여유 확인(`CloneMinFreeGB`, 기본 40GB) → **full clone**<br>`git clone -c core.longpaths=true -b <Branch> --single-branch --depth=1 --no-tags <RepoUrl> <SourceDir>`<br>실패 시 이번 실행에서 만든 폴더만 삭제 |
+| git 저장소 (로컬 HEAD == 원격 해시) | fetch / pull / Framework copy 모두 건너뜀 (`SrcChanged=false`, UNCHANGED 처리) |
+| git 저장소 (로컬 HEAD ≠ 원격 해시) | `origin` == `RepoUrl` / `.git\index.lock` 없음 / 현재 브랜치 == Branch / 로컬 수정 없음 확인 후<br>`git fetch --depth=1 --no-tags origin <Branch>` → `git pull --ff-only origin <Branch>` |
 | git 저장소인데 origin 이 다름 | FAIL (다른 저장소 보호) |
 | git 저장소인데 브랜치가 다름 | FAIL (브랜치별 폴더 규칙 위반, `SourceDir=...\{Branch}` 안내) |
 | 내용이 있는데 git 아님 | FAIL (**삭제하지 않음**) |
@@ -354,8 +355,8 @@ flowchart TD
     커밋 해시 / 메시지 기록 → [2]
 ```
 
-- clone 명령은 `git_sourcecode.md` 의 명령과 같고, Windows 긴 경로(260자) 대응 `core.longpaths=true` 만 추가했다
-- **처음 clone 은 약 7~9GB 다운로드 + 약 20GB 체크아웃**이라 수십 분 걸릴 수 있다 (시간 제한 없음). 이후 실행은 fetch/pull 만 한다
+- clone / fetch 에 `--depth=1 --no-tags` 를 붙여 통신량을 줄인다. 기존 full clone PC 에서는 서버가 HAVE 협상으로 이를 무시하므로 히스토리 유지.
+- **처음 clone 은 약 7~9GB 다운로드 + 약 20GB 체크아웃**이라 수십 분 걸릴 수 있다 (시간 제한 없음). 이후 실행은 로컬 HEAD 비교 후 같으면 바로 건너뜀, 다르면 fetch/pull 만 한다
 - `GIT_TERMINAL_PROMPT=0` 으로 인증 프롬프트 대기를 막음 (인증 실패 시 즉시 FAIL)
 - `RepoUrl` 이 없으면 clone 하지 않고, 기존 SourceDir 의 `origin` 으로 원격 확인/업데이트만 한다
 - TFS 서버는 partial clone(`--filter`)을 지원하지 않는다 (프로토콜 v0, `filter` capability 없음). `--depth`(shallow)는 지원
@@ -408,16 +409,18 @@ java.exe -Dlog4j.configurationFile=<JarRoot>\log4j2.xml
 
 ### [4] Publish — Tomcat 게시
 
-1. `TomcatPort`(8080) LISTEN 확인. 이미 실행 중이면 **재시작하지 않음**
+1. `TomcatPort`(8080) LISTEN 확인. 이미 실행 중이면 **재시작하지 않음** (`wasRunning=true` 기록)
 2. 꺼져 있으면 `catalina.bat start` (JAVA_HOME = 위 Java) 후 최대 60초 대기
 3. 게시 폴더 결정: `TomcatHome\webapps\<WebContext>[\<PublishSubDir>]` (`{Project}` → 프로젝트명 치환)
 4. **같은 이름의 폴더가 이미 있으면 전체 삭제** (삭제한 파일 수를 로그에 기록). 누가 만든 폴더인지 구분하지 않는다
 5. `robocopy /E work\<대상>\deploy → 게시 폴더` 로 새로 복사
+   - UNCHANGED + TestProEnabled=Y 일 때도 이 단계를 실행하여 Tomcat 및 URL 상태를 확인한다 (게시 자체는 건너뜀)
 6. 시작 페이지 결정: 설정 `StartPage` → `index.html` → deploy 루트의 첫 `*.html`
 7. URL 호스트 결정: 설정 `ServerHost` 값. 비우거나 `auto` 이면 **이 PC 의 IPv4 자동 탐색**
    - 기본 게이트웨이가 있는 활성 어댑터의 IPv4 (현재 `이더넷` → `172.10.12.46`)
    - 없으면 `127.*` / `169.254.*` 를 제외한 첫 IPv4, 그것도 없으면 `localhost`
 8. `http://<호스트>:<TomcatPort>/...` 가 HTTP 200 을 반환할 때까지 최대 60초 대기 (Tomcat 자동 배포 지연 대응). Chrome 도 같은 주소로 연다
+   - `wasRunning=true` (실행 전부터 Tomcat이 켜져 있었음) 이면 URL 확인 실패 시 FAIL 대신 경고만 출력하고 계속 진행
 
 **게시 위치 / URL 예시** (프로젝트 `TC_NexaV21`, `ServerHost=auto` → `172.10.12.46`)
 
@@ -793,9 +796,9 @@ set "PIPELINE_HOME=D:\git\cursor_project\Tools\AutoPipeline"
 | AutoPipeline 폴더를 통째로 이동 | bat 과 txt 가 같이 옮겨지므로 2순위(bat 폴더)로 자동 인식. 단, txt 의 절대 경로(`WorkDir` 등)는 수정 필요 → 상대 경로 권장 (10-4) |
 | 설정 폴더를 여러 개 운영 | bat 을 복사해 각각 `PIPELINE_HOME` 만 다르게 지정 |
 
-### 10-4. txt 의 상대 경로 지원 (standalone 전용)
+### 10-4. txt 의 상대 경로 지원 (standalone · ps1 공통)
 
-`auto_pipeline_standalone.bat` 은 txt 의 아래 키가 **상대 경로이면 txt 가 있는 폴더 기준**으로 변환한다.
+`auto_pipeline_standalone.bat` 과 `auto_pipeline.ps1` 모두 txt 의 아래 키가 **상대 경로이면 txt 가 있는 폴더 기준**으로 변환한다.
 
 대상 키: `SourceDir`, `ProjectPath`, `WorkDir`, `JarDir`, `TomcatHome`, `JavaHome`, `ChromePath`,
 `JebiExePath`, `TestScenarioFile`, `TestParallelManifest`, `TestOutputDir`, `TestVarsFile`, `TestSourceFile`
@@ -805,8 +808,6 @@ WorkDir=work\v21        → <설정 폴더>\work\v21
 JarDir=work\jar         → <설정 폴더>\work\jar
 ```
 
-> ⚠ 기존 `auto_pipeline.ps1` 은 상대 경로를 변환하지 않는다. 두 실행 파일을 같이 쓰려면 txt 는 지금처럼 **절대 경로를 유지**한다.
-
 ### 10-5. 기존 ps1 과의 차이
 
 | 항목 | `auto_pipeline.ps1` | `auto_pipeline_standalone.bat` |
@@ -815,7 +816,8 @@ JarDir=work\jar         → <설정 폴더>\work\jar
 | 설정 폴더 | ps1 이 있는 폴더 고정 | `PIPELINE_HOME` → bat 폴더 |
 | 인자 처리 | PowerShell `param()` | 직접 해석 (모르는 인자는 오류) |
 | `-Help` | 없음 | 있음 |
-| txt 상대 경로 | 미지원 | 지원 |
+| txt 상대 경로 | 지원 (2026-10-12~) | 지원 |
+| TestPro 단계 | 있음 (2026-10-12~) | 있음 |
 | 파이프라인 로직 | — | ps1 과 동일 |
 
 **주의**
@@ -1100,6 +1102,7 @@ python\build_exe.bat                     :: Nuitka 만
 | 2026-10-12 | 변경 감지 자동화, `-Block <단계>` 추가, Nuitka `--zig` 전환, `build_all_exe.bat` (py / ps1 / standalone 3종 빌드) 추가 |
 | 2026-10-12 | **main / dev 소스 분리** — 원격 dev 를 `dev-backup-20260726` 으로 백업 후 로컬 dev(`f4899f5`)로 교체, fetch 설정을 전체 브랜치로 변경, 로컬 main 을 origin/main 으로 재설정. `build_standalone_exe.bat` 주석 오인 오류 수정, Nuitka 캐시 확인, 보안 점검 (13-6). 상세: `History\20261012_1058.md` |
 | 2026-10-12 | **`.gitignore` 추가** — `__pycache__/`, `*.pyc`, `work/`, `logs/` 추적 해제 (로컬 파일 유지). 다른 PC 에서 pull 하면 그 PC 의 `work\`·`logs\` 파일이 삭제되므로 필요한 로그는 미리 백업 |
+| 2026-10-12 | **standalone / ps1 동기화** — git clone/fetch 에 `--depth=1 --no-tags` 추가, 로컬 HEAD == remote 시 fetch/pull 스킵, UNCHANGED + TestPro 분기 처리, Publish `wasRunning` 추적(URL 확인 실패를 경고로 처리), TestOutputDir 로그 폴더 겹침 안전장치, `hash_file` 을 `doFrom < 99` 일 때만 기록. `auto_pipeline.ps1` 에 TestPro 단계 추가, 상대 경로 처리 추가, ctx TestPro 필드 추가, Summary TestPro 출력 추가. 상세: `History\20261012_1430.md` |
 
 ---
 
