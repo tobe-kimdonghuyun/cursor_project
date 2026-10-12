@@ -1,11 +1,11 @@
 <#
   auto_pipeline.ps1
   [jar] Deploy JAVA engine update -> Git pull -> nexacrolib build-up -> Nexacro deploy (Java CLI)
-  -> publish to Tomcat -> open Chrome
+  -> publish to Tomcat -> TestPro
 
   Usage:
     auto_pipeline.ps1 [-Target v21|v24|all] [-Branch <name>] [-SourceType git|package] [-Build <folder>]
-                      [-UpdateJar] [-SkipGit] [-OnlyIfChanged] [-OpenBrowser | -NoBrowser] [-DevTools]
+                      [-Block <steps>] [-SkipGit]
 
   -SourceType overrides SourceType= (default git). package = prebuilt nexacrolib.zip from PackageRoot/PackagePath.
   -Build picks a package build folder for this run (default PackageBuild=latest).
@@ -13,8 +13,13 @@
   -Branch overrides Branch= in pipeline_<target>.txt for this run only (single target only).
   SourceDir may contain {Branch}; a missing SourceDir is cloned from RepoUrl (full, single-branch).
 
-  Chrome is opened only when OpenBrowser=Y in pipeline_<target>.txt (default N).
-  -OpenBrowser / -NoBrowser override the config for this run.
+  Change detection is automatic: source (git hash / package id) and jar version are always checked.
+  When nothing changed, steps [2]-[5] are skipped automatically.
+
+  -Block <steps>  Force-run from the specified step even when nothing changed.
+                  Valid values (comma-separated): framework, deploy, publish, testpro
+                  Aliases: fw=framework, test=testpro
+                  Example: -Block deploy,publish
 
   Each target reads pipeline_<target>.txt in this folder.
   Existing Tools scripts are NOT used or modified; all logic lives here.
@@ -24,12 +29,8 @@ param(
     [string]$Branch,
     [string]$SourceType,
     [string]$Build,
-    [switch]$UpdateJar,
-    [switch]$SkipGit,
-    [switch]$OnlyIfChanged,
-    [switch]$OpenBrowser,
-    [switch]$NoBrowser,
-    [switch]$DevTools
+    [string]$Block,
+    [switch]$SkipGit
 )
 
 if ($Branch -and $Target -eq 'all') { Write-Host '[ERROR] -Branch needs a single target (v21 or v24)'; exit 2 }
@@ -289,10 +290,11 @@ function Invoke-Step($Ctx, [string]$Name, [scriptblock]$Body, [bool]$When = $tru
 # Pipeline for one target
 # ============================================================
 
-function Invoke-Target($Ctx) {
+function Invoke-Target($Ctx, [bool]$JarUpdated = $false) {
     $cfgPath = Join-Path $ROOT "pipeline_$($Ctx.Target).txt"
     $cfg = Read-PipelineConfig $cfgPath
     $Ctx.Cfg = $cfg
+    $Ctx.SrcChanged = $true  # set to $false in [1] when no change detected
 
     if (-not (Test-Enabled $cfg)) {
         Write-Host ''
@@ -316,18 +318,13 @@ function Invoke-Target($Ctx) {
     $project = [IO.Path]::GetFileNameWithoutExtension($cfg.ProjectPath)
     $Ctx.Project = $project
 
-    # Chrome: command line switch wins, otherwise OpenBrowser=Y|N in config (default N)
-    $Ctx.OpenBrowser = if ($NoBrowser) { $false }
-                       elseif ($OpenBrowser) { $true }
-                       else { @('Y', 'YES', 'TRUE', '1') -contains "$($cfg.OpenBrowser)".ToUpper() }
-
     $work      = $cfg.WorkDir
     $libRoot   = Join-Path $work 'nexacrolib'
     $libDir    = Join-Path $libRoot 'nexacrolib'
     $genDir    = Join-Path $libRoot 'generate'
     $outDir    = Join-Path (Join-Path $work 'output') $project
     $deployDir = Join-Path $work 'deploy'
-    # Last success marker per source type + branch (-OnlyIfChanged): git = commit hash, package = zip path|size|time
+    # Last success marker per source type + branch: git = commit hash, package = zip path|size|time
     $hashKey   = $cfg.Branch -replace '[\\/:*?"<>|]', '_'
     $hashFile  = Join-Path $work $(if ($srcType -eq 'package') { "last_success_package_$hashKey.txt" } else { "last_success_hash_$hashKey.txt" })
 
@@ -361,11 +358,8 @@ function Invoke-Target($Ctx) {
         $Ctx.JavaHome = $javaHome
 
         $startBat = Find-StartBat $cfg.JarDir
-        if (-not $startBat) { throw "start.bat not found under $($cfg.JarDir). Run with -UpdateJar." }
+        if (-not $startBat) { throw "start.bat not found under $($cfg.JarDir)" }
         $Ctx.JarRoot = Split-Path -Parent $startBat.DirectoryName
-
-        $Ctx.Chrome = if ($cfg.ChromePath) { $cfg.ChromePath } else { 'C:\Program Files\Google\Chrome\Application\chrome.exe' }
-        if ($Ctx.OpenBrowser -and -not (Test-Path -LiteralPath $Ctx.Chrome)) { throw "Chrome not found: $($Ctx.Chrome)" }
 
         Write-Host "  Type    : $srcType$(if ($SourceType) { ' (-SourceType)' })"
         if ($srcType -eq 'git') {
@@ -385,7 +379,6 @@ function Invoke-Target($Ctx) {
 
         Write-Host "  Publish : $pubDir"
         Write-Host "  Host    : $($Ctx.Host)"
-        Write-Host "  Browser : $(if ($Ctx.OpenBrowser) { 'open Chrome' } else { 'off' })"
     }
 
     # ---- [1] Package (SourceType=package): prebuilt nexacrolib.zip = nexacrolib\ + generate\ ----
@@ -413,10 +406,10 @@ function Invoke-Target($Ctx) {
         Write-Host "  Zip     : $zipSrc"
         Write-Host ("  Size    : {0:N1} MB, {1}" -f ($zipItem.Length / 1MB), $zipItem.LastWriteTime)
 
-        # 1-b -OnlyIfChanged: same zip (path + size + time) as the last success
-        if ($OnlyIfChanged -and (Test-Path -LiteralPath $hashFile) -and (Get-Content -LiteralPath $hashFile -Raw).Trim() -eq $pkgId) {
+        # 1-b Same zip (path + size + time) as the last success → no change
+        if ((Test-Path -LiteralPath $hashFile) -and (Get-Content -LiteralPath $hashFile -Raw).Trim() -eq $pkgId) {
             Write-Host '  [SKIP] Same package as last success'
-            $Ctx.Status = 'UNCHANGED'
+            $Ctx.SrcChanged = $false
             return
         }
 
@@ -470,7 +463,7 @@ function Invoke-Target($Ctx) {
                 throw "Branch '$br' is v$($mv.Groups[1].Value) but ExpectedVersion=$($cfg.ExpectedVersion)"
             }
 
-            # 1-b Remote branch check (~1s); also gives the remote hash for -OnlyIfChanged
+            # 1-b Remote branch check (~1s) and change detection via commit hash
             $url = $cfg.RepoUrl
             if (-not $url) {
                 if (-not $isRepo) { throw "SourceDir not found and RepoUrl is not set: $src" }
@@ -483,11 +476,11 @@ function Invoke-Target($Ctx) {
             $remoteHash = ($line -split "`t")[0].Trim()
             Write-Host "  Remote : $br @ $remoteHash"
 
-            if ($OnlyIfChanged -and (Test-Path -LiteralPath $hashFile)) {
+            if (Test-Path -LiteralPath $hashFile) {
                 $last = (Get-Content -LiteralPath $hashFile -Raw).Trim()
                 if ($remoteHash -eq $last) {
                     Write-Host "  [SKIP] No new commits since last success ($last)"
-                    $Ctx.Status = 'UNCHANGED'
+                    $Ctx.SrcChanged = $false
                     return
                 }
             }
@@ -546,10 +539,31 @@ function Invoke-Target($Ctx) {
         Write-Host "  Hash : $($Ctx.Hash)"
         Write-Host "  Msg  : $($Ctx.Msg)"
     }
-    if ($Ctx.Status -eq 'UNCHANGED') { return }
+
+    # ---- Determine starting step (do_from) ----
+    # git source changed → start from [2], package changed → from [3], jar updated → from [3]
+    # -Block forces specific steps even when nothing changed
+    $doFrom = 99
+    if ($Ctx.SrcChanged) { $doFrom = if ($srcType -eq 'git') { 2 } else { 3 } }
+    if ($JarUpdated)     { $doFrom = [Math]::Min($doFrom, 3) }
+    $blockAliases  = @{ fw = 'framework'; test = 'testpro' }
+    $blockStepNums = @{ framework = 2; deploy = 3; publish = 4; testpro = 5 }
+    if ($Block) {
+        foreach ($s in $Block.Split(',')) {
+            $s = $s.Trim().ToLower()
+            if ($blockAliases.ContainsKey($s)) { $s = $blockAliases[$s] }
+            if ($blockStepNums.ContainsKey($s)) { $doFrom = [Math]::Min($doFrom, $blockStepNums[$s]) }
+        }
+    }
+    if ($doFrom -eq 99) {
+        Write-Host ''
+        Write-Host "---- [$($Ctx.Target)] [UNCHANGED] No source or jar changes detected, skipping [2]-[5] ----"
+        $Ctx.Status = 'UNCHANGED'
+        return
+    }
 
     # ---- [2] Build nexacrolib + generate rule ----
-    Invoke-Step $Ctx '2 Framework copy' -When ($srcType -eq 'git') {
+    Invoke-Step $Ctx '2 Framework copy' -When ($doFrom -le 2 -and $srcType -eq 'git') {
         $fwSrc = Join-Path $cfg.SourceDir 'Lib\FrameworkJS'
         Reset-Dir $libRoot $work
         New-Item -ItemType Directory -Force -Path $libDir | Out-Null
@@ -581,7 +595,7 @@ function Invoke-Target($Ctx) {
     }
 
     # ---- [3] Nexacro deploy (Java CLI) ----
-    Invoke-Step $Ctx '3 Deploy' {
+    Invoke-Step $Ctx '3 Deploy' -When ($doFrom -le 3) {
         Reset-Dir $outDir $work
         Reset-Dir $deployDir $work
         $rule = if ($cfg.ExpectedVersion -eq '21') { '-CSSRULE' } else { '-GENERATERULE' }
@@ -607,7 +621,7 @@ function Invoke-Target($Ctx) {
     }
 
     # ---- [4] Publish to Tomcat ----
-    Invoke-Step $Ctx '4 Publish' {
+    Invoke-Step $Ctx '4 Publish' -When ($doFrom -le 4) {
         $port = [int]$cfg.TomcatPort
         if (-not (Test-Port $port)) {
             Write-Host "  Tomcat not listening on $port. Starting..."
@@ -646,18 +660,6 @@ function Invoke-Target($Ctx) {
         Write-Host "  Ready: $($Ctx.Url)"
     }
 
-    # ---- [5] Open Chrome ----
-    Invoke-Step $Ctx '5 Chrome' {
-        if (-not $Ctx.OpenBrowser) { Write-Host '  [SKIP] Browser off (OpenBrowser=N or -NoBrowser)'; return }
-        $profileDir = Join-Path $work 'chrome_profile'
-        $chromeArgs = @("--user-data-dir=`"$profileDir`"", '--no-first-run', '--no-default-browser-check',
-                        '--disk-cache-size=1', '--new-window')
-        if ($DevTools) { $chromeArgs += '--auto-open-devtools-for-tabs' }
-        $chromeArgs += $Ctx.Url
-        Start-Process -FilePath $Ctx.Chrome -ArgumentList $chromeArgs
-        Write-Host "  Opened: $($Ctx.Url)"
-    }
-
     Set-Content -LiteralPath $hashFile -Value $(if ($srcType -eq 'package') { $Ctx.PackageId } else { $Ctx.Hash })
     $Ctx.Status = 'SUCCESS'
 }
@@ -670,7 +672,6 @@ $targets = if ($Target -eq 'all') { @('v21', 'v24') } else { @($Target) }
 $results = @()
 
 # ---- [jar] Deploy JAVA engine: once per run, before any target ----
-# Runs with -UpdateJar, or automatically when the configured JarDir has no engine yet.
 $jarResults = @()
 $jarFailed  = $false
 $jarDirs = foreach ($t in $targets) {
@@ -679,17 +680,20 @@ $jarDirs = foreach ($t in $targets) {
         if (Test-Enabled $c) { $c.JarDir }
     } catch { }
 }
+$jarUpdatedMap = @{}  # {jarDir -> bool}
 foreach ($jd in ($jarDirs | Select-Object -Unique)) {
-    if (-not $UpdateJar -and (Find-StartBat $jd)) { continue }
     Write-Host ''
     Write-Host "---- [jar] Deploy JAVA engine: $jd ----"
     $sw = [Diagnostics.Stopwatch]::StartNew()
     try {
         try { Assert-Under $jd $WORK_ROOT }
         catch { throw "JarDir must be under $WORK_ROOT to be updated (got '$jd')" }
-        $jarResults += Update-DeployJar $jd
+        $res = Update-DeployJar $jd
+        $jarResults += $res
+        $jarUpdatedMap[$jd] = $res -like '*(updated)*'
     } catch {
         $jarFailed = $true
+        $jarUpdatedMap[$jd] = $false
         $jarResults += "FAIL - $($_.Exception.Message)"
         Write-Host "[ERROR] [jar] $($_.Exception.Message)"
         if (Find-StartBat $jd) { Write-Host '  [WARN] Keeping the currently installed engine.' }
@@ -701,7 +705,11 @@ foreach ($t in $targets) {
     $ctx = @{ Target = $t; Status = 'FAIL'; Branch = ''; Version = ''; Hash = ''; Msg = ''; Url = ''; Error = '';
               Steps = New-Object System.Collections.ArrayList }
     try {
-        Invoke-Target $ctx
+        $jarUpd = try {
+            $preCfg = Read-PipelineConfig (Join-Path $ROOT "pipeline_$t.txt")
+            if ($jarUpdatedMap.ContainsKey($preCfg.JarDir)) { $jarUpdatedMap[$preCfg.JarDir] } else { $false }
+        } catch { $false }
+        Invoke-Target $ctx $jarUpd
     } catch {
         $ctx.Error = $_.Exception.Message
         Write-Host "[ERROR] [$t] $($ctx.Error)"

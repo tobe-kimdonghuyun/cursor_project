@@ -3,12 +3,11 @@
 AutoPipeline - Python port of auto_pipeline_standalone.bat (same configs, same options, same steps)
 
   [jar] Deploy JAVA engine -> [1] Source (git) | [1] Package (prebuilt zip) -> [2] Framework copy
-  -> [3] Nexacro deploy (Java CLI) -> [4] Tomcat publish -> [5] Chrome -> [6] TestPro
+  -> [3] Nexacro deploy (Java CLI) -> [4] Tomcat publish -> [5] TestPro
 
 Usage:
   auto_pipeline.exe [v21|v24|all] [-Branch <name>] [-SourceType git|package] [-Build <folder>]
-                    [-UpdateJar] [-SkipGit] [-OnlyIfChanged] [-OpenBrowser|-NoBrowser] [-DevTools]
-                    [-Home <config folder>] [-Help]
+                    [-Block <steps>] [-SkipGit] [-Home <config folder>] [-Help]
 
 Config folder (holds pipeline_v21.txt / pipeline_v24.txt; logs\\ and work\\ are created there):
   -Home > environment variable PIPELINE_HOME > folder of the exe > DEFAULT_HOME
@@ -43,10 +42,9 @@ REQUIRED_KEYS = ('ExpectedVersion', 'SourceDir', 'Branch', 'ProjectPath', 'WorkD
                  'JarDir', 'TomcatHome', 'TomcatPort', 'WebContext')
 # Relative values of these keys are resolved against the folder that holds the config file
 PATH_KEYS = ('SourceDir', 'ProjectPath', 'WorkDir', 'JarDir', 'TomcatHome', 'JavaHome',
-             'ChromePath', 'PackageRoot', 'PackagePath',
+             'PackageRoot', 'PackagePath',
              'JebiExePath', 'TestScenarioFile', 'TestParallelManifest',
              'TestOutputDir', 'TestVarsFile', 'TestSourceFile')
-DEFAULT_CHROME = r'C:\Program Files\Google\Chrome\Application\chrome.exe'
 CREATE_NO_WINDOW = 0x08000000
 
 
@@ -402,7 +400,7 @@ def step(ctx, name, body, when=True):
 # Pipeline for one target
 # ============================================================
 
-def invoke_target(ctx, opt, root):
+def invoke_target(ctx, opt, root, jar_updated=False):
     cfg_path = os.path.join(root, f"pipeline_{ctx['Target']}.txt")
     cfg = read_config(cfg_path)
 
@@ -428,9 +426,6 @@ def invoke_target(ctx, opt, root):
     # Project name = .xprj file name (e.g. TC_NexaV21). Usable as {Project} in WebContext / PublishSubDir.
     project = os.path.splitext(os.path.basename(cfg['ProjectPath']))[0]
 
-    # Chrome: command line switch wins, otherwise OpenBrowser=Y|N in config (default N)
-    open_browser = False if opt['NoBrowser'] else True if opt['OpenBrowser'] else is_yes(cfg.get('OpenBrowser'))
-
     work = cfg['WorkDir']
     lib_root = os.path.join(work, 'nexacrolib')
     lib_dir = os.path.join(lib_root, 'nexacrolib')
@@ -438,7 +433,7 @@ def invoke_target(ctx, opt, root):
     out_dir = os.path.join(work, 'output', project)
     deploy_dir = os.path.join(work, 'deploy')
 
-    # Last success marker per source type + branch (-OnlyIfChanged): git = commit hash, package = zip path|size|time
+    # Last success marker per source type + branch: git = commit hash, package = zip path|size|time
     hash_key = re.sub(r'[\\/:*?"<>|]', '_', cfg['Branch'])
     hash_file = os.path.join(work, f'last_success_package_{hash_key}.txt' if src_type == 'package'
                              else f'last_success_hash_{hash_key}.txt')
@@ -482,10 +477,6 @@ def invoke_target(ctx, opt, root):
             raise PipelineError(f"start.bat not found under {cfg['JarDir']}. Run with -UpdateJar.")
         env['jar_root'] = os.path.dirname(os.path.dirname(start_bat))
 
-        env['chrome'] = cfg.get('ChromePath') or DEFAULT_CHROME
-        if open_browser and not os.path.isfile(env['chrome']):
-            raise PipelineError(f"Chrome not found: {env['chrome']}")
-
         # URL host: ServerHost in config, or auto-detected local IPv4 when empty / 'auto'
         host = cfg.get('ServerHost') or ''
         env['host'] = host if host and host.lower() != 'auto' else get_local_ipv4()
@@ -505,7 +496,6 @@ def invoke_target(ctx, opt, root):
         log(f"  Jar     : {env['jar_root']}")
         log(f'  Publish : {pub_dir}')
         log(f"  Host    : {env['host']}")
-        log(f"  Browser : {'open Chrome' if open_browser else 'off'}")
 
     # ---- [1] Package (SourceType=package): prebuilt nexacrolib.zip = nexacrolib\ + generate\ ----
     #      Replaces [1] Source and [2] Framework copy. No UTF-8 BOM conversion (already built).
@@ -535,8 +525,8 @@ def invoke_target(ctx, opt, root):
         log(f'  Zip     : {zip_src}')
         log(f'  Size    : {st.st_size / 1048576:.1f} MB, {datetime.datetime.fromtimestamp(st.st_mtime):%Y-%m-%d %H:%M:%S}')
 
-        # 1-b -OnlyIfChanged: same zip (path + size + time) as the last success
-        if opt['OnlyIfChanged'] and read_last() == pkg_id:
+        # 1-b 변경 감지: same zip (path + size + time) as the last success → skip
+        if read_last() == pkg_id:
             log('  [SKIP] Same package as last success')
             raise Unchanged()
 
@@ -603,7 +593,8 @@ def invoke_target(ctx, opt, root):
             remote_hash = line.split('\t')[0].strip()
             log(f'  Remote : {br} @ {remote_hash}')
 
-            if opt['OnlyIfChanged'] and read_last() == remote_hash:
+            # 변경 감지: remote hash 동일이면 skip
+            if read_last() == remote_hash:
                 log(f'  [SKIP] No new commits since last success ({remote_hash})')
                 raise Unchanged()
 
@@ -759,20 +750,7 @@ def invoke_target(ctx, opt, root):
             raise PipelineError(f"URL not ready within 60s: {ctx['Url']}")
         log(f"  Ready: {ctx['Url']}")
 
-    # ---- [5] Open Chrome ----
-    def chrome():
-        if not open_browser:
-            log('  [SKIP] Browser off (OpenBrowser=N or -NoBrowser)')
-            return
-        args = [env['chrome'], '--user-data-dir=' + os.path.join(work, 'chrome_profile'),
-                '--no-first-run', '--no-default-browser-check', '--disk-cache-size=1', '--new-window']
-        if opt['DevTools']:
-            args.append('--auto-open-devtools-for-tabs')
-        args.append(ctx['Url'])
-        subprocess.Popen(args, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        log(f"  Opened: {ctx['Url']}")
-
-    # ---- [6] TestPro: JEBI_Main.exe CLI ----
+    # ---- [5] TestPro: JEBI_Main.exe CLI ----
     def testpro():
         # [6-0] Preflight
         jebi = cfg.get('JebiExePath') or ''
@@ -919,18 +897,41 @@ def invoke_target(ctx, opt, root):
             raise PipelineError(
                 f"TestPro {ctx['TestStatus']} (exit {ctx['TestCode']}) Pass {total_pass}, Fail {total_fail}")
 
+    # -Block 옵션: 단계 이름 → 단계 번호 (변경 없어도 해당 번호부터 강제 실행)
+    _BLOCK_STEP_NUM = {'framework': 2, 'deploy': 3, 'publish': 4, 'testpro': 5}
+    block = opt.get('Block', set())
+
     step(ctx, '0 Preflight', preflight)
     try:
         step(ctx, '1 Package', package, when=src_type == 'package')
         step(ctx, '1 Source', source, when=src_type == 'git')
+        src_changed = True
     except Unchanged:
+        src_changed = False
+
+    # 실행 시작 단계 결정:
+    # - source 변경: git → [2]framework부터, package → [3]deploy부터
+    # - jar 업데이트: [3]deploy부터 (framework copy는 git 소스 필요)
+    # - -Block: 지정 단계 중 최솟값부터 강제 실행
+    do_from = 99
+    if src_changed:
+        do_from = 2 if src_type == 'git' else 3
+    if jar_updated:
+        do_from = min(do_from, 3)
+    for s in block:
+        if s in _BLOCK_STEP_NUM:
+            do_from = min(do_from, _BLOCK_STEP_NUM[s])
+
+    if do_from == 99:
+        log('')
+        log(f"---- [{ctx['Target']}] UNCHANGED — source and jar are up to date, nothing to do ----")
         ctx['Status'] = 'UNCHANGED'
         return
-    step(ctx, '2 Framework copy', framework_copy, when=src_type == 'git')
-    step(ctx, '3 Deploy', deploy)
-    step(ctx, '4 Publish', publish)
-    step(ctx, '5 Chrome', chrome)
-    step(ctx, '6 TestPro', testpro, when=is_yes(cfg.get('TestProEnabled')))
+
+    step(ctx, '2 Framework copy', framework_copy, when=do_from <= 2 and src_type == 'git')
+    step(ctx, '3 Deploy', deploy, when=do_from <= 3)
+    step(ctx, '4 Publish', publish, when=do_from <= 4)
+    step(ctx, '5 TestPro', testpro, when=is_yes(cfg.get('TestProEnabled')))
 
     with open(hash_file, 'w', encoding='utf-8') as f:
         f.write((ctx['PackageId'] if src_type == 'package' else ctx['Hash']) + '\n')
@@ -942,22 +943,28 @@ def invoke_target(ctx, opt, root):
 # ============================================================
 
 USAGE = """Usage: auto_pipeline.exe [v21|v24|all] [-Branch <name>] [-SourceType git|package] [-Build <folder>]
-                         [-UpdateJar] [-SkipGit] [-OnlyIfChanged] [-OpenBrowser|-NoBrowser] [-DevTools]
-                         [-Home <config folder>] [-Help]
+                         [-Block <steps>] [-SkipGit] [-Home <config folder>] [-Help]
   -Branch     : this run only, overrides Branch= in pipeline_<target>.txt (v21 or v24 only)
   -SourceType : this run only, overrides SourceType= (default git; package = prebuilt nexacrolib.zip)
   -Build      : this run only, package build folder (default PackageBuild=latest)
+  -Block      : comma-separated steps to force even when no change is detected
+                (framework, deploy, publish, testpro); applies to all targets
+  -SkipGit    : skip remote check / clone / pull (use existing local source as-is)
   -Home       : folder with pipeline_v21.txt / pipeline_v24.txt
-                (default: env PIPELINE_HOME > exe folder > """ + DEFAULT_HOME + ')'
+                (default: env PIPELINE_HOME > exe folder > """ + DEFAULT_HOME + """)
+
+Note: Source changes and Deploy JAVA engine updates are detected automatically on every run.
+      Steps [2]~[4] are skipped when neither source nor jar has changed.
+      Use -Block to force specific steps regardless of change detection."""
 
 
 def parse_args(argv):
     opt = {'Target': 'all', 'Branch': '', 'SourceType': '', 'Build': '', 'Home': '',
-           'UpdateJar': False, 'SkipGit': False, 'OnlyIfChanged': False,
-           'OpenBrowser': False, 'NoBrowser': False, 'DevTools': False}
-    switches = {'-updatejar': 'UpdateJar', '-skipgit': 'SkipGit', '-onlyifchanged': 'OnlyIfChanged',
-                '-openbrowser': 'OpenBrowser', '-nobrowser': 'NoBrowser', '-devtools': 'DevTools'}
+           'SkipGit': False, 'Block': set()}
+    switches = {'-skipgit': 'SkipGit'}
     values = {'-target': 'Target', '-branch': 'Branch', '-sourcetype': 'SourceType', '-build': 'Build', '-home': 'Home'}
+    _BLOCK_ALIASES = {'fw': 'framework', 'git': 'source', 'test': 'testpro'}
+    _VALID_BLOCK = {'framework', 'deploy', 'publish', 'testpro'}
     k = 0
     while k < len(argv):
         a = argv[k]
@@ -973,6 +980,19 @@ def parse_args(argv):
                 print(f'[ERROR] {a} needs a value')
                 sys.exit(2)
             opt[values[low]] = v
+        elif low == '-block':
+            k += 1
+            v = argv[k] if k < len(argv) else ''
+            if not v or v.startswith('-'):
+                print('[ERROR] -Block needs a value (e.g. -Block deploy,publish)')
+                sys.exit(2)
+            for s in v.split(','):
+                s = s.strip().lower()
+                s = _BLOCK_ALIASES.get(s, s)
+                if s not in _VALID_BLOCK:
+                    print(f'[ERROR] Unknown -Block step: {s!r}  (valid: {", ".join(sorted(_VALID_BLOCK))})')
+                    sys.exit(2)
+                opt['Block'].add(s)
         elif low in ('-help', '-h', '/?', '--help'):
             print(USAGE)
             sys.exit(0)
@@ -1044,11 +1064,12 @@ def main(argv):
 
     targets = list(TARGETS) if opt['Target'] == 'all' else [opt['Target']]
 
-    # ---- [jar] Deploy JAVA engine: once per run, before any target ----
-    # Runs with -UpdateJar, or automatically when the configured JarDir has no engine yet.
+    # ---- [jar] Deploy JAVA engine: 매 실행 시 서버 최신 버전 자동 확인 ----
+    # update_deploy_jar 내부에서 installed == latest 이면 "(up to date)" 반환, 변경 있으면 다운로드.
     jar_results = []
     jar_failed = False
     jar_dirs = []
+    jar_updated_map = {}   # {jar_dir: bool} — 실제로 업데이트됐으면 True
     for t in targets:
         try:
             c = read_config(os.path.join(root, f'pipeline_{t}.txt'))
@@ -1057,8 +1078,6 @@ def main(argv):
         except PipelineError:
             pass
     for jd in jar_dirs:
-        if not opt['UpdateJar'] and find_start_bat(jd):
-            continue
         log('')
         log(f'---- [jar] Deploy JAVA engine: {jd} ----')
         t0 = time.time()
@@ -1067,9 +1086,12 @@ def main(argv):
                 assert_under(jd, work_root)
             except PipelineError:
                 raise PipelineError(f"JarDir must be under {work_root} to be updated (got '{jd}')")
-            jar_results.append(update_deploy_jar(jd, work_root))
+            result = update_deploy_jar(jd, work_root)
+            jar_updated_map[jd] = '(updated)' in result
+            jar_results.append(result)
         except Exception as e:
             jar_failed = True
+            jar_updated_map[jd] = False
             jar_results.append(f'FAIL - {e}')
             log(f'[ERROR] [jar] {e}')
             if find_start_bat(jd):
@@ -1083,7 +1105,13 @@ def main(argv):
                'TestStatus': '', 'TestPass': 0, 'TestFail': 0, 'TestSec': 0.0, 'TestCode': 0,
                'Steps': []}
         try:
-            invoke_target(ctx, opt, root)
+            # 해당 target의 JarDir에서 jar 업데이트 여부 전달
+            try:
+                pre_cfg = read_config(os.path.join(root, f'pipeline_{t}.txt'))
+                jar_upd = jar_updated_map.get(pre_cfg.get('JarDir', ''), False)
+            except Exception:
+                jar_upd = False
+            invoke_target(ctx, opt, root, jar_updated=jar_upd)
         except Exception as e:
             ctx['Error'] = str(e)
             log(f'[ERROR] [{t}] {e}')

@@ -22,12 +22,12 @@ if errorlevel 1 (
 pushd "%_HERE%"
 "%_PY%" -m nuitka ^
     --onefile ^
-    --mingw64 ^
+    --zig ^
     --assume-yes-for-downloads ^
     --python-flag=no_docstrings,no_asserts ^
     --windows-console-mode=force ^
     --output-dir=build ^
-    --output-filename=auto_pipeline.exe ^
+    --output-filename=auto_pipeline_py.exe ^
     --remove-output ^
     --company-name=TOBESOFT ^
     --product-name=AutoPipeline ^
@@ -42,6 +42,6 @@ if not "%_RC%"=="0" (
     exit /b %_RC%
 )
 
-copy /Y "%_HERE%build\auto_pipeline.exe" "%_HERE%..\auto_pipeline.exe" >nul
-echo [DONE] %_HERE%..\auto_pipeline.exe
+copy /Y "%_HERE%build\auto_pipeline_py.exe" "%_HERE%..\auto_pipeline_py.exe" >nul
+echo [DONE] %_HERE%..\auto_pipeline_py.exe
 endlocal
